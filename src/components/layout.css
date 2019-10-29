@@ -620,3 +620,8 @@ pre tt:after {
     font-size: 100%;
   }
 }
+
+header {
+  background: #2e3641;
+  margin-bottom: 1.45rem;
+}
