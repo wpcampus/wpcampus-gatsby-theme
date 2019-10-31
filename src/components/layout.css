@@ -1,3 +1,10 @@
+:root {
+  --wpc-blue-dark: #2e3641;
+  --wpc-blue-royal: #1159bd;
+  --wpc-blue-light: #e4eaf4;
+  --wpc-orange: #A76739;
+}
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -40,7 +47,7 @@ template {
   display: none;
 }
 a {
-  color: #1159bd;
+  color: var(--wpc-blue-royal);
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
 }
@@ -623,6 +630,6 @@ pre tt:after {
 }
 
 header {
-  background: #2e3641;
+  background: var(--wpc-blue-dark);
   margin-bottom: 1.45rem;
 }
