@@ -623,8 +623,3 @@ pre tt:after {
     font-size: 100%;
   }
 }
-
-header {
-  background: var(--wpc-blue-dark);
-  margin-bottom: 1.45rem;
-}
