@@ -16,6 +16,7 @@ The Gatsby theme for wpcampus.org.
 
     ```shell
     cd wpcampus-gatsby-theme/
+    nvm use
     gatsby develop
     ```
 
