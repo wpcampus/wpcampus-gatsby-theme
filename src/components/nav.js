@@ -20,6 +20,7 @@ Nav.propTypes = {
 
 const NavPrimaryItems = [
   { slug: "/", text: "Home" },
+  { slug: "/blog/", text: "Blog" },
 ]
 
 const NavPrimary = () => <Nav list={NavPrimaryItems} />

@@ -4,27 +4,55 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-// You can delete this file if you're not using it
 const path = require(`path`)
 const slash = require(`slash`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  // query content for WordPress posts
+  
+  // Query content for WordPress posts.
+  // @TODO remove fields we're not using.
   const posts = await graphql(`
     query {
       allWordpressPost(filter: { type: { eq: "post" } }) {
         edges {
           node {
             id
+            wordpress_id
             slug
-            date
             path
             title
-            subjects
             status
+            date
             excerpt
             content
+            comment_status
+            featured_media {
+              wordpress_id
+              alt_text
+              caption
+              title
+              mime_type
+              source_url
+              localFile {
+                relativePath
+              }
+            }
+            categories {
+              wordpress_id
+              count
+              name
+              path
+              link
+            }
+            author {
+              wordpress_id
+              name
+              slug
+              link
+              path
+              url
+            }
           }
         }
       }
