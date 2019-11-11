@@ -11,9 +11,9 @@ const slash = require(`slash`)
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   // query content for WordPress posts
-  const result = await graphql(`
+  const posts = await graphql(`
     query {
-      allWordpressPost {
+      allWordpressPost(filter: { type: { eq: "post" } }) {
         edges {
           node {
             id
@@ -30,7 +30,7 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
   const postTemplate = path.resolve(`./src/templates/post.js`)
-  result.data.allWordpressPost.edges.forEach(edge => {
+  posts.data.allWordpressPost.edges.forEach(edge => {
     createPage({
       // will be the url for the page
       path: edge.node.slug,
