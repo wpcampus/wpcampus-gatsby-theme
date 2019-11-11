@@ -19,6 +19,7 @@ exports.createPages = async ({ graphql, actions }) => {
             id
             slug
             date
+            path
             title
             subjects
             status
@@ -33,7 +34,7 @@ exports.createPages = async ({ graphql, actions }) => {
   posts.data.allWordpressPost.edges.forEach(edge => {
     createPage({
       // will be the url for the page
-      path: edge.node.slug,
+      path: edge.node.path,
       // specify the component template of your choice
       component: slash(postTemplate),
       // In the ^template's GraphQL query, 'id' will be available
