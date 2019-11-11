@@ -1,6 +1,22 @@
 @import "variables.css";
 
-header {
+.header {
     background: var(--wpc-blue-dark);
     margin-bottom: 1.45rem;
+    color: #fff;
+}
+
+.header .header__container {
+    margin: 0 auto;
+    max-width: 960px;
+    padding: 1.45rem 1.0875rem;
+}
+
+.header .header__siteTitle {
+    margin: 0;
+}
+
+.header *,
+.header a {
+    color: inherit;
 }
