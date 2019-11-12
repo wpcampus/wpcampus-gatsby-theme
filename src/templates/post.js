@@ -4,20 +4,56 @@ import PropTypes from "prop-types"
 
 import Article from "../components/article"
 import Layout from "../components/layout"
-import { NavPrimary } from "../components/nav"
+import { Nav, NavPrimary } from "../components/nav"
 import SEO from "../components/seo"
+
+const PostPagination = ({ previous, next }) => {
+  let items = [
+    {
+      slug: "/blog",
+      text: `All posts`,
+    },
+  ]
+  if (previous) {
+    items.push({
+      slug: previous.path,
+      text: `Previous post: ` + previous.title,
+    })
+  }
+  if (next) {
+    items.push({
+      slug: next.path,
+      text: `Next post: ` + next.title,
+    })
+  }
+  if (items) {
+    return <Nav list={items} />
+  }
+  return null
+}
 
 class Post extends Component {
   render() {
     const post = this.props.data.wordpressPost
+    const context = this.props.pageContext
+    const pagination = (
+      <PostPagination previous={context.previous} next={context.next} />
+    )
     return (
       <Layout>
         <SEO title={post.title} />
         <NavPrimary />
+        {pagination}
         <Article data={post} isSingle={true} displayContentFull={true} />
+        {pagination}
       </Layout>
     )
   }
+}
+
+PostPagination.propTypes = {
+  previous: PropTypes.object,
+  next: PropTypes.object,
 }
 
 Post.propTypes = {
