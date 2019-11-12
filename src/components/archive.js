@@ -8,6 +8,7 @@ const Archive = ({ list }) =>
     <Article
       key={node.id}
       data={node}
+      isSingle={false}
       displayContent={true}
       displayContentFull={false}
     />
