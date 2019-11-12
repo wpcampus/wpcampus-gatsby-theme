@@ -16,6 +16,22 @@ exports.createPages = async ({ graphql, actions }) => {
     query {
       allWordpressPost(filter: { type: { eq: "post" } }) {
         edges {
+          previous {
+            id
+            wordpress_id
+            slug
+            path
+            title
+            date
+          }
+          next {
+            id
+            wordpress_id
+            slug
+            path
+            title
+            date
+          }
           node {
             id
             wordpress_id
@@ -69,6 +85,8 @@ exports.createPages = async ({ graphql, actions }) => {
       // as a GraphQL variable to query for this posts's data.
       context: {
         id: edge.node.id,
+        next: edge.next,
+        previous: edge.previous,
       },
     })
   })
