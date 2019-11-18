@@ -1,9 +1,10 @@
 import React, { Component } from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import PropTypes from "prop-types"
 import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
+import { NavPrimary } from "../components/nav"
 import SEO from "../components/seo"
 
 class Post extends Component {
@@ -13,9 +14,9 @@ class Post extends Component {
     return (
       <Layout>
         <SEO title={post.title} />
+        <NavPrimary />
         <h1>{post.title}</h1>
         <div>{ReactHtmlParser(post.content)}</div>
-        <Link to="/">Go home</Link>
       </Layout>
     )
   }
