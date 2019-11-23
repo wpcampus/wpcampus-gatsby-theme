@@ -21,7 +21,7 @@ export default function Template({ data }) {
 export const query = graphql`
   query {
     allWordpressPost(
-      filter: { type: { eq: "post" } }
+      filter: { type: { eq: "post" }, status: { eq: "publish" } }
       sort: { fields: date, order: DESC }
     ) {
       edges {
