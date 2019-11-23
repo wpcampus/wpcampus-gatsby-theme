@@ -7,14 +7,41 @@
 const path = require(`path`)
 const slash = require(`slash`)
 
+// Build pages from WordPress content
+// @TODO remove fields we're not using.
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  
-  // Query content for WordPress posts.
-  // @TODO remove fields we're not using.
+
+  const pages = await graphql(`
+    query {
+      allWordpressPage( filter: { status: { eq: "publish" } } ) {
+        edges {
+          node {
+            id
+            path
+          }
+        }
+      }
+    }
+  `)
+  const pageTemplate = path.resolve(`./src/templates/page.js`)
+  pages.data.allWordpressPage.edges.forEach(edge => {
+    createPage({
+      // will be the url for the page
+      path: edge.node.path,
+      // specify the component template of your choice
+      component: slash(pageTemplate),
+      // In the ^template's GraphQL query, 'id' will be available
+      // as a GraphQL variable to query for this posts's data.
+      context: {
+        id: edge.node.id,
+      },
+    })
+  })
+
   const posts = await graphql(`
     query {
-      allWordpressPost(filter: { type: { eq: "post" }, status: { eq: "publish" } }) {
+      allWordpressPost( filter: { type: { eq: "post" }, status: { eq: "publish" } } ) {
         edges {
           previous {
             id
