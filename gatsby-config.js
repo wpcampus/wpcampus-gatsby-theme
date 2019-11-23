@@ -33,8 +33,12 @@ module.exports = {
         baseUrl: `wpcampus.org`,
         protocol: `https`,
         hostingWPCOM: false,
-        useACF: true
-      }
+        useACF: false,
+        includedRoutes: [
+          "**/posts",
+          "**/pages"
+        ],
+      },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
