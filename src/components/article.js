@@ -64,11 +64,11 @@ const ArticleContent = ({ data, displayContentFull }) => {
 }
 
 // @TODO Our articles can have multiple authors. Only seems to pull one author.
-const Article = ({ data, isSingle, displayContent, displayContentFull }) => {
+const Article = ({ data, isSingle, displayMeta, displayContent, displayContentFull }) => {
   return (
     <article>
       <ArticleTitle data={data} isSingle={isSingle} />
-      <ArticleMeta data={data} />
+      {displayMeta ? <ArticleMeta data={data} /> : null}
       {displayContent ? (
         <ArticleContent data={data} displayContentFull={displayContentFull} />
       ) : null}
@@ -101,11 +101,13 @@ ArticleContent.defaultProps = {
 Article.propTypes = {
   data: PropTypes.object.isRequired,
   isSingle: PropTypes.bool,
+  displayMeta: PropTypes.bool,
   displayContent: PropTypes.bool,
   displayContentFull: PropTypes.bool,
 }
 
 Article.defaultProps = {
+  displayMeta: true,
   displayContent: true,
   displayContentFull: false,
   isSingle: true,
