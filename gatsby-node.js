@@ -14,7 +14,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // @TODO remove fields we're not using.
   const posts = await graphql(`
     query {
-      allWordpressPost(filter: { type: { eq: "post" } }) {
+      allWordpressPost(filter: { type: { eq: "post" }, status: { eq: "publish" } }) {
         edges {
           previous {
             id
