@@ -14,23 +14,35 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const pages = await graphql(`
     query {
-      allWordpressPage( filter: { status: { eq: "publish" } } ) {
+      allWordpressPage(filter: { status: { eq: "publish" } }) {
         edges {
           node {
             id
             path
+            template
           }
         }
       }
     }
   `)
+
   const pageTemplate = path.resolve(`./src/templates/page.js`)
+  const libraryTemplate = path.resolve("./src/templates/library.js")
+
   pages.data.allWordpressPage.edges.forEach(edge => {
+    let template
+
+    if ("template-library.php" == edge.node.template) {
+      template = libraryTemplate
+    } else {
+      template = pageTemplate
+    }
+
     createPage({
       // will be the url for the page
       path: edge.node.path,
       // specify the component template of your choice
-      component: slash(pageTemplate),
+      component: slash(template),
       // In the ^template's GraphQL query, 'id' will be available
       // as a GraphQL variable to query for this posts's data.
       context: {
