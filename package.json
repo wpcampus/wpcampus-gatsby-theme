@@ -6,7 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@wpcampus/wpcampus-web-components": "^1.1.2",
-    "gatsby": "^2.17.6",
+    "gatsby": "2.18.6",
     "gatsby-cli": "2.8.15",
     "gatsby-image": "^2.2.30",
     "gatsby-plugin-manifest": "^2.2.25",
