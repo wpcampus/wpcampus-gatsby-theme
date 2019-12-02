@@ -1431,10 +1431,10 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@wpcampus/wpcampus-web-components@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-web-components/-/wpcampus-web-components-1.0.1.tgz#2232d2d1d204b0f5f2026587d26cc9b3280f73ae"
-  integrity sha512-vE7bTui+rfv2PYwHAYQgayAHc2+ytnKuR+cEUAIrbLcSpQ/zvWbOqN2sXs2ms3iKj4lSyPZRUVxLwRNVHdzadA==
+"@wpcampus/wpcampus-web-components@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-web-components/-/wpcampus-web-components-1.1.0.tgz#f42abdb2b3e229affc02c974cf94559e63168510"
+  integrity sha512-XD4xW/6GX5LJKpCPHZ7XNyHclZB3FV9IaEkTNhdkYgEVpB3Bw6iS9x+mrzeLP9yiEfxiqKxtKIQbtwDad3B7TA==
   dependencies:
     handlebars "^4.5.3"
 

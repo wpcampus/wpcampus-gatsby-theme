@@ -13,6 +13,8 @@ import Header from "./header"
 import "./../css/layout.css"
 import "./../css/main.css"
 
+import "@wpcampus/wpcampus-web-components"
+
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -27,6 +29,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
+      <wpcampus-notifications></wpcampus-notifications>
       <main>{children}</main>
       <footer>
         © {new Date().getFullYear()},{` `}
