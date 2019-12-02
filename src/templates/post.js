@@ -71,6 +71,7 @@ export const postQuery = graphql`
       wordpress_id
       slug
       path
+      author
       title
       status
       date
@@ -78,32 +79,7 @@ export const postQuery = graphql`
       excerpt
       content
       comment_status
-      featured_media {
-        wordpress_id
-        alt_text
-        caption
-        title
-        mime_type
-        source_url
-        localFile {
-          relativePath
-        }
-      }
-      categories {
-        wordpress_id
-        count
-        name
-        path
-        link
-      }
-      author {
-        wordpress_id
-        name
-        slug
-        link
-        path
-        url
-      }
+      categories
     }
     site {
       siteMetadata {
