@@ -13,7 +13,9 @@ import Header from "./header"
 import "./../css/layout.css"
 import "./../css/main.css"
 
-import "@wpcampus/wpcampus-web-components"
+if (typeof HTMLElement !== "undefined") {
+  require("@wpcampus/wpcampus-web-components")
+}
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
