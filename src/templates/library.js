@@ -6,8 +6,7 @@ import ReactHtmlParser from "react-html-parser"
 import Layout from "../components/layout"
 import { NavPrimary } from "../components/nav"
 import SEO from "../components/seo"
-
-import "@wpcampus/wpcampus-web-components"
+import WebComponent from "../components/webComponents"
 
 class Page extends Component {
   render() {
@@ -18,7 +17,7 @@ class Page extends Component {
         <SEO title={post.title} />
         <NavPrimary />
         <h1>{post.title}</h1>
-        <wpcampus-library></wpcampus-library>
+        <WebComponent tag="wpcampus-library" />
         <div>{ReactHtmlParser(post.content)}</div>
       </Layout>
     )

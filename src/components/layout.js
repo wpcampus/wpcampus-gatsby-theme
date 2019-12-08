@@ -10,12 +10,10 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
+import WebComponent from "./webComponents"
+
 import "./../css/layout.css"
 import "./../css/main.css"
-
-if (typeof HTMLElement !== "undefined") {
-  require("@wpcampus/wpcampus-web-components")
-}
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -31,7 +29,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <wpcampus-notifications></wpcampus-notifications>
+      <WebComponent tag="wpcampus-notifications" />
       <main>{children}</main>
       <footer>
         © {new Date().getFullYear()},{` `}
