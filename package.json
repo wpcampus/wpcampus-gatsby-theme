@@ -5,7 +5,9 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.17.6",
+    "@wpcampus/wpcampus-web-components": "1.1.4",
+    "gatsby": "2.18.6",
+    "gatsby-cli": "^2.8.16",
     "gatsby-image": "^2.2.30",
     "gatsby-plugin-manifest": "^2.2.25",
     "gatsby-plugin-offline": "^3.0.17",
