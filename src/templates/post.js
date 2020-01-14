@@ -4,33 +4,9 @@ import PropTypes from "prop-types"
 
 import Article from "../components/article"
 import Layout from "../components/layout"
-import { Nav, NavPrimary } from "../components/nav"
+import { NavPrimary } from "../components/nav"
+import PostPagination from "../components/pagination"
 import SEO from "../components/seo"
-
-const PostPagination = ({ previous, next }) => {
-  let items = [
-    {
-      slug: "/blog",
-      text: `All posts`,
-    },
-  ]
-  if (previous) {
-    items.push({
-      slug: previous.path,
-      text: `Previous post: ` + previous.title,
-    })
-  }
-  if (next) {
-    items.push({
-      slug: next.path,
-      text: `Next post: ` + next.title,
-    })
-  }
-  if (items) {
-    return <Nav list={items} />
-  }
-  return null
-}
 
 const PostTemplate = props => {
   const post = props.data.wordpressPost
@@ -47,11 +23,6 @@ const PostTemplate = props => {
       {pagination}
     </Layout>
   )
-}
-
-PostPagination.propTypes = {
-  previous: PropTypes.object,
-  next: PropTypes.object,
 }
 
 PostTemplate.propTypes = {
