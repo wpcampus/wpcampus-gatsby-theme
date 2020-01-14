@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
 import ReactHtmlParser from "react-html-parser"
@@ -8,28 +8,26 @@ import { NavPrimary } from "../components/nav"
 import SEO from "../components/seo"
 import WebComponent from "../components/webComponents"
 
-class Page extends Component {
-  render() {
-    const post = this.props.data.wordpressPage
+const Library = props => {
+  const post = props.data.wordpressPage
 
-    return (
-      <Layout>
-        <SEO title={post.title} />
-        <NavPrimary />
-        <h1>{post.title}</h1>
-        <WebComponent tag="wpcampus-library" />
-        <div>{ReactHtmlParser(post.content)}</div>
-      </Layout>
-    )
-  }
+  return (
+    <Layout>
+      <SEO title={post.title} />
+      <NavPrimary />
+      <h1>{post.title}</h1>
+      <div>{ReactHtmlParser(post.content)}</div>
+      <WebComponent tag="wpcampus-library" />
+    </Layout>
+  )
 }
 
-Page.propTypes = {
+Library.propTypes = {
   data: PropTypes.object.isRequired,
   edges: PropTypes.array,
 }
 
-export default Page
+export default Library
 
 export const pageQuery = graphql`
   query($id: String!) {
