@@ -7,7 +7,7 @@
   "dependencies": {
     "@wpcampus/wpcampus-web-components": "1.1.4",
     "gatsby": "2.18.6",
-    "gatsby-cli": "^2.8.16",
+    "gatsby-cli": "^2.8.23",
     "gatsby-image": "^2.2.30",
     "gatsby-plugin-manifest": "^2.2.25",
     "gatsby-plugin-offline": "^3.0.17",
