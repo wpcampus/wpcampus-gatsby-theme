@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
 
@@ -32,23 +32,21 @@ const PostPagination = ({ previous, next }) => {
   return null
 }
 
-class Post extends Component {
-  render() {
-    const post = this.props.data.wordpressPost
-    const context = this.props.pageContext
-    const pagination = (
-      <PostPagination previous={context.previous} next={context.next} />
-    )
-    return (
-      <Layout>
-        <SEO title={post.title} />
-        <NavPrimary />
-        {pagination}
-        <Article data={post} isSingle={true} displayContentFull={true} />
-        {pagination}
-      </Layout>
-    )
-  }
+const PostTemplate = props => {
+  const post = props.data.wordpressPost
+  const context = props.pageContext
+  const pagination = (
+    <PostPagination previous={context.previous} next={context.next} />
+  )
+  return (
+    <Layout>
+      <SEO title={post.title} />
+      <NavPrimary />
+      {pagination}
+      <Article data={post} isSingle={true} displayContentFull={true} />
+      {pagination}
+    </Layout>
+  )
 }
 
 PostPagination.propTypes = {
@@ -56,12 +54,12 @@ PostPagination.propTypes = {
   next: PropTypes.object,
 }
 
-Post.propTypes = {
+PostTemplate.propTypes = {
   data: PropTypes.object.isRequired,
   edges: PropTypes.array,
 }
 
-export default Post
+export default PostTemplate
 
 // @TODO remove fields we're not using.
 export const postQuery = graphql`
