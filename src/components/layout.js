@@ -12,6 +12,8 @@ import { useStaticQuery, graphql } from "gatsby"
 import Header from "./header"
 import WebComponent from "./webComponents"
 
+import { User } from "../user/context"
+
 import "./../css/layout.css"
 import "./../css/main.css"
 
@@ -26,10 +28,26 @@ const Layout = ({ children }) => {
     }
   `)
 
+  const userDisplay = user => {
+    return (
+      <div>
+        {user.isAuthenticated ? (
+          <div>
+            <div>user is authenticated: {user.name}</div>
+            <button onClick={user.handleLogout}>Logout</button>
+          </div>
+        ) : (
+          <button onClick={user.handleLogin}>Login</button>
+        )}
+      </div>
+    )
+  }
+
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
       <WebComponent tag="wpcampus-notifications" />
+      <User.Consumer>{userDisplay}</User.Consumer>
       <main>{children}</main>
       <footer>
         © {new Date().getFullYear()},{` `}
