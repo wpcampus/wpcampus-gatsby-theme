@@ -2,10 +2,19 @@ import messages from "./messages"
 
 const tokenKey = "wpc-auth-token"
 
-// Auth expires every 24 hours
-// Duration in milliseconds
-// @TODO update to something longer? The JWT plugin is set at a week.
-const expDuration = 86400000
+/*
+ * When does authorization expire? By default, every 48 hours
+ * The duration is in milliseconds.
+ *
+ * You can override this value by defining WPC_AUTH_DURATION in the .env file.
+ */
+const defaultDuration = 172800000
+const expDuration =
+  process.env.WPC_AUTH_DURATION &&
+  Number.isInteger(process.env.WPC_AUTH_DURATION) &&
+  process.env.WPC_AUTH_DURATION > 0
+    ? parseInt(process.env.WPC_AUTH_DURATION)
+    : defaultDuration
 
 const removeJWTPrefix = message => {
   return message.replace(/^\[jwt_auth\]\s/, "")
