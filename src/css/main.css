@@ -1,5 +1,74 @@
+.for-screen-reader {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
 main {
   margin: 0 auto;
   max-width: var(--container-max-width);
   padding: 1.45rem var(--container-padding-side);
+}
+
+main .user-display {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin: 0 0 1rem;
+}
+
+main .form--login {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 0;
+  grid-row-gap: 0.5rem;
+  align-items: center;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  padding: 1rem;
+}
+
+main .form--login .form--login__alert {
+  grid-column: 1 / span 2;
+  margin: 0 0 0.5rem;
+  font-weight: bold;
+}
+
+main .form--login .form--login__label {
+  display: block;
+  grid-column: 1 / span 1;
+  padding: 0 0.6rem 0 0;
+}
+
+main .form--login .form--login__inputWrapper {
+  grid-column: 2 / span 1;
+}
+main .form--login .form--login__input {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 5px;
+}
+
+main .form--login .form--login__input[aria-invalid="true"] {
+  border: 1px solid #900;
+}
+
+main .form--login .form--login__input_error {
+  margin: 0.25rem 0 0;
+  color: #900;
+}
+
+main .form--login .form--login__submit {
+  grid-column: 1 / span 2;
+  margin: 0.6rem 0 0;
+}
+
+main .form--login.form--login--processing {
+  opacity: 0.4;
+  pointer-events: none;
 }

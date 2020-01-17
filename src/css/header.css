@@ -1,21 +1,33 @@
 @import "variables.css";
 
 .header {
-    background: var(--wpc-blue-dark);
-    color: #fff;
+  background: var(--wpc-blue-dark);
+  color: #fff;
 }
 
 .header .header__container {
-    margin: 0 auto;
-    max-width: var(--container-max-width);
-    padding: 1.45rem var(--container-padding-side);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  max-width: var(--container-max-width);
+  padding: 1.45rem var(--container-padding-side);
 }
 
 .header .header__siteTitle {
-    margin: 0;
+  margin: 0;
 }
 
 .header *,
 .header a {
-    color: inherit;
+  color: inherit;
+}
+
+.header .user-display {
+  border: 1px solid #fff;
+  padding: 0.25rem;
+}
+
+.header button {
+  color: #222;
 }
