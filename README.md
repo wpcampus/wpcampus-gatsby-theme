@@ -2,6 +2,12 @@
 
 The Gatsby theme for wpcampus.org.
 
+## Troubleshooting
+
+### Seeing node incompatibility issues?
+
+Run `nvm use` to define the node version
+
 ## 🚀 Quick start
 
 1.  **Make sure you have Gatsby installed.**
