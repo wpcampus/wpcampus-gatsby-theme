@@ -60,7 +60,7 @@ export default class Auth {
       formData.append("username", username)
       formData.append("password", password)
 
-      return fetch(process.env.WPCAMPUS_URL_API + "/jwt-auth/v1/token", {
+      return fetch(process.env.WPC_URL_API + "/jwt-auth/v1/token", {
         method: "post",
         headers: new Headers({
           Accept: "application/json",
@@ -90,7 +90,7 @@ export default class Auth {
 
   async authenticate(token) {
     return new Promise((resolve, reject) => {
-      return fetch(process.env.WPCAMPUS_URL_API + "/wpcampus/auth/user", {
+      return fetch(process.env.WPC_URL_API + "/wpcampus/auth/user", {
         method: "get",
         headers: new Headers({
           Accept: "application/json",
