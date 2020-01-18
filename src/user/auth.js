@@ -64,8 +64,11 @@ export default class Auth {
 
   async login(username, password) {
     return new Promise((resolve, reject) => {
-      let formData = new FormData()
+      if (!process.env.WPC_URL_API) {
+        reject(new Error(messages.missing_api))
+      }
 
+      let formData = new FormData()
       formData.append("username", username)
       formData.append("password", password)
 
@@ -99,6 +102,10 @@ export default class Auth {
 
   async authenticate(token) {
     return new Promise((resolve, reject) => {
+      if (!process.env.WPC_URL_API) {
+        reject(new Error(messages.missing_api))
+      }
+
       return fetch(process.env.WPC_URL_API + "/wpcampus/auth/user", {
         method: "get",
         headers: new Headers({

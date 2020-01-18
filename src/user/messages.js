@@ -8,4 +8,5 @@ export default {
   username_empty: "Please provide your username.",
   password_empty: "Please provide your password.",
   login_errors: "There are issues with your login information.",
+  missing_api: "The authentication URL needs to be defined."
 }
