@@ -84,7 +84,11 @@ const LoginForm = () => {
     }
 
     await UserContext.login(username, password)
-      .then(response => {})
+      .then(response => {
+        if (!response.user || !response.user.ID) {
+          throw new Error(messages.login_error)
+        }
+      })
       .catch(error => {
         // The response sometimes sends HTML. Ugh.
         let div = document.createElement("div")
