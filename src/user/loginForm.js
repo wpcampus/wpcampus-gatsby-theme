@@ -33,7 +33,7 @@ const LoginForm = () => {
 
     let value = event.target.value.trim()
     let invalidKey = name + "Invalid"
-    let invalidValue = !value ? messages[name + "_empty"] : false
+    let invalidValue = !value ? messages[name + "_empty"] : state[invalidKey]
 
     setState({
       ...state,
