@@ -76,6 +76,7 @@ export default class Auth {
         method: "post",
         headers: new Headers({
           Accept: "application/json",
+          WPCAUTHACCESS: process.env.WPC_AUTH_ACCESS,
         }),
         body: formData,
       })
@@ -111,6 +112,7 @@ export default class Auth {
         headers: new Headers({
           Accept: "application/json",
           Authorization: "Bearer " + token,
+          WPCAUTHACCESS: process.env.WPC_AUTH_ACCESS,
         }),
       })
         .then(response => {
