@@ -10,6 +10,7 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
+import Footer from "./footer"
 import WebComponent from "./webComponents"
 
 import { User } from "../user/context"
@@ -45,10 +46,7 @@ const Layout = ({ children }) => {
         <User.Consumer>{handleUserDisplay}</User.Consumer>
         {children}
       </main>
-      <footer>
-        © {new Date().getFullYear()},{` `}
-        <a href="https://www.wpcampus.org">WPCampus</a>
-      </footer>
+      <Footer />
     </>
   )
 }
