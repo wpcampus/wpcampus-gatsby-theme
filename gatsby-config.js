@@ -2,6 +2,38 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
+/**
+ * We have to "normalize" because we have a multi author setup.
+ * 
+ * This connects an array of author IDs to their nodes in the users query.
+ */
+const mapAuthorsToUsers = ({ entities }) => {
+  const users = entities.filter(e => e.__type === `wordpress__wp_users`)
+  return entities.map(entity => {
+    if (!users.length) {
+      return entity
+    }
+    if (!entity.author || !entity.author.length) {
+      return entity
+    }
+
+    entity.author___NODE = entity.author
+      .map(userID => {
+        // Find the user
+        const user = users.find(u => u.wordpress_id === userID)
+
+        if (user) {
+          return user.id
+        }
+        return undefined
+      })
+      .filter(node => node != undefined)
+    delete entity.author
+
+    return entity
+  })
+}
+
 module.exports = {
   siteMetadata: {
     title: `WPCampus`,
@@ -38,7 +70,8 @@ module.exports = {
         protocol: `https`,
         hostingWPCOM: false,
         useACF: false,
-        includedRoutes: ["**/posts", "**/pages", "**/categories"],
+        includedRoutes: ["**/posts", "**/pages", "**/categories", "**/users"],
+        normalizer: mapAuthorsToUsers,
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

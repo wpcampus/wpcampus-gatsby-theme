@@ -33,6 +33,14 @@ export const pageQuery = graphql`
       id
       wordpress_id
       slug
+      author {
+        id
+        wordpress_id
+        name
+        slug
+        path
+        url
+      }
       date
       title
       status
