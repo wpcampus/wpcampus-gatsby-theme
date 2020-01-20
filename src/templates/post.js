@@ -48,7 +48,14 @@ export const postQuery = graphql`
       excerpt
       content
       comment_status
-      categories
+      categories {
+        id
+        wordpress_id
+        count
+        name
+        description
+        path
+      }
     }
     site {
       siteMetadata {

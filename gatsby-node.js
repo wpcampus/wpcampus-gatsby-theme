@@ -95,4 +95,53 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
+
+  const categories = await graphql(`
+    query {
+      allWordpressCategory {
+        edges {
+          previous {
+            id
+            wordpress_id
+            count
+            name
+            description
+            path
+          }
+          next {
+            id
+            wordpress_id
+            count
+            name
+            description
+            path
+          }
+          node {
+            id
+            wordpress_id
+            count
+            name
+            description
+            path
+          }
+        }
+      }
+    }
+  `)
+  const categoryTemplate = path.resolve(`./src/templates/category.js`)
+  categories.data.allWordpressCategory.edges.forEach(edge => {
+    createPage({
+      // will be the url for the page
+      path: edge.node.path,
+      // specify the component template of your choice
+      component: slash(categoryTemplate),
+      // In the ^template's GraphQL query, 'id' will be available
+      // as a GraphQL variable to query for this posts's data.
+      context: {
+        id: edge.node.id,
+        next: edge.next,
+        previous: edge.previous,
+      },
+    })
+  })
 }
