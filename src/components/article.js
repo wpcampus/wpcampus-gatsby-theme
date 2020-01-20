@@ -16,7 +16,9 @@ const getArticleContent = (data, displayContentFull) => {
 const ArticleCategories = ({ list }) => (
   <ul>
     {list.map((item, i) => (
-      <li key={i}>{item}</li>
+      <li key={i}>
+        <Link to={item.path}>{item.name}</Link>
+      </li>
     ))}
   </ul>
 )
