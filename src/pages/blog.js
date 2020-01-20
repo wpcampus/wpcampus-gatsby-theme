@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Archive from "../components/archive"
+import { ArticleArchive } from "../components/archive"
 import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
@@ -11,8 +11,8 @@ export default function Template({ data }) {
     <Layout>
       <SEO title="Blog" />
       <h1>Blog posts</h1>
-      <NavPrimary/>
-      <Archive list={data.allWordpressPost.edges} />
+      <NavPrimary />
+      <ArticleArchive list={data.allWordpressPost.edges} />
     </Layout>
   )
 }
@@ -38,7 +38,14 @@ export const query = graphql`
           excerpt
           content
           comment_status
-          categories
+          categories {
+            id
+            wordpress_id
+            count
+            name
+            description
+            path
+          }
         }
       }
     }

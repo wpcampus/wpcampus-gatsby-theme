@@ -16,7 +16,9 @@ const getArticleContent = (data, displayContentFull) => {
 const ArticleCategories = ({ list }) => (
   <ul>
     {list.map((item, i) => (
-      <li key={i}>{item}</li>
+      <li key={i}>
+        <Link to={item.path}>{item.name}</Link>
+      </li>
     ))}
   </ul>
 )
@@ -42,7 +44,7 @@ const ArticleMeta = ({ data }) => {
       <li className="article__meta article__meta--author">Need to get author name: {data.author}</li>
       {data.categories ? (
         <li className="article__meta article__meta--categories">
-          Need to get category names:
+          Categories:
           <ArticleCategories list={data.categories} />
         </li>
       ) : null}

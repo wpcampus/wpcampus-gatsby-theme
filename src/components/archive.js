@@ -3,7 +3,35 @@ import PropTypes from "prop-types"
 
 import Article from "../components/article"
 
-const Archive = ({ list, displayMeta, displayContent, displayContentFull }) =>
+const CategoryArchive = ({ list }) => {
+  return list.map(({ node }) => {
+    // Convert category data to match post data for component
+    node.title = node.name
+    node.content = "<p>" + node.description + "</p>"
+
+    return (
+      <Article
+        key={node.id}
+        data={node}
+        isSingle={false}
+        displayMeta={false}
+        displayContent={true}
+        displayContentFull={false}
+      />
+    )
+  })
+}
+
+CategoryArchive.propTypes = {
+  list: PropTypes.array.isRequired,
+}
+
+const ArticleArchive = ({
+  list,
+  displayMeta,
+  displayContent,
+  displayContentFull,
+}) =>
   list.map(({ node }) => (
     <Article
       key={node.id}
@@ -15,17 +43,17 @@ const Archive = ({ list, displayMeta, displayContent, displayContentFull }) =>
     />
   ))
 
-Archive.propTypes = {
+ArticleArchive.propTypes = {
   list: PropTypes.array.isRequired,
   displayMeta: PropTypes.bool,
   displayContent: PropTypes.bool,
   displayContentFull: PropTypes.bool,
 }
 
-Archive.defaultProps = {
+ArticleArchive.defaultProps = {
   displayMeta: true,
   displayContent: true,
   displayContentFull: false,
 }
 
-export default Archive
+export { ArticleArchive, CategoryArchive }

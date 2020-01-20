@@ -3,20 +3,16 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { ArticleArchive } from "../components/archive"
+import { CategoryArchive } from "../components/archive"
 import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
   return (
     <Layout>
-      <SEO title="Pages" />
-      <h1>Pages</h1>
+      <SEO title="Categories" />
+      <h1>Categories</h1>
       <NavPrimary />
-      <ArticleArchive
-        displayMeta={false}
-        displayContent={false}
-        list={data.allWordpressPage.edges}
-      />
+      <CategoryArchive list={data.allWordpressCategory.edges} />
     </Layout>
   )
 }
@@ -24,23 +20,25 @@ export default function Template({ data }) {
 // @TODO remove fields we're not using.
 export const query = graphql`
   query {
-    allWordpressPage(
-      filter: { status: { eq: "publish" } }
-      sort: { fields: title, order: ASC }
-    ) {
+    allWordpressCategory {
       edges {
         node {
           id
           wordpress_id
-          slug
+          count
+          name
+          description
           path
-          author
-          title
-          status
-          date
-          dateFormatted: date(formatString: "MMMM D, YYYY")
-          excerpt
-          content
+          parent {
+            ... on wordpress__CATEGORY {
+              id
+              id
+              wordpress_id
+              count
+              name
+              path
+            }
+          }
         }
       }
     }

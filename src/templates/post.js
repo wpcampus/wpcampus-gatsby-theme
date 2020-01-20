@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import Article from "../components/article"
 import Layout from "../components/layout"
 import { NavPrimary } from "../components/nav"
-import PostPagination from "../components/pagination"
+import { PostPagination } from "../components/pagination"
 import SEO from "../components/seo"
 
 const PostTemplate = props => {
@@ -48,7 +48,14 @@ export const postQuery = graphql`
       excerpt
       content
       comment_status
-      categories
+      categories {
+        id
+        wordpress_id
+        count
+        name
+        description
+        path
+      }
     }
     site {
       siteMetadata {
