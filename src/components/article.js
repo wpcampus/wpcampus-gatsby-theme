@@ -23,6 +23,16 @@ const ArticleCategories = ({ list }) => (
   </ul>
 )
 
+const ArticleAuthors = ({ list }) => (
+  <ul>
+    {list.map((item, i) => (
+      <li key={i}>
+        <Link to={item.path}>{item.name}</Link>
+      </li>
+    ))}
+  </ul>
+)
+
 const ArticleTitle = ({ data, isSingle }) => {
   const className = "article__title"
   if (isSingle) {
@@ -41,7 +51,12 @@ const ArticleMeta = ({ data }) => {
       <li className="article__meta article__meta--date">
         {data.dateFormatted}
       </li>
-      <li className="article__meta article__meta--author">Need to get author name: {data.author}</li>
+      {data.author ? (
+        <li className="article__meta article__meta--author">
+          Author:
+          <ArticleAuthors list={data.author} />
+        </li>
+      ) : null}
       {data.categories ? (
         <li className="article__meta article__meta--categories">
           Categories:
@@ -63,8 +78,13 @@ const ArticleContent = ({ data, displayContentFull }) => {
   return <div className={className}>{ReactHtmlParser(articleContent)}</div>
 }
 
-// @TODO Our articles can have multiple authors. Only seems to pull one author.
-const Article = ({ data, isSingle, displayMeta, displayContent, displayContentFull }) => {
+const Article = ({
+  data,
+  isSingle,
+  displayMeta,
+  displayContent,
+  displayContentFull,
+}) => {
   return (
     <article>
       <ArticleTitle data={data} isSingle={isSingle} />

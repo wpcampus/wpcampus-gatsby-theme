@@ -40,7 +40,14 @@ export const postQuery = graphql`
       wordpress_id
       slug
       path
-      author
+      author {
+        id
+        wordpress_id
+        name
+        slug
+        path
+        url
+      }
       title
       status
       date
