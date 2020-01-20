@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Archive from "../components/archive"
+import { ArticleArchive } from "../components/archive"
 import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
@@ -11,8 +11,12 @@ export default function Template({ data }) {
     <Layout>
       <SEO title="Pages" />
       <h1>Pages</h1>
-      <NavPrimary/>
-      <Archive displayMeta={false} displayContent={false} list={data.allWordpressPage.edges} />
+      <NavPrimary />
+      <ArticleArchive
+        displayMeta={false}
+        displayContent={false}
+        list={data.allWordpressPage.edges}
+      />
     </Layout>
   )
 }

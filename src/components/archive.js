@@ -3,7 +3,12 @@ import PropTypes from "prop-types"
 
 import Article from "../components/article"
 
-const Archive = ({ list, displayMeta, displayContent, displayContentFull }) =>
+const ArticleArchive = ({
+  list,
+  displayMeta,
+  displayContent,
+  displayContentFull,
+}) =>
   list.map(({ node }) => (
     <Article
       key={node.id}
@@ -15,17 +20,17 @@ const Archive = ({ list, displayMeta, displayContent, displayContentFull }) =>
     />
   ))
 
-Archive.propTypes = {
+ArticleArchive.propTypes = {
   list: PropTypes.array.isRequired,
   displayMeta: PropTypes.bool,
   displayContent: PropTypes.bool,
   displayContentFull: PropTypes.bool,
 }
 
-Archive.defaultProps = {
+ArticleArchive.defaultProps = {
   displayMeta: true,
   displayContent: true,
   displayContentFull: false,
 }
 
-export default Archive
+export { ArticleArchive }
