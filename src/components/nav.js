@@ -45,6 +45,7 @@ const NavPrimaryItems = [
     children: [{ slug: "/categories", text: "Categories" }],
   },
   { slug: "/pages/", text: "Pages" },
+  { slug: "/contributors/", text: "Contributors" },
   { slug: "/members/", text: "Members" },
 ]
 
