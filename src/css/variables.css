@@ -1,8 +1,8 @@
 :root {
-    --wpc-blue-dark: #2e3641;
-    --wpc-blue-royal: #1159bd;
-    --wpc-blue-light: #e4eaf4;
-    --wpc-orange: #A76739;
-    --container-max-width: 960px;
-    --container-padding-side: 1.25rem;
+  --wpc-blue-dark: #2e3641;
+  --wpc-blue-royal: #1159bd;
+  --wpc-blue-light: #e4eaf4;
+  --wpc-orange: #a76739;
+  --container-max-width: 960px;
+  --container-padding-side: 1.25rem;
 }
