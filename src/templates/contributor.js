@@ -9,7 +9,6 @@ import SEO from "../components/seo"
 
 const ContributorTemplate = props => {
   const contributor = props.data.wordpressWpUsers
-  const context = props.pageContext
   return (
     <Layout>
       <SEO title={contributor.name} />
