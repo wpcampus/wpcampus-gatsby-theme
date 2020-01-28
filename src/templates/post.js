@@ -19,7 +19,7 @@ const PostTemplate = props => {
       <SEO title={post.title} />
       <NavPrimary />
       {pagination}
-      <Article data={post} isSingle={true} displayContentFull={true} />
+      <Article data={post} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
       {pagination}
     </Layout>
   )

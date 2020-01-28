@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import ReactHtmlParser from "react-html-parser"
+import Content from "../components/content"
 
 const getArticleContent = (data, displayContentFull) => {
   if (!displayContentFull && data.excerpt) {
@@ -80,6 +81,7 @@ const ArticleContent = ({ data, displayContentFull }) => {
 
 const Article = ({
   data,
+  wpc_protected,
   isSingle,
   displayMeta,
   displayContent,
@@ -88,10 +90,12 @@ const Article = ({
   return (
     <article>
       <ArticleTitle data={data} isSingle={isSingle} />
-      {displayMeta ? <ArticleMeta data={data} /> : null}
-      {displayContent ? (
-        <ArticleContent data={data} displayContentFull={displayContentFull} />
-      ) : null}
+      <Content wpc_protected={wpc_protected}>
+        {displayMeta ? <ArticleMeta data={data} /> : null}
+        {displayContent ? (
+          <ArticleContent data={data} displayContentFull={displayContentFull} />
+        ) : null}
+      </Content>
     </article>
   )
 }
@@ -120,6 +124,7 @@ ArticleContent.defaultProps = {
 
 Article.propTypes = {
   data: PropTypes.object.isRequired,
+  wpc_protected: PropTypes.object,
   isSingle: PropTypes.bool,
   displayMeta: PropTypes.bool,
   displayContent: PropTypes.bool,
