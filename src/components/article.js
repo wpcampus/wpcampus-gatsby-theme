@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import ReactHtmlParser from "react-html-parser"
-import Content from "../components/content"
+import ProtectedContent from "../components/content"
 
 const getArticleContent = (data, displayContentFull) => {
   if (!displayContentFull && data.excerpt) {
@@ -90,12 +90,12 @@ const Article = ({
   return (
     <article>
       <ArticleTitle data={data} isSingle={isSingle} />
-      <Content wpc_protected={wpc_protected}>
+      <ProtectedContent wpc_protected={wpc_protected}>
         {displayMeta ? <ArticleMeta data={data} /> : null}
         {displayContent ? (
           <ArticleContent data={data} displayContentFull={displayContentFull} />
         ) : null}
-      </Content>
+      </ProtectedContent>
     </article>
   )
 }

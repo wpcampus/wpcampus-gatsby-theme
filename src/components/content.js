@@ -3,7 +3,7 @@ import React from "react"
 
 import { User } from "../user/context"
 
-const Content = ({ children, wpc_protected }) => {
+const ProtectedContent = ({ children, wpc_protected }) => {
   const displayContent = () => {
     return children
   }
@@ -39,16 +39,16 @@ const Content = ({ children, wpc_protected }) => {
   return displayContent()
 }
 
-Content.propTypes = {
+ProtectedContent.propTypes = {
   children: PropTypes.node.isRequired,
   wpc_protected: PropTypes.object,
 }
 
-Content.defaultProps = {
+ProtectedContent.defaultProps = {
   wpc_protected: {
     protected: false,
     user_roles: [],
   },
 }
 
-export default Content
+export default ProtectedContent
