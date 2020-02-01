@@ -1,7 +1,10 @@
 import PropTypes from "prop-types"
 import React from "react"
+import ReactHtmlParser from "react-html-parser"
 
 import { User } from "../user/context"
+
+const defaultProtectedMessage = "<p>This content is restricted.</p>"
 
 const ProtectedContent = ({ children, wpc_protected }) => {
   const displayContent = () => {
@@ -9,7 +12,10 @@ const ProtectedContent = ({ children, wpc_protected }) => {
   }
   // @TODO need to customize message.
   const displayProtectedMessage = () => {
-    return <p>This content is for members only.</p>
+    if (wpc_protected.message) {
+      return ReactHtmlParser(wpc_protected.message)
+    }
+    return ReactHtmlParser(defaultProtectedMessage)
   }
   const handleProtectedContent = user => {
     if (!user.isActive()) {
@@ -48,6 +54,7 @@ ProtectedContent.defaultProps = {
   wpc_protected: {
     protected: false,
     user_roles: [],
+    message: defaultProtectedMessage,
   },
 }
 

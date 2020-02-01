@@ -8,8 +8,8 @@ import { NavPrimary } from "../components/nav"
 import SEO from "../components/seo"
 import ProtectedContent from "../components/content"
 
-const PageTemplate = props => {
-  const page = props.data.wordpressPage
+const MemberPageTemplate = props => {
+  const page = props.data.wordpressWpMembers
   const pageContext = props.pageContext
 
   return (
@@ -24,27 +24,19 @@ const PageTemplate = props => {
   )
 }
 
-PageTemplate.propTypes = {
+MemberPageTemplate.propTypes = {
   data: PropTypes.object.isRequired,
   edges: PropTypes.array,
 }
 
-export default PageTemplate
+export default MemberPageTemplate
 
-export const pageQuery = graphql`
+export const memberQuery = graphql`
   query($id: String!) {
-    wordpressPage(id: { eq: $id }) {
+    wordpressWpMembers(id: { eq: $id }) {
       id
       wordpress_id
       slug
-      author {
-        id
-        wordpress_id
-        name
-        slug
-        path
-        url
-      }
       date
       title
       status
