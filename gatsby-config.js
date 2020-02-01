@@ -3,9 +3,9 @@ require("dotenv").config({
 })
 
 /**
- * We have to "normalize" because we have a multi author setup.
- * 
- * This connects an array of author IDs to their nodes in the users query.
+ * We have to tweak our content authors because we have a multi author setup.
+ *
+ * This connects an array of author IDs (instead of a single ID) to their nodes in the users query.
  */
 const mapAuthorsToUsers = ({ entities }) => {
   const users = entities.filter(e => e.__type === `wordpress__wp_users`)
@@ -70,8 +70,20 @@ module.exports = {
         protocol: `https`,
         hostingWPCOM: false,
         useACF: false,
-        includedRoutes: ["**/posts", "**/pages", "**/categories", "**/users"],
-        normalizer: mapAuthorsToUsers,
+        includedRoutes: [
+          "**/posts",
+          "**/pages",
+          "**/categories",
+          "**/users", // @TODO security concern?
+          "**/members", // @TODO security concern?
+        ],
+        normalizers: normalizers => [
+          ...normalizers,
+          {
+            name: "mapAuthorsToUsers",
+            normalizer: mapAuthorsToUsers,
+          },
+        ],
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

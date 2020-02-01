@@ -7,8 +7,6 @@
 const path = require(`path`)
 const slash = require(`slash`)
 
-// Build pages from WordPress content
-// @TODO remove fields we're not using.
 /**
  * Creating a custom schema for our protected post meta
  * that the WPCampus: Members WordPress plugin adds to the
@@ -52,13 +50,30 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       },
       interfaces: ["Node"],
     }),
+    schema.buildObjectType({
+      name: "wordpress__wp_members",
+      fields: {
+        wpc_protected: "wpcProtected",
+      },
+      interfaces: ["Node"],
+    }),
   ]
   createTypes(typeDefs)
 }
 
+/**
+ * Build content from WordPress content.
+ * 
+ * @TODO remove fields we're not using.
+ */
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
+  /**
+   * Build pages from WordPress "page" post type.
+   * 
+   * @TODO remove fields we're not using.
+   */
   const pages = await graphql(`
     query {
       allWordpressPage(filter: { status: { eq: "publish" } }) {
@@ -106,9 +121,16 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
+  /**
+   * Build blog posts from WordPress "post" post type.
+   * 
+   * @TODO remove fields we're not using.
+   */
   const posts = await graphql(`
     query {
-      allWordpressPost( filter: { type: { eq: "post" }, status: { eq: "publish" } } ) {
+      allWordpressPost(
+        filter: { type: { eq: "post" }, status: { eq: "publish" } }
+      ) {
         edges {
           previous {
             id
@@ -173,6 +195,11 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
+  /**
+   * Build category archives from WordPress "categories" taxonomy.
+   * 
+   * @TODO remove fields we're not using.
+   */
   const categories = await graphql(`
     query {
       allWordpressCategory {
@@ -222,6 +249,11 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
+  /**
+   * Build contributor pages from WordPress users list.
+   * 
+   * @TODO remove fields we're not using.
+   */
   const authors = await graphql(`
     query {
       allWordpressWpUsers {
@@ -249,6 +281,49 @@ exports.createPages = async ({ graphql, actions }) => {
       // as a GraphQL variable to query for this posts's data.
       context: {
         id: edge.node.id,
+      },
+    })
+  })
+
+  /**
+   * Build contributor archive from WordPress users list.
+   * 
+   * @TODO remove fields we're not using.
+   */
+  const members = await graphql(`
+    query {
+      allWordpressWpMembers(
+        filter: { type: { eq: "member" }, status: { eq: "publish" } }
+      ) {
+        edges {
+          node {
+            id
+            path
+            template
+            wpc_protected {
+              protected
+              user_roles {
+                enable
+                disable
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+  const memberPageTemplate = path.resolve(`./src/templates/memberPage.js`)
+  members.data.allWordpressWpMembers.edges.forEach(edge => {
+    createPage({
+      // will be the url for the page
+      path: edge.node.path,
+      // specify the component template of your choice
+      component: slash(memberPageTemplate),
+      // In the ^template's GraphQL query, 'id' will be available
+      // as a GraphQL variable to query for this data.
+      context: {
+        id: edge.node.id,
+        wpc_protected: edge.node.wpc_protected,
       },
     })
   })
