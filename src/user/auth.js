@@ -64,7 +64,7 @@ export default class Auth {
 
   async login(username, password) {
     return new Promise((resolve, reject) => {
-      if (!process.env.WPC_URL_API) {
+      if (!process.env.WPC_AUTH_API_BASE) {
         reject(new Error(messages.missing_api))
       }
 
@@ -72,7 +72,7 @@ export default class Auth {
       formData.append("username", username)
       formData.append("password", password)
 
-      return fetch(process.env.WPC_URL_API + "/jwt-auth/v1/token", {
+      return fetch(process.env.WPC_AUTH_API_BASE + "/jwt-auth/v1/token", {
         method: "post",
         headers: new Headers({
           Accept: "application/json",
@@ -103,11 +103,11 @@ export default class Auth {
 
   async authenticate(token) {
     return new Promise((resolve, reject) => {
-      if (!process.env.WPC_URL_API) {
+      if (!process.env.WPC_AUTH_API_BASE) {
         reject(new Error(messages.missing_api))
       }
 
-      return fetch(process.env.WPC_URL_API + "/wpcampus/auth/user", {
+      return fetch(process.env.WPC_AUTH_API_BASE + "/wpcampus/auth/user", {
         method: "get",
         headers: new Headers({
           Accept: "application/json",
