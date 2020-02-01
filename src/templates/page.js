@@ -1,12 +1,12 @@
 import React from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
+import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
 import { NavPrimary } from "../components/nav"
 import SEO from "../components/seo"
 import ProtectedContent from "../components/content"
-import ReactHtmlParser from "react-html-parser"
 
 const PageTemplate = props => {
   const page = props.data.wordpressPage

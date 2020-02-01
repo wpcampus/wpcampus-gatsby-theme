@@ -33,6 +33,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           resolve: source => true === source.protected || false,
         },
         user_roles: "userRoles",
+        message: "String"
       },
       interfaces: ["Node"],
     }),
@@ -88,6 +89,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 enable
                 disable
               }
+              message
             }
           }
         }
@@ -145,6 +147,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 enable
                 disable
               }
+              message
             }
           }
           next {
@@ -160,6 +163,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 enable
                 disable
               }
+              message
             }
           }
           node {
@@ -171,6 +175,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 enable
                 disable
               }
+              message
             }
           }
         }
@@ -306,6 +311,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 enable
                 disable
               }
+              message
             }
           }
         }
