@@ -12,7 +12,7 @@ Run `nvm use` to define the node version
 
 1. Duplicate the .env.sample file and rename as .env.development.
 2. Set the data for your dev environment.
-    * Talk to an administrator for the correct information.
+    * [Talk to an administrator](./.github/CODEOWNERS) for the correct information.
 
 ## Gatsby setup
 
