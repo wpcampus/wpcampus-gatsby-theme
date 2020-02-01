@@ -8,7 +8,13 @@ The Gatsby theme for wpcampus.org.
 
 Run `nvm use` to define the node version
 
-## 🚀 Quick start
+## WPCampus setup
+
+1. Duplicate the .env.sample file and rename as .env.development.
+2. Set the data for your dev environment.
+    * Talk to an administrator for the correct information.
+
+## Gatsby setup
 
 1.  **Make sure you have Gatsby installed.**
 
