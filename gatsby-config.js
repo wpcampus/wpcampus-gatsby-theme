@@ -86,6 +86,18 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: 'gatsby-source-gravityforms',
+      options: {
+          // Base URL needs to include protocol (http/https)
+          baseUrl: `https://${process.env.WPC_HOST}`,
+          // Gravity Forms API
+          api: {
+              key: process.env.WPC_GF_API_KEY,
+              secret: process.env.WPC_GF_API_SECRET,
+          },
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
