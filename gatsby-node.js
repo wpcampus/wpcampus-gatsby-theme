@@ -51,13 +51,13 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       },
       interfaces: ["Node"],
     }),
-    schema.buildObjectType({
+    /*schema.buildObjectType({
       name: "wordpress__wp_members",
       fields: {
         wpc_protected: "wpcProtected",
       },
       interfaces: ["Node"],
-    }),
+    }),*/
   ]
   createTypes(typeDefs)
 }
@@ -295,7 +295,7 @@ exports.createPages = async ({ graphql, actions }) => {
    * 
    * @TODO remove fields we're not using.
    */
-  const members = await graphql(`
+  /*const members = await graphql(`
     query {
       allWordpressWpMembers(
         filter: { type: { eq: "member" }, status: { eq: "publish" } }
@@ -332,5 +332,5 @@ exports.createPages = async ({ graphql, actions }) => {
         wpc_protected: edge.node.wpc_protected,
       },
     })
-  })
+  })*/
 }

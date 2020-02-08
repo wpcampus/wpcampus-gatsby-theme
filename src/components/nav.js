@@ -46,7 +46,7 @@ const NavPrimaryItems = [
   },
   { slug: "/pages/", text: "Pages" },
   { slug: "/contributors/", text: "Contributors" },
-  { slug: "/members/", text: "Members" },
+  //{ slug: "/members/", text: "Members" },
 ]
 
 const NavPrimary = () => <Nav list={NavPrimaryItems} />
