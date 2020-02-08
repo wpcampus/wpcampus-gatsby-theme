@@ -5,13 +5,11 @@ import PropTypes from "prop-types"
 import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
 import { NavPrimary } from "../components/nav"
-import SEO from "../components/seo"
 
 const ContributorTemplate = props => {
   const contributor = props.data.wordpressWpUsers
   return (
-    <Layout>
-      <SEO title={contributor.name} />
+    <Layout pageTitle={contributor.name}>
       <h1>{contributor.name}</h1>
       <NavPrimary />
       <ArticleArchive list={props.data.allWordpressPost.edges} />

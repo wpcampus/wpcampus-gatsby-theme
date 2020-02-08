@@ -2,14 +2,12 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
 import { AuthorArchive } from "../components/archive"
 import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
   return (
-    <Layout>
-      <SEO title="Contributors" />
+    <Layout pageTitle="Contributors">
       <h1>Contributors</h1>
       <NavPrimary />
       <AuthorArchive list={data.allWordpressWpUsers.edges} />

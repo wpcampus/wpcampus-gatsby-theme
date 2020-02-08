@@ -6,7 +6,6 @@ import Article from "../components/article"
 import Layout from "../components/layout"
 import { NavPrimary } from "../components/nav"
 import { PostPagination } from "../components/pagination"
-import SEO from "../components/seo"
 
 const PostTemplate = props => {
   const post = props.data.wordpressPost
@@ -15,8 +14,7 @@ const PostTemplate = props => {
     <PostPagination previous={context.previous} next={context.next} />
   )
   return (
-    <Layout>
-      <SEO title={post.title} />
+    <Layout pageTitle={post.title}>
       <NavPrimary />
       {pagination}
       <Article data={post} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />

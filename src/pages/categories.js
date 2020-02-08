@@ -2,14 +2,12 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
 import { CategoryArchive } from "../components/archive"
 import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
   return (
-    <Layout>
-      <SEO title="Categories" />
+    <Layout pageTitle="Categories">
       <h1>Categories</h1>
       <NavPrimary />
       <CategoryArchive list={data.allWordpressCategory.edges} />
