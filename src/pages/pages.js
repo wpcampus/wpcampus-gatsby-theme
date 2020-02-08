@@ -3,13 +3,10 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import { ArticleArchive } from "../components/archive"
-import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
   return (
-    <Layout pageTitle="Pages">
-      <h1>Pages</h1>
-      <NavPrimary />
+    <Layout heading="Pages">
       <ArticleArchive
         displayMeta={false}
         displayContent={false}

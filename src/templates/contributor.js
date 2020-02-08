@@ -4,14 +4,12 @@ import PropTypes from "prop-types"
 
 import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
-import { NavPrimary } from "../components/nav"
 
 const ContributorTemplate = props => {
   const contributor = props.data.wordpressWpUsers
+  const heading = `Contributor: ${contributor.name}`
   return (
-    <Layout pageTitle={contributor.name}>
-      <h1>{contributor.name}</h1>
-      <NavPrimary />
+    <Layout heading={heading}>
       <ArticleArchive list={props.data.allWordpressPost.edges} />
     </Layout>
   )

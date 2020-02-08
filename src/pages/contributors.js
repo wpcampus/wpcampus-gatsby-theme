@@ -3,13 +3,10 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import { AuthorArchive } from "../components/archive"
-import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
   return (
-    <Layout pageTitle="Contributors">
-      <h1>Contributors</h1>
-      <NavPrimary />
+    <Layout heading="Contributors">
       <AuthorArchive list={data.allWordpressWpUsers.edges} />
     </Layout>
   )

@@ -5,7 +5,9 @@ import PropTypes from "prop-types"
 const NavItem = ({ item }) => {
   return (
     <li>
-      <Link to={item.slug}>{item.text}</Link>
+      <Link activeClassName="nav-link--current" to={item.slug}>
+        {item.text}
+      </Link>
       {item.children && item.children.length ? (
         <ul>
           {item.children.map((child, i) => (
@@ -23,17 +25,24 @@ NavItem.propTypes = {
   item: PropTypes.object.isRequired,
 }
 
-const Nav = ({ list }) => (
-  <nav>
-    <ul>
-      {list.map((item, i) => (
-        <NavItem key={i} item={item} />
-      ))}
-    </ul>
-  </nav>
-)
+const Nav = ({ classes, list }) => {
+  const navAttr = {}
+  if (classes) {
+    navAttr.className = classes
+  }
+  return (
+    <nav {...navAttr}>
+      <ul>
+        {list.map((item, i) => (
+          <NavItem key={i} item={item} />
+        ))}
+      </ul>
+    </nav>
+  )
+}
 
 Nav.propTypes = {
+  classes: PropTypes.string,
   list: PropTypes.array.isRequired,
 }
 
@@ -49,6 +58,12 @@ const NavPrimaryItems = [
   //{ slug: "/members/", text: "Members" },
 ]
 
-const NavPrimary = () => <Nav list={NavPrimaryItems} />
+const NavPrimary = () => {
+  return (
+    <div className="nav--primary">
+      <Nav list={NavPrimaryItems} />
+    </div>
+  )
+}
 
 export { Nav, NavPrimary }

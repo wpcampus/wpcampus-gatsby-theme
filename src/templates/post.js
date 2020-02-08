@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 
 import Article from "../components/article"
 import Layout from "../components/layout"
-import { NavPrimary } from "../components/nav"
 import { PostPagination } from "../components/pagination"
 
 const PostTemplate = props => {
@@ -15,7 +14,6 @@ const PostTemplate = props => {
   )
   return (
     <Layout pageTitle={post.title}>
-      <NavPrimary />
       {pagination}
       <Article data={post} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
       {pagination}
