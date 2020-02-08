@@ -78,8 +78,8 @@ module.exports = {
           //"**/members", // @TODO security concern?
         ],
         auth: {
-          jwt_user: process.env.WPC_USER,
-          jwt_pass: process.env.WPC_PASSWORD,
+          jwt_user: process.env.WPC_JWT_USER,
+          jwt_pass: process.env.WPC_JWT_PASSWORD,
         },
         normalizers: normalizers => [
           ...normalizers,
