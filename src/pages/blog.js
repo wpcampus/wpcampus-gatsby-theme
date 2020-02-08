@@ -3,12 +3,10 @@ import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import { ArticleArchive } from "../components/archive"
-import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
   return (
     <Layout pageTitle="Blog" heading="Blog posts">
-      <NavPrimary />
       <ArticleArchive list={data.allWordpressPost.edges} />
     </Layout>
   )

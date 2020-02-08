@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
-import { NavPrimary } from "../components/nav"
 import ProtectedContent from "../components/content"
 
 const PageTemplate = props => {
@@ -12,7 +11,6 @@ const PageTemplate = props => {
   const pageContext = props.pageContext
   return (
     <Layout heading={page.title}>
-      <NavPrimary />
       <ProtectedContent wpc_protected={pageContext.wpc_protected}>
         <div>{ReactHtmlParser(page.content)}</div>
       </ProtectedContent>

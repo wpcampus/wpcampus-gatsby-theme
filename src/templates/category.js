@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 
 import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
-import { NavPrimary } from "../components/nav"
 import { CategoryPagination } from "../components/pagination"
 
 const CategoryTemplate = props => {
@@ -17,7 +16,6 @@ const CategoryTemplate = props => {
   return (
     <Layout heading={heading}>
       {category.description ? <p>{category.description}</p> : ""}
-      <NavPrimary />
       {pagination}
       <ArticleArchive list={props.data.allWordpressPost.edges} />
       {pagination}
