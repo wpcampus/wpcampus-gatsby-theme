@@ -7,8 +7,7 @@ import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
   return (
-    <Layout pageTitle="Pages">
-      <h1>Pages</h1>
+    <Layout heading="Pages">
       <NavPrimary />
       <ArticleArchive
         displayMeta={false}

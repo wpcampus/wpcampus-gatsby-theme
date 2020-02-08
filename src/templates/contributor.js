@@ -8,9 +8,9 @@ import { NavPrimary } from "../components/nav"
 
 const ContributorTemplate = props => {
   const contributor = props.data.wordpressWpUsers
+  const heading = `Contributor: ${contributor.name}`
   return (
-    <Layout pageTitle={contributor.name}>
-      <h1>{contributor.name}</h1>
+    <Layout heading={heading}>
       <NavPrimary />
       <ArticleArchive list={props.data.allWordpressPost.edges} />
     </Layout>

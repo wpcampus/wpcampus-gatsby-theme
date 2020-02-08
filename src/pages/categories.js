@@ -7,8 +7,7 @@ import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
   return (
-    <Layout pageTitle="Categories">
-      <h1>Categories</h1>
+    <Layout heading="Categories">
       <NavPrimary />
       <CategoryArchive list={data.allWordpressCategory.edges} />
     </Layout>

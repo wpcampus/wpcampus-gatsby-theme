@@ -20,7 +20,7 @@ import userDisplay from "../user/display"
 import "./../css/layout.css"
 import "./../css/main.css"
 
-const Layout = ({ pageTitle, children }) => {
+const Layout = ({ pageTitle, heading, children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -39,6 +39,10 @@ const Layout = ({ pageTitle, children }) => {
     return userDisplay(user, args)
   }
 
+  if (!pageTitle && heading) {
+    pageTitle = heading
+  }
+
   return (
     <>
       <SEO title={pageTitle} />
@@ -46,6 +50,7 @@ const Layout = ({ pageTitle, children }) => {
       <WebComponent tag="wpcampus-notifications" />
       <main>
         <User.Consumer>{handleUserDisplay}</User.Consumer>
+        {heading ? (<h1>{heading}</h1>) : null}
         {children}
       </main>
       <Footer />
@@ -54,7 +59,8 @@ const Layout = ({ pageTitle, children }) => {
 }
 
 Layout.propTypes = {
-  pageTitle: PropTypes.string.isRequired,
+  pageTitle: PropTypes.string,
+  heading: PropTypes.string,
   children: PropTypes.node.isRequired,
 }
 

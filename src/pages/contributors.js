@@ -7,8 +7,7 @@ import { NavPrimary } from "../components/nav"
 
 export default function Template({ data }) {
   return (
-    <Layout pageTitle="Contributors">
-      <h1>Contributors</h1>
+    <Layout heading="Contributors">
       <NavPrimary />
       <AuthorArchive list={data.allWordpressWpUsers.edges} />
     </Layout>

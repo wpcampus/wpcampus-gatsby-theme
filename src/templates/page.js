@@ -10,11 +10,9 @@ import ProtectedContent from "../components/content"
 const PageTemplate = props => {
   const page = props.data.wordpressPage
   const pageContext = props.pageContext
-
   return (
-    <Layout pageTitle={page.title}>
+    <Layout heading={page.title}>
       <NavPrimary />
-      <h1>{page.title}</h1>
       <ProtectedContent wpc_protected={pageContext.wpc_protected}>
         <div>{ReactHtmlParser(page.content)}</div>
       </ProtectedContent>

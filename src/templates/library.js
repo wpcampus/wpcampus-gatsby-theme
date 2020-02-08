@@ -8,13 +8,11 @@ import { NavPrimary } from "../components/nav"
 import WebComponent from "../components/webComponents"
 
 const Library = props => {
-  const post = props.data.wordpressPage
-
+  const page = props.data.wordpressPage
   return (
-    <Layout pageTitle={post.title}>
+    <Layout heading={page.title}>
       <NavPrimary />
-      <h1>{post.title}</h1>
-      <div>{ReactHtmlParser(post.content)}</div>
+      <div>{ReactHtmlParser(page.content)}</div>
       <WebComponent tag="wpcampus-library" />
     </Layout>
   )
