@@ -623,3 +623,25 @@ pre tt:after {
     font-size: 100%;
   }
 }
+
+.nav--primary {
+  margin: 0 auto;
+  max-width: var(--container-max-width);
+  padding: 1rem var(--container-padding-side) 0rem;
+}
+
+.nav--primary ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0;
+  list-style: none;
+}
+
+.nav--primary li {
+  margin: 0;
+}
+
+.nav--primary a.nav-link--current {
+  font-weight: bold;
+}
