@@ -6,7 +6,6 @@ import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
 import { NavPrimary } from "../components/nav"
 import { CategoryPagination } from "../components/pagination"
-import SEO from "../components/seo"
 
 const CategoryTemplate = props => {
   const category = props.data.wordpressCategory
@@ -15,8 +14,7 @@ const CategoryTemplate = props => {
     <CategoryPagination previous={context.previous} next={context.next} />
   )
   return (
-    <Layout>
-      <SEO title={category.name} />
+    <Layout pageTitle={category.name}>
       <h1>Category: {category.name}</h1>
       {category.description ? <p>{category.description}</p> : ""}
       <NavPrimary />

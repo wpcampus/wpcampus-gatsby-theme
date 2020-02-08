@@ -5,7 +5,6 @@ import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
 import { NavPrimary } from "../components/nav"
-import SEO from "../components/seo"
 import ProtectedContent from "../components/content"
 
 const PageTemplate = props => {
@@ -13,8 +12,7 @@ const PageTemplate = props => {
   const pageContext = props.pageContext
 
   return (
-    <Layout>
-      <SEO title={page.title} />
+    <Layout pageTitle={page.title}>
       <NavPrimary />
       <h1>{page.title}</h1>
       <ProtectedContent wpc_protected={pageContext.wpc_protected}>

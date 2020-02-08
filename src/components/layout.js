@@ -9,6 +9,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
+import SEO from "./seo"
 import Header from "./header"
 import Footer from "./footer"
 import WebComponent from "./webComponents"
@@ -19,7 +20,7 @@ import userDisplay from "../user/display"
 import "./../css/layout.css"
 import "./../css/main.css"
 
-const Layout = ({ children }) => {
+const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -40,6 +41,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
+      <SEO title={pageTitle} />
       <Header siteTitle={data.site.siteMetadata.title} />
       <WebComponent tag="wpcampus-notifications" />
       <main>
@@ -52,6 +54,7 @@ const Layout = ({ children }) => {
 }
 
 Layout.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 }
 
