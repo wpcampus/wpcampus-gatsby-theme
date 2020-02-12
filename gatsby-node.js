@@ -11,7 +11,7 @@ const slash = require(`slash`)
  * Creating a custom schema for our protected post meta
  * that the WPCampus: Members WordPress plugin adds to the
  * WordPress REST API.
- * 
+ *
  * We use this data to protect/restrict content.
  */
 exports.createSchemaCustomization = ({ actions, schema }) => {
@@ -33,7 +33,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           resolve: source => true === source.protected || false,
         },
         user_roles: "userRoles",
-        message: "String"
+        message: "String",
       },
       interfaces: ["Node"],
     }),
@@ -64,7 +64,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
 /**
  * Build content from WordPress content.
- * 
+ *
  * @TODO remove fields we're not using.
  */
 exports.createPages = async ({ graphql, actions }) => {
@@ -72,7 +72,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   /**
    * Build pages from WordPress "page" post type.
-   * 
+   *
    * @TODO remove fields we're not using.
    */
   const pages = await graphql(`
@@ -98,6 +98,7 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
   const pageTemplate = path.resolve(`./src/templates/page.js`)
+  const contactTemplate = path.resolve("./src/templates/contact.js")
   const libraryTemplate = path.resolve("./src/templates/library.js")
 
   pages.data.allWordpressPage.edges.forEach(edge => {
@@ -123,9 +124,19 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
+  createPage({
+    path: "/contact-test",
+    component: slash(contactTemplate),
+    context: {
+      wpc_protected: {
+        protected: false,
+      },
+    },
+  })
+
   /**
    * Build blog posts from WordPress "post" post type.
-   * 
+   *
    * @TODO remove fields we're not using.
    */
   const posts = await graphql(`
@@ -202,7 +213,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   /**
    * Build category archives from WordPress "categories" taxonomy.
-   * 
+   *
    * @TODO remove fields we're not using.
    */
   const categories = await graphql(`
@@ -256,7 +267,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   /**
    * Build contributor pages from WordPress users list.
-   * 
+   *
    * @TODO remove fields we're not using.
    */
   const authors = await graphql(`
@@ -292,7 +303,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   /**
    * Build contributor archive from WordPress users list.
-   * 
+   *
    * @TODO remove fields we're not using.
    */
   /*const members = await graphql(`
