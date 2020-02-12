@@ -7,6 +7,9 @@ import { User } from "../user/context"
 const defaultProtectedMessage = "<p>This content is restricted.</p>"
 
 const ProtectedContent = ({ children, wpc_protected }) => {
+  if (!wpc_protected) {
+    wpc_protected = {}
+  }
   const displayContent = () => {
     return children
   }
