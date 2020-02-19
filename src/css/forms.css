@@ -1,0 +1,82 @@
+form.gform {
+  border: 1px solid #ccc;
+  padding: 1rem;
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 120px;
+    padding: 0.25rem;
+  }
+
+  fieldset {
+    padding: 1rem 1rem 0.5rem 1rem;
+  }
+
+  .gform__label,
+  .gform__description {
+    margin: 0 0 0.75rem;
+  }
+
+  .gform__label {
+    display: block;
+
+    &--radio {
+      display: inline-block;
+    }
+  }
+
+  .gform__field {
+    margin: 0 0 0.5rem;
+
+    &--radio {
+      margin: 0 0.5rem 0 0;
+    }
+
+    &[aria-required="true"] {
+      border: 1px solid #700;
+    }
+  }
+
+  .gform__container {
+    margin: 0 0 1rem;
+
+    &--radio {
+      vertical-align: middle;
+    }
+
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .gform__options {
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+
+    .gform__container {
+      flex-grow: 1;
+
+      &:first-child:nth-last-child(2),
+      &:first-child:nth-last-child(2) ~ .gform__container {
+        width: 50%;
+      }
+    }
+
+    &--radio {
+      flex-wrap: wrap;
+
+      .gform__container {
+        width: 50%;
+      }
+    }
+  }
+}
