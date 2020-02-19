@@ -64,6 +64,12 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-postcss`,
+      options: {
+        postCssPlugins: [require(`autoprefixer`)(), require("postcss-nested")],
+      },
+    },
+    {
       resolve: `gatsby-source-wordpress`,
       options: {
         baseUrl: process.env.WPC_HOST,
