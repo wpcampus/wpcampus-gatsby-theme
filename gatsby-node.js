@@ -58,6 +58,15 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       },
       interfaces: ["Node"],
     }),*/
+    schema.buildObjectType({
+      name: "GF__FormFormFieldsInputs",
+      fields: {
+        customLabel: "String",
+        defaultValue: "String",
+        placeholder: "String",
+      },
+      interfaces: ["Node"],
+    }),
   ]
   createTypes(typeDefs)
 }
