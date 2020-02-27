@@ -10,7 +10,7 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 import SEO from "./seo"
-import { NavPrimary } from "../components/nav"
+import NavPrimary from "../components/navPrimary"
 import Header from "./header"
 import Footer from "./footer"
 import WebComponent from "./webComponents"
@@ -50,7 +50,7 @@ const Layout = ({ pageTitle, heading, children }) => {
       <Header siteTitle={data.site.siteMetadata.title} />
       <WebComponent tag="wpcampus-notifications" />
       <NavPrimary />
-      <main>
+      <main id="main">
         <User.Consumer>{handleUserDisplay}</User.Consumer>
         {heading ? (<h1>{heading}</h1>) : null}
         {children}

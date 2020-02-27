@@ -25,45 +25,41 @@ NavItem.propTypes = {
   item: PropTypes.object.isRequired,
 }
 
-const Nav = ({ classes, list }) => {
+const NavList = ({ list }) => {
+  return (
+    <ul>
+      {list.map((item, i) => (
+        <NavItem key={i} item={item} />
+      ))}
+    </ul>
+  )
+}
+
+NavList.propTypes = {
+  list: PropTypes.array.isRequired,
+}
+
+const Nav = ({ id, classes, list, children }) => {
   const navAttr = {}
+  if (id) {
+    navAttr.id = id
+  }
   if (classes) {
     navAttr.className = classes
   }
   return (
     <nav {...navAttr}>
-      <ul>
-        {list.map((item, i) => (
-          <NavItem key={i} item={item} />
-        ))}
-      </ul>
+      {children}
+      <NavList list={list} />
     </nav>
   )
 }
 
 Nav.propTypes = {
+  id: PropTypes.string,
   classes: PropTypes.string,
   list: PropTypes.array.isRequired,
+  children: PropTypes.object,
 }
 
-const NavPrimaryItems = [
-  { slug: "/", text: "Home" },
-  {
-    slug: "/blog/",
-    text: "Blog",
-    children: [{ slug: "/categories", text: "Categories" }],
-  },
-  { slug: "/pages/", text: "Pages" },
-  { slug: "/contributors/", text: "Contributors" },
-  //{ slug: "/members/", text: "Members" },
-]
-
-const NavPrimary = () => {
-  return (
-    <div className="nav--primary">
-      <Nav list={NavPrimaryItems} />
-    </div>
-  )
-}
-
-export { Nav, NavPrimary }
+export default Nav
