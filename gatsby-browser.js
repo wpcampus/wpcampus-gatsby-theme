@@ -5,10 +5,15 @@
  */
 
 import React from "react"
+import PropTypes from "prop-types"
 import { UserContextProvider } from "./src/user/context"
 
 import "./src/css/general.css"
 
 export const wrapRootElement = ({ element }) => (
-  <UserContextProvider>{element}</UserContextProvider>
+	<UserContextProvider>{element}</UserContextProvider>
 )
+
+wrapRootElement.propTypes = {
+	element: PropTypes.object.isRequired
+}

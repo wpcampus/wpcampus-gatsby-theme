@@ -7,23 +7,24 @@ import Layout from "../components/layout"
 import { PostPagination } from "../components/pagination"
 
 const PostTemplate = props => {
-  const post = props.data.wordpressPost
-  const context = props.pageContext
-  const pagination = (
-    <PostPagination previous={context.previous} next={context.next} />
-  )
-  return (
-    <Layout pageTitle={post.title}>
-      {pagination}
-      <Article data={post} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
-      {pagination}
-    </Layout>
-  )
+	const post = props.data.wordpressPost
+	const context = props.pageContext
+	const pagination = (
+		<PostPagination previous={context.previous} next={context.next} />
+	)
+	return (
+		<Layout pageTitle={post.title}>
+			{pagination}
+			<Article data={post} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
+			{pagination}
+		</Layout>
+	)
 }
 
 PostTemplate.propTypes = {
-  data: PropTypes.object.isRequired,
-  edges: PropTypes.array,
+	data: PropTypes.object.isRequired,
+	edges: PropTypes.array,
+	pageContext: PropTypes.object.isRequired
 }
 
 export default PostTemplate
