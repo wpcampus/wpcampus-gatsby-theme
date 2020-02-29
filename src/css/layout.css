@@ -146,11 +146,6 @@ button::-moz-focus-inner {
 button:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
-fieldset {
-  border: 1px solid silver;
-  margin: 0 2px;
-  padding: 0.35em 0.625em 0.75em;
-}
 legend {
   box-sizing: border-box;
   color: inherit;
@@ -425,16 +420,6 @@ table {
   line-height: 1.45rem;
   border-collapse: collapse;
   width: 100%;
-}
-fieldset {
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: 0;
-  padding-bottom: 0;
-  padding-left: 0;
-  padding-right: 0;
-  padding-top: 0;
-  margin-bottom: 1.45rem;
 }
 blockquote {
   margin-left: 1.45rem;
