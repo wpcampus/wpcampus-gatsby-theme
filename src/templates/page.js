@@ -7,20 +7,21 @@ import Layout from "../components/layout"
 import ProtectedContent from "../components/content"
 
 const PageTemplate = props => {
-  const page = props.data.wordpressPage
-  const pageContext = props.pageContext
-  return (
-    <Layout heading={page.title}>
-      <ProtectedContent wpc_protected={pageContext.wpc_protected}>
-        <div>{ReactHtmlParser(page.content)}</div>
-      </ProtectedContent>
-    </Layout>
-  )
+	const page = props.data.wordpressPage
+	const pageContext = props.pageContext
+	return (
+		<Layout heading={page.title}>
+			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
+				<div>{ReactHtmlParser(page.content)}</div>
+			</ProtectedContent>
+		</Layout>
+	)
 }
 
 PageTemplate.propTypes = {
-  data: PropTypes.object.isRequired,
-  edges: PropTypes.array,
+	data: PropTypes.object.isRequired,
+	edges: PropTypes.array,
+	pageContext: PropTypes.object.isRequired
 }
 
 export default PageTemplate

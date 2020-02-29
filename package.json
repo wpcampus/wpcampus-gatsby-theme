@@ -7,6 +7,8 @@
   "dependencies": {
     "@wpcampus/wpcampus-web-components": "1.1.4",
     "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.18.3",
     "gatsby": "^2.19.12",
     "gatsby-cli": "^2.8.29",
     "gatsby-image": "^2.2.30",
@@ -36,7 +38,7 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "lint": "jslint *.js src/**/*.js ",
+    "lint": "eslint *.js src/**/*.js",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
