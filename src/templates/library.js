@@ -7,18 +7,18 @@ import Layout from "../components/layout"
 import WebComponent from "../components/webComponents"
 
 const Library = props => {
-  const page = props.data.wordpressPage
-  return (
-    <Layout heading={page.title}>
-      <div>{ReactHtmlParser(page.content)}</div>
-      <WebComponent tag="wpcampus-library" />
-    </Layout>
-  )
+	const page = props.data.wordpressPage
+	return (
+		<Layout heading={page.title}>
+			<div>{ReactHtmlParser(page.content)}</div>
+			<WebComponent tag="wpcampus-library" />
+		</Layout>
+	)
 }
 
 Library.propTypes = {
-  data: PropTypes.object.isRequired,
-  edges: PropTypes.array,
+	data: PropTypes.object.isRequired,
+	edges: PropTypes.array,
 }
 
 export default Library

@@ -6,18 +6,18 @@ import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
 
 const ContributorTemplate = props => {
-  const contributor = props.data.wordpressWpUsers
-  const heading = `Contributor: ${contributor.name}`
-  return (
-    <Layout heading={heading}>
-      <ArticleArchive list={props.data.allWordpressPost.edges} />
-    </Layout>
-  )
+	const contributor = props.data.wordpressWpUsers
+	const heading = `Contributor: ${contributor.name}`
+	return (
+		<Layout heading={heading}>
+			<ArticleArchive list={props.data.allWordpressPost.edges} />
+		</Layout>
+	)
 }
 
 ContributorTemplate.propTypes = {
-  data: PropTypes.object.isRequired,
-  edges: PropTypes.array,
+	data: PropTypes.object.isRequired,
+	edges: PropTypes.array,
 }
 
 export default ContributorTemplate

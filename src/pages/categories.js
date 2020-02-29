@@ -1,15 +1,20 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import { CategoryArchive } from "../components/archive"
 
 export default function Template({ data }) {
-  return (
-    <Layout heading="Categories">
-      <CategoryArchive list={data.allWordpressCategory.edges} />
-    </Layout>
-  )
+	return (
+		<Layout heading="Categories">
+			<CategoryArchive list={data.allWordpressCategory.edges} />
+		</Layout>
+	)
+}
+
+Template.propTypes = {
+	data: PropTypes.object.isRequired
 }
 
 // @TODO remove fields we're not using.
