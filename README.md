@@ -8,6 +8,21 @@ The Gatsby theme for wpcampus.org.
 
 Run `nvm use` to define the node version
 
+## Code standards
+
+This repo uses `eslint` to check for and enforce coding standards.
+
+It also includes settings for Visual Studio Code.
+
+### Our code standards:
+- Use tabs
+- Use double quotes (instead of single)
+- No semicolons (at end of each line)
+
+### How to lint/fix code standards:
+
+Run `npm run lint` in the command line.
+
 ## WPCampus setup
 
 1. Duplicate the .env.sample file and rename as .env.development.
