@@ -7,25 +7,26 @@ import Layout from "../components/layout"
 import { CategoryPagination } from "../components/pagination"
 
 const CategoryTemplate = props => {
-  const category = props.data.wordpressCategory
-  const context = props.pageContext
-  const pagination = (
-    <CategoryPagination previous={context.previous} next={context.next} />
-  )
-  const heading = `Category: ${category.name}`
-  return (
-    <Layout heading={heading}>
-      {category.description ? <p>{category.description}</p> : ""}
-      {pagination}
-      <ArticleArchive list={props.data.allWordpressPost.edges} />
-      {pagination}
-    </Layout>
-  )
+	const category = props.data.wordpressCategory
+	const context = props.pageContext
+	const pagination = (
+		<CategoryPagination previous={context.previous} next={context.next} />
+	)
+	const heading = `Category: ${category.name}`
+	return (
+		<Layout heading={heading}>
+			{category.description ? <p>{category.description}</p> : ""}
+			{pagination}
+			<ArticleArchive list={props.data.allWordpressPost.edges} />
+			{pagination}
+		</Layout>
+	)
 }
 
 CategoryTemplate.propTypes = {
-  data: PropTypes.object.isRequired,
-  edges: PropTypes.array,
+	data: PropTypes.object.isRequired,
+	edges: PropTypes.array,
+	pageContext: PropTypes.object.isRequired
 }
 
 export default CategoryTemplate

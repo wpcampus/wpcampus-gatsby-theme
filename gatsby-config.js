@@ -1,5 +1,5 @@
 require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
+	path: `.env.${process.env.NODE_ENV}`,
 })
 
 /**
@@ -8,108 +8,106 @@ require("dotenv").config({
  * This connects an array of author IDs (instead of a single ID) to their nodes in the users query.
  */
 const mapAuthorsToUsers = ({ entities }) => {
-  const users = entities.filter(e => e.__type === `wordpress__wp_users`)
-  return entities.map(entity => {
-    if (!users.length) {
-      return entity
-    }
-    if (!entity.author || !entity.author.length) {
-      return entity
-    }
+	const users = entities.filter(e => e.__type === "wordpress__wp_users")
+	return entities.map(entity => {
+		if (!users.length) {
+			return entity
+		}
+		if (!entity.author || !entity.author.length) {
+			return entity
+		}
 
-    entity.author___NODE = entity.author
-      .map(userID => {
-        // Find the user
-        const user = users.find(u => u.wordpress_id === userID)
+		entity.author___NODE = entity.author
+			.map(userID => {
+				// Find the user
+				const user = users.find(u => u.wordpress_id === userID)
 
-        if (user) {
-          return user.id
-        }
-        return undefined
-      })
-      .filter(node => node != undefined)
-    delete entity.author
+				if (user) {
+					return user.id
+				}
+				return undefined
+			})
+			.filter(node => node != undefined)
+		delete entity.author
 
-    return entity
-  })
+		return entity
+	})
 }
 
 module.exports = {
-  siteMetadata: {
-    title: `WPCampus`,
-    description: `WPCampus is a community of web professionals, educators, and people dedicated to advancing higher education by providing support, resources, and training focused on open source web publishing technologies.`,
-    author: `@wpcampusorg`,
-  },
-  plugins: [
-    `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
-        start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/wpcampus-favicon.svg`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-postcss`,
-      options: {
-        postCssPlugins: [require(`autoprefixer`)(), require("postcss-nested")],
-      },
-    },
-    {
-      resolve: `gatsby-source-wordpress`,
-      options: {
-        baseUrl: process.env.WPC_HOST,
-        protocol: `https`,
-        hostingWPCOM: false,
-        useACF: false,
-        includedRoutes: [
-          "**/posts",
-          "**/pages",
-          "**/categories",
-          "**/users", // @TODO security concern?
-          //"**/members", // @TODO security concern?
-        ],
-        auth: {
-          jwt_user: process.env.WPC_JWT_USER,
-          jwt_pass: process.env.WPC_JWT_PASSWORD,
-        },
-        normalizers: normalizers => [
-          ...normalizers,
-          {
-            name: "mapAuthorsToUsers",
-            normalizer: mapAuthorsToUsers,
-          },
-        ],
-      },
-    },
-    {
-      resolve: `gatsby-source-gravityforms`,
-      options: {
-        // Base URL needs to include protocol (http/https)
-        baseUrl: `https://${process.env.WPC_HOST}`,
-        // Gravity Forms API
-        api: {
-          key: process.env.WPC_GF_API_KEY,
-          secret: process.env.WPC_GF_API_SECRET,
-        },
-      },
-    },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
-  ],
+	siteMetadata: {
+		title: "WPCampus",
+		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing higher education by providing support, resources, and training focused on open source web publishing technologies.",
+		author: "@wpcampusorg",
+	},
+	plugins: [
+		"gatsby-plugin-react-helmet",
+		{
+			resolve: "gatsby-source-filesystem",
+			options: {
+				name: "images",
+				path: `${__dirname}/src/images`,
+			},
+		},
+		"gatsby-transformer-sharp",
+		"gatsby-plugin-sharp",
+		{
+			resolve: "gatsby-plugin-manifest",
+			options: {
+				name: "gatsby-starter-default",
+				short_name: "starter",
+				start_url: "/",
+				background_color: "#663399",
+				theme_color: "#663399",
+				display: "minimal-ui",
+				icon: "src/images/wpcampus-favicon.svg",
+			},
+		},
+		{
+			resolve: "gatsby-plugin-postcss",
+			options: {
+				postCssPlugins: [require("autoprefixer")(), require("postcss-nested")],
+			},
+		},
+		{
+			resolve: "gatsby-source-wordpress",
+			options: {
+				baseUrl: process.env.WPC_HOST,
+				protocol: "https",
+				hostingWPCOM: false,
+				useACF: false,
+				includedRoutes: [
+					"**/posts",
+					"**/pages",
+					"**/categories",
+					"**/users", // @TODO security concern?
+					//"**/members", // @TODO security concern?
+				],
+				auth: {
+					jwt_user: process.env.WPC_JWT_USER,
+					jwt_pass: process.env.WPC_JWT_PASSWORD,
+				},
+				normalizers: normalizers => [
+					...normalizers,
+					{
+						name: "mapAuthorsToUsers",
+						normalizer: mapAuthorsToUsers,
+					},
+				],
+			},
+		},
+		{
+			resolve: "gatsby-source-gravityforms",
+			options: {
+				baseUrl: `https://${process.env.WPC_HOST}`,
+				api: {
+					key: process.env.WPC_GF_API_KEY,
+					secret: process.env.WPC_GF_API_SECRET,
+				},
+			},
+		},
+		// this (optional) plugin enables Progressive Web App + Offline functionality
+		// To learn more, visit: https://gatsby.dev/offline
+		// `gatsby-plugin-offline`,
+	],
 }

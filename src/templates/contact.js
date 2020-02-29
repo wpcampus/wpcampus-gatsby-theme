@@ -7,17 +7,18 @@ import Form from "../components/form"
 import ProtectedContent from "../components/content"
 
 const PageTemplate = props => {
-  return (
-    <Layout heading="Contact WPCampus">
-      <ProtectedContent wpc_protected={props.pageContext.wpc_protected}>
-        <Form data={props.data.gfForm} />
-      </ProtectedContent>
-    </Layout>
-  )
+	return (
+		<Layout heading="Contact WPCampus">
+			<ProtectedContent wpc_protected={props.pageContext.wpc_protected}>
+				<Form data={props.data.gfForm} />
+			</ProtectedContent>
+		</Layout>
+	)
 }
 
 PageTemplate.propTypes = {
-  data: PropTypes.object.isRequired,
+	pageContext: PropTypes.object.isRequired,
+	data: PropTypes.object.isRequired,
 }
 
 export default PageTemplate
