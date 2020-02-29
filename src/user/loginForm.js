@@ -33,7 +33,7 @@ const LoginForm = () => {
 
     let value = event.target.value.trim()
     let invalidKey = name + "Invalid"
-    let invalidValue = !value ? messages[name + "_empty"] : state[invalidKey]
+    let invalidValue = !value ? messages[name + "_empty"] : false
 
     setState({
       ...state,
@@ -163,6 +163,15 @@ const LoginForm = () => {
     type: "text",
     name: "username",
     placeholder: "Username",
+    required: "required",
+    "aria-required": "true",
+    "aria-labelledby": `${IDs.usernameLabel} ${IDs.usernameLabelError}`,
+    onBlur: event => changeField(event),
+    onChange: event => changeField(event),
+  }
+
+  if (state.usernameInvalid) {
+    usernameAttr["aria-invalid"] = "true"
   }
 
   const passwordAttr = {
@@ -171,6 +180,15 @@ const LoginForm = () => {
     type: "password",
     name: "password",
     placeholder: "Password",
+    required: "required",
+    "aria-required": "true",
+    "aria-labelledby": `${IDs.passwordLabel} ${IDs.passwordLabelError}`,
+    onBlur: event => changeField(event),
+    onChange: event => changeField(event),
+  }
+
+  if (state.passwordInvalid) {
+    passwordAttr["aria-invalid"] = "true"
   }
 
   const submitAttr = {
@@ -192,15 +210,7 @@ const LoginForm = () => {
         Username
       </label>
       <div className={classes.inputWrapper}>
-        <input
-          {...usernameAttr}
-          required="required"
-          aria-required="true"
-          aria-invalid={state.usernameInvalid ? "true" : "false"}
-          aria-labelledby={IDs.usernameLabel + " " + IDs.usernameLabelError}
-          onBlur={event => changeField(event)}
-          onChange={event => changeField(event)}
-        />
+        <input {...usernameAttr} />
         <div id={IDs.usernameLabelError} className={classes.inputError}>
           {state.usernameInvalid}
         </div>
@@ -213,15 +223,7 @@ const LoginForm = () => {
         Password:
       </label>
       <div className={classes.inputWrapper}>
-        <input
-          {...passwordAttr}
-          required="required"
-          aria-required="true"
-          aria-invalid={state.passwordInvalid ? "true" : "false"}
-          aria-labelledby={IDs.passwordLabel + " " + IDs.passwordLabelError}
-          onBlur={event => changeField(event)}
-          onChange={event => changeField(event)}
-        />
+        <input {...passwordAttr} />
         <div id={IDs.passwordLabelError} className={classes.inputError}>
           {state.passwordInvalid}
         </div>
