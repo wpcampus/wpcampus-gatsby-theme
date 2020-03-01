@@ -65,12 +65,6 @@ export const pageQuery = graphql`
           name
           placeholder
           defaultValue
-          choices {
-            text
-            value
-            isSelected
-            price
-          }
           isHidden
           inputType
         }

@@ -69,22 +69,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 				inputs: "[GF__FormFormFieldsInputs]",
 			},
 		}),
-		// We made this type.
-		schema.buildObjectType({
-			name: "GF__FormFormFieldsChoices",
-			fields: {
-				text: "String",
-				value: "String",
-				isSelected: "Boolean",
-				price: "String",
-			},
-			interfaces: ["Node"],
-		}),
 		// The GF source made this type.
 		schema.buildObjectType({
 			name: "GF__FormFormFieldsInputs",
 			fields: {
-				choices: "[GF__FormFormFieldsChoices]",
+				choices: "String",
 				customLabel: "String",
 				defaultValue: "String",
 				label: "String",
