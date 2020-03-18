@@ -8,7 +8,8 @@ import React from "react"
 import PropTypes from "prop-types"
 import { UserContextProvider } from "./src/user/context"
 
-import "./src/css/general.css"
+import "./src/css/base.css"
+import "./src/css/global.css"
 
 export const wrapRootElement = ({ element }) => (
 	<UserContextProvider>{element}</UserContextProvider>

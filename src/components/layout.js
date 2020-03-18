@@ -50,10 +50,12 @@ const Layout = ({ pageTitle, heading, children }) => {
 			<Header siteTitle={data.site.siteMetadata.title} />
 			<WebComponent tag="wpcampus-notifications" />
 			<NavPrimary />
-			<main id="main">
-				<User.Consumer>{handleUserDisplay}</User.Consumer>
-				{heading ? (<h1>{heading}</h1>) : null}
-				{children}
+			<main id="main" className="wpc-main wpc-wrapper">
+				<div className="wpc-container">
+					<User.Consumer>{handleUserDisplay}</User.Consumer>
+					{heading ? (<h1>{heading}</h1>) : null}
+					{children}
+				</div>
 			</main>
 			<Footer />
 		</>

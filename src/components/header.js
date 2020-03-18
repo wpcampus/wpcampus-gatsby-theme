@@ -9,9 +9,9 @@ import "./../css/header.css"
 
 const Header = ({ siteTitle }) => {
 	return (
-		<header className="header">
-			<div className="header__container">
-				<h1 className="header__siteTitle">
+		<header className="wpc-header wpc-wrapper">
+			<div className="wpc-container">
+				<h1 className="wpc-header__heading wpc-header__heading--site">
 					<Link to="/">{siteTitle}</Link>
 				</h1>
 				<User.Consumer>{userDisplay}</User.Consumer>
