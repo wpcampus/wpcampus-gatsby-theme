@@ -10,7 +10,7 @@ Run `nvm use` to define the node version
 
 ## Code standards
 
-This repo uses `eslint` to check for and enforce coding standards.
+This repo uses `eslint` and `stylelint` to check for and enforce coding and CSS standards.
 
 It also includes settings for Visual Studio Code.
 
@@ -19,9 +19,16 @@ It also includes settings for Visual Studio Code.
 - Use double quotes (instead of single)
 - No semicolons (at end of each line)
 
-### How to lint/fix code standards:
+#### How to lint/fix code standards:
 
 Run `npm run lint` in the command line.
+
+### Our CSS standards:
+- **Add standards**
+
+#### How to lint/fix CSS standards:
+
+Run `npm run css` in the command line.
 
 ## WPCampus setup
 

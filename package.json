@@ -41,7 +41,8 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "lint": "eslint *.js src/**/*.js *.json --fix",
+	"lint": "eslint *.js src/**/*.js *.json --fix",
+	"css": "stylelint src/css/*.css --fix",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
