@@ -7,8 +7,6 @@
   "dependencies": {
     "@wpcampus/wpcampus-web-components": "1.1.4",
     "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.18.3",
     "gatsby": "^2.19.12",
     "gatsby-cli": "^2.10.0",
     "gatsby-image": "^2.2.30",
@@ -28,7 +26,9 @@
     "react-html-parser": "^2.0.2"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
     "eslint-plugin-json": "^2.1.1",
+    "eslint-plugin-react": "^7.19.0",
     "prettier": "^1.18.2"
   },
   "keywords": [
