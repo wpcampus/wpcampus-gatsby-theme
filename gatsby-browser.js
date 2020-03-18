@@ -10,6 +10,8 @@ import { UserContextProvider } from "./src/user/context"
 
 import "./src/css/base.css"
 import "./src/css/global.css"
+import "./src/css/layout.css"
+import "./src/css/main.css"
 
 export const wrapRootElement = ({ element }) => (
 	<UserContextProvider>{element}</UserContextProvider>

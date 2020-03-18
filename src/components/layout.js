@@ -18,9 +18,6 @@ import WebComponent from "./webComponents"
 import { User } from "../user/context"
 import userDisplay from "../user/display"
 
-import "./../css/layout.css"
-import "./../css/main.css"
-
 const Layout = ({ pageTitle, heading, children }) => {
 	const data = useStaticQuery(graphql`
     query SiteTitleQuery {
