@@ -28,6 +28,7 @@
     "react-html-parser": "^2.0.2"
   },
   "devDependencies": {
+    "eslint-plugin-json": "^2.1.1",
     "prettier": "^1.18.2"
   },
   "keywords": [
