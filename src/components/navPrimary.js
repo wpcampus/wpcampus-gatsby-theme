@@ -25,8 +25,14 @@ const NavPrimary = () => {
 		})
 	})
 
+	const navPrimaryAttr = {
+		id: "nav",
+		classes: "wpc-nav wpc-nav--primary",
+		list: NavPrimaryItems
+	}
+
 	return (
-		<Nav id="nav" list={NavPrimaryItems}>
+		<Nav {...navPrimaryAttr}>
 			<button className="menu-toggle">Menu</button>
 		</Nav>
 	)
