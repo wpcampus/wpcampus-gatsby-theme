@@ -18,31 +18,18 @@
 		height: 100%;
 		z-index: -100;
 
-		.wpc-grid--dev__cols {
-			display: grid;
-			grid-template-columns: repeat(12, 1fr);
-			grid-column-gap: 1rem;
+		.wpc-grid--dev__areas {
 			height: 100%;
 
-			.wpc-grid--dev__col {
+			.wpc-grid--dev__area {
 				background: rgba(0, 0, 255, 0.025);
 				border: 0;
 			}
 		}
 
-		.wpc-wrapper {
+		.wpc-container {
 			height: 100%;
-
-			.wpc-container {
-				height: 100%;
-				padding: 0;
-			}
-		}
-	}
-
-	.wpc-notifications {
-		.wpc-notification {
-			border: var(--area-border);
+			padding: 0;
 		}
 	}
 }
