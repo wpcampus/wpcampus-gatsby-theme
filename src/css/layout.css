@@ -1,7 +1,0 @@
-.wpc-wrapper {
-  .wpc-container {
-    margin: 0 auto;
-    max-width: var(--container-max-width);
-    padding: 1.45rem var(--container-padding-side);
-  }
-}

@@ -6,8 +6,10 @@ const Footer = () => {
 	return (
 		<footer className="wpc-footer wpc-wrapper">
 			<div className="wpc-container">
-				© {new Date().getFullYear()},{" "}
-				<a href="https://www.wpcampus.org">WPCampus</a>
+				<div className="wpc-area">
+					© {new Date().getFullYear()},{" "}
+					<a href="https://www.wpcampus.org">WPCampus</a>
+				</div>
 			</div>
 		</footer>
 	)

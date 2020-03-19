@@ -1,60 +1,60 @@
 .wpc-form {
-  .wpc-form__alert {
-    margin: 0 0 0.5rem;
-    font-weight: bold;
-  }
+	&__alert {
+		margin: 0 0 0.5rem;
+		font-weight: bold;
+	}
 
-  .wpc-form__label {
-    display: block;
-    padding: 0 0.6rem 0 0;
-  }
+	&__label {
+		display: block;
+		padding: 0 0.6rem 0 0;
+	}
 
-  .wpc-form__input {
-    display: block;
-    width: 100%;
-    height: auto;
-    padding: 5px;
+	&__input {
+		display: block;
+		width: 100%;
+		height: auto;
+		padding: 5px;
 
-    &[aria-invalid="true"] {
-      border: 1px solid #900;
-    }
+		&[aria-invalid="true"] {
+			border: 1px solid #900;
+		}
 
-    &--error {
-      margin: 0.25rem 0 0;
-      color: #900;
-    }
-  }
+		&--error {
+			margin: 0.25rem 0 0;
+			color: #900;
+		}
+	}
 
-  &--login {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-column-gap: 0;
-    grid-row-gap: 0.5rem;
-    align-items: center;
-    font-size: 0.9rem;
-    border: 1px solid #ccc;
-    padding: 1rem;
+	&--login {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		grid-column-gap: 0;
+		grid-row-gap: 0.5rem;
+		align-items: center;
+		font-size: 0.9rem;
+		border: 1px solid #ccc;
+		padding: 1rem;
 
-    .wpc-form__alert {
-      grid-column: 1 / span 2;
-    }
+		.wpc-form__alert {
+			grid-column: 1 / span 2;
+		}
 
-    .wpc-form__label {
-      grid-column: 1 / span 1;
-    }
+		.wpc-form__label {
+			grid-column: 1 / span 1;
+		}
 
-    .wpc-form__inputWrapper {
-      grid-column: 2 / span 1;
-    }
+		.wpc-form__inputWrapper {
+			grid-column: 2 / span 1;
+		}
 
-    .wpc-form__submit {
-      grid-column: 1 / span 2;
-      margin: 0.6rem 0 0;
-    }
-  }
+		.wpc-form__submit {
+			grid-column: 1 / span 2;
+			margin: 0.6rem 0 0;
+		}
+	}
 
-  &.wpc-form--processing {
-    opacity: 0.4;
-    pointer-events: none;
-  }
+	&--processing {
+		opacity: 0.4;
+		pointer-events: none;
+	}
 }

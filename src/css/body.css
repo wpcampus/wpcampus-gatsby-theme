@@ -1,0 +1,25 @@
+.wpc-body {
+	&__areas {
+		grid-template-rows: auto 1fr;
+
+		.wpc-body__area {
+			&--nav {
+				grid-area: navPrimary;
+				grid-column: col-start / span 3;
+				grid-row: 1 / span 2;
+			}
+
+			&--crumbs {
+				grid-area: crumbs;
+				grid-column: col-start 4 / span 9;
+				grid-row: 1 / span 1;
+			}
+
+			&--main {
+				grid-area: main;
+				grid-column: col-start 4 / span 9;
+				grid-row: 2 / span 1;
+			}
+		}
+	}
+}

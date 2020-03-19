@@ -1,89 +1,72 @@
 /* Prevent the body from scrolling when the menu is toggled open. */
 body.menu-toggled-open {
-  overflow-y: hidden;
+	overflow-y: hidden;
 }
 
 #nav {
-  background: #1a1b1f;
-  position: fixed;
-  top: 0;
-  z-index: 100;
+	height: 100%;
 }
 
 #nav.toggled-open {
-  height: 100%;
-  overflow-y: scroll;
-  width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+	width: 100%;
 }
 
 #nav a,
 #nav .submenu-toggle {
-  color: #fff;
+	color: inherit;
 }
 
 #nav ul {
-  list-style: none;
-  padding-left: 20px;
+	list-style: none;
 }
 
 #nav > ul {
-  display: none;
-  margin: 0;
-  padding: 20px;
+	display: none;
+	margin: 0;
 }
 
 #nav.toggled-open > ul {
-  display: block;
+	display: block;
 }
 
 #nav .has-submenu-toggle ul {
-  display: none;
+	display: none;
 }
 
 #nav .toggled-open > ul {
-  display: block;
+	display: block;
 }
 
 #nav li {
-  position: relative;
+	position: relative;
 }
 
 #nav .submenu-toggle {
-  background: transparent;
-  background: url("../images/icon-plus.svg") center no-repeat;
-  border: none;
-  border-radius: 50%;
-  height: 1em;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transition: transform 0.15s ease;
-  width: 1em;
+	background: transparent;
+	background: url("../images/icon-plus-dark.svg") center no-repeat;
+	border: none;
+	border-radius: 50%;
+	height: 1em;
+	padding: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transition: transform 0.15s ease;
+	width: 1em;
 }
 
 #nav .toggled-open > .submenu-toggle {
-  transform: rotate(45deg);
+	transform: rotate(45deg);
 }
 
 @media (min-width: 960px) {
-  #nav {
-    bottom: 0;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    width: 200px;
-  }
+	#nav .menu-toggle {
+		display: none;
+	}
 
-  #nav .menu-toggle {
-    display: none;
-  }
-
-  #nav > ul {
-    display: block;
-  }
-
-  main {
-    margin-left: 200px;
-  }
+	#nav > ul {
+		display: block;
+	}
 }
