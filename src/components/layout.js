@@ -13,6 +13,7 @@ import SEO from "./seo"
 import NavPrimary from "../components/navPrimary"
 import Header from "./header"
 import Footer from "./footer"
+import WPCGridDev from "./grid-dev"
 import WebComponent from "./webComponents"
 
 import { User } from "../user/context"
@@ -43,8 +44,19 @@ const Layout = ({ pageTitle, heading, children }) => {
 		pageTitle = heading
 	}
 
+	const wpcampusAttr = {
+		className: "wpcampus"
+	}
+
+	const showGrid = "development" === process.env.NODE_ENV && "1" === process.env.WPC_SHOW_GRID
+
+	if (showGrid) {
+		wpcampusAttr.className += " wpcampus--hasGridDev"
+	}
+
 	return (
-		<>
+		<div {...wpcampusAttr}>
+			{showGrid ? <WPCGridDev /> : null}
 			<SEO title={pageTitle} />
 			<Header siteTitle={data.site.siteMetadata.title} />
 			<NavPrimary />
@@ -57,7 +69,7 @@ const Layout = ({ pageTitle, heading, children }) => {
 				</div>
 			</main>
 			<Footer />
-		</>
+		</div>
 	)
 }
 
