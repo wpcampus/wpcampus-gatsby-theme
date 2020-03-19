@@ -49,7 +49,7 @@ const Layout = ({ pageTitle, heading, children }) => {
 			{showGrid ? <WPCGridDev /> : null}
 			<SEO title={pageTitle} />
 			<Header siteTitle={data.site.siteMetadata.title} />
-			<WebComponent classes="wpc-notifications" tag="wpcampus-notifications" />
+			<WebComponent id="notifications" tag="wpcampus-notifications" />
 			<div className="wpc-body wpc-wrapper">
 				<div className="wpc-container wpc-body__container">
 					<div className="wpc-areas wpc-areas--grid wpc-body__areas">
