@@ -45,13 +45,13 @@ const Layout = ({ pageTitle, heading, children }) => {
 		<>
 			<SEO title={pageTitle} />
 			<Header siteTitle={data.site.siteMetadata.title} />
-			<WebComponent tag="wpcampus-notifications" />
 			<NavPrimary />
 			<main id="main" className="wpc-main wpc-wrapper">
 				<div className="wpc-container">
 					<User.Consumer>{handleUserDisplay}</User.Consumer>
 					{heading ? (<h1>{heading}</h1>) : null}
 					{children}
+			<WebComponent classes="wpc-notifications" tag="wpcampus-notifications" />
 				</div>
 			</main>
 			<Footer />
