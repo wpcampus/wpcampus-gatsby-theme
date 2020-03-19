@@ -1,0 +1,8 @@
+.wpc-notifications {
+  .wpc-notification {
+    margin: 0 auto;
+    max-width: var(--container-max-width);
+    padding: var(--container-padding-top) 0 var(--container-padding-bottom);
+    border: var(--container-border-width) var(--container-border-style) var(--container-border-color);
+  }
+}
