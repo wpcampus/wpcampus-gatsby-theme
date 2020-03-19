@@ -22,6 +22,7 @@ const NavPrimary = () => {
 			breakpoint: 960,
 			main: document.getElementById("main"),
 			nav: document.getElementById("nav"),
+			minHeights: false,
 		})
 	})
 
