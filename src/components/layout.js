@@ -54,7 +54,7 @@ const Layout = ({ pageTitle, heading, children }) => {
 			<WebComponent id="notifications" tag="wpcampus-notifications" />
 			<div className="wpc-body wpc-wrapper">
 				<div className="wpc-container wpc-body__container">
-					<div className="wpc-areas wpc-areas--grid wpc-body__areas">
+					<div className="wpc-areas wpc-areas--grid wpc-areas--grid--rows wpc-body__areas">
 						<div className="wpc-area wpc-body__area wpc-body__area--nav">
 							<NavPrimary />
 						</div>
