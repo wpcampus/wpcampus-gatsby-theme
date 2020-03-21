@@ -29,6 +29,7 @@ const NavPrimary = () => {
 	const navPrimaryAttr = {
 		id: "nav",
 		classes: "wpc-nav wpc-nav--primary",
+		label: "Primary",
 		list: NavPrimaryItems
 	}
 
