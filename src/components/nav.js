@@ -39,13 +39,16 @@ NavList.propTypes = {
 	list: PropTypes.array.isRequired,
 }
 
-const Nav = ({ id, classes, list, children }) => {
+const Nav = ({ id, classes, label, list, children }) => {
 	const navAttr = {}
 	if (id) {
 		navAttr.id = id
 	}
 	if (classes) {
 		navAttr.className = classes
+	}
+	if (label) {
+		navAttr["aria-label"] = label
 	}
 	return (
 		<nav {...navAttr}>
@@ -58,6 +61,7 @@ const Nav = ({ id, classes, list, children }) => {
 Nav.propTypes = {
 	id: PropTypes.string,
 	classes: PropTypes.string,
+	label: PropTypes.string,
 	list: PropTypes.array.isRequired,
 	children: PropTypes.object,
 }
