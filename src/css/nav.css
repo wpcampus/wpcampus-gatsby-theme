@@ -1,0 +1,72 @@
+/* Prevent the body from scrolling when the menu is toggled open. */
+body.menu-toggled-open {
+	overflow-y: hidden;
+}
+
+#nav {
+	height: 100%;
+}
+
+#nav.toggled-open {
+	height: 100%;
+	overflow-y: scroll;
+	width: 100%;
+}
+
+#nav a,
+#nav .submenu-toggle {
+	color: inherit;
+}
+
+#nav ul {
+	list-style: none;
+}
+
+#nav > ul {
+	display: none;
+	margin: 0;
+}
+
+#nav.toggled-open > ul {
+	display: block;
+}
+
+#nav .has-submenu-toggle ul {
+	display: none;
+}
+
+#nav .toggled-open > ul {
+	display: block;
+}
+
+#nav li {
+	position: relative;
+}
+
+#nav .submenu-toggle {
+	background: transparent;
+	background: url("../images/icon-plus-dark.svg") center no-repeat;
+	border: none;
+	border-radius: 50%;
+	height: 1em;
+	padding: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transition: transform 0.15s ease;
+	width: 1em;
+}
+
+#nav .toggled-open > .submenu-toggle {
+	transform: rotate(45deg);
+}
+
+@media (min-width: 960px) {
+	#nav .menu-toggle {
+		display: none;
+	}
+
+	#nav > ul {
+		display: block;
+	}
+}

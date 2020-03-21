@@ -18,7 +18,7 @@ const userDisplay = (user, args) => {
 	return (
 		<div>
 			{user.isLoggedIn() ? (
-				<div className="user-display">
+				<div className="wpc-user">
 					<div>User: {user.getDisplayName()}</div>
 					{args.showLogout ? <button onClick={user.logout}>Logout</button> : ""}
 				</div>

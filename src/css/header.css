@@ -1,33 +1,20 @@
-@import "variables.css";
+.wpc-header {
+	.wpc-header__heading {
+		&--site {
+			margin: 0;
+		}
+	}
 
-.header {
-  background: var(--wpc-blue-dark);
-  color: #fff;
-}
+	&__areas {
+		.wpc-header__area {
+			&--logo {
+				grid-column: col-start / span 8;
+				align-self: center;
+			}
 
-.header .header__container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
-  max-width: var(--container-max-width);
-  padding: 1.45rem var(--container-padding-side);
-}
-
-.header .header__siteTitle {
-  margin: 0;
-}
-
-.header *,
-.header a {
-  color: inherit;
-}
-
-.header .user-display {
-  border: 1px solid #fff;
-  padding: 0.25rem;
-}
-
-.header button {
-  color: #222;
+			&--meta {
+				grid-column: col-start 9 / span 4;
+			}
+		}
+	}
 }

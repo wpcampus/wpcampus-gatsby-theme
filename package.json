@@ -5,12 +5,10 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@wpcampus/wpcampus-web-components": "1.1.4",
+    "@wpcampus/wpcampus-web-components": "^1.1.8",
     "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.18.3",
-    "gatsby": "^2.19.12",
-    "gatsby-cli": "^2.8.30",
+    "gatsby": "^2.19.45",
+    "gatsby-cli": "^2.11.0",
     "gatsby-image": "^2.2.30",
     "gatsby-plugin-manifest": "^2.2.25",
     "gatsby-plugin-offline": "^3.0.17",
@@ -29,7 +27,12 @@
     "react-html-parser": "^2.0.2"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "eslint": "^6.8.0",
+    "eslint-plugin-json": "^2.1.1",
+    "eslint-plugin-react": "^7.19.0",
+    "prettier": "^1.18.2",
+    "stylelint": "^13.2.1",
+    "stylelint-config-standard": "^20.0.0"
   },
   "keywords": [
     "gatsby"
@@ -39,7 +42,8 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "lint": "eslint *.js src/**/*.js --fix",
+    "lint": "eslint *.js src/**/*.js *.json --fix",
+    "css": "stylelint src/css/*.css --fix",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"

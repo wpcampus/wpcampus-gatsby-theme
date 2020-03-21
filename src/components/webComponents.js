@@ -5,23 +5,30 @@ if (typeof HTMLElement !== "undefined") {
 	require("@wpcampus/wpcampus-web-components")
 }
 
-const allowedComponents = ["wpcampus-library", "wpcampus-notifications"]
+const allowedComponents = ["wpcampus-library", "wpcampus-notifications", "wpcampus-coc", "wpcampus-footer"]
 
-const WebComponent = ({ tag }) => {
+const WebComponent = ({ id, classes, tag }) => {
 	if (!allowedComponents.includes(tag)) {
 		return null
 	}
-	let markup = "<" + tag + "></" + tag + ">"
+	let markup = `<${tag}></${tag}>`
+	const attr = {
+		className: `wpc-component wpc-component--${id}`,
+		dangerouslySetInnerHTML: {
+			__html: markup,
+		}
+	}
+	if (classes) {
+		attr.className += ` ${classes}`
+	}
 	return (
-		<div
-			dangerouslySetInnerHTML={{
-				__html: markup,
-			}}
-		/>
+		<div {...attr}></div>
 	)
 }
 
 WebComponent.propTypes = {
+	id: PropTypes.string.isRequired,
+	classes: PropTypes.string,
 	tag: PropTypes.string.isRequired,
 }
 

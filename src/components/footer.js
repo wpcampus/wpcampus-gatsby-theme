@@ -1,15 +1,12 @@
 import React from "react"
 
+import WebComponent from "./webComponents"
+
 import "./../css/footer.css"
 
 const Footer = () => {
 	return (
-		<footer className="footer">
-			<div className="footer__container">
-        © {new Date().getFullYear()},{" "}
-				<a href="https://www.wpcampus.org">WPCampus</a>
-			</div>
-		</footer>
+		<WebComponent id="footer" tag="wpcampus-footer" />
 	)
 }
 

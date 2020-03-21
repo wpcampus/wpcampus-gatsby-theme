@@ -3,6 +3,8 @@ import React, { useState, useContext } from "react"
 import { User } from "../user/context"
 import messages from "../user/messages"
 
+import "./../css/forms.css"
+
 const LoginForm = () => {
 	const initialState = {
 		alert: false,
@@ -127,18 +129,18 @@ const LoginForm = () => {
 	}
 
 	const classes = {
-		form: "form--login",
-		alert: "form--login__alert",
+		form: "wpc-form wpc-form--login",
+		alert: "wpc-form__alert",
 		alertHidden: "for-screen-reader",
-		label: "form--login__label",
-		inputWrapper: "form--login__inputWrapper",
-		input: "form--login__input",
-		inputError: "form--login__input_error",
-		submit: "form--login__submit",
+		label: "wpc-form__label",
+		inputWrapper: "wpc-form__inputWrapper",
+		input: "wpc-form__input",
+		inputError: "wpc-form__input--error",
+		submit: "wpc-form__submit",
 	}
 
 	if (state.processing) {
-		classes.form += " form--login--processing"
+		classes.form += " wpc-form--processing"
 	}
 
 	const formAttr = {
@@ -198,7 +200,7 @@ const LoginForm = () => {
 	}
 
 	return (
-		<form {...formAttr} onSubmit={event => submitLogin(event)}>
+		<form {...formAttr} aria-label="Login to WPCampus" onSubmit={event => submitLogin(event)}>
 			<p {...alertAttr} aria-live="polite">
 				{state.alert}
 			</p>

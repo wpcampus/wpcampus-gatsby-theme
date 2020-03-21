@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Nav } from "../components/nav"
+import Nav from "../components/nav"
 
 const Pagination = ({ slug, single, plural, previous, next }) => {
 	let items = [

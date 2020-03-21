@@ -10,7 +10,7 @@ Run `nvm use` to define the node version
 
 ## Code standards
 
-This repo uses `eslint` to check for and enforce coding standards.
+This repo uses `eslint` and `stylelint` to check for and enforce coding and CSS standards.
 
 It also includes settings for Visual Studio Code.
 
@@ -19,15 +19,23 @@ It also includes settings for Visual Studio Code.
 - Use double quotes (instead of single)
 - No semicolons (at end of each line)
 
-### How to lint/fix code standards:
+#### How to lint/fix code standards:
 
 Run `npm run lint` in the command line.
+
+### Our CSS standards:
+- Use tabs
+
+#### How to lint/fix CSS standards:
+
+Run `npm run css` in the command line.
 
 ## WPCampus setup
 
 1. Duplicate the .env.sample file and rename as .env.development.
 2. Set the data for your dev environment.
     * [Talk to an administrator](./.github/CODEOWNERS) for the correct information.
+3. Add `WPC_SHOW_GRID=1` to .env.development to display CSS grid in development environment.
 
 ## Gatsby setup
 
