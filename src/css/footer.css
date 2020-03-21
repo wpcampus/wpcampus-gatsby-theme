@@ -1,4 +1,32 @@
 .wpc-footer {
+	nav.wpc-nav {
+		&--social {
+			svg {
+				display: block;
+			}
+
+			a {
+				display: flex;
+				height: 100%;
+				align-items: center;
+			}
+
+			ul,
+			li {
+				margin: 0;
+			}
+
+			li {
+				list-style: none;
+			}
+
+			ul {
+				display: flex;
+				align-items: stretch;
+			}
+		}
+	}
+
 	&__areas {
 		grid-template-rows: auto auto;
 
