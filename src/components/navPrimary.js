@@ -22,11 +22,19 @@ const NavPrimary = () => {
 			breakpoint: 960,
 			main: document.getElementById("main"),
 			nav: document.getElementById("nav"),
+			minHeights: false,
 		})
 	})
 
+	const navPrimaryAttr = {
+		id: "nav",
+		classes: "wpc-nav wpc-nav--primary",
+		label: "Primary",
+		list: NavPrimaryItems
+	}
+
 	return (
-		<Nav id="nav" list={NavPrimaryItems}>
+		<Nav {...navPrimaryAttr}>
 			<button className="menu-toggle">Menu</button>
 		</Nav>
 	)
