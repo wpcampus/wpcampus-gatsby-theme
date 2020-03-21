@@ -5,7 +5,7 @@ if (typeof HTMLElement !== "undefined") {
 	require("@wpcampus/wpcampus-web-components")
 }
 
-const allowedComponents = ["wpcampus-library", "wpcampus-notifications", "wpcampus-coc"]
+const allowedComponents = ["wpcampus-library", "wpcampus-notifications", "wpcampus-coc", "wpcampus-footer"]
 
 const WebComponent = ({ id, classes, tag }) => {
 	if (!allowedComponents.includes(tag)) {

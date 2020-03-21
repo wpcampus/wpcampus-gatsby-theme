@@ -1,0 +1,31 @@
+.wpc-footer {
+	&__areas {
+		grid-template-rows: auto auto;
+
+		.wpc-footer__area {
+			grid-row: 1 / span 1;
+
+			&--logo {
+				grid-column: col-start / span 3;
+			}
+
+			&--nav {
+				grid-column: col-start 4 / span 3;
+			}
+
+			&--desc {
+				grid-column: col-start 7 / span 3;
+			}
+
+			&--social {
+				grid-column: col-start 10 / span 3;
+			}
+
+			&--copyright {
+				grid-column: col-start 1 / span 12;
+				grid-row: 2 / span 1;
+				text-align: center;
+			}
+		}
+	}
+}
