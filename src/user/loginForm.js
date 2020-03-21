@@ -200,7 +200,7 @@ const LoginForm = () => {
 	}
 
 	return (
-		<form {...formAttr} onSubmit={event => submitLogin(event)}>
+		<form {...formAttr} aria-label="Login to WPCampus" onSubmit={event => submitLogin(event)}>
 			<p {...alertAttr} aria-live="polite">
 				{state.alert}
 			</p>
