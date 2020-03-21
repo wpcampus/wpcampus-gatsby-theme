@@ -13,6 +13,7 @@ import SEO from "./seo"
 import NavPrimary from "../components/navPrimary"
 import Header from "./header"
 import Heading from "./heading"
+import Crumbs from "./crumbs"
 import Conduct from "./conduct"
 import Footer from "./footer"
 import WPCGridDev from "./grid-dev"
@@ -57,9 +58,7 @@ const Layout = ({ pageTitle, heading, children }) => {
 						<div className="wpc-area wpc-body__area wpc-body__area--nav">
 							<NavPrimary />
 						</div>
-						<div className="wpc-area wpc-body__area wpc-body__area--crumbs">
-							<span>Breadcrumbs</span>
-						</div>
+						<Crumbs classes="wpc-area wpc-body__area wpc-body__area--crumbs" />
 						<div className="wpc-area wpc-body__area wpc-body__area--main">
 							<main id="main" className="wpc-main wpc-wrapper">
 								{heading ? (<Heading level={1} heading={heading} />) : null}
