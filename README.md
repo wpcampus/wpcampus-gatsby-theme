@@ -24,7 +24,7 @@ It also includes settings for Visual Studio Code.
 Run `npm run lint` in the command line.
 
 ### Our CSS standards:
-- **Add standards**
+- Use tabs
 
 #### How to lint/fix CSS standards:
 
