@@ -13,6 +13,7 @@ import SEO from "./seo"
 import NavPrimary from "../components/navPrimary"
 import Header from "./header"
 import Heading from "./heading"
+import Conduct from "./conduct"
 import Footer from "./footer"
 import WPCGridDev from "./grid-dev"
 import WebComponent from "./webComponents"
@@ -68,6 +69,7 @@ const Layout = ({ pageTitle, heading, children }) => {
 					</div>
 				</div>
 			</div>
+			<Conduct />
 			<Footer />
 		</div>
 	)

@@ -1,0 +1,16 @@
+/* stylelint-disable selector-type-no-unknown */
+wpcampus-coc {
+	.wpc-coc__heading {
+		margin: 0 0 1rem;
+	}
+
+	.wpc-coc__message {
+		margin: 0 0 1rem;
+	}
+
+	.wpc-coc__button {
+		display: block;
+		margin: 0 auto;
+	}
+}
+/* stylelint-disable */
