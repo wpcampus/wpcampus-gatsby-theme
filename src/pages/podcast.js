@@ -3,11 +3,14 @@ import PropTypes from "prop-types"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
+import { PodcastCallout, PodcastActions } from "../components/podcast"
 import { ArticleArchive } from "../components/archive"
 
 export default function Template({ data }) {
 	return (
 		<Layout pageTitle="Podcast" heading="Podcasts">
+			<PodcastCallout />
+			<PodcastActions />
 			<ArticleArchive list={data.allWordpressWpPodcast.edges} />
 		</Layout>
 	)
