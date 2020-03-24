@@ -32,7 +32,7 @@ const CategoryPagination = ({ previous, next }) => {
 }
 
 const PostPagination = ({ previous, next }) => {
-	return <Pagination slug="blog" single="post" plural="posts" previous={previous} next={next} />
+	return <Pagination slug="blognew" single="post" plural="posts" previous={previous} next={next} />
 }
 
 const PodcastPagination = ({ previous, next }) => {
