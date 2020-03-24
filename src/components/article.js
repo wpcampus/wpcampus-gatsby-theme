@@ -25,9 +25,9 @@ const ArticleCategories = ({ list }) => (
 	</ul>
 )
 
-const ArticleMetaAuthors = ({ list }) => (
+const ArticleMetaAuthors = ({ authors }) => (
 	<ul>
-		{list.map((item, i) => (
+		{authors.map((item, i) => (
 			<li key={i}>
 				<Link to={item.path}>{item.name}</Link>
 			</li>
@@ -36,7 +36,7 @@ const ArticleMetaAuthors = ({ list }) => (
 )
 
 ArticleMetaAuthors.propTypes = {
-	list: PropTypes.array.isRequired
+	authors: PropTypes.array.isRequired
 }
 
 const ArticleTitle = ({ data, isSingle }) => {
@@ -60,7 +60,7 @@ const ArticleMeta = ({ data }) => {
 			{data.author ? (
 				<li className="article__meta article__meta--author">
 					Author:
-					<ArticleMetaAuthors list={data.author} />
+					<ArticleMetaAuthors authors={data.author} />
 				</li>
 			) : null}
 			{data.categories ? (
