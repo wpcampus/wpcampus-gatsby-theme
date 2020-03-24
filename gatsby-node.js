@@ -51,13 +51,28 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			},
 			interfaces: ["Node"],
 		}),
+		schema.buildObjectType({
+			name: "wordpress__wp_podcast",
+			fields: {
+				"episode_featured_image": {
+					type: "String",
+					resolve(source) {
+						if ("string" !== typeof source.episode_featured_image) {
+							return ""
+						}
+						return source.episode_featured_image
+					}
+				},
+			},
+			interfaces: ["Node"],
+		}),
 		/*schema.buildObjectType({
-      name: "wordpress__wp_members",
-      fields: {
-        wpc_protected: "wpcProtected",
-      },
-      interfaces: ["Node"],
-    }),*/
+		name: "wordpress__wp_members",
+		fields: {
+			wpc_protected: "wpcProtected",
+		},
+		interfaces: ["Node"],
+		}),*/
 	]
 	createTypes(typeDefs)
 }
@@ -201,10 +216,62 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	/**
-   * Build category archives from WordPress "categories" taxonomy.
-   * 
-   * @TODO remove fields we're not using.
-   */
+	 * Build podcast posts from WordPress "podcast" post type.
+	 * 
+	 * @TODO remove fields we're not using.
+	 */
+	const podcasts = await graphql(`
+		query {
+		allWordpressWpPodcast(
+			filter: { type: { eq: "podcast" }, status: { eq: "publish" } }
+		) {
+			edges {
+				previous {
+					id
+					wordpress_id
+					slug
+					path
+					title
+					date
+				}
+				next {
+					id
+					wordpress_id
+					slug
+					path
+					title
+					date
+				}
+				node {
+					id
+					path
+				}
+			}
+		}
+		}
+	`)
+	const podcastTemplate = path.resolve("./src/templates/podcast.js")
+	podcasts.data.allWordpressWpPodcast.edges.forEach(edge => {
+		createPage({
+			// will be the url for the page
+			path: edge.node.path,
+			// specify the component template of your choice
+			component: slash(podcastTemplate),
+			// In the ^template's GraphQL query, 'id' will be available
+			// as a GraphQL variable to query for this posts's data.
+			context: {
+				id: edge.node.id,
+				next: edge.next,
+				previous: edge.previous,
+			},
+		})
+	})
+
+	/**
+	 * Build category archives from WordPress "categories" taxonomy.
+	 * 
+	 * @TODO remove fields we're not using.
+	 */
 	const categories = await graphql(`
     query {
       allWordpressCategory {
