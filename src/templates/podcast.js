@@ -15,6 +15,7 @@ const PodcastTemplate = props => {
 	return (
 		<Layout pageTitle={podcast.title}>
 			{pagination}
+			<p>Duration: {podcast.meta.duration}</p>
 			<Article data={podcast} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
 			{pagination}
 		</Layout>
@@ -59,7 +60,10 @@ export const podcastQuery = graphql`
         name
         description
         path
-      }
+	  }
+	  meta {
+		  duration
+	  }
     }
     site {
       siteMetadata {
