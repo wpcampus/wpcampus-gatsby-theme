@@ -80,6 +80,7 @@ module.exports = {
 					"**/posts",
 					"**/pages",
 					"**/categories",
+					"**/podcast",
 					"**/users", // @TODO security concern?
 					//"**/members", // @TODO security concern?
 				],
