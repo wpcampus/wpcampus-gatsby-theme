@@ -2,21 +2,58 @@ import React from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
+const NavLink = ({ item }) => {
+	if (!item.slug || !item.text) {
+		return ""
+	}
+	return (
+		<Link activeClassName="nav-link--current" to={item.slug}>
+			{item.text}
+		</Link>
+	)
+}
+
+NavLink.propTypes = {
+	item: PropTypes.object.isRequired,
+}
+
+const NavAnchor = ({ item }) => {
+	if (!item.href || !item.text) {
+		return ""
+	}
+	const anchorAttr = {
+		href: item.href
+	}
+	if (item.classes) {
+		anchorAttr.classes = item.classes
+	}
+	if (item["aria-label"]) {
+		anchorAttr["aria-label"] = item["aria-label"]
+	}
+	if (item.title) {
+		anchorAttr.title = item.title
+	}
+	if (item.target) {
+		anchorAttr.target = item.target
+	}
+	return (<a {...anchorAttr}>{item.text}</a>)
+}
+
+NavAnchor.propTypes = {
+	item: PropTypes.object.isRequired,
+}
+
 const NavItem = ({ item }) => {
 	return (
 		<li>
-			<Link activeClassName="nav-link--current" to={item.slug}>
-				{item.text}
-			</Link>
+			{item.slug ? <NavLink item={item} /> : <NavAnchor item={item} />}
 			{item.children && item.children.length ? (
 				<ul>
 					{item.children.map((child, i) => (
 						<NavItem key={i} item={child} />
 					))}
 				</ul>
-			) : (
-				""
-			)}
+			) : ""}
 		</li>
 	)
 }
