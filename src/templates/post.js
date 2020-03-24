@@ -44,6 +44,10 @@ export const postQuery = graphql`
         slug
         path
         url
+		description
+		company
+		company_position
+		twitter
       }
       title
       status

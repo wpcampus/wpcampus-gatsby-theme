@@ -44,7 +44,11 @@ export const podcastQuery = graphql`
         name
         slug
         path
-        url
+		url
+		description
+		company
+		company_position
+		twitter
       }
       title
       status
