@@ -51,6 +51,7 @@ CategoryArchive.propTypes = {
 
 const ArticleArchive = ({
 	list,
+	displayAuthor,
 	displayMeta,
 	displayContent,
 	displayContentFull,
@@ -60,6 +61,7 @@ const ArticleArchive = ({
 			key={node.id}
 			data={node}
 			isSingle={false}
+			displayAuthor={displayAuthor}
 			displayMeta={displayMeta}
 			displayContent={displayContent}
 			displayContentFull={displayContentFull}
@@ -68,12 +70,14 @@ const ArticleArchive = ({
 
 ArticleArchive.propTypes = {
 	list: PropTypes.array.isRequired,
+	displayAuthor: PropTypes.bool,
 	displayMeta: PropTypes.bool,
 	displayContent: PropTypes.bool,
 	displayContentFull: PropTypes.bool,
 }
 
 ArticleArchive.defaultProps = {
+	displayAuthor: false,
 	displayMeta: true,
 	displayContent: true,
 	displayContentFull: false,
