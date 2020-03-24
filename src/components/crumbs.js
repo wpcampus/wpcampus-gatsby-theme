@@ -8,7 +8,7 @@ const Crumbs = ({ classes }) => {
 	const breadcrumbs = [
 		{ slug: "/", text: "Home" },
 		{
-			slug: "/blog/",
+			slug: "/blognew/",
 			text: "Blog",
 			children: [{ slug: "/categories", text: "Categories" }],
 		},

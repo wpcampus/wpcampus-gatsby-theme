@@ -5,10 +5,11 @@ import "./../css/nav.css"
 import { Nav } from "./nav"
 import navigation from "../js/nav-primary"
 
+// @TODO revert usage of "blognew" to "blog".
 const NavPrimaryItems = [
 	{ slug: "/", text: "Home" },
 	{
-		slug: "/blog/",
+		slug: "/blognew/",
 		text: "Blog",
 		children: [{ slug: "/categories", text: "Categories" }],
 	},
