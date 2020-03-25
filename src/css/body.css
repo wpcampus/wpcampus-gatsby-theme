@@ -1,5 +1,7 @@
 .wpc-body {
 	.wpc-author {
+		margin: 0 0 1rem;
+
 		&__areas {
 			.wpc-author__area {
 				&--avatar {
