@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import ReactHtmlParser from "react-html-parser"
 
-import AuthorCard from "../components/author"
+import { AuthorCards } from "../components/author"
 import ProtectedContent from "../components/content"
 
 const getArticleContent = (data, displayContentFull) => {
@@ -25,18 +25,6 @@ const ArticleCategories = ({ list }) => (
 		))}
 	</ul>
 )
-
-const ArticleAuthors = ({ authors }) => (
-	<ul>
-		{authors.map((item, i) => (
-			<AuthorCard key={i} author={item} />
-		))}
-	</ul>
-)
-
-ArticleAuthors.propTypes = {
-	authors: PropTypes.array.isRequired
-}
 
 const ArticleMetaAuthors = ({ authors }) => (
 	<ul>
@@ -114,7 +102,7 @@ const Article = ({
 				{displayContent ? (
 					<ArticleContent data={data} displayContentFull={displayContentFull} />
 				) : null}
-				{displayAuthor && data.author ? <ArticleAuthors authors={data.author} /> : null}
+				{displayAuthor && data.author ? <AuthorCards authors={data.author} /> : null}
 			</ProtectedContent>
 		</article>
 	)
