@@ -61,6 +61,23 @@ AuthorCardMeta.propTypes = {
 	author: PropTypes.object.isRequired,
 }
 
+const AuthorCards = ({ authors }) => {
+	if (!authors) {
+		return ""
+	}
+	return (
+		<div className="wpc-authors">
+			{authors.map((item, i) => (
+				<AuthorCard key={i} author={item} />
+			))}
+		</div>
+	)
+}
+
+AuthorCards.propTypes = {
+	authors: PropTypes.array.isRequired,
+}
+
 const AuthorCard = ({ author }) => {
 	const authorLink = "/contributor/" + author.slug
 	return (
@@ -83,4 +100,4 @@ AuthorCard.propTypes = {
 	author: PropTypes.object.isRequired,
 }
 
-export default AuthorCard
+export { AuthorCard, AuthorCards }
