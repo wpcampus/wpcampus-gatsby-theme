@@ -62,6 +62,7 @@ AuthorCardMeta.propTypes = {
 }
 
 const AuthorCard = ({ author }) => {
+	const authorLink = "/contributor/" + author.slug
 	return (
 		<div className="wpc-author">
 			<div className="wpc-areas wpc-areas--grid wpc-author__areas">
@@ -69,7 +70,7 @@ const AuthorCard = ({ author }) => {
 					<img className="wpc" src={avatarEduwapuuBW} />
 				</div>
 				<div className="wpc-area wpc-author__area wpc-author__area--main">
-					<Link to={author.path}>{author.name}</Link>
+					<Link to={authorLink}>{author.name}</Link>
 					<AuthorCardMeta author={author} />
 					{!author.description ? "" : <p>{author.description}</p>}
 				</div>
