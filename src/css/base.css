@@ -141,3 +141,7 @@ table {
 a {
 	color: var(--wpc-blue-royal);
 }
+
+img {
+	max-width: 100%;
+}
