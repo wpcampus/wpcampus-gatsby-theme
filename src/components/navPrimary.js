@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 
 import "./../css/nav.css"
 
-import Nav from "./nav"
+import { Nav } from "./nav"
 import navigation from "../js/nav-primary"
 
 // @TODO revert usage of "blognew" to "blog".

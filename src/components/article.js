@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import ReactHtmlParser from "react-html-parser"
 
+import { AuthorCards } from "../components/author"
 import ProtectedContent from "../components/content"
 
 const getArticleContent = (data, displayContentFull) => {
@@ -25,9 +26,9 @@ const ArticleCategories = ({ list }) => (
 	</ul>
 )
 
-const ArticleAuthors = ({ list }) => (
+const ArticleMetaAuthors = ({ authors }) => (
 	<ul>
-		{list.map((item, i) => (
+		{authors.map((item, i) => (
 			<li key={i}>
 				<Link to={item.path}>{item.name}</Link>
 			</li>
@@ -35,8 +36,8 @@ const ArticleAuthors = ({ list }) => (
 	</ul>
 )
 
-ArticleAuthors.propTypes = {
-	list: PropTypes.array.isRequired
+ArticleMetaAuthors.propTypes = {
+	authors: PropTypes.array.isRequired
 }
 
 const ArticleTitle = ({ data, isSingle }) => {
@@ -59,13 +60,13 @@ const ArticleMeta = ({ data }) => {
 			</li>
 			{data.author ? (
 				<li className="article__meta article__meta--author">
-          Author:
-					<ArticleAuthors list={data.author} />
+					Author:
+					<ArticleMetaAuthors authors={data.author} />
 				</li>
 			) : null}
 			{data.categories ? (
 				<li className="article__meta article__meta--categories">
-          Categories:
+					Categories:
 					<ArticleCategories list={data.categories} />
 				</li>
 			) : null}
@@ -88,6 +89,7 @@ const Article = ({
 	data,
 	wpc_protected,
 	isSingle,
+	displayAuthor,
 	displayMeta,
 	displayContent,
 	displayContentFull,
@@ -100,6 +102,7 @@ const Article = ({
 				{displayContent ? (
 					<ArticleContent data={data} displayContentFull={displayContentFull} />
 				) : null}
+				{displayAuthor && data.author ? <AuthorCards authors={data.author} /> : null}
 			</ProtectedContent>
 		</article>
 	)
@@ -131,12 +134,14 @@ Article.propTypes = {
 	data: PropTypes.object.isRequired,
 	wpc_protected: PropTypes.object,
 	isSingle: PropTypes.bool,
+	displayAuthor: PropTypes.bool,
 	displayMeta: PropTypes.bool,
 	displayContent: PropTypes.bool,
 	displayContentFull: PropTypes.bool,
 }
 
 Article.defaultProps = {
+	displayAuthor: true,
 	displayMeta: true,
 	displayContent: true,
 	displayContentFull: false,

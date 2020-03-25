@@ -36,7 +36,6 @@ export const query = graphql`
             name
             slug
             path
-            url
           }
           title
           status

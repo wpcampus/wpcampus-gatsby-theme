@@ -34,14 +34,6 @@ export const query = graphql`
           wordpress_id
           slug
           path
-          author {
-            id
-            wordpress_id
-            name
-            slug
-            path
-            url
-          }
           title
           status
           date

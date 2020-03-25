@@ -3,12 +3,14 @@ import PropTypes from "prop-types"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import { AuthorArchive } from "../components/archive"
+import { AuthorCards } from "../components/author"
 
+// @TODO add filters for university?
+// @TODO replace/merge with subject matter experts directory?
 export default function Template({ data }) {
 	return (
 		<Layout heading="Contributors">
-			<AuthorArchive list={data.allWordpressWpUsers.edges} />
+			<AuthorCards authors={data.allWordpressWpUsers.nodes} />
 		</Layout>
 	)
 }
@@ -21,16 +23,18 @@ Template.propTypes = {
 export const query = graphql`
   query {
     allWordpressWpUsers {
-      edges {
-        node {
-          id
-          wordpress_id
-          name
-          slug
-          path
-          url
-        }
-      }
+		nodes {
+			id
+			wordpress_id
+			name
+			slug
+			path
+			url
+			description
+			company
+			company_position
+			twitter
+		}
     }
     site {
       siteMetadata {

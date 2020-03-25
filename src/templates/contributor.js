@@ -55,6 +55,10 @@ export const query = graphql`
             slug
             path
             url
+			description
+			company
+			company_position
+			twitter
           }
           title
           status

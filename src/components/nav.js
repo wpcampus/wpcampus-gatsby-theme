@@ -103,4 +103,4 @@ Nav.propTypes = {
 	children: PropTypes.object,
 }
 
-export default Nav
+export { Nav, NavAnchor }
