@@ -13,7 +13,7 @@ const Crumbs = ({ classes }) => {
 			children: [{ slug: "/categories", text: "Categories" }],
 		},
 		{ slug: "/pages/", text: "Pages" },
-		{ slug: "/contributors/", text: "Contributors" },
+		{ slug: "/contributorsnew/", text: "Contributors" },
 	]
 
 	return (

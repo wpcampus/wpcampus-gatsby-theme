@@ -6,6 +6,7 @@ import { Nav } from "./nav"
 import navigation from "../js/nav-primary"
 
 // @TODO revert usage of "blognew" to "blog".
+// @TODO revert usage of "contributorsnew" to "contributors".
 const NavPrimaryItems = [
 	{ slug: "/", text: "Home" },
 	{
@@ -15,7 +16,7 @@ const NavPrimaryItems = [
 	},
 	{ slug: "/pages/", text: "Pages" },
 	{ slug: "/podcast/", text: "Podcast" },
-	{ slug: "/contributors/", text: "Contributors" },
+	{ slug: "/contributorsnew/", text: "Contributors" },
 ]
 
 const NavPrimary = () => {
