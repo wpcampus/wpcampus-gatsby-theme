@@ -2,22 +2,8 @@ import React, { useEffect } from "react"
 
 import "./../css/nav.css"
 
-import { Nav } from "./nav"
+import { Nav, NavPrimaryItems } from "./nav"
 import navigation from "../js/nav-primary"
-
-// @TODO revert usage of "blognew" to "blog".
-// @TODO revert usage of "contributorsnew" to "contributors".
-const NavPrimaryItems = [
-	{ slug: "/", text: "Home" },
-	{
-		slug: "/blognew/",
-		text: "Blog",
-		children: [{ slug: "/categories", text: "Categories" }],
-	},
-	{ slug: "/pages/", text: "Pages" },
-	{ slug: "/podcast/", text: "Podcast" },
-	{ slug: "/contributorsnew/", text: "Contributors" },
-]
 
 const NavPrimary = () => {
 	useEffect(() => {
