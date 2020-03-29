@@ -65,6 +65,9 @@ const Layout = ({ pageTitle, heading, children }) => {
 								{children}
 							</main>
 						</div>
+						<div className="wpc-area wpc-body__area wpc-body__area--sidebar">
+							<aside className="wpc-sidebar wpc-wrapper" aria-label="Sidebar">Sidebar</aside>
+						</div>
 					</div>
 				</div>
 			</div>
