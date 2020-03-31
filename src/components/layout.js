@@ -13,13 +13,11 @@ import SEO from "./seo"
 import NavPrimary from "../components/navPrimary"
 import Header from "./header"
 import Heading from "./heading"
+import Notifications from "./notifications"
 import Crumbs from "./crumbs"
 import Conduct from "./conduct"
 import Footer from "./footer"
 import WPCGridDev from "./grid-dev"
-import WebComponent from "./webComponents"
-
-import "./../css/notifications.css"
 
 const Layout = ({ pageTitle, heading, children }) => {
 	const data = useStaticQuery(graphql`
@@ -51,7 +49,7 @@ const Layout = ({ pageTitle, heading, children }) => {
 			{showGrid ? <WPCGridDev /> : null}
 			<SEO title={pageTitle} />
 			<Header siteTitle={data.site.siteMetadata.title} />
-			<WebComponent id="notifications" tag="wpcampus-notifications" />
+			<Notifications />
 			<div className="wpc-body wpc-wrapper">
 				<div className="wpc-container wpc-body__container">
 					<div className="wpc-areas wpc-areas--grid wpc-areas--grid--rows wpc-body__areas">
