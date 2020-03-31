@@ -20,15 +20,6 @@ import Footer from "./footer"
 import WPCGridDev from "./grid-dev"
 
 const Layout = ({ pageTitle, heading, children }) => {
-	const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
 
 	if (!pageTitle && heading) {
 		pageTitle = heading
@@ -48,7 +39,7 @@ const Layout = ({ pageTitle, heading, children }) => {
 		<div {...wpcampusAttr}>
 			{showGrid ? <WPCGridDev /> : null}
 			<SEO title={pageTitle} />
-			<Header siteTitle={data.site.siteMetadata.title} />
+			<Header />
 			<Notifications />
 			<div className="wpc-body wpc-wrapper">
 				<div className="wpc-container wpc-body__container">

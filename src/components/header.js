@@ -1,13 +1,13 @@
 import { Link } from "gatsby"
-import PropTypes from "prop-types"
 import React from "react"
 
+import WPCampusLogo from "./logo"
 import { User } from "../user/context"
 import userDisplay from "../user/display"
 
 import "./../css/header.css"
 
-const Header = ({ siteTitle }) => {
+const Header = () => {
 	// Have to use separate function to process <User.Consumer> and pass args
 	const handleUserDisplay = user => {
 		const args = {
@@ -21,7 +21,7 @@ const Header = ({ siteTitle }) => {
 				<div className="wpc-areas wpc-areas--grid wpc-header__areas">
 					<div className="wpc-area wpc-header__area wpc-header__area--logo">
 						<h1 className="wpc-header__heading wpc-header__heading--site">
-							<Link to="/">{siteTitle}</Link>
+							<Link to="/" aria-label="Home"><WPCampusLogo /></Link>
 						</h1>
 					</div>
 					<div className="wpc-area wpc-header__area wpc-header__area--meta">
@@ -31,14 +31,6 @@ const Header = ({ siteTitle }) => {
 			</div>
 		</header>
 	)
-}
-
-Header.propTypes = {
-	siteTitle: PropTypes.string,
-}
-
-Header.defaultProps = {
-	siteTitle: "",
 }
 
 export default Header

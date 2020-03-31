@@ -156,3 +156,15 @@ img {
 	position: absolute;
 	width: 1px;
 }
+
+.wpc-logo {
+	svg {
+		enable-background: new 0 0 300 50;
+	}
+
+	&__letters {
+		&--wp {
+			opacity: 0.7;
+		}
+	}
+}
