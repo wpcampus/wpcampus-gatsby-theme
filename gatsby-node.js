@@ -89,6 +89,8 @@ exports.createPages = async ({ graphql, actions }) => {
    * Build pages from WordPress "page" post type.
    * 
    * @TODO remove fields we're not using.
+   * 
+   * @TODO this means we can't have more than 5 levels of crumbs.
    */
 	const pages = await graphql(`
     query {
@@ -96,8 +98,29 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            path
-            template
+			path
+			title
+			template
+			parent_element {
+				path
+				title
+				parent_element {
+                	path
+                	title
+                	parent_element {
+						path
+						title
+						parent_element {
+							path
+							title
+							parent_element {
+								path
+								title
+							}
+						}
+                	}
+                }
+			}
             wpc_protected {
               protected
               user_roles {
@@ -133,6 +156,11 @@ exports.createPages = async ({ graphql, actions }) => {
 			// as a GraphQL variable to query for this posts's data.
 			context: {
 				id: edge.node.id,
+				crumbs: {
+					path: edge.node.path,
+					title: edge.node.title,
+					parent_element: edge.node.parent_element
+				},
 				wpc_protected: edge.node.wpc_protected,
 			},
 		})

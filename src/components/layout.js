@@ -18,7 +18,7 @@ import Conduct from "./conduct"
 import Footer from "./footer"
 import WPCGridDev from "./grid-dev"
 
-const Layout = ({ pageTitle, heading, children }) => {
+const Layout = ({ pageTitle, heading, crumbs, children }) => {
 
 	if (!pageTitle && heading) {
 		pageTitle = heading
@@ -46,7 +46,7 @@ const Layout = ({ pageTitle, heading, children }) => {
 						<div className="wpc-area wpc-body__area wpc-body__area--nav">
 							<NavPrimary />
 						</div>
-						<Crumbs classes="wpc-area wpc-body__area wpc-body__area--crumbs" />
+						<Crumbs crumbs={crumbs} classes="wpc-area wpc-body__area wpc-body__area--crumbs" />
 						<div className="wpc-area wpc-body__area wpc-body__area--main">
 							<main id="main" className="wpc-main wpc-wrapper">
 								{heading ? (<Heading level={1} heading={heading} />) : null}
@@ -68,6 +68,7 @@ const Layout = ({ pageTitle, heading, children }) => {
 Layout.propTypes = {
 	pageTitle: PropTypes.string,
 	heading: PropTypes.string,
+	crumbs: PropTypes.object,
 	children: PropTypes.node.isRequired,
 }
 

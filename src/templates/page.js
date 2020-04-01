@@ -10,7 +10,7 @@ const PageTemplate = props => {
 	const page = props.data.wordpressPage
 	const pageContext = props.pageContext
 	return (
-		<Layout heading={page.title}>
+		<Layout heading={page.title} crumbs={pageContext.crumbs}>
 			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
 				<div>{ReactHtmlParser(page.content)}</div>
 			</ProtectedContent>

@@ -3,13 +3,31 @@ import PropTypes from "prop-types"
 
 import { Nav } from "../components/nav"
 
-const Crumbs = ({ classes }) => {
+const Crumbs = ({ classes, crumbs }) => {
 
-	const breadcrumbs = [
-		{ slug: "/", text: "Home" },
-		{ slug: "/blognew/", text: "Blog" },
-		{ slug: "/categories", text: "Categories" }
-	]
+	const breadcrumbs = []
+
+	let node = crumbs
+	while (node && node.path && node.title) {
+
+		breadcrumbs.push({ slug: node.path, text: node.title })
+
+		if (node.parent_element) {
+			node = node.parent_element
+		} else {
+			node = false
+			break
+		}
+	}
+
+	if (!breadcrumbs.length) {
+		return null
+	}
+
+	// Always add home crumb.
+	breadcrumbs.push({ slug: "/", text: "Home" })
+
+	breadcrumbs.reverse()
 
 	const navAttr = {
 		classes: "wpc-crumbs",
@@ -17,7 +35,7 @@ const Crumbs = ({ classes }) => {
 		list: breadcrumbs
 	}
 
-	if ( classes ) {
+	if (classes) {
 		navAttr.classes += ` ${classes}`
 	}
 
@@ -27,7 +45,8 @@ const Crumbs = ({ classes }) => {
 }
 
 Crumbs.propTypes = {
-	classes: PropTypes.string
+	classes: PropTypes.string,
+	crumbs: PropTypes.object.isRequired
 }
 
 export default Crumbs
