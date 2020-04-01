@@ -54,9 +54,7 @@ const Layout = ({ pageTitle, heading, children }) => {
 							</main>
 						</div>
 						<div className="wpc-area wpc-body__area wpc-body__area--sidebar">
-							<aside className="wpc-sidebar wpc-wrapper" aria-label="Sidebar">
-								<WebComponent id="blog" tag="wpcampus-blog" />
-							</aside>
+							<aside className="wpc-sidebar wpc-wrapper" aria-label="Sidebar"></aside>
 						</div>
 					</div>
 				</div>
