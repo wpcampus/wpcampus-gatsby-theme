@@ -7,17 +7,22 @@ const Crumbs = ({ classes }) => {
 
 	const breadcrumbs = [
 		{ slug: "/", text: "Home" },
-		{
-			slug: "/blognew/",
-			text: "Blog",
-			children: [{ slug: "/categories", text: "Categories" }],
-		},
-		{ slug: "/pages/", text: "Pages" },
-		{ slug: "/contributorsnew/", text: "Contributors" },
+		{ slug: "/blognew/", text: "Blog" },
+		{ slug: "/categories", text: "Categories" }
 	]
 
+	const navAttr = {
+		classes: "wpc-crumbs",
+		label: "Breadcrumbs",
+		list: breadcrumbs
+	}
+
+	if ( classes ) {
+		navAttr.classes += ` ${classes}`
+	}
+
 	return (
-		<Nav list={breadcrumbs} classes={classes} label="Breadcrumbs" />
+		<Nav {...navAttr} />
 	)
 }
 
