@@ -13,7 +13,7 @@ const PodcastTemplate = props => {
 		<PodcastPagination previous={context.previous} next={context.next} />
 	)
 	return (
-		<Layout pageTitle={podcast.title}>
+		<Layout pageTitle={podcast.title} crumbs={context.crumbs}>
 			{pagination}
 			<p>Duration: {podcast.meta.duration}</p>
 			<Article data={podcast} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />

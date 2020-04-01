@@ -14,7 +14,7 @@ const CategoryTemplate = props => {
 	)
 	const heading = `Category: ${category.name}`
 	return (
-		<Layout heading={heading}>
+		<Layout heading={heading} crumbs={context.crumbs}>
 			{category.description ? <p>{category.description}</p> : ""}
 			{pagination}
 			<ArticleArchive list={props.data.allWordpressPost.edges} />

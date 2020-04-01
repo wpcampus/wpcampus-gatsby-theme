@@ -79,7 +79,7 @@ AuthorCards.propTypes = {
 }
 
 const AuthorCard = ({ author }) => {
-	const authorLink = "/contributor/" + author.slug
+	const authorLink = "/about/contributors/" + author.slug
 	return (
 		<div className="wpc-author">
 			<div className="wpc-areas wpc-areas--grid wpc-author__areas">

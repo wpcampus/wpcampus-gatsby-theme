@@ -3,14 +3,13 @@ import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
 // @TODO revert usage of "blognew" to "blog".
-// @TODO revert usage of "contributorsnew" to "contributors".
 const NavPrimaryItems = [
 	{ slug: "/", text: "Home" },
 	{
 		slug: "/about/",
 		text: "About",
 		children: [
-			{ slug: "/about/contributorsnew/", text: "Contributors" },
+			{ slug: "/about/contributors/", text: "Contributors" },
 			{ slug: "/about/partners/", text: "Partners" },
 			{ slug: "/about/mascots/", text: "Mascots" },
 			{ slug: "/about/governance/", text: "Governance" },
@@ -22,7 +21,7 @@ const NavPrimaryItems = [
 		text: "Blog",
 		children: [
 			{
-				slug: "/blog/categories",
+				slug: "/blognew/categories",
 				text: "Categories"
 			}
 		]

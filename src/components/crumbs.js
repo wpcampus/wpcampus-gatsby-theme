@@ -46,7 +46,7 @@ const Crumbs = ({ classes, crumbs }) => {
 
 Crumbs.propTypes = {
 	classes: PropTypes.string,
-	crumbs: PropTypes.object.isRequired
+	crumbs: PropTypes.object
 }
 
 export default Crumbs

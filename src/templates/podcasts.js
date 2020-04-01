@@ -6,9 +6,14 @@ import Layout from "../components/layout"
 import { PodcastCallout, PodcastActions } from "../components/podcast"
 import { ArticleArchive } from "../components/archive"
 
-export default function Template({ data }) {
+export default function Template(props) {
+	const data = props.data
+	const crumbs = {
+		path: props.path,
+		title: "Podcast"
+	}
 	return (
-		<Layout pageTitle="Podcast" heading="Podcasts">
+		<Layout pageTitle="Podcast" heading="Podcasts" crumbs={crumbs}>
 			<PodcastCallout />
 			<PodcastActions />
 			<ArticleArchive list={data.allWordpressWpPodcast.edges} />
@@ -17,6 +22,7 @@ export default function Template({ data }) {
 }
 
 Template.propTypes = {
+	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired
 }
 

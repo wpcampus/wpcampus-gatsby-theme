@@ -8,6 +8,7 @@ const CategoryArchive = ({ list }) => {
 		// Convert category data to match post data for component
 		node.title = node.name
 		node.content = "<p>" + node.description + "</p>"
+		node.path = "/blognew" + node.path
 
 		return (
 			<Article

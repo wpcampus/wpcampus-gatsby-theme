@@ -13,7 +13,7 @@ const PostTemplate = props => {
 		<PostPagination previous={context.previous} next={context.next} />
 	)
 	return (
-		<Layout pageTitle={post.title}>
+		<Layout pageTitle={post.title} crumbs={context.crumbs}>
 			{pagination}
 			<Article data={post} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
 			{pagination}
