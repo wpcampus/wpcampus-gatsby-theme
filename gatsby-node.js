@@ -137,12 +137,15 @@ exports.createPages = async ({ graphql, actions }) => {
 
 	const pageTemplate = path.resolve("./src/templates/page.js")
 	const libraryTemplate = path.resolve("./src/templates/library.js")
+	const indexTemplate = path.resolve("./src/templates/index.js")
 
 	pages.data.allWordpressPage.edges.forEach(edge => {
 		let template
 
 		if ("template-library.php" == edge.node.template) {
 			template = libraryTemplate
+		} else if ("/" == edge.node.path) {
+			template = indexTemplate
 		} else {
 			template = pageTemplate
 		}
