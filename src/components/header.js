@@ -1,4 +1,5 @@
 import { Link } from "gatsby"
+import PropTypes from "prop-types"
 import React from "react"
 
 import WPCampusLogo from "./logo"
@@ -7,7 +8,7 @@ import userDisplay from "../user/display"
 
 import "./../css/header.css"
 
-const Header = () => {
+const Header = props => {
 	// Have to use separate function to process <User.Consumer> and pass args
 	const handleUserDisplay = user => {
 		const args = {
@@ -15,14 +16,23 @@ const Header = () => {
 		}
 		return userDisplay(user, args)
 	}
+
+	let HeadingTag
+
+	if (props.isHome) {
+		HeadingTag = "h1"
+	} else {
+		HeadingTag = "span"
+	}
+
 	return (
 		<header className="wpc-header wpc-wrapper">
 			<div className="wpc-container wpc-header__container">
 				<div className="wpc-areas wpc-areas--grid wpc-header__areas">
 					<div className="wpc-area wpc-header__area wpc-header__area--logo">
-						<h1 className="wpc-header__heading wpc-header__heading--site">
+						<HeadingTag className="wpc-header__heading wpc-header__heading--site">
 							<Link to="/" aria-label="Home"><WPCampusLogo /></Link>
-						</h1>
+						</HeadingTag>
 					</div>
 					<div className="wpc-area wpc-header__area wpc-header__area--meta">
 						<User.Consumer>{handleUserDisplay}</User.Consumer>
@@ -31,6 +41,14 @@ const Header = () => {
 			</div>
 		</header>
 	)
+}
+
+Header.propTypes = {
+	isHome: PropTypes.bool,
+}
+
+Header.defaultProps = {
+	isHome: false,
 }
 
 export default Header

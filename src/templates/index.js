@@ -8,7 +8,7 @@ import Layout from "../components/layout"
 const PageTemplate = props => {
 	const page = props.data.wordpressPage
 	return (
-		<Layout pageTitle={page.title} useTitleTemplate={false} heading={page.title}>
+		<Layout isHome={true} pageTitle={page.title} useTitleTemplate={false} heading={page.title}>
 			<div>{ReactHtmlParser(page.content)}</div>
 		</Layout>
 	)
