@@ -1,0 +1,13 @@
+version: 2.1
+workflows:
+  version: 2
+  build_deploy_test:
+    jobs:
+      - pfe/gatsby_build_and_deploy
+      - pfe/make_multidev:
+          filters:
+            branches:
+              ignore: "master"
+
+orbs:
+  pfe: stevector/pantheon-frontend@0.1.0
