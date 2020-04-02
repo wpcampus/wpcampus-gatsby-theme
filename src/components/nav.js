@@ -89,7 +89,7 @@ const NavLink = ({ item }) => {
 		return ""
 	}
 	return (
-		<Link activeClassName="nav-link--current" to={item.slug}>
+		<Link className="nav-link" activeClassName="nav-link--current" to={item.slug}>
 			{item.text}
 		</Link>
 	)
