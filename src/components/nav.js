@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 
 // @TODO revert usage of "blognew" to "blog".
 const NavPrimaryItems = [
-	{ slug: "/", text: "Home" },
 	{
 		slug: "/about/",
 		text: "About",
@@ -14,16 +13,6 @@ const NavPrimaryItems = [
 			{ slug: "/about/mascots/", text: "Mascots" },
 			{ slug: "/about/governance/", text: "Governance" },
 			{ slug: "/about/contact/", text: "Contact us" },
-		]
-	},
-	{
-		slug: "/blognew/",
-		text: "Blog",
-		children: [
-			{
-				slug: "/blognew/categories",
-				text: "Categories"
-			}
 		]
 	},
 	{
@@ -45,8 +34,18 @@ const NavPrimaryItems = [
 		]
 	},
 	{
+		slug: "/blognew/",
+		text: "Our blog",
+		children: [
+			{
+				slug: "/blognew/categories",
+				text: "Categories"
+			}
+		]
+	},
+	{
 		slug: "/conferences/",
-		text: "Conferences",
+		text: "Our conferences",
 		children: [
 			{
 				href: "https://2021.wpcampus.org/",
