@@ -18,7 +18,7 @@ import Conduct from "./conduct"
 import Footer from "./footer"
 import WPCGridDev from "./grid-dev"
 
-const Layout = ({ pageTitle, heading, crumbs, children }) => {
+const Layout = ({ pageTitle, useTitleTemplate, heading, crumbs, children }) => {
 
 	if (!pageTitle && heading) {
 		pageTitle = heading
@@ -37,7 +37,7 @@ const Layout = ({ pageTitle, heading, crumbs, children }) => {
 	return (
 		<div {...wpcampusAttr}>
 			{showGrid ? <WPCGridDev /> : null}
-			<SEO title={pageTitle} />
+			<SEO title={pageTitle} useTitleTemplate={useTitleTemplate} />
 			<Header />
 			<Notifications />
 			<div className="wpc-body wpc-wrapper">
@@ -67,9 +67,14 @@ const Layout = ({ pageTitle, heading, crumbs, children }) => {
 
 Layout.propTypes = {
 	pageTitle: PropTypes.string,
+	useTitleTemplate: PropTypes.bool,
 	heading: PropTypes.string,
 	crumbs: PropTypes.object,
 	children: PropTypes.node.isRequired,
+}
+
+Layout.defaultProps = {
+	useTitleTemplate: true
 }
 
 export default Layout
