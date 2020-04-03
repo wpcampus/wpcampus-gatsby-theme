@@ -197,7 +197,7 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	createPage({
-		path: "/contact-test",
+		path: "/about/contact/",
 		component: slash(contactTemplate),
 		context: {
 			wpc_protected: {
