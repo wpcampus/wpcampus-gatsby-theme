@@ -17,7 +17,7 @@ const NavPrimaryItems = [
 	},
 	{
 		slug: "/community/",
-		text: "Our Community",
+		text: "Our community",
 		children: [
 			{
 				slug: "/community/members",
@@ -129,7 +129,7 @@ const NavItem = ({ item }) => {
 		<li>
 			{item.slug ? <NavLink item={item} /> : <NavAnchor item={item} />}
 			{item.children && item.children.length ? (
-				<ul>
+				<ul className="wpc-nav__sub">
 					{item.children.map((child, i) => (
 						<NavItem key={i} item={child} />
 					))}

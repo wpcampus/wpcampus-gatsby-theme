@@ -29,6 +29,14 @@ const Header = props => {
 		<header className="wpc-header wpc-wrapper">
 			<div className="wpc-container wpc-header__container">
 				<div className="wpc-areas wpc-areas--grid wpc-header__areas">
+					<div className="wpc-area wpc-header__area wpc-header__area--actions">
+						<nav className="wpc-nav wpc-nav--actions" aria-label="Login or become a member">
+							<ul>
+								<li><a className="wpc-button wpc-button--primary" href="/">Login</a></li>
+								<li><a className="wpc-button" href="/">Become a member</a></li>
+							</ul>
+						</nav>
+					</div>
 					<div className="wpc-area wpc-header__area wpc-header__area--logo">
 						<HeadingTag className="wpc-header__heading wpc-header__heading--site">
 							<Link to="/" aria-label="Home"><WPCampusLogo /></Link>

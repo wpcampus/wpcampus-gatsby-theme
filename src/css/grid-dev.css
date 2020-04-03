@@ -6,7 +6,7 @@
 	position: relative;
 
 	.wpc-area {
-		border: var(--area-border);
+		border: var(--area-border-dev);
 	}
 
 	.wpc-grid--dev {

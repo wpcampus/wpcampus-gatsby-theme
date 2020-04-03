@@ -6,17 +6,20 @@ import { Nav, NavPrimaryItems } from "./nav"
 import navigation from "../js/nav-primary"
 
 const NavPrimary = () => {
+
+	const navPrimaryID = "navPrimary"
+
 	useEffect(() => {
 		navigation.init({
 			breakpoint: 960,
 			main: document.getElementById("main"),
-			nav: document.getElementById("nav"),
+			nav: document.getElementById(navPrimaryID),
 			minHeights: false,
 		})
 	})
 
 	const navPrimaryAttr = {
-		id: "nav",
+		id: navPrimaryID,
 		classes: "wpc-nav wpc-nav--primary",
 		label: "Primary",
 		list: NavPrimaryItems
