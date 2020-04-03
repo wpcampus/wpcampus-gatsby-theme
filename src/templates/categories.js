@@ -5,15 +5,25 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import { CategoryArchive } from "../components/archive"
 
-export default function Template({ data }) {
+export default function Template(props) {
+	const data = props.data
+	const crumbs = {
+		path: props.path,
+		title: "Categories",
+		parent_element: {
+			path: "/blognew/",
+			title: "Blog"
+		}
+	}
 	return (
-		<Layout heading="Categories">
+		<Layout heading="Categories" crumbs={crumbs}>
 			<CategoryArchive list={data.allWordpressCategory.edges} />
 		</Layout>
 	)
 }
 
 Template.propTypes = {
+	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired
 }
 

@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Nav from "../components/nav"
+import { Nav } from "../components/nav"
 
 const Pagination = ({ slug, single, plural, previous, next }) => {
 	let items = [
@@ -32,7 +32,11 @@ const CategoryPagination = ({ previous, next }) => {
 }
 
 const PostPagination = ({ previous, next }) => {
-	return <Pagination slug="blog" single="post" plural="posts" previous={previous} next={next} />
+	return <Pagination slug="blognew" single="post" plural="posts" previous={previous} next={next} />
+}
+
+const PodcastPagination = ({ previous, next }) => {
+	return <Pagination slug="podcast" single="podcast" plural="podcasts" previous={previous} next={next} />
 }
 
 Pagination.propTypes = {
@@ -53,4 +57,9 @@ PostPagination.propTypes = {
 	next: PropTypes.object,
 }
 
-export { Pagination, CategoryPagination, PostPagination }
+PodcastPagination.propTypes = {
+	previous: PropTypes.object,
+	next: PropTypes.object,
+}
+
+export { Pagination, CategoryPagination, PodcastPagination, PostPagination }

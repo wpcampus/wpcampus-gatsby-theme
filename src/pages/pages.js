@@ -1,3 +1,4 @@
+// @TODO delete page
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql } from "gatsby"
@@ -34,14 +35,6 @@ export const query = graphql`
           wordpress_id
           slug
           path
-          author {
-            id
-            wordpress_id
-            name
-            slug
-            path
-            url
-          }
           title
           status
           date

@@ -51,13 +51,28 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			},
 			interfaces: ["Node"],
 		}),
+		schema.buildObjectType({
+			name: "wordpress__wp_podcast",
+			fields: {
+				"episode_featured_image": {
+					type: "String",
+					resolve(source) {
+						if ("string" !== typeof source.episode_featured_image) {
+							return ""
+						}
+						return source.episode_featured_image
+					}
+				},
+			},
+			interfaces: ["Node"],
+		}),
 		/*schema.buildObjectType({
-      name: "wordpress__wp_members",
-      fields: {
-        wpc_protected: "wpcProtected",
-      },
-      interfaces: ["Node"],
-    }),*/
+		name: "wordpress__wp_members",
+		fields: {
+			wpc_protected: "wpcProtected",
+		},
+		interfaces: ["Node"],
+		}),*/
 		// The GF source made this type.
 		schema.buildObjectType({
 			name: "GF__FormFormFields",
@@ -96,42 +111,68 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 exports.createPages = async ({ graphql, actions }) => {
 	const { createPage } = actions
 
-	/**
-   * Build pages from WordPress "page" post type.
-   * 
-   * @TODO remove fields we're not using.
-   */
+	/*
+   	 * Build pages from WordPress "page" post type.
+   	 * 
+   	 * @TODO remove fields we're not using.
+   	 * 
+   	 * @TODO this means we can't have more than 5 levels of crumbs.
+   	 */
 	const pages = await graphql(`
-    query {
-      allWordpressPage(filter: { status: { eq: "publish" } }) {
-        edges {
-          node {
-            id
-            path
-            template
-            wpc_protected {
-              protected
-              user_roles {
-                enable
-                disable
-              }
-              message
-            }
-          }
-        }
-      }
-    }
-  `)
+		query {
+			allWordpressPage(filter: { status: { eq: "publish" } }) {
+				edges {
+					node {
+						id
+						path
+						title
+						template
+						parent_element {
+							path
+							title
+							parent_element {
+								path
+								title
+								parent_element {
+									path
+									title
+									parent_element {
+										path
+										title
+										parent_element {
+											path
+											title
+										}
+									}
+								}
+							}
+						}
+						wpc_protected {
+							protected
+							user_roles {
+								enable
+								disable
+							}
+							message
+						}
+					}
+				}
+			}
+		}
+  	`)
 
 	const contactTemplate = path.resolve("./src/templates/contact.js")
 	const pageTemplate = path.resolve("./src/templates/page.js")
 	const libraryTemplate = path.resolve("./src/templates/library.js")
+	const indexTemplate = path.resolve("./src/templates/index.js")
 
 	pages.data.allWordpressPage.edges.forEach(edge => {
 		let template
 
 		if ("template-library.php" == edge.node.template) {
 			template = libraryTemplate
+		} else if ("/" == edge.node.path) {
+			template = indexTemplate
 		} else {
 			template = pageTemplate
 		}
@@ -145,6 +186,11 @@ exports.createPages = async ({ graphql, actions }) => {
 			// as a GraphQL variable to query for this posts's data.
 			context: {
 				id: edge.node.id,
+				crumbs: {
+					path: edge.node.path,
+					title: edge.node.title,
+					parent_element: edge.node.parent_element
+				},
 				wpc_protected: edge.node.wpc_protected,
 			},
 		})
@@ -160,65 +206,66 @@ exports.createPages = async ({ graphql, actions }) => {
 		},
 	})
 
-	/**
-   * Build blog posts from WordPress "post" post type.
-   * 
-   * @TODO remove fields we're not using.
-   */
+	/*
+   	 * Build blog posts from WordPress "post" post type.
+   	 * 
+   	 * @TODO remove fields we're not using.
+   	 */
 	const posts = await graphql(`
-    query {
-      allWordpressPost(
-        filter: { type: { eq: "post" }, status: { eq: "publish" } }
-      ) {
-        edges {
-          previous {
-            id
-            wordpress_id
-            slug
-            path
-            title
-            date
-            wpc_protected {
-              protected
-              user_roles {
-                enable
-                disable
-              }
-              message
-            }
-          }
-          next {
-            id
-            wordpress_id
-            slug
-            path
-            title
-            date
-            wpc_protected {
-              protected
-              user_roles {
-                enable
-                disable
-              }
-              message
-            }
-          }
-          node {
-            id
-            path
-            wpc_protected {
-              protected
-              user_roles {
-                enable
-                disable
-              }
-              message
-            }
-          }
-        }
-      }
-    }
-  `)
+		query {
+			allWordpressPost(
+				filter: { type: { eq: "post" }, status: { eq: "publish" } }
+			) {
+				edges {
+					previous {
+						id
+						wordpress_id
+						slug
+						path
+						title
+						date
+						wpc_protected {
+							protected
+							user_roles {
+								enable
+								disable
+							}
+							message
+						}
+					}
+					next {
+						id
+						wordpress_id
+						slug
+						path
+						title
+						date
+						wpc_protected {
+							protected
+							user_roles {
+								enable
+								disable
+							}
+							message
+						}
+					}
+					node {
+						id
+						path
+						title
+						wpc_protected {
+							protected
+							user_roles {
+								enable
+								disable
+							}
+							message
+						}
+					}
+				}
+			}
+		}
+  	`)
 	const postTemplate = path.resolve("./src/templates/post.js")
 	posts.data.allWordpressPost.edges.forEach(edge => {
 		createPage({
@@ -233,52 +280,140 @@ exports.createPages = async ({ graphql, actions }) => {
 				wpc_protected: edge.node.wpc_protected,
 				next: edge.next,
 				previous: edge.previous,
+				crumbs: {
+					path: edge.node.path,
+					title: edge.node.title,
+					parent_element: {
+						path: "/blognew/",
+						title: "Blog"
+					}
+				},
 			},
 		})
 	})
 
-	/**
-   * Build category archives from WordPress "categories" taxonomy.
-   * 
-   * @TODO remove fields we're not using.
-   */
-	const categories = await graphql(`
-    query {
-      allWordpressCategory {
-        edges {
-          previous {
-            id
-            wordpress_id
-            count
-            name
-            description
-            path
-          }
-          next {
-            id
-            wordpress_id
-            count
-            name
-            description
-            path
-          }
-          node {
-            id
-            wordpress_id
-            count
-            name
-            description
-            path
-          }
-        }
-      }
-    }
-  `)
-	const categoryTemplate = path.resolve("./src/templates/category.js")
-	categories.data.allWordpressCategory.edges.forEach(edge => {
+	/*
+	 * Create main podcast page.
+	 */
+	createPage({
+		path: "/podcast/",
+		component: path.resolve("src/templates/podcasts.js")
+	})
+
+	/*
+	 * Build podcast posts from WordPress "podcast" post type.
+	 * 
+	 * @TODO remove fields we're not using.
+	 */
+	const podcasts = await graphql(`
+		query {
+			allWordpressWpPodcast(
+				filter: { type: { eq: "podcast" }, status: { eq: "publish" } }
+			) {
+				edges {
+					previous {
+						id
+						wordpress_id
+						slug
+						path
+						title
+						date
+					}
+					next {
+						id
+						wordpress_id
+						slug
+						path
+						title
+						date
+					}
+					node {
+						id
+						path
+						title
+					}
+				}
+			}
+		}
+	`)
+	const podcastTemplate = path.resolve("./src/templates/podcast.js")
+	podcasts.data.allWordpressWpPodcast.edges.forEach(edge => {
 		createPage({
 			// will be the url for the page
 			path: edge.node.path,
+			// specify the component template of your choice
+			component: slash(podcastTemplate),
+			// In the ^template's GraphQL query, 'id' will be available
+			// as a GraphQL variable to query for this posts's data.
+			context: {
+				id: edge.node.id,
+				next: edge.next,
+				previous: edge.previous,
+				crumbs: {
+					path: edge.node.path,
+					title: edge.node.title,
+					parent_element: {
+						path: "/podcast/",
+						title: "Podcast"
+					}
+				},
+			},
+		})
+	})
+
+	/*
+	 * Create main categories page.
+	 */
+	createPage({
+		path: "/blognew/categories/",
+		component: path.resolve("src/templates/categories.js")
+	})
+
+	/**
+	 * Build category archives from WordPress "categories" taxonomy.
+	 * 
+	 * @TODO remove fields we're not using.
+	 */
+	const categories = await graphql(`
+		query {
+			allWordpressCategory {
+				edges {
+					previous {
+						id
+						wordpress_id
+						count
+						name
+						description
+						path
+					}
+					next {
+						id
+						wordpress_id
+						count
+						name
+						description
+						path
+					}
+					node {
+						id
+						wordpress_id
+						count
+						name
+						description
+						path
+					}
+				}
+			}
+		}
+  	`)
+	const categoryTemplate = path.resolve("./src/templates/category.js")
+	categories.data.allWordpressCategory.edges.forEach(edge => {
+
+		const categoryPath = "/blognew" + edge.node.path
+
+		createPage({
+			// will be the url for the page
+			path: categoryPath,
 			// specify the component template of your choice
 			component: slash(categoryTemplate),
 			// In the ^template's GraphQL query, 'id' will be available
@@ -287,51 +422,83 @@ exports.createPages = async ({ graphql, actions }) => {
 				id: edge.node.id,
 				next: edge.next,
 				previous: edge.previous,
+				crumbs: {
+					path: categoryPath,
+					title: edge.node.name,
+					parent_element: {
+						path: "/blognew/categories/",
+						title: "Categories",
+						parent_element: {
+							path: "/blognew/",
+							title: "Blog"
+						}
+					}
+				},
 			},
 		})
 	})
 
+	/*
+	 * Create main contributors page.
+	 */
+	createPage({
+		path: "/about/contributors/",
+		component: path.resolve("src/templates/contributors.js")
+	})
+
 	/**
-   * Build contributor pages from WordPress users list.
-   * 
-   * @TODO remove fields we're not using.
-   */
+   	 * Build contributor pages from WordPress users list.
+   	 * 
+   	 * @TODO remove fields we're not using.
+   	 */
 	const authors = await graphql(`
-    query {
-      allWordpressWpUsers {
-        edges {
-          node {
-            id
-            wordpress_id
-            name
-            slug
-            path
-            url
-          }
-        }
-      }
-    }
-  `)
+		query {
+			allWordpressWpUsers {
+				edges {
+					node {
+						id
+						wordpress_id
+						name
+						slug
+						path
+						url
+					}
+				}
+			}
+		}
+  	`)
 	const authorTemplate = path.resolve("./src/templates/contributor.js")
 	authors.data.allWordpressWpUsers.edges.forEach(edge => {
 		createPage({
 			// will be the url for the page
-			path: "/contributor/" + edge.node.slug,
+			path: "/about/contributors/" + edge.node.slug,
 			// specify the component template of your choice
 			component: slash(authorTemplate),
 			// In the ^template's GraphQL query, 'id' will be available
 			// as a GraphQL variable to query for this posts's data.
 			context: {
 				id: edge.node.id,
+				crumbs: {
+					path: edge.node.path,
+					title: edge.node.name,
+					parent_element: {
+						path: "/about/contributors/",
+						title: "Contributors",
+						parent_element: {
+							path: "/about/",
+							title: "About"
+						}
+					}
+				},
 			},
 		})
 	})
 
 	/**
-   * Build contributor archive from WordPress users list.
-   * 
-   * @TODO remove fields we're not using.
-   */
+   	 * Build contributor archive from WordPress users list.
+   	 * 
+   	 * @TODO remove fields we're not using.
+   	 */
 	/*const members = await graphql(`
     query {
       allWordpressWpMembers(

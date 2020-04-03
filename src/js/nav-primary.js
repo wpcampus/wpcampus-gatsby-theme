@@ -102,18 +102,31 @@
 		submenus.forEach(submenu => {
 			if (submenu.parentNode.querySelector(".js-submenu-toggle")) return
 
-			submenu.parentNode.insertBefore(toggleButton.cloneNode(true), submenu)
+			// Get parent link.
+			const submenuParentLink = submenu.previousSibling
+
+			// Create a span wrapper.
+			const toggleSpan = document.createElement("span")
+			toggleSpan.classList.add("nav-link--toggle")
+			toggleSpan.appendChild(submenuParentLink)
+
+			// Add the toggle button to the span.
+			toggleSpan.appendChild(toggleButton.cloneNode(true))
+
+			// Add the span before the submenu.
+			submenu.parentNode.insertBefore(toggleSpan, submenu)
 		})
 
 		menu.classList.add("has-submenu-toggle", "js-has-submenu-toggle")
 	}
 
 	/**
-   * Toggles classes and attributes used for handling the display of the menu.
-   * @private
-   * @param {Event}  event    The click event target.
-   * @param {String} expanded The updated value for the `aria-expanded` attribute.
-   */
+     * Toggles classes and attributes used for handling the display of the menu.
+	 *
+	 * @private
+     * @param {Event}  event    The click event target.
+     * @param {String} expanded The updated value for the `aria-expanded` attribute.
+     */
 	const toggleMenu = (target, expanded) => {
 		const label =
 			"Open menu" === target.getAttribute("aria-label")
@@ -145,7 +158,7 @@
 
 		target.setAttribute("aria-label", label)
 
-		target.parentNode.classList.toggle("toggled-open")
+		target.parentNode.parentNode.classList.toggle("toggled-open")
 
 		resizeHandler()
 

@@ -8,8 +8,9 @@ import Layout from "../components/layout"
 const ContributorTemplate = props => {
 	const contributor = props.data.wordpressWpUsers
 	const heading = `Contributor: ${contributor.name}`
+	const context = props.pageContext
 	return (
-		<Layout heading={heading}>
+		<Layout heading={heading} crumbs={context.crumbs}>
 			<ArticleArchive list={props.data.allWordpressPost.edges} />
 		</Layout>
 	)
@@ -18,6 +19,7 @@ const ContributorTemplate = props => {
 ContributorTemplate.propTypes = {
 	data: PropTypes.object.isRequired,
 	edges: PropTypes.array,
+	pageContext: PropTypes.object.isRequired
 }
 
 export default ContributorTemplate
@@ -55,6 +57,10 @@ export const query = graphql`
             slug
             path
             url
+			description
+			company
+			company_position
+			twitter
           }
           title
           status

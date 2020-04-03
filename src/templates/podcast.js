@@ -4,35 +4,36 @@ import PropTypes from "prop-types"
 
 import Article from "../components/article"
 import Layout from "../components/layout"
-import { PostPagination } from "../components/pagination"
+import { PodcastPagination } from "../components/pagination"
 
-const PostTemplate = props => {
-	const post = props.data.wordpressPost
+const PodcastTemplate = props => {
+	const podcast = props.data.wordpressWpPodcast
 	const context = props.pageContext
 	const pagination = (
-		<PostPagination previous={context.previous} next={context.next} />
+		<PodcastPagination previous={context.previous} next={context.next} />
 	)
 	return (
-		<Layout pageTitle={post.title} crumbs={context.crumbs}>
+		<Layout pageTitle={podcast.title} crumbs={context.crumbs}>
 			{pagination}
-			<Article data={post} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
+			<p>Duration: {podcast.meta.duration}</p>
+			<Article data={podcast} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
 			{pagination}
 		</Layout>
 	)
 }
 
-PostTemplate.propTypes = {
+PodcastTemplate.propTypes = {
 	data: PropTypes.object.isRequired,
 	edges: PropTypes.array,
 	pageContext: PropTypes.object.isRequired
 }
 
-export default PostTemplate
+export default PodcastTemplate
 
 // @TODO remove fields we're not using.
-export const postQuery = graphql`
+export const podcastQuery = graphql`
   query($id: String!) {
-    wordpressPost(id: { eq: $id }) {
+    wordpressWpPodcast(id: { eq: $id }) {
       id
       wordpress_id
       slug
@@ -43,7 +44,7 @@ export const postQuery = graphql`
         name
         slug
         path
-        url
+		url
 		description
 		company
 		company_position
@@ -63,7 +64,10 @@ export const postQuery = graphql`
         name
         description
         path
-      }
+	  }
+	  meta {
+		  duration
+	  }
     }
     site {
       siteMetadata {

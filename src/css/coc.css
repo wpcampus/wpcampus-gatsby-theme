@@ -1,16 +1,60 @@
 /* stylelint-disable selector-type-no-unknown */
 wpcampus-coc {
-	.wpc-coc__heading {
-		margin: 0 0 1rem;
-	}
+	background: var(--wpc-gray-lightest);
+	border-top: var(--area-border-gray-light);
 
-	.wpc-coc__message {
-		margin: 0 0 1rem;
-	}
+	.wpc-coc {
+		a {
+			color: inherit;
+		}
 
-	.wpc-coc__button {
-		display: block;
-		margin: 0 auto;
+		svg {
+			display: block;
+			max-width: 100%;
+			height: auto;
+		}
+
+		&__link {
+			font-weight: bold;
+		}
+
+		.wpc-coc__heading {
+			font-size: 1.3rem;
+			font-weight: 600;
+			margin: 0 0 0.25rem;
+		}
+
+		.wpc-coc__main {
+			& > *:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		&__area {
+			padding: var(--area-padding) var(--area-padding-large);
+
+			@media (min-width: 768px) {
+				display: grid;
+				grid-template-columns: 100px 1fr;
+				grid-column-gap: 2rem;
+				align-items: center;
+
+				.wpc-coc__main {
+					grid-column: 2 / span 1;
+				}
+
+				.wpc-coc__graphic {
+					grid-column: 1 / span 1;
+					grid-row: 1;
+				}
+			}
+		}
+
+		/* Laptop */
+		@media (min-width: 768px) {
+			max-width: 90%;
+			margin: 0 auto;
+		}
 	}
 }
 /* stylelint-disable */

@@ -3,25 +3,34 @@ import PropTypes from "prop-types"
 import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
+import { PodcastCallout, PodcastActions } from "../components/podcast"
 import { ArticleArchive } from "../components/archive"
 
-export default function Template({ data }) {
+export default function Template(props) {
+	const data = props.data
+	const crumbs = {
+		path: props.path,
+		title: "Podcast"
+	}
 	return (
-		<Layout pageTitle="Blog" heading="Blog posts">
-			<ArticleArchive list={data.allWordpressPost.edges} />
+		<Layout pageTitle="Podcast" heading="Podcasts" crumbs={crumbs}>
+			<PodcastCallout />
+			<PodcastActions />
+			<ArticleArchive list={data.allWordpressWpPodcast.edges} />
 		</Layout>
 	)
 }
 
 Template.propTypes = {
+	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired
 }
 
 // @TODO remove fields we're not using.
 export const query = graphql`
   query {
-    allWordpressPost(
-      filter: { type: { eq: "post" }, status: { eq: "publish" } }
+    allWordpressWpPodcast(
+      filter: { type: { eq: "podcast" }, status: { eq: "publish" } }
       sort: { fields: date, order: DESC }
     ) {
       edges {
@@ -36,7 +45,6 @@ export const query = graphql`
             name
             slug
             path
-            url
           }
           title
           status

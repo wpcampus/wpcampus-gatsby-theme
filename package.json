@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@wpcampus/wpcampus-web-components": "^1.1.8",
+    "@wpcampus/wpcampus-web-components": "^1.2.0",
     "dotenv": "^8.2.0",
     "gatsby": "^2.19.45",
     "gatsby-cli": "^2.11.0",
@@ -41,11 +41,12 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
+    "playground": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "lint": "eslint *.js src/**/*.js *.json --fix",
     "css": "stylelint src/css/*.css --fix",
     "start": "npm run develop",
-    "serve": "gatsby serve",
+    "serve": "gatsby clean && gatsby build && gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "repository": {
