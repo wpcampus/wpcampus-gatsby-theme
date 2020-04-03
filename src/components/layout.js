@@ -59,7 +59,7 @@ const Layout = props => {
 						<Crumbs crumbs={crumbs} classes="wpc-area wpc-body__area wpc-body__area--crumbs" />
 						<div className="wpc-area wpc-body__area wpc-body__area--main">
 							<main id="main" className="wpc-main wpc-wrapper">
-								{heading ? (<Heading level={1} heading={heading} />) : null}
+								{!isHome && heading ? (<Heading level={1} heading={heading} />) : null}
 								{children}
 							</main>
 						</div>
