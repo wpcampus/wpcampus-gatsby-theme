@@ -1,20 +1,50 @@
 .wpc-header {
-	.wpc-header__heading {
-		&--site {
-			margin: 0;
-		}
+	border-bottom: 5px solid rgba(44, 38, 50, 0.9);
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.7);
+	z-index: 1000;
+	position: relative;
+
+	&__heading {
+		margin: 0;
 	}
 
 	&__areas {
+		padding: 1.5rem 2rem;
+
 		.wpc-header__area {
+			&--actions {
+				grid-column: col-start 1 / span 3;
+
+				.wpc-button {
+					max-width: 300px;
+				}
+			}
+
 			&--logo {
-				grid-column: col-start / span 8;
+				grid-column: col-start 5 / span 4;
 				align-self: center;
+
+				a,
+				svg {
+					display: block;
+				}
+
+				svg {
+					max-height: 70px;
+					margin: 0 auto;
+				}
 			}
 
 			&--meta {
-				grid-column: col-start 9 / span 4;
+				grid-column: col-start 10 / span 3;
 			}
 		}
 	}
+}
+
+/* @TODO: purchase graphic */
+.wpc-hero {
+	background: url(../images/heros/hero1.png) center -95px fixed;
+	height: 150px;
+	border-bottom: var(--area-border-gray-light);
 }
