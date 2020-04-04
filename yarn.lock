@@ -1649,11 +1649,57 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@wpcampus/wpcampus-web-components@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-web-components/-/wpcampus-web-components-1.2.0.tgz#513806740534d9ddfca220a239653dd7ded43a08"
-  integrity sha512-CKvIGvbNVA4njWgslDFA37BdBbRml8GGjOiEkgURFvFZ/9SPTa0UD2+F6jqq2TBBceBmnWiLFDD8RTzbYOA8qA==
+"@wpcampus/wpcampus-wc-blog@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.0.1.tgz#d11d98fe302271039b84443827b50105753b197f"
+  integrity sha512-qD8cdsBPrVyEkTtbVL5NO6DelTkV2MlV9J2shj6XMU4/E+UQpFIuo8ecUrt7O881lQ0TU57ywNY1JdwUBa6nFQ==
   dependencies:
+    "@wpcampus/wpcampus-wc-default" "^0.0.1"
+
+"@wpcampus/wpcampus-wc-conduct@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-conduct/-/wpcampus-wc-conduct-0.0.2.tgz#a7fb63110205eddf63fd0844e036abc2ef9a5b28"
+  integrity sha512-klAj0F+AVYgXbkWEUWiVDU6YenrARWsPmkQh5woWWrUXuH3VN7i3pGBdcdNsu78MNo5FpzpC336lCCHDCeTxaQ==
+  dependencies:
+    "@wpcampus/wpcampus-wc-default" "^0.0.1"
+
+"@wpcampus/wpcampus-wc-default@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-default/-/wpcampus-wc-default-0.0.1.tgz#446daec8c6fe4b8d3185dbc02f80d323078628f4"
+  integrity sha512-VYizejdAkyVEEV5n0hkleZF/sbC7QnAlzb9+cunn01g8o1uBKTMKCaP0yxVhJMgrM5Y9swj3rdZNZuwp/fJTyA==
+
+"@wpcampus/wpcampus-wc-footer@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-footer/-/wpcampus-wc-footer-0.0.1.tgz#0a11cecdd520e3ebf744e083d8833d49a55f48cc"
+  integrity sha512-7IS4zEsUMqUdwDOyAf4DNlS2dMMha/ctEPhlOccuD7VsKINacbdCzBoDXeF/rf2o2KfQEz1PtzFudU1XVeC7sg==
+  dependencies:
+    "@wpcampus/wpcampus-wc-default" "^0.0.1"
+
+"@wpcampus/wpcampus-wc-library@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-library/-/wpcampus-wc-library-0.0.1.tgz#80ff3ab99eccfd696c754bf95fadb506922bfef2"
+  integrity sha512-JnocmHSpDT6jCRqTJEo4j/k89azksTVJ2TnoW2zmnMZ3yrom2h94Wtn+gGP5PHzTsn85f/EabG+nxfNhS1BRHQ==
+  dependencies:
+    "@wpcampus/wpcampus-wc-default" "^0.0.1"
+
+"@wpcampus/wpcampus-wc-notifications@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-notifications/-/wpcampus-wc-notifications-0.0.1.tgz#985776156d09dff87e3b847fc083fb8309652c08"
+  integrity sha512-WmJrklV3SPaJmdusEYKnrC8wq8HHQU3fSfxDipXmnX0j+tVUAfrhWj6+NHpPKxjgcV1Od8yoNkQZXFuk9glSYg==
+  dependencies:
+    "@wpcampus/wpcampus-wc-default" "^0.0.1"
+
+"@wpcampus/wpcampus-web-components@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-web-components/-/wpcampus-web-components-1.2.1.tgz#f00f3724706b57c71fb9fa5d79c59a1d0acc1d72"
+  integrity sha512-16w7Wfoge4RD4UQdAKrdrg7QvL8A9Xd8KFxWzNG602ioePP3668tyK6yo36wZ00zcGxYPGIihUY37MZhLRs8vw==
+  dependencies:
+    "@wpcampus/wpcampus-wc-blog" "^0.0.1"
+    "@wpcampus/wpcampus-wc-conduct" "^0.0.2"
+    "@wpcampus/wpcampus-wc-default" "^0.0.1"
+    "@wpcampus/wpcampus-wc-footer" "^0.0.1"
+    "@wpcampus/wpcampus-wc-library" "^0.0.1"
+    "@wpcampus/wpcampus-wc-notifications" "^0.0.1"
     handlebars "^4.5.3"
 
 "@xtuc/ieee754@^1.2.0":
