@@ -1,9 +1,9 @@
 /* stylelint-disable selector-type-no-unknown */
-wpcampus-coc {
+wpcampus-conduct {
 	background: var(--wpc-gray-lightest);
 	border-top: var(--area-border-gray-light);
 
-	.wpc-coc {
+	.wpc-conduct {
 		a {
 			color: inherit;
 		}
@@ -18,13 +18,13 @@ wpcampus-coc {
 			font-weight: bold;
 		}
 
-		.wpc-coc__heading {
+		.wpc-conduct__heading {
 			font-size: 1.3rem;
 			font-weight: 600;
 			margin: 0 0 0.25rem;
 		}
 
-		.wpc-coc__main {
+		.wpc-conduct__main {
 			& > *:last-child {
 				margin-bottom: 0;
 			}
@@ -39,11 +39,11 @@ wpcampus-coc {
 				grid-column-gap: 2rem;
 				align-items: center;
 
-				.wpc-coc__main {
+				.wpc-conduct__main {
 					grid-column: 2 / span 1;
 				}
 
-				.wpc-coc__graphic {
+				.wpc-conduct__graphic {
 					grid-column: 1 / span 1;
 					grid-row: 1;
 				}

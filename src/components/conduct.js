@@ -2,11 +2,11 @@ import React from "react"
 
 import WebComponent from "./webComponents"
 
-import "./../css/coc.css"
+import "./../css/conduct.css"
 
 const Conduct = () => {
 	return (
-		<WebComponent id="coc" tag="wpcampus-coc" />
+		<WebComponent id="conduct" tag="wpcampus-conduct" />
 	)
 }
 
