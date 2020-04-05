@@ -104,7 +104,7 @@ export default class Auth {
 				reject(new Error(messages.missing_api))
 			}
 
-			return fetch(process.env.WPC_AUTH_API_BASE + "/wp/v2/users/me", {
+			return fetch(process.env.WPC_AUTH_API_BASE + "/wpcampus/auth/user", {
 				method: "get",
 				headers: new Headers({
 					Accept: "application/json",
