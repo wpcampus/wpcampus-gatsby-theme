@@ -1664,10 +1664,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@wpcampus/wpcampus-wc-blog@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.0.1.tgz#d11d98fe302271039b84443827b50105753b197f"
-  integrity sha512-qD8cdsBPrVyEkTtbVL5NO6DelTkV2MlV9J2shj6XMU4/E+UQpFIuo8ecUrt7O881lQ0TU57ywNY1JdwUBa6nFQ==
+"@wpcampus/wpcampus-wc-blog@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.0.2.tgz#cb74b34939dbff53ab665a3a6b0a83576edc0be9"
+  integrity sha512-6owgjhrmGPJxNQ9a1Ikv5nSJt0ovcSN93kLJtltaQUQnY/k7TG6aRSYx4UFaTbGxh/8yG6fbxk0VZ8mKhsE/kw==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
 
@@ -1697,24 +1697,24 @@
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
 
-"@wpcampus/wpcampus-wc-notifications@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-notifications/-/wpcampus-wc-notifications-0.0.1.tgz#985776156d09dff87e3b847fc083fb8309652c08"
-  integrity sha512-WmJrklV3SPaJmdusEYKnrC8wq8HHQU3fSfxDipXmnX0j+tVUAfrhWj6+NHpPKxjgcV1Od8yoNkQZXFuk9glSYg==
+"@wpcampus/wpcampus-wc-notifications@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-notifications/-/wpcampus-wc-notifications-0.0.2.tgz#957046ca22c7a532b69e03b57ec688183364808b"
+  integrity sha512-Y2b+ZUfIjrWkGhhvmn3fFxc9MSZZcs+gcz7XBp087YZi0xGTKcWudFVhoQNnQMXw1q0sYDTzi5MU1Ncxvm6QiQ==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
 
-"@wpcampus/wpcampus-web-components@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-web-components/-/wpcampus-web-components-1.2.1.tgz#f00f3724706b57c71fb9fa5d79c59a1d0acc1d72"
-  integrity sha512-16w7Wfoge4RD4UQdAKrdrg7QvL8A9Xd8KFxWzNG602ioePP3668tyK6yo36wZ00zcGxYPGIihUY37MZhLRs8vw==
+"@wpcampus/wpcampus-web-components@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-web-components/-/wpcampus-web-components-1.2.2.tgz#c04d53f368360da15c6fd766fce8305f7bc1b04f"
+  integrity sha512-c6lYAhDNs3UwHd83vUZ7EQQuP2EHcRJiSpjs9dEnnx5Jm9RbSh7azFZ45YhCWiXvGl6TnuUIs6avoox2KhL0Gw==
   dependencies:
-    "@wpcampus/wpcampus-wc-blog" "^0.0.1"
+    "@wpcampus/wpcampus-wc-blog" "^0.0.2"
     "@wpcampus/wpcampus-wc-conduct" "^0.0.2"
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
     "@wpcampus/wpcampus-wc-footer" "^0.0.1"
     "@wpcampus/wpcampus-wc-library" "^0.0.1"
-    "@wpcampus/wpcampus-wc-notifications" "^0.0.1"
+    "@wpcampus/wpcampus-wc-notifications" "^0.0.2"
     handlebars "^4.5.3"
 
 "@xtuc/ieee754@^1.2.0":
