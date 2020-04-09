@@ -10,9 +10,9 @@ const tokenKey = "wpc-auth-token"
  */
 const defaultDuration = 172800000
 const expDuration =
-    process.env.WPC_AUTH_DURATION &&
-        Number.isInteger(process.env.WPC_AUTH_DURATION) &&
-        process.env.WPC_AUTH_DURATION > 0 ? parseInt(process.env.WPC_AUTH_DURATION) : defaultDuration
+	process.env.WPC_AUTH_DURATION &&
+		Number.isInteger(process.env.WPC_AUTH_DURATION) &&
+		process.env.WPC_AUTH_DURATION > 0 ? parseInt(process.env.WPC_AUTH_DURATION) : defaultDuration
 
 const removeJWTPrefix = message => {
 	return message.replace(/^\[jwt_auth\]\s/, "")
@@ -20,10 +20,13 @@ const removeJWTPrefix = message => {
 
 export default class Auth {
 	removeToken() {
-		localStorage.removeItem(tokenKey)
+		typeof localStorage !== "undefined" && localStorage.removeItem(tokenKey)
 	}
 
 	storeToken(tokenValue) {
+		if (typeof localStorage === "undefined") {
+			return false
+		}
 		let token = {
 			token: tokenValue,
 		}
@@ -33,6 +36,10 @@ export default class Auth {
 	}
 
 	getValidToken() {
+		if (typeof localStorage === "undefined") {
+			return false
+		}
+
 		let token = localStorage.getItem(tokenKey)
 		if (token === null) {
 			return false
