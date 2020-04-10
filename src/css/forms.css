@@ -1,4 +1,33 @@
 .wpc-form {
+	input[type="text"],
+	input[type="search"],
+	input[type="email"],
+	input[type="password"] {
+		display: block;
+		width: 100%;
+		height: auto;
+		padding: 0.5rem;
+		font-size: 1rem;
+		color: inherit;
+	}
+
+	input[type="submit"] {
+		background-color: var(--wpc-blue-royal);
+		border: 1px solid var(--wpc-blue-royal);
+		border-radius: 0.25rem;
+		padding: 0.5rem 1rem;
+		font-size: 1.1rem;
+		color: #fff;
+		cursor: pointer;
+
+		&:hover,
+		&:focus {
+			background-color: var(--wpc-blue-dark);
+			border-color: var(--wpc-blue-dark);
+			color: #fff;
+		}
+	}
+
 	&__alert {
 		margin: 0 0 0.5rem;
 		font-weight: bold;
@@ -10,11 +39,6 @@
 	}
 
 	&__input {
-		display: block;
-		width: 100%;
-		height: auto;
-		padding: 0.3rem;
-
 		&[aria-invalid="true"] {
 			border: 1px solid #900;
 		}
@@ -23,6 +47,12 @@
 			margin: 0.25rem 0 0;
 			color: #900;
 		}
+	}
+
+	&--search {
+		display: grid;
+		grid-template-columns: 80% 1fr;
+		grid-column-gap: 0.5rem;
 	}
 
 	&--login {

@@ -71,6 +71,23 @@
 		}
 	}
 
+	.wpc-search {
+		transition: all 0.5s;
+
+		.wpc-form--search {
+			margin: 1.5rem 0 0 0;
+		}
+
+		&__results {
+			margin: 2rem 0 0 0;
+		}
+
+		&--processing {
+			opacity: 0.6;
+			pointer-events: none;
+		}
+	}
+
 	main {
 		& > h1:first-child {
 			margin-top: -0.25rem;
