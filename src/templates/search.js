@@ -197,6 +197,10 @@ class Search extends React.Component {
 			results: prevState.results
 		}))
 
+		if (undefined === process.env.WPC_SEARCH) {
+			return
+		}
+
 		let url = process.env.WPC_SEARCH
 
 		// What post types do we want?
