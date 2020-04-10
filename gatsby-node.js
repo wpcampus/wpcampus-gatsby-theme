@@ -78,12 +78,97 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 }
 
 /**
+ * Create search nodes.
+ * 
+ * Am not using this code but its
+ * a great example of how to create new
+ * nodes from existing nodes so keeping
+ * the code for now.
+ */
+/*exports.onCreateNode = ({ node, actions, getNode, createNodeId, createContentDigest }) => {
+	const { createNode } = actions
+
+	const types = [
+		"wordpress__wp_podcast",
+		"wordpress__POST",
+		"wordpress__PAGE"
+	]
+
+	if (!types.includes(node.internal.type)) {
+		return
+	}
+
+	const searchType = "wordpress__wp_search"
+
+	// Create one search field that has all the values we want searched.
+	let searchContent = `${node.title} ${node.excerpt} ${node.content}`
+
+	const searchNode = {
+		id: createNodeId(`${node.id}-search`),
+		type: node.type,
+		date: node.date,
+		title: node.title,
+		excerpt: node.excerpt,
+		path: node.path
+	}
+
+	// Add author name(s) to search content
+	if (node.author___NODE && node.author___NODE.length) {
+
+		if ("object" === typeof node.author___NODE) {
+
+			for (const property in node.author___NODE) {
+				if (Object.prototype.hasOwnProperty.call(node.author___NODE, property)) {
+
+					const authorNode = getNode(node.author___NODE[property])
+
+					// Add author name to search content.
+					if (authorNode.name) {
+						searchContent += ` ${authorNode.name}`
+					}
+				}
+			}
+		} else if ( "string" === typeof node.author___NODE) {
+
+			const authorNode = getNode(node.author___NODE)
+
+			// Add author name to search content.
+			if (authorNode.name) {
+				searchContent += ` ${authorNode.name}`
+			}
+		}
+	}
+
+	// Add search content to node.
+	searchNode.search = searchContent
+
+	createNode({
+		...searchNode,
+		parent: null,
+		children: [],
+		internal:
+		{
+			type: searchType,
+			contentDigest: createContentDigest(searchNode)
+		}
+	})
+}*/
+
+/**
  * Build content from WordPress content.
  * 
  * @TODO remove fields we're not using.
  */
 exports.createPages = async ({ graphql, actions }) => {
 	const { createPage } = actions
+
+	/*
+	 * Create search page.
+	 */
+	createPage({
+		path: "/search/",
+		component: path.resolve("src/templates/search.js")
+	})
 
 	/*
    	 * Build pages from WordPress "page" post type.
