@@ -41,12 +41,16 @@ const Layout = props => {
 		wpcampusAttr.className += " wpcampus--hasGridDev"
 	}
 
+	if (isHome){
+		wpcampusAttr.className += " wpcampus--home"
+	}
+
 	return (
 		<div {...wpcampusAttr}>
 			{showGrid ? <WPCGridDev /> : null}
 			<SEO title={pageTitle} useTitleTemplate={useTitleTemplate} />
 			<Header isHome={isHome} />
-			<div className="wpc-hero"></div>
+			{!isHome ? <div className="wpc-hero"></div> : null}
 			<div className="wpc-body wpc-wrapper">
 				<div className="wpc-container wpc-body__container">
 					<div className="wpc-areas wpc-areas--grid wpc-areas--grid--rows wpc-body__areas">
