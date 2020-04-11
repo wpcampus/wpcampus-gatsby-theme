@@ -11,7 +11,7 @@ const Library = props => {
 	return (
 		<Layout heading={page.title}>
 			<div>{ReactHtmlParser(page.content)}</div>
-			<WebComponent type="library" tag="wpcampus-library" />
+			<WebComponent tag="wpcampus-library" />
 		</Layout>
 	)
 }

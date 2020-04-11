@@ -6,7 +6,7 @@ import "../css/notifications.css"
 
 const Notifications = () => {
 	return (
-		<WebComponent type="notifications" tag="wpcampus-notifications" />
+		<WebComponent tag="wpcampus-notifications" />
 	)
 }
 

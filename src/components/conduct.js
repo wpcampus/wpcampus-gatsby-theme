@@ -6,7 +6,7 @@ import "./../css/conduct.css"
 
 const Conduct = () => {
 	return (
-		<WebComponent type="conduct" tag="wpcampus-conduct" />
+		<WebComponent tag="wpcampus-conduct" />
 	)
 }
 

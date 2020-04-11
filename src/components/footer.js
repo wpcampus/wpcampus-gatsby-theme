@@ -6,7 +6,7 @@ import "./../css/footer.css"
 
 const Footer = () => {
 	return (
-		<WebComponent type="footer" tag="wpcampus-footer" />
+		<WebComponent tag="wpcampus-footer" />
 	)
 }
 

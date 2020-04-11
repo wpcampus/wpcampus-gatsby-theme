@@ -7,31 +7,25 @@ if (typeof HTMLElement !== "undefined") {
 
 const allowedComponents = ["wpcampus-library", "wpcampus-notifications", "wpcampus-blog", "wpcampus-conduct", "wpcampus-footer"]
 
-const WebComponent = ({ id, type, classes, tag }) => {
+const WebComponent = ({ id, classes, tag }) => {
 	if (!allowedComponents.includes(tag)) {
 		return null
 	}
-	let markup = `<${tag}></${tag}>`
-	const attr = {
-		className: `wpc-component wpc-component--${type}`,
-		dangerouslySetInnerHTML: {
-			__html: markup,
-		}
-	}
+	let Tag = tag
+	const attr = {}
 	if (id) {
 		attr.id = id
 	}
 	if (classes) {
-		attr.className += ` ${classes}`
+		attr.className = classes
 	}
 	return (
-		<div {...attr}></div>
+		<Tag {...attr}></Tag>
 	)
 }
 
 WebComponent.propTypes = {
 	id: PropTypes.string,
-	type: PropTypes.string.isRequired,
 	classes: PropTypes.string,
 	tag: PropTypes.string.isRequired,
 }
