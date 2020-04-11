@@ -4,14 +4,14 @@ import PropTypes from "prop-types"
 import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
-import WebComponent from "../components/webComponents"
+import WebComponent from "../components/webComponent"
 
 const Library = props => {
 	const page = props.data.wordpressPage
 	return (
 		<Layout heading={page.title}>
 			<div>{ReactHtmlParser(page.content)}</div>
-			<WebComponent id="library" tag="wpcampus-library" />
+			<WebComponent type="library" tag="wpcampus-library" />
 		</Layout>
 	)
 }

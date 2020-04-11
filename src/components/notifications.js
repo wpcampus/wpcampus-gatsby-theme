@@ -1,12 +1,12 @@
 import React from "react"
 
-import WebComponent from "./webComponents"
+import WebComponent from "./webComponent"
 
 import "../css/notifications.css"
 
 const Notifications = () => {
 	return (
-		<WebComponent id="notifications" tag="wpcampus-notifications" />
+		<WebComponent type="notifications" tag="wpcampus-notifications" />
 	)
 }
 

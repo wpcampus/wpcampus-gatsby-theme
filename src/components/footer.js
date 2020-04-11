@@ -1,12 +1,12 @@
 import React from "react"
 
-import WebComponent from "./webComponents"
+import WebComponent from "./webComponent"
 
 import "./../css/footer.css"
 
 const Footer = () => {
 	return (
-		<WebComponent id="footer" tag="wpcampus-footer" />
+		<WebComponent type="footer" tag="wpcampus-footer" />
 	)
 }
 
