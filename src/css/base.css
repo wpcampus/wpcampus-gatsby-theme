@@ -186,10 +186,8 @@ h3 {
 	width: 1px;
 }
 
-.wpc-logo {
-	svg {
-		enable-background: new 0 0 300 50;
-	}
+svg.wpc-logo {
+	enable-background: new 0 0 300 50;
 
 	&__letters {
 		&--wp {
