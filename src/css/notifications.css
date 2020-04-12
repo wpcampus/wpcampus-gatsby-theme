@@ -3,7 +3,6 @@ wpcampus-notifications {
 	background: var(--wpc-gray-lightest);
 	border-bottom: var(--area-border-gray-light);
 	font-size: 0.95rem;
-	line-height: 1.6;
 	text-align: left;
 	padding: 1.5rem var(--area-padding);
 

@@ -20,7 +20,7 @@
 			color: inherit;
 
 			&.nav-link--current {
-				font-weight: bold;
+				font-weight: 600;
 			}
 		}
 

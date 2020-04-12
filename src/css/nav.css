@@ -12,13 +12,12 @@
 
 	height: 100%;
 	font-size: 1.15rem;
-	line-height: 1.6;
+	line-height: 1.5;
 	color: #fff;
 
 	a {
 		display: block;
 		color: inherit;
-		line-height: 1.5;
 		text-decoration: none;
 		padding: var(--nav-padding-top) var(--nav-padding-right) var(--nav-padding-bottom) var(--nav-padding-left);
 
@@ -30,7 +29,7 @@
 
 		&.nav-link {
 			&--current {
-				font-weight: bold;
+				font-weight: 600;
 			}
 
 			&--current,
@@ -126,7 +125,7 @@
 
 		& > .nav-link--toggle {
 			.nav-link {
-				font-weight: bold;
+				font-weight: 600;
 			}
 
 			/* stylelint-disable no-descending-specificity */

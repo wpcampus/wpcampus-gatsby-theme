@@ -30,7 +30,7 @@
 
 	&__alert {
 		margin: 0 0 0.5rem;
-		font-weight: bold;
+		font-weight: 600;
 	}
 
 	&__label {
