@@ -1,12 +1,14 @@
 import React from "react"
 
-import WebComponent from "./webComponent"
+if (typeof HTMLElement !== "undefined") {
+	require("@wpcampus/wpcampus-wc-conduct")
+}
 
 import "./../css/conduct.css"
 
 const Conduct = () => {
 	return (
-		<WebComponent tag="wpcampus-conduct" />
+		<wpcampus-conduct></wpcampus-conduct>
 	)
 }
 

@@ -1,12 +1,14 @@
 import React from "react"
 
-import WebComponent from "./webComponent"
+if (typeof HTMLElement !== "undefined") {
+	require("@wpcampus/wpcampus-wc-footer")
+}
 
 import "./../css/footer.css"
 
 const Footer = () => {
 	return (
-		<WebComponent tag="wpcampus-footer" />
+		<wpcampus-footer></wpcampus-footer>
 	)
 }
 

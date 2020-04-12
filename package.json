@@ -5,7 +5,11 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@wpcampus/wpcampus-web-components": "^1.2.4",
+    "@wpcampus/wpcampus-wc-blog": "/Users/cherrybomb/Repos/wpcampus-wc-blog",
+    "@wpcampus/wpcampus-wc-conduct": "^0.0.2",
+    "@wpcampus/wpcampus-wc-footer": "^0.0.1",
+    "@wpcampus/wpcampus-wc-library": "^0.0.2",
+    "@wpcampus/wpcampus-wc-notifications": "^0.0.3",
     "dotenv": "^8.2.0",
     "gatsby": "^2.19.45",
     "gatsby-cli": "^2.11.0",

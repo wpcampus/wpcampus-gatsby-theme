@@ -1,12 +1,14 @@
 import React from "react"
 
-import WebComponent from "./webComponent"
+if (typeof HTMLElement !== "undefined") {
+	require("@wpcampus/wpcampus-wc-notifications")
+}
 
 import "../css/notifications.css"
 
 const Notifications = () => {
 	return (
-		<WebComponent tag="wpcampus-notifications" />
+		<wpcampus-notifications></wpcampus-notifications>
 	)
 }
 
