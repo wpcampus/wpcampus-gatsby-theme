@@ -519,7 +519,7 @@ exports.createPages = async ({ graphql, actions }) => {
 	authors.data.allWordpressWpUsers.edges.forEach(edge => {
 		createPage({
 			// will be the url for the page
-			path: "/about/contributors/" + edge.node.slug,
+			path: "/about/contributors/" + edge.node.slug + "/",
 			// specify the component template of your choice
 			component: slash(authorTemplate),
 			// In the ^template's GraphQL query, 'id' will be available
