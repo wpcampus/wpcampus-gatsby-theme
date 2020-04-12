@@ -145,7 +145,7 @@ class Search extends React.Component {
 		super()
 
 		this.crumbs = {
-			path: "/search",
+			path: "/search/",
 			title: "Search",
 		}
 
