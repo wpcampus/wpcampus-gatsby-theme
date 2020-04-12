@@ -6,6 +6,10 @@ wpcampus-notifications {
 	text-align: left;
 	padding: 1.5rem var(--area-padding);
 
+	a {
+		color: inherit;
+	}
+
 	*:first-child {
 		margin-top: 0;
 	}
