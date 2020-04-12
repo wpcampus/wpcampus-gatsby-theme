@@ -197,11 +197,7 @@ class Search extends React.Component {
 			results: prevState.results
 		}))
 
-		if (undefined === process.env.WPC_SEARCH) {
-			return
-		}
-
-		let url = process.env.WPC_SEARCH
+		let url = "https://wpcampus.org/wp-json/wpcampus/search/"
 
 		// What post types do we want?
 		url += "?subtype=page,post,podcast"
