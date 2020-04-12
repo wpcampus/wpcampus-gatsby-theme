@@ -12,25 +12,8 @@ const NavPrimaryItems = [
 			{ slug: "/about/partners/", text: "Partners" },
 			{ slug: "/about/mascots/", text: "Mascots" },
 			{ slug: "/about/governance/", text: "Governance" },
+			{ slug: "/about/guidelines/", text: "Guidelines" },
 			{ slug: "/about/contact/", text: "Contact us" },
-		]
-	},
-	{
-		slug: "/community/",
-		text: "Our community",
-		children: [
-			{
-				slug: "/community/members",
-				text: "Become a member"
-			},
-			{
-				slug: "/community/slack",
-				text: "Slack"
-			},
-			{
-				slug: "/community/calendar",
-				text: "Calendar of events"
-			}
 		]
 	},
 	{
@@ -38,8 +21,40 @@ const NavPrimaryItems = [
 		text: "Our blog",
 		children: [
 			{
-				slug: "/blognew/categories",
+				slug: "/blognew/categories/",
 				text: "Categories"
+			}
+		]
+	},
+	{
+		slug: "/community/",
+		text: "Our community",
+		children: [
+			{
+				slug: "/community/membership/",
+				text: "Become a member"
+			},
+			{
+				slug: "/community/slack/",
+				text: "Slack",
+				children: [
+					{
+						slug: "/community/slack/channels/",
+						text: "Slack channels",
+					}
+				]
+			},
+			{
+				slug: "/community/sme/",
+				text: "Subject matter experts"
+			},
+			{
+				slug: "/community/calendar/",
+				text: "Calendar of events"
+			},
+			{
+				slug: "/community/swag/",
+				text: "Swag"
 			}
 		]
 	},
@@ -78,6 +93,7 @@ const NavPrimaryItems = [
 		]
 	},
 	{ slug: "/learning/", text: "Learning" },
+	{ slug: "/jobs/", text: "Job board" },
 	{ slug: "/podcast/", text: "Podcast" },
 	{ href: "https://shop.wpcampus.org/", text: "Shop" },
 	{ slug: "/pages/", text: "Pages" }

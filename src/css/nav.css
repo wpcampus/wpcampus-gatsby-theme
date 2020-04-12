@@ -146,6 +146,7 @@
 			font-size: 1rem;
 
 			& > li {
+				& > .nav-link--toggle > a,
 				& > a {
 					padding-left: calc(var(--nav-padding-left) * 2);
 				}
