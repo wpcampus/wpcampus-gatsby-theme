@@ -2,7 +2,7 @@ import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 
-import WPCampusLogo from "./logo"
+import WPCampusLogo from "../svg/logo"
 import { User } from "../user/context"
 import userDisplay from "../user/display"
 
