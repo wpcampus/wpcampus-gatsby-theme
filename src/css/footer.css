@@ -61,7 +61,7 @@
 
 			/* stylelint-disable no-descending-specificity */
 			li {
-				margin: 0 0 0 0.75rem;
+				margin: 0 0 0 1rem;
 
 				&:first-child {
 					margin-left: 0;
