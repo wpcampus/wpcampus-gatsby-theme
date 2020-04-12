@@ -13,6 +13,7 @@ import NavPrimary from "../components/navPrimary"
 import Header from "./header"
 import Heading from "./heading"
 import Notifications from "./notifications"
+import Sidebar from "./sidebar"
 import Crumbs from "./crumbs"
 import Conduct from "./conduct"
 import Footer from "./footer"
@@ -41,7 +42,7 @@ const Layout = props => {
 		wpcampusAttr.className += " wpcampus--hasGridDev"
 	}
 
-	if (isHome){
+	if (isHome) {
 		wpcampusAttr.className += " wpcampus--home"
 	}
 
@@ -68,12 +69,7 @@ const Layout = props => {
 							</main>
 						</div>
 						<div className="wpc-area wpc-body__area wpc-body__area--sidebar">
-							<aside className="wpc-sidebar wpc-wrapper" aria-label="Sidebar">
-								<div className="wpc-blog-posts">
-									<h2><a href="https://wpcampus.org/blog">From our blog</a></h2>
-									<h3><a href="https://wpcampus.org/2020/03/wpcampus-2020-to-go-online/">WPCampus 2020 to go online, meet in New Orleans for 2021</a></h3><p>The WPCampus community decided to pivot our 2020 in-person event to an online conference and re-scheduled to convene in New Orleans, Louisiana, for WPCampus 2021. WPCampus 2020 Online will take place July 15-17, 2020. The three-day online conference will include a variety of formats, including general lectures, lightning talks, longer-form sessions like workshops, and more. […]</p>
-								</div>
-							</aside>
+							<Sidebar />
 						</div>
 					</div>
 				</div>
