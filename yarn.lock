@@ -1664,12 +1664,12 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@wpcampus/wpcampus-wc-blog@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.0.3.tgz#2f01c895c314610a1ca179b0f7d54d9c148731ec"
-  integrity sha512-s5h0s+WDwF85dLN76K/6slbY3vT4Jmp0Z9yYVbQ+W+jwQ05fgcNkdVysaK9vtbS9zPTyiF9f0BDmHpfJA3NrBg==
+"@wpcampus/wpcampus-wc-blog@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.0.4.tgz#0f5d708081e18d6205ec6a49930d9d20d664b7ab"
+  integrity sha512-pXm0pPVjnpnWIxrjLCKSkUamPqyr3QHGBWpubbghKN9evDjZX6hQxO2uEItwhTgWluEcvsL5OkWjc6cNkpAylQ==
   dependencies:
-    "@wpcampus/wpcampus-wc-default" "^0.0.2"
+    "@wpcampus/wpcampus-wc-default" "^0.0.4"
 
 "@wpcampus/wpcampus-wc-conduct@^0.0.2":
   version "0.0.2"
@@ -1683,10 +1683,10 @@
   resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-default/-/wpcampus-wc-default-0.0.1.tgz#446daec8c6fe4b8d3185dbc02f80d323078628f4"
   integrity sha512-VYizejdAkyVEEV5n0hkleZF/sbC7QnAlzb9+cunn01g8o1uBKTMKCaP0yxVhJMgrM5Y9swj3rdZNZuwp/fJTyA==
 
-"@wpcampus/wpcampus-wc-default@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-default/-/wpcampus-wc-default-0.0.2.tgz#c0eba0afbe52d1fe0afce071790ac70fb55a563c"
-  integrity sha512-e5ggFtbmpzVjGOAxmCRiaUaqQFgeL1g3BelGQjwEFJ5HSoPchliy8hUYjDCAItR5JCjuK9NHC1XaixdshgMzdw==
+"@wpcampus/wpcampus-wc-default@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-default/-/wpcampus-wc-default-0.0.4.tgz#5ba8fdd8b96b9d1f46e8d34b4b295b484f83147f"
+  integrity sha512-rQuP5Qj7qQifPGMilDPAUkiF0BVb2Zhc6q6bBQ0juJnOzwa4ilczHkQa4shLIopk16keqebjYHcMn2LoEa99pA==
 
 "@wpcampus/wpcampus-wc-footer@^0.0.1":
   version "0.0.1"
@@ -1702,24 +1702,24 @@
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
 
-"@wpcampus/wpcampus-wc-notifications@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-notifications/-/wpcampus-wc-notifications-0.0.2.tgz#957046ca22c7a532b69e03b57ec688183364808b"
-  integrity sha512-Y2b+ZUfIjrWkGhhvmn3fFxc9MSZZcs+gcz7XBp087YZi0xGTKcWudFVhoQNnQMXw1q0sYDTzi5MU1Ncxvm6QiQ==
+"@wpcampus/wpcampus-wc-notifications@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-notifications/-/wpcampus-wc-notifications-0.0.3.tgz#c1ebd71d3464a9a7b584bac2d09890df24eb3c1e"
+  integrity sha512-RUN96JARCsZyxmbQHYtoq1n49drYsbltu+epdlABDY4fLh2lFcZ1yDLTT/7hcc8fBLfVdv9SQeJt3BsT9Zl0zQ==
   dependencies:
-    "@wpcampus/wpcampus-wc-default" "^0.0.1"
+    "@wpcampus/wpcampus-wc-default" "^0.0.4"
 
-"@wpcampus/wpcampus-web-components@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-web-components/-/wpcampus-web-components-1.2.3.tgz#20ea03af349beba7a06f747cbd99e2db5319022e"
-  integrity sha512-rA1kujC3x6Mhl3dVfe/l+HkjCdaVjsaFvVNb+rdadetwqJpTwlqbo2H5unmt7AnKWzRl9m+efvgb8QpeY7EbhQ==
+"@wpcampus/wpcampus-web-components@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-web-components/-/wpcampus-web-components-1.2.4.tgz#e22fa4aef5585aaac4fedf61138bd772170fdd7c"
+  integrity sha512-vNxg7qb17DUdYapgG5cZt/qtP4Rd6lJ9YoBZ32obeOQHraVvZZfm5ik2iNygMJNLeXA7+cESIKNfy1xSJWdQ8A==
   dependencies:
-    "@wpcampus/wpcampus-wc-blog" "^0.0.3"
+    "@wpcampus/wpcampus-wc-blog" "^0.0.4"
     "@wpcampus/wpcampus-wc-conduct" "^0.0.2"
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
     "@wpcampus/wpcampus-wc-footer" "^0.0.1"
     "@wpcampus/wpcampus-wc-library" "^0.0.1"
-    "@wpcampus/wpcampus-wc-notifications" "^0.0.2"
+    "@wpcampus/wpcampus-wc-notifications" "^0.0.3"
     handlebars "^4.5.3"
 
 "@xtuc/ieee754@^1.2.0":
@@ -6347,17 +6347,17 @@ graphql-import@^0.7.1:
     lodash "^4.17.4"
     resolve-from "^4.0.0"
 
-graphql-playground-html@^1.6.15:
-  version "1.6.15"
-  resolved "https://registry.yarnpkg.com/graphql-playground-html/-/graphql-playground-html-1.6.15.tgz#f86e8d9c027a046e113746913c3e96429f991e2c"
-  integrity sha512-yRTKAOybHD6Lcb2/u4jkSkBzcz+Ppje8NmQuA0jn8Ou9T44qjm4vVwqkOW5ciugR/t4s5NilaWgvdbPMocfS6g==
+graphql-playground-html@^1.6.19:
+  version "1.6.19"
+  resolved "https://registry.yarnpkg.com/graphql-playground-html/-/graphql-playground-html-1.6.19.tgz#3883ecf5e8c18b3c0f08145b5417b9c01a1f0bef"
+  integrity sha512-cLAqoOlxHbGj/LBpr4l2BE9qXf3g8ShjQqU2daVueITI/3wIkcDQTaQaQp+HWv0uaX0dCsgMCFW/TooLj8yJOg==
 
 graphql-playground-middleware-express@^1.7.12:
-  version "1.7.13"
-  resolved "https://registry.yarnpkg.com/graphql-playground-middleware-express/-/graphql-playground-middleware-express-1.7.13.tgz#d187a43ac6507b1d601de818e5d3317b7e4256a5"
-  integrity sha512-dsB+3JSRGkaSE5GIZHKuOhAw0Ay/vXsqDiLPQNiu9vKg7291heA9g3jZHuDkGuHnsMzgFSNCHb6ovcN7KU4xpw==
+  version "1.7.14"
+  resolved "https://registry.yarnpkg.com/graphql-playground-middleware-express/-/graphql-playground-middleware-express-1.7.14.tgz#19ec806c54e3d8c213e1bf00088e9e236f49b258"
+  integrity sha512-EqoAhbRBd7rEEEDFfvECQVmZnC4cOEmRc5goiiZldozt2GZB2UBK3/7p0DAtflg6S1w6SNUR8Tg9cDLjiL1Dew==
   dependencies:
-    graphql-playground-html "^1.6.15"
+    graphql-playground-html "^1.6.19"
 
 graphql-request@^1.5.0:
   version "1.8.2"
