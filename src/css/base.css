@@ -238,3 +238,9 @@ nav.wpc-nav {
 		}
 	}
 }
+
+.wpc-component {
+	&__error-message {
+		font-style: italic;
+	}
+}
