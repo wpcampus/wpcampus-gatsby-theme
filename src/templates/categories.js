@@ -11,7 +11,7 @@ export default function Template(props) {
 		path: props.path,
 		title: "Categories",
 		parent_element: {
-			path: "/blognew/",
+			path: "/blog/",
 			title: "Blog"
 		}
 	}

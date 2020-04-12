@@ -227,6 +227,11 @@ exports.createPages = async ({ graphql, actions }) => {
 	pages.data.allWordpressPage.edges.forEach(edge => {
 		let template
 
+		// @TODO will be able to delete after deleted from WordPress app.
+		if ( "/blog/" === edge.node.path) {
+			return
+		}
+
 		if ("template-library.php" == edge.node.template) {
 			template = libraryTemplate
 		} else if ("/" == edge.node.path) {
@@ -332,7 +337,7 @@ exports.createPages = async ({ graphql, actions }) => {
 					path: edge.node.path,
 					title: edge.node.title,
 					parent_element: {
-						path: "/blognew/",
+						path: "/blog/",
 						title: "Blog"
 					}
 				},
@@ -409,11 +414,13 @@ exports.createPages = async ({ graphql, actions }) => {
 		})
 	})
 
+	const categoriesPath = "/blog/categories/"
+
 	/*
 	 * Create main categories page.
 	 */
 	createPage({
-		path: "/blognew/categories/",
+		path: categoriesPath,
 		component: path.resolve("src/templates/categories.js")
 	})
 
@@ -456,12 +463,10 @@ exports.createPages = async ({ graphql, actions }) => {
   	`)
 	const categoryTemplate = path.resolve("./src/templates/category.js")
 	categories.data.allWordpressCategory.edges.forEach(edge => {
-
-		const categoryPath = "/blognew" + edge.node.path
-
+		
 		createPage({
 			// will be the url for the page
-			path: categoryPath,
+			path: edge.node.path,
 			// specify the component template of your choice
 			component: slash(categoryTemplate),
 			// In the ^template's GraphQL query, 'id' will be available
@@ -471,13 +476,13 @@ exports.createPages = async ({ graphql, actions }) => {
 				next: edge.next,
 				previous: edge.previous,
 				crumbs: {
-					path: categoryPath,
+					path: edge.node.path,
 					title: edge.node.name,
 					parent_element: {
-						path: "/blognew/categories/",
+						path: categoriesPath,
 						title: "Categories",
 						parent_element: {
-							path: "/blognew/",
+							path: "/blog/",
 							title: "Blog"
 						}
 					}

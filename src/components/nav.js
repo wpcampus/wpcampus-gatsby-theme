@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
-// @TODO revert usage of "blognew" to "blog".
 const NavPrimaryItems = [
 	{
 		slug: "/about/",
@@ -17,11 +16,11 @@ const NavPrimaryItems = [
 		]
 	},
 	{
-		slug: "/blognew/",
+		slug: "/blog/",
 		text: "Our blog",
 		children: [
 			{
-				slug: "/blognew/categories/",
+				slug: "/blog/categories/",
 				text: "Categories"
 			}
 		]
