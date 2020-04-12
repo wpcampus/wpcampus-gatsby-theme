@@ -87,8 +87,19 @@ const NavLink = ({ item }) => {
 	if (!item.slug || !item.text) {
 		return ""
 	}
+	const isActiveParent = ({ isCurrent, isPartiallyCurrent }) => {
+		const attrs = {
+			className: "nav-link"
+		}
+		if (isCurrent) {
+			attrs.className += " nav-link--current"
+		} else if (isPartiallyCurrent) {
+			attrs.className += " nav-link--current-parent"
+		}
+		return attrs
+	}
 	return (
-		<Link className="nav-link" activeClassName="nav-link--current" to={item.slug}>
+		<Link getProps={isActiveParent} to={item.slug}>
 			{item.text}
 		</Link>
 	)
@@ -126,7 +137,7 @@ NavAnchor.propTypes = {
 
 const NavItem = ({ item }) => {
 	return (
-		<li>
+		<li className="nav-listitem">
 			{item.slug ? <NavLink item={item} /> : <NavAnchor item={item} />}
 			{item.children && item.children.length ? (
 				<ul className="wpc-nav__sub">

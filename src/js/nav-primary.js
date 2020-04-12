@@ -110,11 +110,20 @@
 			toggleSpan.classList.add("nav-link--toggle")
 			toggleSpan.appendChild(submenuParentLink)
 
+			// Create a toggle button for the submenu.
+			const thisToggleButton = toggleButton.cloneNode(true)
+
 			// Add the toggle button to the span.
-			toggleSpan.appendChild(toggleButton.cloneNode(true))
+			toggleSpan.appendChild(thisToggleButton)
 
 			// Add the span before the submenu.
 			submenu.parentNode.insertBefore(toggleSpan, submenu)
+
+			// If submenu parent is a current parent, let the <li> know and toggle the submenu.
+			if (submenuParentLink.classList.contains("nav-link--current-parent")) {
+				submenuParentLink.parentNode.parentNode.classList.add("nav-listitem--current-parent")
+				toggleSubmenu(thisToggleButton, true)				
+			}
 		})
 
 		menu.classList.add("has-submenu-toggle", "js-has-submenu-toggle")
