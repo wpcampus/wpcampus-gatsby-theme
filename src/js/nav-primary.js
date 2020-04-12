@@ -119,10 +119,14 @@
 			// Add the span before the submenu.
 			submenu.parentNode.insertBefore(toggleSpan, submenu)
 
-			// If submenu parent is a current parent, let the <li> know and toggle the submenu.
-			if (submenuParentLink.classList.contains("nav-link--current-parent")) {
+			// If a parent menu is active, toggle the submenu.
+			if (submenuParentLink.classList.contains("nav-link--current")) {
+				toggleSubmenu(thisToggleButton, true)
+			} else if (submenuParentLink.classList.contains("nav-link--current-parent")) {
+
+				// If a submenu parent is a current parent, let the <li> know and toggle the submenu.
 				submenuParentLink.parentNode.parentNode.classList.add("nav-listitem--current-parent")
-				toggleSubmenu(thisToggleButton, true)				
+				toggleSubmenu(thisToggleButton, true)
 			}
 		})
 
