@@ -522,9 +522,12 @@ exports.createPages = async ({ graphql, actions }) => {
   	`)
 	const authorTemplate = path.resolve("./src/templates/contributor.js")
 	authors.data.allWordpressWpUsers.edges.forEach(edge => {
+
+		const contributorPath = "/about/contributors/" + edge.node.slug + "/"
+
 		createPage({
 			// will be the url for the page
-			path: "/about/contributors/" + edge.node.slug + "/",
+			path: contributorPath,
 			// specify the component template of your choice
 			component: slash(authorTemplate),
 			// In the ^template's GraphQL query, 'id' will be available
@@ -532,7 +535,7 @@ exports.createPages = async ({ graphql, actions }) => {
 			context: {
 				id: edge.node.id,
 				crumbs: {
-					path: edge.node.path,
+					path: contributorPath,
 					title: edge.node.name,
 					parent_element: {
 						path: "/about/contributors/",

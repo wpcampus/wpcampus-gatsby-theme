@@ -26,15 +26,17 @@ const ArticleCategories = ({ list }) => (
 	</ul>
 )
 
-const ArticleMetaAuthors = ({ authors }) => (
-	<ul>
-		{authors.map((item, i) => (
-			<li key={i}>
-				<Link to={item.path}>{item.name}</Link>
+const ArticleMetaAuthors = ({ authors }) => {
+	const contributorPathBase = "/about/contributors/"
+	return <ul>
+		{authors.map((item, i) => {
+			const contributorPath = contributorPathBase + item.slug + "/"
+			return <li key={i}>
+				<Link to={contributorPath}>{item.name}</Link>
 			</li>
-		))}
+		})}
 	</ul>
-)
+}
 
 ArticleMetaAuthors.propTypes = {
 	authors: PropTypes.array.isRequired
