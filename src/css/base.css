@@ -178,6 +178,12 @@ h3 {
 	margin: 0 0 0.5rem;
 }
 
+h4 {
+	font-size: 1.3rem;
+	line-height: 1.5;
+	margin: 0 0 0.5rem;
+}
+
 .for-screen-reader {
 	border: 0;
 	clip: rect(0 0 0 0);
