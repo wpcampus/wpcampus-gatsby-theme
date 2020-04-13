@@ -12,7 +12,7 @@ if (typeof HTMLElement !== "undefined") {
 const Library = props => {
 	const page = props.data.wordpressPage
 	return (
-		<Layout heading={page.title}>
+		<Layout heading={page.title} path={props.path}>
 			<div>{ReactHtmlParser(page.content)}</div>
 			<wpcampus-library></wpcampus-library>
 		</Layout>
@@ -20,6 +20,7 @@ const Library = props => {
 }
 
 Library.propTypes = {
+	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired,
 	edges: PropTypes.array,
 }

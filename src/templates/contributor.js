@@ -10,13 +10,14 @@ const ContributorTemplate = props => {
 	const heading = `Contributor: ${contributor.name}`
 	const context = props.pageContext
 	return (
-		<Layout heading={heading} crumbs={context.crumbs}>
+		<Layout heading={heading} crumbs={context.crumbs} path={props.path}>
 			<ArticleArchive list={props.data.allWordpressPost.edges} />
 		</Layout>
 	)
 }
 
 ContributorTemplate.propTypes = {
+	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired,
 	edges: PropTypes.array,
 	pageContext: PropTypes.object.isRequired

@@ -25,6 +25,7 @@ const Layout = props => {
 	const useTitleTemplate = props.useTitleTemplate
 	const heading = props.heading
 	const crumbs = props.crumbs
+	const path = props.path
 	const children = props.children
 
 	let pageTitle = props.pageTitle
@@ -44,6 +45,14 @@ const Layout = props => {
 
 	if (isHome) {
 		wpcampusAttr.className += " wpcampus--home"
+	}
+
+	// Add path as a wrapper class.
+	if (path){
+		let pathSlug = path.replace(/^\//i, "")
+		pathSlug = pathSlug.replace(/\/$/i, "")
+		pathSlug = pathSlug.replace(/\//gi, "-")
+		wpcampusAttr.className += " wpcampus--path-" + pathSlug
 	}
 
 	return (
@@ -86,6 +95,7 @@ Layout.propTypes = {
 	useTitleTemplate: PropTypes.bool,
 	heading: PropTypes.string,
 	crumbs: PropTypes.object,
+	path: PropTypes.string,
 	children: PropTypes.node.isRequired,
 }
 

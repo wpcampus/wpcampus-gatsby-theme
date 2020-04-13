@@ -6,7 +6,6 @@ import Layout from "../components/layout"
 import { CategoryArchive } from "../components/archive"
 
 export default function Template(props) {
-	const data = props.data
 	const crumbs = {
 		path: props.path,
 		title: "Categories",
@@ -16,8 +15,8 @@ export default function Template(props) {
 		}
 	}
 	return (
-		<Layout heading="Categories" crumbs={crumbs}>
-			<CategoryArchive list={data.allWordpressCategory.edges} />
+		<Layout heading="Categories" crumbs={crumbs} path={props.path}>
+			<CategoryArchive list={props.data.allWordpressCategory.edges} />
 		</Layout>
 	)
 }

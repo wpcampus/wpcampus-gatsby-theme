@@ -14,7 +14,7 @@ const CategoryTemplate = props => {
 	)
 	const heading = `Category: ${category.name}`
 	return (
-		<Layout heading={heading} crumbs={context.crumbs}>
+		<Layout heading={heading} crumbs={context.crumbs} path={props.path}>
 			{category.description ? <p>{category.description}</p> : ""}
 			{pagination}
 			<ArticleArchive list={props.data.allWordpressPost.edges} />
@@ -24,6 +24,7 @@ const CategoryTemplate = props => {
 }
 
 CategoryTemplate.propTypes = {
+	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired,
 	edges: PropTypes.array,
 	pageContext: PropTypes.object.isRequired

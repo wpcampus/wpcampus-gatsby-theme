@@ -10,7 +10,7 @@ const PageTemplate = props => {
 	const page = props.data.wordpressPage
 	const pageContext = props.pageContext
 	return (
-		<Layout heading={page.title} crumbs={pageContext.crumbs}>
+		<Layout heading={page.title} crumbs={pageContext.crumbs} path={props.path}>
 			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
 				<div>{ReactHtmlParser(page.content)}</div>
 			</ProtectedContent>
@@ -19,6 +19,7 @@ const PageTemplate = props => {
 }
 
 PageTemplate.propTypes = {
+	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired,
 	edges: PropTypes.array,
 	pageContext: PropTypes.object.isRequired

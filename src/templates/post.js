@@ -13,7 +13,7 @@ const PostTemplate = props => {
 		<PostPagination previous={context.previous} next={context.next} />
 	)
 	return (
-		<Layout pageTitle={post.title} crumbs={context.crumbs}>
+		<Layout pageTitle={post.title} crumbs={context.crumbs} path={props.path}>
 			{pagination}
 			<Article data={post} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
 			{pagination}
@@ -22,6 +22,7 @@ const PostTemplate = props => {
 }
 
 PostTemplate.propTypes = {
+	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired,
 	edges: PropTypes.array,
 	pageContext: PropTypes.object.isRequired

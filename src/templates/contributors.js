@@ -8,7 +8,6 @@ import { AuthorCards } from "../components/author"
 // @TODO add filters for university?
 // @TODO replace/merge with subject matter experts directory?
 export default function Template(props) {
-	const data = props.data
 	const crumbs = {
 		path: props.path,
 		title: "Contributors",
@@ -18,8 +17,8 @@ export default function Template(props) {
 		}
 	}
 	return (
-		<Layout heading="Contributors" crumbs={crumbs}>
-			<AuthorCards authors={data.allWordpressWpUsers.nodes} />
+		<Layout heading="Contributors" crumbs={crumbs} path={props.path}>
+			<AuthorCards authors={props.data.allWordpressWpUsers.nodes} />
 		</Layout>
 	)
 }

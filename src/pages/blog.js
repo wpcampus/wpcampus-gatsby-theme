@@ -6,14 +6,13 @@ import Layout from "../components/layout"
 import { ArticleArchive } from "../components/archive"
 
 export default function Template(props) {
-	const data = props.data
 	const crumbs = {
 		path: props.path,
 		title: "Blog",
 	}
 	return (
-		<Layout pageTitle="Blog" heading="Blog posts" crumbs={crumbs}>
-			<ArticleArchive list={data.allWordpressPost.edges} />
+		<Layout pageTitle="Blog" heading="Blog posts" crumbs={crumbs} path={props.path}>
+			<ArticleArchive list={props.data.allWordpressPost.edges} />
 		</Layout>
 	)
 }

@@ -7,16 +7,15 @@ import { PodcastCallout, PodcastActions } from "../components/podcast"
 import { ArticleArchive } from "../components/archive"
 
 export default function Template(props) {
-	const data = props.data
 	const crumbs = {
 		path: props.path,
 		title: "Podcast"
 	}
 	return (
-		<Layout pageTitle="Podcast" heading="Podcasts" crumbs={crumbs}>
+		<Layout pageTitle="Podcast" heading="Podcasts" crumbs={crumbs} path={props.path}>
 			<PodcastCallout />
 			<PodcastActions />
-			<ArticleArchive list={data.allWordpressWpPodcast.edges} />
+			<ArticleArchive list={props.data.allWordpressWpPodcast.edges} />
 		</Layout>
 	)
 }
