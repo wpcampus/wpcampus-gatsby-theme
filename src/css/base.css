@@ -258,3 +258,11 @@ nav.wpc-nav {
 		font-style: italic;
 	}
 }
+
+.wpcampus--path-404 {
+	svg#Truck_sheep {
+		float: right;
+		max-width: 200px;
+		margin: 0 0 3rem 4rem;
+	}
+}

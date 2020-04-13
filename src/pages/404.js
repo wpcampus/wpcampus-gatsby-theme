@@ -1,11 +1,23 @@
 import React from "react"
+import { Link } from "gatsby"
 
 import Layout from "../components/layout"
+import SearchLayout from "../components/searchLayout"
 
-const NotFoundPage = () => (
-	<Layout heading="Page not found">
-		<p>You just hit a route that doesn&#39;t exist... the sadness.</p>
+import TruckSheep from "../svg/trucksheep"
+
+import "./../css/trucksheep.css"
+
+const NotFoundPage = () => {
+	// Have to hard code 404 in case the dynamic 404 passes the URL location.
+	return <Layout heading="Page not found" path="/404/">
+		<Link to="/about/mascots/" aria-label="Learn more about Truck Sheep"><TruckSheep /></Link>
+		<SearchLayout includeSearchHeading={true}>
+			<p>Hmm. The URL you visited does not seem to exist.</p>
+			<p>Truck Sheep made sure we included our search form to help you find what you&apos;re looking for.</p>
+			<p>If you need further assistance, please <Link to="/about/contact" aria-label="Contact us and let us know">let us know</Link>.</p>
+		</SearchLayout>
 	</Layout>
-)
+}
 
 export default NotFoundPage

@@ -1,0 +1,16 @@
+svg#Truck_sheep {
+	enable-background: new 0 0 100 81;
+	display: block;
+	max-width: 300px;
+	height: auto;
+	margin: 2rem 0;
+
+	.st0 { fill: #757575; }
+	.st1 { fill: #fff; }
+	.st2 { fill: #383838; }
+	.st3 { fill: #347dc8; }
+	.st4 { fill: #1159bd; }
+	.st5 { fill: #e4eaf4; }
+	.st6 { fill: #fafdb0; }
+	.st7 { fill: #e5e5e5; }
+}
