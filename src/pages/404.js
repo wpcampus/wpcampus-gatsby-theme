@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 
 import Layout from "../components/layout"
-import SearchLayout from "../components/searchLayout"
+import { SearchLayout } from "../components/search"
 
 import TruckSheep from "../svg/trucksheep"
 

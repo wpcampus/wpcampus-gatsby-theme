@@ -34,7 +34,7 @@ const SearchResultsByType = ({ label, id, results, headingLevel, plural }) => {
 	return <div className="wpc-search__results">
 		<HeadingTag id={id}>{headingLabel}</HeadingTag>
 		{!results.length ? noResults : results.map((item, i) => {
-			return <SearchResult key={i} result={item} headingLevel={(headingLevel+1)} />
+			return <SearchResult key={i} result={item} headingLevel={(headingLevel + 1)} />
 		})}
 	</div>
 }
@@ -291,4 +291,4 @@ SearchLayout.defaultProps = {
 	includeSearchHeading: false
 }
 
-export default SearchLayout
+export { SearchLayout }
