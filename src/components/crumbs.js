@@ -31,7 +31,7 @@ const Crumbs = ({ classes, crumbs }) => {
 
 	const navAttr = {
 		classes: "wpc-crumbs",
-		label: "Breadcrumbs",
+		aria_label: "Breadcrumbs",
 		list: breadcrumbs
 	}
 

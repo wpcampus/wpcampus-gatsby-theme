@@ -21,7 +21,7 @@ const NavPrimary = () => {
 	const navPrimaryAttr = {
 		id: navPrimaryID,
 		classes: "wpc-nav wpc-nav--primary",
-		label: "Primary",
+		aria_label: "Primary",
 		list: NavPrimaryItems
 	}
 

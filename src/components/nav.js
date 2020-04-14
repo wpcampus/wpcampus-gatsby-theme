@@ -137,8 +137,8 @@ const NavAnchor = ({ item }) => {
 	if (item.classes) {
 		anchorAttr.classes = item.classes
 	}
-	if (item["aria-label"]) {
-		anchorAttr["aria-label"] = item["aria-label"]
+	if (item.aria_label) {
+		anchorAttr["aria-label"] = item.aria_label
 	}
 	if (item.title) {
 		anchorAttr.title = item.title
@@ -186,7 +186,7 @@ NavList.propTypes = {
 	list: PropTypes.array.isRequired,
 }
 
-const Nav = ({ id, classes, label, list, children }) => {
+const Nav = ({ id, classes, aria_label, list, children }) => {
 	const navAttr = {}
 	if (id) {
 		navAttr.id = id
@@ -194,8 +194,8 @@ const Nav = ({ id, classes, label, list, children }) => {
 	if (classes) {
 		navAttr.className = classes
 	}
-	if (label) {
-		navAttr["aria-label"] = label
+	if (aria_label) {
+		navAttr["aria-label"] = aria_label
 	}
 	return (
 		<nav {...navAttr}>
@@ -208,7 +208,7 @@ const Nav = ({ id, classes, label, list, children }) => {
 Nav.propTypes = {
 	id: PropTypes.string,
 	classes: PropTypes.string,
-	label: PropTypes.string,
+	aria_label: PropTypes.string,
 	list: PropTypes.array.isRequired,
 	children: PropTypes.object,
 }

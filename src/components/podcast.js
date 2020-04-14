@@ -12,7 +12,7 @@ const PodcastCallout = () => {
 
 const PodcastActions = () => {
 	const actionsAttr = {
-		label: "Find the WPCampus podcast on other platforms",
+		aria_label: "Find the WPCampus podcast on other platforms",
 		list: [
 			{
 				href: "https://open.spotify.com/show/0ULgPfGeMdkZYoRxkOJcMq?si=5_VGrpbnTd2CJIAx8yPWcQ",

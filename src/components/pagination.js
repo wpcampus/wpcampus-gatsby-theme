@@ -22,7 +22,7 @@ const Pagination = ({ path, single, plural, previous, next }) => {
 		})
 	}
 	if (items) {
-		return <Nav list={items} />
+		return <Nav aria_label="Pagination" list={items} />
 	}
 	return null
 }
