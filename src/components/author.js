@@ -84,7 +84,7 @@ const AuthorCard = ({ author }) => {
 		<div className="wpc-author">
 			<div className="wpc-areas wpc-areas--grid wpc-author__areas">
 				<div className="wpc-area wpc-author__area wpc-author__area--avatar">
-					<img className="wpc" src={avatarEduwapuuBW} />
+					<img className="wpc" src={avatarEduwapuuBW} alt="" />
 				</div>
 				<div className="wpc-area wpc-author__area wpc-author__area--main">
 					<Link to={authorLink}>{author.name}</Link>
