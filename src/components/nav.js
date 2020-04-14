@@ -116,8 +116,15 @@ const NavLink = ({ item }) => {
 		}
 		return attrs
 	}
+	const linkAttr = {
+		getProps: isActiveParent,
+		to: item.path
+	}
+	if (item.aria_label) {
+		linkAttr["aria-label"] = item.aria_label
+	}
 	return (
-		<Link getProps={isActiveParent} to={item.slug}>
+		<Link {...linkAttr}>
 			{item.text}
 		</Link>
 	)
