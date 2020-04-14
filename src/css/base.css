@@ -196,8 +196,6 @@ h4 {
 }
 
 svg.wpc-logo {
-	enable-background: new 0 0 300 50;
-
 	&__letters {
 		&--wp {
 			opacity: 0.7;
@@ -267,8 +265,6 @@ nav.wpc-nav {
 
 .wpc-svg {
 	&--magnifying {
-		enable-background: new 0 0 40 40;
-
 		path {
 			fill-rule: evenodd;
 			clip-rule: evenodd;
