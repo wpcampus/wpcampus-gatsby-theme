@@ -163,6 +163,14 @@ exports.createPages = async ({ graphql, actions }) => {
 	const { createPage } = actions
 
 	/*
+	 * Create login page.
+	 */
+	createPage({
+		path: "/login/",
+		component: path.resolve("src/templates/login.js")
+	})
+	
+	/*
 	 * Create profile page.
 	 */
 	createPage({
