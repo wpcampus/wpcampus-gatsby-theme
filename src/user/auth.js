@@ -92,8 +92,10 @@ export default class Auth {
 						let messageCode = removeJWTPrefix(response.code)
 						if (messages[messageCode]) {
 							throw new Error(messages[messageCode])
-						} else {
+						} else if (response.message) {
 							throw new Error(response.message)
+						} else {
+							throw new Error(messages.login_error)
 						}
 					}
 					this.storeToken(response.token)
@@ -126,8 +128,10 @@ export default class Auth {
 						let messageCode = removeJWTPrefix(response.code)
 						if (messages[messageCode]) {
 							throw new Error(messages[messageCode])
-						} else {
+						} else if (response.message) {
 							throw new Error(response.message)
+						} else {
+							throw new Error(messages.auth_problem)
 						}
 					}
 					response = {

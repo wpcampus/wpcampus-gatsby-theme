@@ -196,12 +196,12 @@ const UserContextProvider = props => {
 					},
 				})
 			})
-			/*.catch(error => {
+			.catch(() => {
 				// @TODO handle error?
 				//console.error(error.message)
 
 				logout()
-			})*/
+			})
 	}
 
 	return (
