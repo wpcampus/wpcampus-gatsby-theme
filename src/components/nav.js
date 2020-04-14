@@ -5,62 +5,62 @@ import PropTypes from "prop-types"
 // @TODO remove search and pages menu item
 const NavPrimaryItems = [
 	{
-		slug: "/about/",
+		path: "/about/",
 		text: "About",
 		children: [
-			{ slug: "/about/contributors/", text: "Contributors" },
-			{ slug: "/about/partners/", text: "Partners" },
-			{ slug: "/about/mascots/", text: "Mascots" },
-			{ slug: "/about/governance/", text: "Governance" },
-			{ slug: "/about/guidelines/", text: "Guidelines" },
-			{ slug: "/about/newsletter/", text: "Our newsletter" },
-			{ slug: "/about/contact/", text: "Contact us" },
+			{ path: "/about/contributors/", text: "Contributors" },
+			{ path: "/about/partners/", text: "Partners" },
+			{ path: "/about/mascots/", text: "Mascots" },
+			{ path: "/about/governance/", text: "Governance" },
+			{ path: "/about/guidelines/", text: "Guidelines" },
+			{ path: "/about/newsletter/", text: "Our newsletter" },
+			{ path: "/about/contact/", text: "Contact us" },
 		]
 	},
 	{
-		slug: "/blog/",
+		path: "/blog/",
 		text: "Our blog",
 		children: [
 			{
-				slug: "/blog/categories/",
+				path: "/blog/categories/",
 				text: "Categories"
 			}
 		]
 	},
 	{
-		slug: "/community/",
+		path: "/community/",
 		text: "Our community",
 		children: [
 			{
-				slug: "/community/membership/",
+				path: "/community/membership/",
 				text: "Become a member"
 			},
 			{
-				slug: "/community/slack/",
+				path: "/community/slack/",
 				text: "Slack",
 				children: [
 					{
-						slug: "/community/slack/channels/",
+						path: "/community/slack/channels/",
 						text: "Slack channels",
 					}
 				]
 			},
 			{
-				slug: "/community/sme/",
+				path: "/community/sme/",
 				text: "Subject matter experts"
 			},
 			{
-				slug: "/community/calendar/",
+				path: "/community/calendar/",
 				text: "Calendar of events"
 			},
 			{
-				slug: "/community/swag/",
+				path: "/community/swag/",
 				text: "Swag"
 			}
 		]
 	},
 	{
-		slug: "/conferences/",
+		path: "/conferences/",
 		text: "Our conferences",
 		children: [
 			{
@@ -93,16 +93,16 @@ const NavPrimaryItems = [
 			}
 		]
 	},
-	{ slug: "/learning/", text: "Learning" },
-	{ slug: "/jobs/", text: "Job board" },
-	{ slug: "/podcast/", text: "Podcast" },
+	{ path: "/learning/", text: "Learning" },
+	{ path: "/jobs/", text: "Job board" },
+	{ path: "/podcast/", text: "Podcast" },
 	{ href: "https://shop.wpcampus.org/", text: "Shop" },
-	{ slug: "/search/", text: "Search" },
-	{ slug: "/pages/", text: "Pages" }
+	{ path: "/search/", text: "Search" },
+	{ path: "/pages/", text: "Pages" }
 ]
 
 const NavLink = ({ item }) => {
-	if (!item.slug || !item.text) {
+	if (!item.path || !item.text) {
 		return ""
 	}
 	const isActiveParent = ({ isCurrent, isPartiallyCurrent }) => {
@@ -156,7 +156,7 @@ NavAnchor.propTypes = {
 const NavItem = ({ item }) => {
 	return (
 		<li className="nav-listitem">
-			{item.slug ? <NavLink item={item} /> : <NavAnchor item={item} />}
+			{item.path ? <NavLink item={item} /> : <NavAnchor item={item} />}
 			{item.children && item.children.length ? (
 				<ul className="wpc-nav__sub">
 					{item.children.map((child, i) => (

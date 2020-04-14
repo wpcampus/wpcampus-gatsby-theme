@@ -25,7 +25,7 @@ const Crumbs = ({ classes, crumbs }) => {
 	}
 
 	// Always add home crumb.
-	breadcrumbs.push({ slug: "/", text: "Home" })
+	breadcrumbs.push({ path: "/", text: "Home" })
 
 	breadcrumbs.reverse()
 

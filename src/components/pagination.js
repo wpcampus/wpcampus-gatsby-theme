@@ -2,22 +2,22 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Nav } from "../components/nav"
 
-const Pagination = ({ slug, single, plural, previous, next }) => {
+const Pagination = ({ path, single, plural, previous, next }) => {
 	let items = [
 		{
-			slug: `/${slug}`,
+			path: path,
 			text: `All ${plural}`,
 		},
 	]
 	if (previous) {
 		items.push({
-			slug: previous.path,
+			path: previous.path,
 			text: `Previous ${single}: ` + (previous.title || previous.name),
 		})
 	}
 	if (next) {
 		items.push({
-			slug: next.path,
+			path: next.path,
 			text: `Next ${single}: ` + (next.title || next.name),
 		})
 	}
@@ -28,21 +28,21 @@ const Pagination = ({ slug, single, plural, previous, next }) => {
 }
 
 const CategoryPagination = ({ previous, next }) => {
-	return <Pagination slug="categories" single="category" plural="categories" previous={previous} next={next} />
+	return <Pagination path="/blog/categories/" single="category" plural="categories" previous={previous} next={next} />
 }
 
 const PostPagination = ({ previous, next }) => {
-	return <Pagination slug="blog" single="post" plural="posts" previous={previous} next={next} />
+	return <Pagination path="/blog/" single="post" plural="posts" previous={previous} next={next} />
 }
 
 const PodcastPagination = ({ previous, next }) => {
-	return <Pagination slug="podcast" single="podcast" plural="podcasts" previous={previous} next={next} />
+	return <Pagination path="/podcast/" single="podcast" plural="podcasts" previous={previous} next={next} />
 }
 
 Pagination.propTypes = {
 	previous: PropTypes.object,
 	next: PropTypes.object,
-	slug: PropTypes.string,
+	path: PropTypes.string,
 	single: PropTypes.string,
 	plural: PropTypes.string
 }
