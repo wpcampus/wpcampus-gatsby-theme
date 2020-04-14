@@ -167,6 +167,7 @@ exports.createPages = async ({ graphql, actions }) => {
 	 */
 	createPage({
 		path: "/search/",
+		matchPath: "/search/*",
 		component: path.resolve("src/templates/search.js")
 	})
 
