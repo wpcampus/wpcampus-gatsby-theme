@@ -3,19 +3,12 @@ import PropTypes from "prop-types"
 import React from "react"
 
 import WPCampusLogo from "../svg/logo"
-//import { User } from "../user/context"
-//import userDisplay from "../user/display"
+import { User } from "../user/context"
 import { SearchForm } from "../components/search"
 
-import "./../css/header.css"
+import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
-// Have to use separate function to process <User.Consumer> and pass args
-/*const handleUserDisplay = user => {
-	const args = {
-		showLogin: true,
-	}
-	return userDisplay(user, args)
-}*/
+import "./../css/header.css"
 
 const HeaderArea = ({ children, area }) => {
 	return <div className={`wpc-area wpc-header__area wpc-header__area--${area}`}>
@@ -47,17 +40,82 @@ HeaderAreas.defaultProps = {
 	hasGrid: true
 }
 
-const HeaderMemberActions = () => {
-	return <nav className="wpc-nav wpc-nav--actions" aria-label="Become a member or login">
+const HeaderMemberActions = ({ classes }) => {
+	const actionsAttr = {
+		className: "wpc-nav wpc-nav--actions",
+		"aria-label": "Become a member or login"
+	}
+	if (classes) {
+		actionsAttr.className += ` ${classes}`
+	}
+	return <nav {...actionsAttr}>
 		<ul>
-			<li><Link className="wpc-button wpc-button--primary" to="/community/membership">Become a member</Link></li>
-			<li><Link className="wpc-button" to="/login">Login</Link></li>
+			<li><Link className="wpc-button wpc-button--primary" to="/community/membership/">Become a member</Link></li>
+			<li><Link className="wpc-button" to="/login/">Login</Link></li>
 		</ul>
 	</nav>
 }
 
+HeaderMemberActions.propTypes = {
+	classes: PropTypes.string
+}
+
+const HeaderLoggedInActions = ({ classes }) => {
+	const actionsAttr = {
+		className: "wpc-nav wpc-nav--actions",
+		"aria-label": "View profile or logout"
+	}
+	if (classes) {
+		actionsAttr.className += ` ${classes}`
+	}
+	return <nav {...actionsAttr}>
+		<ul>
+			<li><Link className="wpc-button wpc-button--primary" to="/profile/">View profile</Link></li>
+			<li><Link className="wpc-button wpc-button--plain wpc-button--logout" to="/logout/">Logout</Link></li>
+		</ul>
+	</nav>
+}
+
+HeaderLoggedInActions.propTypes = {
+	classes: PropTypes.string
+}
+
+const UserLoggedInActions = ({ user }) => {
+	
+	const userName = user.getDisplayName()
+
+	let userNameDisplay
+	if (userName) {
+		userNameDisplay = "Hi, " + userName
+	} else {
+		userNameDisplay = "Hi!"
+	}
+
+	return <div className="wpc-user">
+		<img className="wpc-user__avatar" src={avatarEduwapuuBW} alt="" />
+		<div className="wpc-user__info">
+			<span className="wpc-user__name">{userNameDisplay}</span>
+			<HeaderLoggedInActions classes="wpc-user__actions" />
+		</div>
+	</div>
+}
+
+UserLoggedInActions.propTypes = {
+	user: PropTypes.object
+}
+
 // Going to make a few different banners.
 const HeaderHomeBanner1 = () => {
+
+	const handleUserDisplay = user => {
+		if (!user.isActive()) {
+			return ""
+		}
+		if (user.isLoggedIn()) {
+			return <UserLoggedInActions user={user} />
+		}
+		return <HeaderMemberActions />
+	}
 
 	const searchFormAttr = {
 		showSubmit: false
@@ -80,11 +138,21 @@ const HeaderHomeBanner1 = () => {
 		</ul>
 		<p className="wpc-home-banner__tagline">Where WordPress meets Higher Education</p>
 		<SearchForm {...searchFormAttr} />
-		<HeaderMemberActions />
+		<User.Consumer>{handleUserDisplay}</User.Consumer>
 	</div>
 }
 
 const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
+
+	const handleUserDisplay = user => {
+		if (!user.isActive()) {
+			return ""
+		}
+		if (user.isLoggedIn()) {
+			return <UserLoggedInActions user={user} />
+		}
+		return <HeaderMemberActions />
+	}
 
 	const headerAttr = {
 		className: "wpc-header wpc-wrapper"
@@ -113,12 +181,7 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 
 		headerAreas = <HeaderAreas>
 			<HeaderArea area="actions">
-				<nav className="wpc-nav wpc-nav--actions" aria-label="Become a member or login">
-					<ul>
-						<li><a className="wpc-button wpc-button--primary" href="/">Become a member</a></li>
-						<li><a className="wpc-button" href="/">Login</a></li>
-					</ul>
-				</nav>
+				<User.Consumer>{handleUserDisplay}</User.Consumer>
 			</HeaderArea>
 			<HeaderArea area="logo">
 				<span className="wpc-header__heading wpc-header__heading--site">

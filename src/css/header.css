@@ -4,6 +4,40 @@
 	z-index: 1000;
 	position: relative;
 
+	.wpc-user {
+		display: grid;
+		grid-template-columns: 80px auto;
+		grid-column-gap: 1.1rem;
+		align-items: center;
+
+		&__avatar {
+			display: block;
+			width: 100%;
+			height: auto;
+			border: var(--area-border-gray-light);
+		}
+
+		&__name {
+			font-weight: 600;
+			font-size: 1.1rem;
+		}
+
+		&__actions {
+			ul {
+				display: flex;
+
+				li {
+					margin: 0 0.25rem 0 0;
+				}
+			}
+
+			.wpc-button {
+				padding: 0.25rem 0.75rem;
+				font-size: 0.9rem;
+			}
+		}
+	}
+
 	&__heading {
 		margin: 0;
 	}
