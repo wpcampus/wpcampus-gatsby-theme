@@ -13,6 +13,7 @@ const NavPrimaryItems = [
 			{ slug: "/about/mascots/", text: "Mascots" },
 			{ slug: "/about/governance/", text: "Governance" },
 			{ slug: "/about/guidelines/", text: "Guidelines" },
+			{ slug: "/about/newsletter/", text: "Our newsletter" },
 			{ slug: "/about/contact/", text: "Contact us" },
 		]
 	},
