@@ -3,8 +3,6 @@ import React, { useState, useContext } from "react"
 import { User } from "../user/context"
 import messages from "../user/messages"
 
-import "./../css/forms.css"
-
 const LoginForm = () => {
 	const initialState = {
 		alert: false,
