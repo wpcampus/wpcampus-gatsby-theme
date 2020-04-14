@@ -78,6 +78,7 @@
 		grid-column-gap: 0.75rem;
 		border: var(--input-border);
 		padding: 0.75rem;
+		background: #fff;
 
 		.wpc-search-form__magnifying {
 			display: flex;
@@ -94,6 +95,7 @@
 			border: 0;
 			padding: 0;
 			font-size: 1.3rem;
+			background: transparent;
 		}
 
 		&.wpc-form--hide-submit {

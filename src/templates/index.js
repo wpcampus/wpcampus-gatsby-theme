@@ -5,6 +5,8 @@ import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
 
+import "./../css/home.css"
+
 const PageTemplate = props => {
 	const page = props.data.wordpressPage
 	return (
