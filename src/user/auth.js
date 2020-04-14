@@ -3,6 +3,11 @@ import messages from "./messages"
 const tokenKey = "wpc-auth-token"
 
 /*
+ * Set the root URL for auth requests.
+ */
+const authRoot = "https://wpcampus.org/wp-json"
+
+/*
  * When does authorization expire? By default, every 48 hours
  * The duration is in milliseconds.
  *
@@ -69,7 +74,7 @@ export default class Auth {
 
 	async login(username, password) {
 		return new Promise((resolve, reject) => {
-			if (!process.env.WPC_AUTH_API_BASE) {
+			if (!authRoot) {
 				reject(new Error(messages.missing_api))
 			}
 
@@ -77,7 +82,7 @@ export default class Auth {
 			formData.append("username", username)
 			formData.append("password", password)
 
-			return fetch(process.env.WPC_AUTH_API_BASE + "/jwt-auth/v1/token", {
+			return fetch(authRoot + "/jwt-auth/v1/token", {
 				method: "post",
 				headers: new Headers({
 					Accept: "application/json",
@@ -107,11 +112,11 @@ export default class Auth {
 
 	async authenticate(token) {
 		return new Promise((resolve, reject) => {
-			if (!process.env.WPC_AUTH_API_BASE) {
+			if (!authRoot) {
 				reject(new Error(messages.missing_api))
 			}
 
-			return fetch(process.env.WPC_AUTH_API_BASE + "/wpcampus/auth/user", {
+			return fetch(authRoot + "/wpcampus/auth/user", {
 				method: "get",
 				headers: new Headers({
 					Accept: "application/json",
