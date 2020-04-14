@@ -7,11 +7,15 @@ import { CategoryArchive } from "../components/archive"
 
 export default function Template(props) {
 	const crumbs = {
-		path: props.path,
-		title: "Categories",
+		crumb: {
+			path: props.path,
+			text: "Categories",
+		},
 		parent_element: {
-			path: "/blog/",
-			title: "Blog"
+			crumb: {
+				path: "/blog/",
+				text: "Blog"
+			}
 		}
 	}
 	return (

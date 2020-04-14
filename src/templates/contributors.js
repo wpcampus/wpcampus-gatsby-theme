@@ -9,11 +9,15 @@ import { AuthorCards } from "../components/author"
 // @TODO replace/merge with subject matter experts directory?
 export default function Template(props) {
 	const crumbs = {
-		path: props.path,
-		title: "Contributors",
+		crumb: {
+			path: props.path,
+			text: "Contributors",
+		},
 		parent_element: {
-			path: "/about/",
-			title: "About"
+			crumb: {
+				path: "/about/",
+				text: "About"
+			}
 		}
 	}
 	return (

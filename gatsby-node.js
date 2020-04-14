@@ -7,6 +7,19 @@
 const path = require("path")
 const slash = require("slash")
 
+// Returns the path from a full URL.
+const getNodePathFromLink = link => {
+	if (!link) {
+		return ""
+	}
+	try {
+		const url = new URL(link)
+		return url.pathname
+	} catch (error) {
+		return link
+	}
+}
+
 /**
  * Creating a custom schema for our protected post meta
  * that the WPCampus: Members WordPress plugin adds to the
@@ -38,9 +51,30 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			interfaces: ["Node"],
 		}),
 		schema.buildObjectType({
+			name: "wpcCrumb",
+			fields: {
+				path: {
+					type: "String",
+					resolve: source => {
+						if (source.path) {
+							return source.path
+						}
+						if (source.link) {
+							return getNodePathFromLink(source.link)
+						}
+						return ""
+					}
+				},
+				aria_label: "String",
+				text: "String"
+			},
+			interfaces: ["Node"],
+		}),
+		schema.buildObjectType({
 			name: "wordpress__PAGE",
 			fields: {
 				wpc_protected: "wpcProtected",
+				crumb: "wpcCrumb"
 			},
 			interfaces: ["Node"],
 		}),
@@ -169,7 +203,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		path: "/login/",
 		component: path.resolve("src/templates/login.js")
 	})
-	
+
 	/*
 	 * Create profile page.
 	 */
@@ -202,22 +236,47 @@ exports.createPages = async ({ graphql, actions }) => {
 						id
 						path
 						title
+						crumb {
+							path
+							aria_label
+							text
+						}
 						template
 						parent_element {
 							path
-							title
+							crumb {
+								path
+								aria_label
+								text
+							}
 							parent_element {
 								path
-								title
+								crumb {
+									path
+									aria_label
+									text
+								}
 								parent_element {
 									path
-									title
+									crumb {
+										path
+										aria_label
+										text
+									}
 									parent_element {
 										path
-										title
+										crumb {
+											path
+											aria_label
+											text
+										}
 										parent_element {
 											path
-											title
+											crumb {
+												path
+												aria_label
+												text
+											}
 										}
 									}
 								}
@@ -267,8 +326,7 @@ exports.createPages = async ({ graphql, actions }) => {
 			context: {
 				id: edge.node.id,
 				crumbs: {
-					path: edge.node.path,
-					title: edge.node.title,
+					crumb: edge.node.crumb,
 					parent_element: edge.node.parent_element
 				},
 				wpc_protected: edge.node.wpc_protected,
@@ -351,11 +409,15 @@ exports.createPages = async ({ graphql, actions }) => {
 				next: edge.next,
 				previous: edge.previous,
 				crumbs: {
-					path: edge.node.path,
-					title: edge.node.title,
+					crumb: {
+						path: edge.node.path,
+						text: edge.node.title,
+					},
 					parent_element: {
-						path: "/blog/",
-						title: "Blog"
+						crumb: {
+							path: "/blog/",
+							text: "Blog"
+						}
 					}
 				},
 			},
@@ -420,11 +482,15 @@ exports.createPages = async ({ graphql, actions }) => {
 				next: edge.next,
 				previous: edge.previous,
 				crumbs: {
-					path: edge.node.path,
-					title: edge.node.title,
+					crumb: {
+						path: edge.node.path,
+						text: edge.node.title,
+					},
 					parent_element: {
-						path: "/podcast/",
-						title: "Podcast"
+						crumb: {
+							path: "/podcast/",
+							text: "Podcast"
+						}
 					}
 				},
 			},
@@ -480,7 +546,7 @@ exports.createPages = async ({ graphql, actions }) => {
   	`)
 	const categoryTemplate = path.resolve("./src/templates/category.js")
 	categories.data.allWordpressCategory.edges.forEach(edge => {
-		
+
 		createPage({
 			// will be the url for the page
 			path: edge.node.path,
@@ -493,14 +559,20 @@ exports.createPages = async ({ graphql, actions }) => {
 				next: edge.next,
 				previous: edge.previous,
 				crumbs: {
-					path: edge.node.path,
-					title: edge.node.name,
+					crumb: {
+						path: edge.node.path,
+						text: edge.node.name,
+					},
 					parent_element: {
-						path: categoriesPath,
-						title: "Categories",
+						crumb: {
+							path: categoriesPath,
+							text: "Categories"
+						},
 						parent_element: {
-							path: "/blog/",
-							title: "Blog"
+							crumb: {
+								path: "/blog/",
+								text: "Blog"
+							}
 						}
 					}
 				},
@@ -552,14 +624,20 @@ exports.createPages = async ({ graphql, actions }) => {
 			context: {
 				id: edge.node.id,
 				crumbs: {
-					path: contributorPath,
-					title: edge.node.name,
+					crumb: {
+						path: contributorPath,
+						text: edge.node.name,
+					},
 					parent_element: {
-						path: "/about/contributors/",
-						title: "Contributors",
+						crumb: {
+							path: "/about/contributors/",
+							text: "Contributors",
+						},
 						parent_element: {
-							path: "/about/",
-							title: "About"
+							crumb: {
+								path: "/about/",
+								text: "About"
+							}
 						}
 					}
 				},

@@ -8,9 +8,9 @@ const Crumbs = ({ classes, crumbs }) => {
 	const breadcrumbs = []
 
 	let node = crumbs
-	while (node && node.path && node.title) {
+	while (node && node.crumb) {
 
-		breadcrumbs.push({ slug: node.path, text: node.title })
+		breadcrumbs.push(node.crumb)
 
 		if (node.parent_element) {
 			node = node.parent_element

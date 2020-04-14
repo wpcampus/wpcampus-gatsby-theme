@@ -17,8 +17,10 @@ const SearchTemplate = (props) => {
 	const [searchQuery, updateSearchQuery] = useState(defaultSearchQuery)
 
 	const crumbs = {
-		path: "/search/",
-		title: "Search",
+		crumb: {
+			path: "/search/",
+			text: "Search"
+		}
 	}
 
 	return (

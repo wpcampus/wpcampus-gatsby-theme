@@ -7,8 +7,10 @@ import { ArticleArchive } from "../components/archive"
 
 export default function Template(props) {
 	const crumbs = {
-		path: props.path,
-		title: "Blog",
+		crumb: {
+			path: props.path,
+			text: "Blog"
+		}
 	}
 	return (
 		<Layout pageTitle="Blog" heading="Blog posts" crumbs={crumbs} path={props.path}>
