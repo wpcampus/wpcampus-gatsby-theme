@@ -8,16 +8,11 @@ const tokenKey = "wpc-auth-token"
 const authRoot = "https://wpcampus.org/wp-json"
 
 /*
- * When does authorization expire? By default, every 48 hours
+ * When does authorization expire? 
+ * By default, every 48 hours.
  * The duration is in milliseconds.
- *
- * You can override this value by defining WPC_AUTH_DURATION in the .env file.
  */
-const defaultDuration = 172800000
-const expDuration =
-	process.env.WPC_AUTH_DURATION &&
-		Number.isInteger(process.env.WPC_AUTH_DURATION) &&
-		process.env.WPC_AUTH_DURATION > 0 ? parseInt(process.env.WPC_AUTH_DURATION) : defaultDuration
+const authExpiration = 172800000 
 
 const removeJWTPrefix = message => {
 	return message.replace(/^\[jwt_auth\]\s/, "")
@@ -57,7 +52,7 @@ export default class Auth {
 			return false
 		}
 
-		if (Date.now() - token.date > expDuration) {
+		if (Date.now() - token.date > authExpiration) {
 			this.removeToken()
 			return false
 		}
