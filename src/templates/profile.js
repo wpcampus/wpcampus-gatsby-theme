@@ -1,6 +1,4 @@
 import React from "react"
-//import { navigate } from "gatsby"
-//import PropTypes from "prop-types"
 
 import Layout from "../components/layout"
 import { User } from "../user/context"
@@ -8,7 +6,7 @@ import userDisplay from "../user/display"
 
 // @TODO tell robots dont index this page
 
-const Profile = props => {
+const Profile = () => {
 	const handleDisplay = user => {
 		if (!user.isActive()) {
 			return ""
@@ -16,7 +14,6 @@ const Profile = props => {
 		if (user.isLoggedIn()) {
 			return "logged in"
 		}
-		//navigate("/login")
 		const args = {
 			showLogin: true,
 		}
@@ -28,11 +25,5 @@ const Profile = props => {
 		</Layout>
 	)
 }
-
-/*Profile.propTypes = {
-	data: PropTypes.object.isRequired,
-	edges: PropTypes.array,
-	pageContext: PropTypes.object.isRequired
-}*/
 
 export default Profile
