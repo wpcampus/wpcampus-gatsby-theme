@@ -229,6 +229,11 @@ svg.wpc-logo {
 		color: #fff;
 	}
 
+	&--plain {
+		background: transparent;
+		border: 0;
+	}
+
 	&:hover,
 	&:focus {
 		background-color: var(--wpc-blue-dark);
