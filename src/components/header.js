@@ -48,7 +48,7 @@ HeaderAreas.defaultProps = {
 }
 
 const HeaderMemberActions = () => {
-	return <nav className="wpc-nav wpc-nav--actions wpc-home-banner__actions" aria-label="Become a member or login">
+	return <nav className="wpc-nav wpc-nav--actions" aria-label="Become a member or login">
 		<ul>
 			<li><Link className="wpc-button wpc-button--primary" to="/community/membership">Become a member</Link></li>
 			<li><Link className="wpc-button" to="/login">Login</Link></li>
@@ -86,11 +86,20 @@ const HeaderHomeBanner1 = () => {
 
 const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 
+	const headerAttr = {
+		className: "wpc-header wpc-wrapper"
+	}
+
 	let headerAreas
 	if (isHome) {
+
+		// Select the home banner.
+		const banner = <HeaderHomeBanner1 />
+		headerAttr.className += " wpc-header--home-one"
+
 		headerAreas = <HeaderAreas hasGrid={false}>
 			<HeaderArea area="banner">
-				<HeaderHomeBanner1 />
+				{banner}
 			</HeaderArea>
 			<HeaderArea area="meta"></HeaderArea>
 		</HeaderAreas>
@@ -120,10 +129,6 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 				<SearchForm {...searchFormAttr} />
 			</HeaderArea>
 		</HeaderAreas>
-	}
-
-	const headerAttr = {
-		className: "wpc-header wpc-wrapper"
 	}
 
 	return (
