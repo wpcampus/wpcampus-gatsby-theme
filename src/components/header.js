@@ -60,7 +60,7 @@ HeaderMemberActions.propTypes = {
 	classes: PropTypes.string
 }
 
-const HeaderLoggedInActions = ({ classes }) => {
+const HeaderLoggedInActions = ({ user, classes }) => {
 	const actionsAttr = {
 		className: "wpc-nav wpc-nav--actions",
 		"aria-label": "View profile or logout"
@@ -71,17 +71,18 @@ const HeaderLoggedInActions = ({ classes }) => {
 	return <nav {...actionsAttr}>
 		<ul>
 			<li><Link className="wpc-button wpc-button--primary" to="/profile/">View profile</Link></li>
-			<li><Link className="wpc-button wpc-button--plain wpc-button--logout" to="/logout/">Logout</Link></li>
+			<li><button className="wpc-button wpc-button--plain wpc-button--logout" onClick={user.logout}>Logout</button></li>
 		</ul>
 	</nav>
 }
 
 HeaderLoggedInActions.propTypes = {
+	user: PropTypes.object,
 	classes: PropTypes.string
 }
 
 const UserLoggedInActions = ({ user }) => {
-	
+
 	const userName = user.getDisplayName()
 
 	let userNameDisplay
@@ -95,7 +96,7 @@ const UserLoggedInActions = ({ user }) => {
 		<img className="wpc-user__avatar" src={avatarEduwapuuBW} alt="" />
 		<div className="wpc-user__info">
 			<span className="wpc-user__name">{userNameDisplay}</span>
-			<HeaderLoggedInActions classes="wpc-user__actions" />
+			<HeaderLoggedInActions user={user} classes="wpc-user__actions wpc-member__actions" />
 		</div>
 	</div>
 }
@@ -114,7 +115,7 @@ const HeaderHomeBanner1 = () => {
 		if (user.isLoggedIn()) {
 			return <UserLoggedInActions user={user} />
 		}
-		return <HeaderMemberActions />
+		return <HeaderMemberActions classes="wpc-home-banner__actions wpc-member__actions" />
 	}
 
 	const searchFormAttr = {
@@ -151,7 +152,7 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 		if (user.isLoggedIn()) {
 			return <UserLoggedInActions user={user} />
 		}
-		return <HeaderMemberActions />
+		return <HeaderMemberActions classes="wpc-member__actions" />
 	}
 
 	const headerAttr = {

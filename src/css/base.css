@@ -222,6 +222,8 @@ svg.wpc-logo {
 	border-radius: 10px;
 	padding: 0.5rem 1rem;
 	color: inherit;
+	text-decoration: underline;
+	cursor: pointer;
 
 	&--primary {
 		background-color: var(--wpc-blue-royal);
