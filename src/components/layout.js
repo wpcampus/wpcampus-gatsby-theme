@@ -21,6 +21,8 @@ import WPCGridDev from "./grid-dev"
 
 const Layout = props => {
 
+	const searchQuery = props.searchQuery
+	const updateSearchQuery = props.updateSearchQuery
 	const isHome = props.isHome
 	const useTitleTemplate = props.useTitleTemplate
 	const heading = props.heading
@@ -64,7 +66,7 @@ const Layout = props => {
 		<div {...wpcampusAttr}>
 			{showGrid ? <WPCGridDev /> : null}
 			<SEO title={pageTitle} useTitleTemplate={useTitleTemplate} />
-			<Header isHome={isHome} />
+			<Header searchQuery={searchQuery} updateSearchQuery={updateSearchQuery} isHome={isHome} />
 			{!isHome ? <div className="wpc-hero"></div> : null}
 			<div className="wpc-body wpc-wrapper">
 				<div className="wpc-container wpc-body__container">
@@ -95,6 +97,8 @@ const Layout = props => {
 }
 
 Layout.propTypes = {
+	searchQuery: PropTypes.string,
+	updateSearchQuery: PropTypes.func,
 	isHome: PropTypes.bool,
 	pageTitle: PropTypes.string,
 	useTitleTemplate: PropTypes.bool,

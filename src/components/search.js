@@ -1,10 +1,16 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import PropTypes from "prop-types"
 
-const sanitizeSearch = (str) => {
+import MagnifyingGlass from "../svg/magnifying-glass"
+
+const sanitizeSearchTerm = (str) => {
 	str = str.replace(/[^a-z0-9áéíóúñü .,_-]/gim, "")
 	return str.trim()
+}
+
+const navigateToSearch = (searchValue) => {
+	navigate("/search/" + searchValue)
 }
 
 const SearchResult = ({ result, headingLevel }) => {
@@ -51,7 +57,7 @@ SearchResultsByType.defaultProps = {
 	headingLevel: 2
 }
 
-const SearchResults = ({ query, results, headingLevel, isSearchComplete }) => {
+const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete }) => {
 	// @TODO add library
 	const sortByType = {
 		post: {
@@ -75,7 +81,7 @@ const SearchResults = ({ query, results, headingLevel, isSearchComplete }) => {
 	}
 
 	// If there's no query, then no search.
-	if (!query) {
+	if (!searchQuery) {
 		isSearchComplete = false
 		results = []
 	}
@@ -94,9 +100,9 @@ const SearchResults = ({ query, results, headingLevel, isSearchComplete }) => {
 		})
 
 		if (1 === results.length) {
-			resultsMessage = `There is 1 result for "${query}".`
+			resultsMessage = `There is 1 result for "${searchQuery}".`
 		} else {
-			resultsMessage = `There are ${results.length} results for "${query}".`
+			resultsMessage = `There are ${results.length} results for "${searchQuery}".`
 		}
 
 		resultsList = Object.keys(sortByType).map(function (key, i) {
@@ -127,7 +133,7 @@ const SearchResults = ({ query, results, headingLevel, isSearchComplete }) => {
 }
 
 SearchResults.propTypes = {
-	query: PropTypes.string,
+	searchQuery: PropTypes.string,
 	results: PropTypes.array,
 	headingLevel: PropTypes.number,
 	isSearchComplete: PropTypes.bool.isRequired
@@ -138,30 +144,155 @@ SearchResults.defaultProps = {
 	isSearchComplete: false
 }
 
-// @TODO setup to work so back navigation updates the page.
-/*const getWindowSearch = () => {
-	let windowSearch = window.location.search.replace("?", "").split("&")
-	if (windowSearch) {
-		for (let i = 0; i < windowSearch.length; i++) {
-			let param = windowSearch[i].split("=")
-			if ("s" === param[0]) {
-				return param[1]
+const propsChanged = (prevProps, newProps) => {
+
+	const newState = {}
+
+	// Will be true if something changed.
+	let changed = false
+	for (const property in prevProps) {
+		if (Object.prototype.hasOwnProperty.call(prevProps, property)) {
+			if (prevProps[property] !== newProps[property]) {
+				newState[property] = newProps[property]
+				changed = true
 			}
 		}
 	}
-	return null
-}*/
+
+	if (!changed) {
+		return false
+	}
+
+	return newState
+}
+class SearchForm extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			searchQuery: props.searchQuery,
+			updateSearchQuery: props.updateSearchQuery,
+			showSubmit: props.showSubmit,
+		}
+
+		if ("function" === typeof props.onSubmit) {
+			this.state.onSubmit = props.onSubmit
+		} else {
+			this.onFormSubmit = this.onFormSubmit.bind(this)
+			this.state.onSubmit = this.onFormSubmit
+		}
+
+		// This binding is necessary to make `this` work in the callback
+		this.onChangeSearch = this.onChangeSearch.bind(this)
+
+	}
+
+	// Update the state if properties were updated.
+	componentDidUpdate(prevProps, prevState) {
+
+		const changed = propsChanged(prevProps, this.props)
+
+		// If things changed, returns an object. Otherwise false.
+		if (false !== changed) {
+
+			this.setState({
+				...prevState,
+				...changed
+			})
+		}
+	}
+
+	onFormSubmit(event) {
+		event.preventDefault()
+
+		const searchField = event.target.querySelector("input[name=\"search\"]")
+
+		let searchValue = searchField.value
+
+		if (!searchValue) {
+			return
+		}
+
+		searchValue = sanitizeSearchTerm(searchValue)
+
+		if (searchValue) {
+
+			if ("function" === typeof this.state.updateSearchQuery) {
+				this.state.updateSearchQuery(searchValue)
+			}
+
+			navigateToSearch(searchValue)
+		}
+	}
+
+	onChangeSearch(e) {
+		if (e.target.value === this.state.searchQuery) {
+			return
+		}
+
+		this.setState({
+			...this.state,
+			searchQuery: e.target.value,
+		})
+	}
+
+	render() {
+
+		const searchFormAttr = {
+			className: "wpc-form wpc-form--search wpc-search-form",
+			action: "/search/",
+			onSubmit: this.state.onSubmit
+		}
+
+		if (!this.state.showSubmit) {
+			searchFormAttr.className += " wpc-form--hide-submit"
+		}
+
+		const inputSearchAttr = {
+			type: "search",
+			className: "wpc-form__input wpc-search-form__input",
+			name: "search",
+			onChange: this.onChangeSearch,
+			"aria-label": "Search the site",
+			placeholder: "Search the site",
+			value: this.state.searchQuery
+		}
+
+		return <form {...searchFormAttr}>
+			<div className="wpc-search-form__magnifying">
+				<MagnifyingGlass />
+			</div>
+			<input {...inputSearchAttr} />
+			<input className="wpc-form__submit" type="submit" value="Search" />
+		</form>
+	}
+}
+
+SearchForm.propTypes = {
+	searchQuery: PropTypes.string,
+	updateSearchQuery: PropTypes.func,
+	showSubmit: PropTypes.bool,
+	onSubmit: PropTypes.func
+}
+
+SearchForm.defaultProps = {
+	searchQuery: "",
+	showSubmit: true
+}
 
 class SearchLayout extends React.Component {
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
 
 		this.cssSearchPrefix = "wpc-search"
 
 		this.state = {
 			processing: false,
 			isSearchComplete: false,
-			query: null,
+			searchQuery: props.searchQuery,
+			updateSearchQuery: props.updateSearchQuery,
+			includeSearchHeading: props.includeSearchHeading,
+			children: props.children,
 			results: []
 		}
 
@@ -170,38 +301,52 @@ class SearchLayout extends React.Component {
 
 	}
 
-	// @TODO I couldn't get to work.
-	/*componentDidMount() {
-		window.addEventListener("popstate", this.handlePopState)
+	// When mounted, check if a search query was defined and run search.
+	componentDidMount() {
+		if (this.props.searchQuery && !this.state.isSearchComplete && !this.state.processing) {
+			this.runSearch(this.props.searchQuery)
+		}
 	}
 
-	handlePopState(e) {
-		if (e.state) {
-			e.preventDefault()
-			e.stopPropagation()
-			this.setState(e.state)
+	// Update the state if properties were updated.
+	componentDidUpdate(prevProps, prevState) {
+
+		const changed = propsChanged(prevProps, this.props)
+
+		// If things changed, returns an object. Otherwise false.
+		if (false !== changed) {
+
+			this.setState({
+				...prevState,
+				...changed
+			})
 		}
-	}*/
+	}
 
 	runSearch(searchStr) {
-
-		searchStr = sanitizeSearch(searchStr)
 
 		if (!searchStr) {
 			return
 		}
 
-		if (searchStr === this.state.query) {
+		searchStr = sanitizeSearchTerm(searchStr)
+
+		if (!searchStr) {
 			return
 		}
 
 		const encodedSearchStr = encodeURIComponent(searchStr)
 
 		this.setState((prevState) => ({
-			processing: true,
-			query: searchStr,
-			results: prevState.results
+			...prevState,
+			processing: true
 		}))
+
+		if ("function" === typeof this.state.updateSearchQuery) {
+			this.state.updateSearchQuery(searchStr)
+		}
+
+		window.history.pushState({}, "", "/search/" + encodedSearchStr)
 
 		let url = "https://wpcampus.org/wp-json/wpcampus/search/"
 
@@ -225,13 +370,12 @@ class SearchLayout extends React.Component {
 				}
 
 				this.setState((prevState) => ({
+					...prevState,
 					processing: false,
-					query: prevState.query,
 					results: response,
+					resultsQuery: searchStr,
 					isSearchComplete: true
 				}))
-
-				window.history.pushState(this.state, "", window.location.pathname + "?s=" + encodedSearchStr)
 
 			})
 			.catch(() => {
@@ -250,6 +394,10 @@ class SearchLayout extends React.Component {
 			return
 		}
 
+		if (searchValue === this.state.searchQuery) {
+			return
+		}
+
 		this.runSearch(searchValue)
 	}
 
@@ -263,26 +411,20 @@ class SearchLayout extends React.Component {
 			searchAttr.className += ` ${this.cssSearchPrefix}--processing`
 		}
 
-		const searchFormAttr = {
-			className: "wpc-form wpc-form--search",
-			onSubmit: this.handleSubmit
-		}
-
-		const headingLevel = this.props.includeSearchHeading ? 3 : 2
+		const headingLevel = this.state.includeSearchHeading ? 3 : 2
 
 		return <div {...searchAttr}>
-			{this.props.children ? this.props.children : null}
-			{this.props.includeSearchHeading ? <h2>Search our website</h2> : null}
-			<form {...searchFormAttr}>
-				<input type="search" className="wpc-form__input" name="search" aria-label="Search the site" placeholder="Search the site" />
-				<input type="submit" value="Search" />
-			</form>
-			<SearchResults headingLevel={headingLevel} isSearchComplete={this.state.isSearchComplete} query={this.state.query} results={this.state.results} />
+			{this.state.children ? this.state.children : null}
+			{this.state.includeSearchHeading ? <h2>Search our website</h2> : null}
+			<SearchForm searchQuery={this.state.searchQuery} updateSearchQuery={this.state.updateSearchQuery} onSubmit={this.handleSubmit} />
+			<SearchResults headingLevel={headingLevel} isSearchComplete={this.state.isSearchComplete} searchQuery={this.state.resultsQuery} results={this.state.results} />
 		</div>
 	}
 }
 
 SearchLayout.propTypes = {
+	searchQuery: PropTypes.string,
+	updateSearchQuery: PropTypes.func.isRequired,
 	includeSearchHeading: PropTypes.bool,
 	children: PropTypes.node
 }
@@ -291,4 +433,4 @@ SearchLayout.defaultProps = {
 	includeSearchHeading: false
 }
 
-export { SearchLayout }
+export { SearchLayout, SearchForm, sanitizeSearchTerm }

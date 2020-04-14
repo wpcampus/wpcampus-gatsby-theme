@@ -3,19 +3,20 @@ import PropTypes from "prop-types"
 import React from "react"
 
 import WPCampusLogo from "../svg/logo"
-import { User } from "../user/context"
-import userDisplay from "../user/display"
+//import { User } from "../user/context"
+//import userDisplay from "../user/display"
+import { SearchForm } from "../components/search"
 
 import "./../css/header.css"
 
 const Header = props => {
 	// Have to use separate function to process <User.Consumer> and pass args
-	const handleUserDisplay = user => {
+	/*const handleUserDisplay = user => {
 		const args = {
 			showLogin: true,
 		}
 		return userDisplay(user, args)
-	}
+	}*/
 
 	let HeadingTag
 
@@ -23,6 +24,12 @@ const Header = props => {
 		HeadingTag = "h1"
 	} else {
 		HeadingTag = "span"
+	}
+
+	const searchFormAttr = {
+		showSubmit: false,
+		searchQuery: props.searchQuery,
+		updateSearchQuery: props.updateSearchQuery
 	}
 
 	return (
@@ -43,7 +50,7 @@ const Header = props => {
 						</HeadingTag>
 					</div>
 					<div className="wpc-area wpc-header__area wpc-header__area--meta">
-						<User.Consumer>{handleUserDisplay}</User.Consumer>
+						<SearchForm {...searchFormAttr} />
 					</div>
 				</div>
 			</div>
@@ -52,6 +59,8 @@ const Header = props => {
 }
 
 Header.propTypes = {
+	searchQuery: PropTypes.string,
+	updateSearchQuery: PropTypes.func,
 	isHome: PropTypes.bool,
 }
 

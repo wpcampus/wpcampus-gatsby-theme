@@ -265,6 +265,17 @@ nav.wpc-nav {
 	}
 }
 
+.wpc-svg {
+	&--magnifying {
+		enable-background: new 0 0 40 40;
+
+		path {
+			fill-rule: evenodd;
+			clip-rule: evenodd;
+		}
+	}
+}
+
 .wpcampus--path-404 {
 	svg#Truck_sheep {
 		float: right;

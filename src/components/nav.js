@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
+// @TODO remove search and pages menu item
 const NavPrimaryItems = [
 	{
 		slug: "/about/",
@@ -95,6 +96,7 @@ const NavPrimaryItems = [
 	{ slug: "/jobs/", text: "Job board" },
 	{ slug: "/podcast/", text: "Podcast" },
 	{ href: "https://shop.wpcampus.org/", text: "Shop" },
+	{ slug: "/search/", text: "Search" },
 	{ slug: "/pages/", text: "Pages" }
 ]
 
