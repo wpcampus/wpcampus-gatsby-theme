@@ -4,7 +4,7 @@ import "./../css/conduct.css"
 
 const Conduct = () => {
 	useEffect(() => {
-		import('@wpcampus/wpcampus-wc-conduct')
+		require("@wpcampus/wpcampus-wc-conduct")
 	}, [])
 
 	return <wpcampus-conduct></wpcampus-conduct>

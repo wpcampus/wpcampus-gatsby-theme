@@ -4,7 +4,7 @@ import "./../css/footer.css"
 
 const Footer = () => {
 	useEffect(() => {
-		import('@wpcampus/wpcampus-wc-footer')
+		require("@wpcampus/wpcampus-wc-footer")
 	}, [])
 
 	return <wpcampus-footer></wpcampus-footer>
