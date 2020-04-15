@@ -258,12 +258,22 @@ class SearchForm extends React.Component {
 			value: this.state.searchQuery
 		}
 
+		const submitAttr = {
+			className: "wpc-form__submit",
+			type: "submit",
+			value: "Search"
+		}
+
+		if (!this.state.showSubmit) {
+			submitAttr.tabIndex = "-1"
+		}
+
 		return <form {...searchFormAttr}>
 			<div className="wpc-search-form__magnifying">
 				<MagnifyingGlass />
 			</div>
 			<input {...inputSearchAttr} />
-			<input className="wpc-form__submit" type="submit" value="Search" />
+			<input {...submitAttr} />
 		</form>
 	}
 }
