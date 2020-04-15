@@ -172,7 +172,7 @@ class SearchForm extends React.Component {
 		this.state = {
 			searchQuery: props.searchQuery,
 			updateSearchQuery: props.updateSearchQuery,
-			showSubmit: props.showSubmit,
+			showSubmitIcon: props.showSubmitIcon,
 		}
 
 		if ("function" === typeof props.onSubmit) {
@@ -244,8 +244,8 @@ class SearchForm extends React.Component {
 			onSubmit: this.state.onSubmit
 		}
 
-		if (!this.state.showSubmit) {
-			searchFormAttr.className += " wpc-form--hide-submit"
+		if (this.state.showSubmitIcon) {
+			searchFormAttr.className += " wpc-search-form--show-submit-icon"
 		}
 
 		const inputSearchAttr = {
@@ -259,21 +259,25 @@ class SearchForm extends React.Component {
 		}
 
 		const submitAttr = {
-			className: "wpc-form__submit",
+			className: "wpc-form__submit wpc-search-form__submit",
 			type: "submit",
-			value: "Search"
+			"aria-label": "Search"
 		}
 
-		if (!this.state.showSubmit) {
-			submitAttr.tabIndex = "-1"
+		if (this.state.showSubmitIcon) {
+			submitAttr.value = ""
+		} else {
+			submitAttr.value = "Search"
 		}
 
 		return <form {...searchFormAttr}>
-			<div className="wpc-search-form__magnifying">
-				<MagnifyingGlass />
-			</div>
 			<input {...inputSearchAttr} />
-			<input {...submitAttr} />
+			<div className="wpc-search-form__submit-icon">
+				<input {...submitAttr} />
+				{this.state.showSubmitIcon ? <div className="wpc-search-form__magnifying">
+					<MagnifyingGlass />
+				</div> : null}
+			</div>
 		</form>
 	}
 }
@@ -281,13 +285,13 @@ class SearchForm extends React.Component {
 SearchForm.propTypes = {
 	searchQuery: PropTypes.string,
 	updateSearchQuery: PropTypes.func,
-	showSubmit: PropTypes.bool,
+	showSubmitIcon: PropTypes.bool,
 	onSubmit: PropTypes.func
 }
 
 SearchForm.defaultProps = {
 	searchQuery: "",
-	showSubmit: true
+	showSubmitIcon: false
 }
 
 class SearchLayout extends React.Component {

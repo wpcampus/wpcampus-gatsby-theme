@@ -50,56 +50,73 @@
 		}
 	}
 
-	/* stylelint-disable no-descending-specificity */
-	&--hide-submit {
-		input[type="submit"] {
-			border: 0;
-			clip: rect(0 0 0 0);
-			height: 1px;
-			margin: -1px;
-			overflow: hidden;
-			padding: 0;
-			position: absolute;
-			width: 1px;
-		}
-		/* stylelint-disable */
-	}
-
 	&--processing {
 		opacity: 0.4;
 		pointer-events: none;
 	}
 
 	&--search {
-		--magnifying-width: 30px;
+		--magnifying-width: 40px;
 
 		display: grid;
-		grid-template-columns: var(--magnifying-width) 1fr 10rem;
+		grid-template-columns: 1fr 10rem;
 		grid-column-gap: 0.75rem;
+		align-items: stretch;
 		border: var(--input-border);
 		padding: 0.75rem;
 		background: #fff;
 
-		.wpc-search-form__magnifying {
-			display: flex;
-			align-items: center;
+		&.wpc-search-form {
+			.wpc-search-form {
+				&__input[type="search"] {
+					border: 0;
+					padding: 0;
+					font-size: 1.3rem;
+					background: transparent;
+				}
 
-			svg {
-				display: block;
-				width: var(--magnifying-width);
-				height: auto;
+				&__submit {
+					display: block;
+					width: 100%;
+				}
 			}
-		}
 
-		.wpc-search-form__input[type="search"] {
-			border: 0;
-			padding: 0;
-			font-size: 1.3rem;
-			background: transparent;
-		}
+			&--show-submit-icon {
+				grid-template-columns: 1fr var(--magnifying-width);
 
-		&.wpc-form--hide-submit {
-			grid-template-columns: var(--magnifying-width) 1fr;
+				.wpc-search-form__submit-icon {
+					position: relative;
+
+					input[type="submit"] {
+						background: transparent;
+						border: 0;
+						padding: 0;
+						width: var(--magnifying-width);
+						height: var(--magnifying-width);
+
+						&:hover,
+						&:focus {
+							outline: 1px dotted #212121;
+  							outline: 5px auto -webkit-focus-ring-color;
+						}
+					}
+
+					.wpc-search-form__magnifying {
+						position: absolute;
+						left: 0;
+						top: 0;
+						width: var(--magnifying-width);
+						height: var(--magnifying-width);
+						pointer-events: none;
+
+						svg {
+							display: block;
+							width: var(--magnifying-width);
+							height: var(--magnifying-width);
+						}
+					}
+				}
+			}
 		}
 	}
 

@@ -119,7 +119,7 @@ const HeaderHomeBanner1 = () => {
 	}
 
 	const searchFormAttr = {
-		showSubmit: false
+		showSubmitIcon: true
 	}
 
 	return <div className="wpc-home-banner">
@@ -175,7 +175,7 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 	} else {
 
 		const searchFormAttr = {
-			showSubmit: false,
+			showSubmitIcon: true,
 			searchQuery: searchQuery,
 			updateSearchQuery: updateSearchQuery
 		}
