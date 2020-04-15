@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useMemo } from "react"
 
 import "./../css/conduct.css"
 
@@ -7,7 +7,9 @@ const Conduct = () => {
 		require("@wpcampus/wpcampus-wc-conduct")
 	}, [])
 
-	return <wpcampus-conduct></wpcampus-conduct>
+	return useMemo(() => {
+		return <wpcampus-conduct></wpcampus-conduct>
+	})
 }
 
 export default Conduct
