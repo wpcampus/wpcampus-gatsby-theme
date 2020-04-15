@@ -17,9 +17,17 @@
 			}
 		}
 
-		&--tweet {
-			.wpc-widget__tweet {
-				margin: 0;
+		&--tweets {
+			.wpc-tweets__tweet {
+				margin: 0 0 1rem 0;
+
+				.wpc-tweets__text {
+					margin: 0;
+				}
+
+				&:last-child {
+					margin-bottom: 0;
+				}
 			}
 		}
 
