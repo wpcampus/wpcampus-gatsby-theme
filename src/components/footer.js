@@ -1,15 +1,13 @@
-import React from "react"
-
-if (typeof HTMLElement !== "undefined") {
-	require("@wpcampus/wpcampus-wc-footer")
-}
+import React, { useEffect } from "react"
 
 import "./../css/footer.css"
 
 const Footer = () => {
-	return (
-		<wpcampus-footer></wpcampus-footer>
-	)
+	useEffect(() => {
+		import('@wpcampus/wpcampus-wc-footer')
+	}, [])
+
+	return <wpcampus-footer></wpcampus-footer>
 }
 
 export default Footer
