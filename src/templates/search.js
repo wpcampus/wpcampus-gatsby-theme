@@ -19,6 +19,7 @@ const SearchTemplate = (props) => {
 	const crumbs = {
 		crumb: {
 			path: "/search/",
+			isCurrent: true,
 			text: "Search"
 		}
 	}

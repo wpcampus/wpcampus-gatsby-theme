@@ -105,11 +105,11 @@ const NavLink = ({ item }) => {
 	if (!item.path || !item.text) {
 		return ""
 	}
-	const isActiveParent = ({ isCurrent, isPartiallyCurrent }) => {
+	const getLinkProps = ({ isCurrent, isPartiallyCurrent }) => {
 		const attrs = {
 			className: "nav-link"
 		}
-		if (isCurrent) {
+		if (isCurrent || true === item.isCurrent) {
 			attrs.className += " nav-link--current"
 		} else if (isPartiallyCurrent) {
 			attrs.className += " nav-link--current-parent"
@@ -117,7 +117,7 @@ const NavLink = ({ item }) => {
 		return attrs
 	}
 	const linkAttr = {
-		getProps: isActiveParent,
+		getProps: getLinkProps,
 		to: item.path
 	}
 	if (item.aria_label) {
