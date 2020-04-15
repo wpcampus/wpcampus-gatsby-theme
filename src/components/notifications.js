@@ -1,15 +1,15 @@
-import React from "react"
-
-if (typeof HTMLElement !== "undefined") {
-	require("@wpcampus/wpcampus-wc-notifications")
-}
+import React, { useEffect, useMemo } from "react"
 
 import "../css/notifications.css"
 
 const Notifications = () => {
-	return (
-		<wpcampus-notifications></wpcampus-notifications>
-	)
+	useEffect(() => {
+		require("@wpcampus/wpcampus-wc-notifications")
+	}, [])
+
+	return useMemo(() => {
+		return <wpcampus-notifications></wpcampus-notifications>
+	})
 }
 
 export default Notifications

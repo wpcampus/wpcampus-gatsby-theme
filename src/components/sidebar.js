@@ -1,13 +1,9 @@
-import React from "react"
+import React, { useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 
 import QuotesIcon from "../svg/quotes"
 import TwitterIcon from "../svg/twitter"
-
-if (typeof HTMLElement !== "undefined") {
-	require("@wpcampus/wpcampus-wc-blog")
-}
 
 import "./../css/sidebar.css"
 
@@ -30,10 +26,15 @@ Widget.propTypes = {
 }
 
 const BlogWidget = () => {
-	return <Widget type="blog">
-		<h2 className="wpc-widget__heading"><Link className="wpc-icon-text" aria-label="The WPCampus Blog" to="/blog"><QuotesIcon />From our blog</Link></h2>
-		<wpcampus-blog></wpcampus-blog>
-	</Widget>
+	useEffect(() => {
+		require("@wpcampus/wpcampus-wc-blog")
+	}, [])
+	return useMemo(() => {
+		return <Widget type="blog">
+			<h2 className="wpc-widget__heading"><Link className="wpc-icon-text" aria-label="The WPCampus Blog" to="/blog"><QuotesIcon />From our blog</Link></h2>
+			<wpcampus-blog></wpcampus-blog>
+		</Widget>
+	})
 }
 
 // @TODO replace with web component.

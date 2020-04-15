@@ -1,22 +1,23 @@
-import React from "react"
+import React, { useEffect, useMemo } from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
 import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
 
-if (typeof HTMLElement !== "undefined") {
-	require("@wpcampus/wpcampus-wc-library")
-}
-
 const Library = props => {
 	const page = props.data.wordpressPage
-	return (
-		<Layout heading={page.title} path={props.path}>
+
+	useEffect(() => {
+		require("@wpcampus/wpcampus-wc-library")
+	}, [])
+
+	return useMemo(() => {
+		return <Layout heading={page.title} path={props.path}>
 			<div>{ReactHtmlParser(page.content)}</div>
 			<wpcampus-library></wpcampus-library>
 		</Layout>
-	)
+	})
 }
 
 Library.propTypes = {
