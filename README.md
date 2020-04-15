@@ -32,7 +32,9 @@ Run `npm run css` in the command line.
 
 ## WPCampus setup
 
-1. Duplicate the .env.sample file and rename as .env.development.
+1. Duplicate the .env.sample twice with the following names. These files are used depending on the environment being run.
+	* .env.development
+	* .env.production
 2. Set the data for your dev environment.
     * [Talk to an administrator](./.github/CODEOWNERS) for the correct information.
 3. Add `WPC_SHOW_GRID=1` to .env.development to display CSS grid in development environment.
