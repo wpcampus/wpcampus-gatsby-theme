@@ -32,12 +32,9 @@ const LoginForm = () => {
 		}
 
 		let value = event.target.value.trim()
-		let invalidKey = name + "Invalid"
-		let invalidValue = !value ? messages[name + "_empty"] : false
 
 		setState({
 			...state,
-			[invalidKey]: invalidValue,
 			[name]: value,
 		})
 	}
@@ -206,9 +203,7 @@ const LoginForm = () => {
 				id={IDs.usernameLabel}
 				htmlFor={IDs.username}
 				className={classes.label}
-			>
-        Username
-			</label>
+			>Username</label>
 			<div className={classes.inputWrapper}>
 				<input {...usernameAttr} />
 				<div id={IDs.usernameLabelError} className={classes.inputError}>
@@ -219,9 +214,7 @@ const LoginForm = () => {
 				id={IDs.passwordLabel}
 				htmlFor={IDs.username}
 				className={classes.label}
-			>
-        Password:
-			</label>
+			>Password:</label>
 			<div className={classes.inputWrapper}>
 				<input {...passwordAttr} />
 				<div id={IDs.passwordLabelError} className={classes.inputError}>
