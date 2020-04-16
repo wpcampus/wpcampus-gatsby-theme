@@ -71,7 +71,7 @@ const HeaderLoggedInActions = ({ user, classes }) => {
 	const LogoutButton = user.LogoutButton
 	return <nav {...actionsAttr}>
 		<ul>
-			<li><Link className="wpc-button wpc-button--primary" to="/profile/">View profile</Link></li>
+			<li><Link className="wpc-button wpc-button--primary" to="/profile/">Your profile</Link></li>
 			<li><LogoutButton isPlain={true} /></li>
 		</ul>
 	</nav>
