@@ -3,7 +3,7 @@ import { navigate } from "gatsby"
 
 import Layout from "../components/layout"
 import { User } from "../user/context"
-import userDisplay from "../user/display"
+import LoginForm from "../user/loginForm"
 
 // @TODO tell robots dont index this page
 
@@ -15,11 +15,7 @@ const Login = () => {
 		if (user.isLoggedIn()) {
 			navigate( "/profile/" )
 		}
-		//navigate("/login")
-		const args = {
-			showLogin: true,
-		}
-		return userDisplay(user, args)
+		return <LoginForm />
 	}
 	return (
 		<Layout heading="Login">

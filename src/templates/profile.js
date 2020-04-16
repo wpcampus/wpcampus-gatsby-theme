@@ -2,7 +2,7 @@ import React from "react"
 
 import Layout from "../components/layout"
 import { User } from "../user/context"
-import userDisplay from "../user/display"
+import LoginForm from "../user/loginForm"
 
 // @TODO tell robots dont index this page
 
@@ -17,7 +17,7 @@ const Profile = () => {
 		const args = {
 			showLogin: true,
 		}
-		return userDisplay(user, args)
+		return <LoginForm />
 	}
 	return (
 		<Layout heading="Profile">
