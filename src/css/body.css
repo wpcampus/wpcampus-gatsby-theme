@@ -1,20 +1,4 @@
 .wpc-body {
-	.wpc-author {
-		margin: 0 0 1rem;
-
-		&__areas {
-			.wpc-author__area {
-				&--avatar {
-					grid-column: col-start / span 3;
-				}
-
-				&--main {
-					grid-column: col-start 4 / span 9;
-				}
-			}
-		}
-	}
-
 	nav.wpc-crumbs {
 		a {
 			color: inherit;

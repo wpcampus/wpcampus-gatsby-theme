@@ -291,3 +291,77 @@ nav.wpc-nav {
 		margin: 0 0 3rem 4rem;
 	}
 }
+
+.wpc-author-card {
+	margin: 0 0 1rem;
+
+	&__heading {
+		font-size: 1.6rem;
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	/* stylelint-disable no-descending-specificity */
+	&__meta {
+		display: block;
+		list-style: none;
+		margin: 0 0 1rem;
+		font-size: 0.9rem;
+
+		li {
+			--dash-width: 6px;
+			--dash-padding: 5px;
+
+			display: inline-block;
+			position: relative;
+			padding-left: calc(var(--dash-width) + var(--dash-padding));
+			margin-left: var(--dash-padding);
+
+			&::before {
+				content: '';
+				display: block;
+				position: absolute;
+				left: 0;
+				top: 50%;
+				width: var(--dash-width);
+				height: 2px;
+				background: #888;
+			}
+
+			&:first-child {
+				padding-left: 0;
+				margin-left: 0;
+
+				&::before {
+					display: none;
+				}
+			}
+		}
+	}
+	/* stylelint-disable */
+
+	.wpc-areas--grid {
+		grid-column-gap: 1.5rem;
+
+		.wpc-author-card__area {
+			&--avatar {
+				grid-column: col-start / span 3;
+			}
+
+			&--main {
+				grid-column: col-start 4 / span 9;
+			}
+
+			/* Desktop */
+			@media (min-width: 1260px) {
+				&--avatar {
+					grid-column: col-start / span 2;
+				}
+
+				&--main {
+					grid-column: col-start 3 / span 10;
+				}
+			}
+		}
+	}
+}
