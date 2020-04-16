@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useRef, useState, useContext } from "react"
 
 import { User } from "../user/context"
 import messages from "../user/messages"
@@ -14,6 +14,9 @@ const LoginForm = () => {
 	}
 	const [state, setState] = useState(initialState)
 	const UserContext = useContext(User)
+	
+	const inputUsernameRef = useRef()
+	const inputPasswordRef = useRef()
 
 	const IDs = {
 		alert: "login-alert",
@@ -71,12 +74,12 @@ const LoginForm = () => {
 		})
 
 		if (!username) {
-			document.getElementById(IDs.username).focus()
+			inputUsernameRef.current.focus()
 			return
 		}
 
 		if (!password) {
-			document.getElementById(IDs.password).focus()
+			inputPasswordRef.current.focus()
 			return
 		}
 
@@ -93,20 +96,17 @@ const LoginForm = () => {
 				let errorText = div.textContent || div.innerText || ""
 
 				// @TODO need to setup a "lost password" page.
-				/*if (
-          errorText.startsWith(
-            "ERROR: The password you entered for the username"
-          )
-        )*/
-				errorText = errorText.replace(/^ERROR:\s/, "")
+				
+				// Replace "error" prefix.
+				errorText = errorText.replace(/^(<strong>)?ERROR:(<\/strong>)?\s/i, "")
 
 				// Set the field errors.
 				if (errorText.startsWith("This username is unknown")) {
-					document.getElementById(IDs.username).focus()
+					inputUsernameRef.current.focus()
 					usernameInvalid = errorText
 					errorText = messages.login_errors
 				} else if (errorText.startsWith("The password you entered")) {
-					document.getElementById(IDs.password).focus()
+					inputPasswordRef.current.focus()
 					passwordInvalid = errorText
 					errorText = messages.login_errors
 				} else if (errorText.startsWith("NetworkError")) {
@@ -154,7 +154,14 @@ const LoginForm = () => {
 		alertAttr.className += " " + classes.alertHidden
 	}
 
-	const usernameAttr = {
+	const labelUsernameAttr = {
+		id: IDs.usernameLabel,
+		htmlFor: IDs.username,
+		className: classes.label
+	}
+
+	const inputUsernameAttr = {
+		ref: inputUsernameRef,
 		id: IDs.username,
 		className: classes.input,
 		type: "text",
@@ -168,10 +175,17 @@ const LoginForm = () => {
 	}
 
 	if (state.usernameInvalid) {
-		usernameAttr["aria-invalid"] = "true"
+		inputUsernameAttr["aria-invalid"] = "true"
 	}
 
-	const passwordAttr = {
+	const labelPasswordAttr = {
+		id: IDs.passwordLabel,
+		htmlFor: IDs.username,
+		className: classes.label
+	}
+
+	const inputPasswordAttr = {
+		ref: inputPasswordRef,
 		id: IDs.password,
 		className: classes.input,
 		type: "password",
@@ -185,7 +199,7 @@ const LoginForm = () => {
 	}
 
 	if (state.passwordInvalid) {
-		passwordAttr["aria-invalid"] = "true"
+		inputPasswordAttr["aria-invalid"] = "true"
 	}
 
 	const submitAttr = {
@@ -199,24 +213,16 @@ const LoginForm = () => {
 			<p {...alertAttr} aria-live="polite">
 				{state.alert}
 			</p>
-			<label
-				id={IDs.usernameLabel}
-				htmlFor={IDs.username}
-				className={classes.label}
-			>Username</label>
+			<label {...labelUsernameAttr}>Username</label>
 			<div className={classes.inputWrapper}>
-				<input {...usernameAttr} />
+				<input {...inputUsernameAttr} />
 				<div id={IDs.usernameLabelError} className={classes.inputError}>
 					{state.usernameInvalid}
 				</div>
 			</div>
-			<label
-				id={IDs.passwordLabel}
-				htmlFor={IDs.username}
-				className={classes.label}
-			>Password:</label>
+			<label {...labelPasswordAttr}>Password:</label>
 			<div className={classes.inputWrapper}>
-				<input {...passwordAttr} />
+				<input {...inputPasswordAttr} />
 				<div id={IDs.passwordLabelError} className={classes.inputError}>
 					{state.passwordInvalid}
 				</div>
