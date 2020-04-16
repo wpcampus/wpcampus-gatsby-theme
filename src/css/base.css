@@ -292,6 +292,30 @@ nav.wpc-nav {
 	}
 }
 
+table.wpc-table {
+	width: 100%;
+	text-align: left;
+
+	th {
+		font-weight: 600;
+	}
+
+	&--profile {
+		font-size: 1.1rem;
+
+		th,
+		td {
+			padding: 0.25rem 0;
+		}
+
+		th {
+			width: 18%;
+			font-size: 1.2rem;
+			padding-right: 1rem;
+		}
+	}
+}
+
 .wpc-author-card {
 	margin: 0 0 1rem;
 
