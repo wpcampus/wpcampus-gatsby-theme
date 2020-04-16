@@ -330,6 +330,10 @@ class SearchLayout extends React.Component {
 		// If things changed, returns an object. Otherwise false.
 		if (false !== changed) {
 
+			if (changed.searchQuery && !this.state.processing) {
+				this.runSearch(this.props.searchQuery)
+			}
+
 			this.setState({
 				...prevState,
 				...changed
@@ -356,10 +360,12 @@ class SearchLayout extends React.Component {
 			processing: true
 		}))
 
+		// @TODO doesnt need to run when component is mounted.
 		if ("function" === typeof this.state.updateSearchQuery) {
 			this.state.updateSearchQuery(searchStr)
 		}
 
+		// @TODO doesnt need to run when component is mounted because already set?
 		window.history.pushState({}, "", "/search/" + encodedSearchStr)
 
 		let url = "https://wpcampus.org/wp-json/wpcampus/search/"

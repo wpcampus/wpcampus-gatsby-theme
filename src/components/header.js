@@ -4,7 +4,7 @@ import React from "react"
 
 import WPCampusLogo from "../svg/logo"
 import { User } from "../user/context"
-import { SearchForm } from "../components/search"
+//import { SearchForm } from "../components/search"
 
 import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
@@ -119,9 +119,11 @@ const HeaderHomeBanner1 = () => {
 		return <HeaderMemberActions classes="wpc-home-banner__actions wpc-member__actions" />
 	}
 
-	const searchFormAttr = {
+	/*const searchFormAttr = {
 		showSubmitIcon: true
 	}
+
+	<SearchForm {...searchFormAttr} />*/
 
 	return <div className="wpc-home-banner">
 		<ul className="wpc-home-banner__numbers">
@@ -139,7 +141,6 @@ const HeaderHomeBanner1 = () => {
 			</li>
 		</ul>
 		<p className="wpc-home-banner__tagline">Where WordPress meets Higher Education</p>
-		<SearchForm {...searchFormAttr} />
 		<User.Consumer>{handleUserDisplay}</User.Consumer>
 	</div>
 }
@@ -175,11 +176,13 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 		</HeaderAreas>
 	} else {
 
-		const searchFormAttr = {
+		/*const searchFormAttr = {
 			showSubmitIcon: true,
 			searchQuery: searchQuery,
 			updateSearchQuery: updateSearchQuery
 		}
+
+		<SearchForm {...searchFormAttr} />*/
 
 		headerAreas = <HeaderAreas>
 			<HeaderArea area="actions">
@@ -190,9 +193,7 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 					<Link to="/" aria-label="Home"><WPCampusLogo /></Link>
 				</span>
 			</HeaderArea>
-			<HeaderArea area="meta">
-				<SearchForm {...searchFormAttr} />
-			</HeaderArea>
+			<HeaderArea area="meta"></HeaderArea>
 		</HeaderAreas>
 	}
 
