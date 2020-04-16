@@ -219,7 +219,7 @@ svg.wpc-logo {
 .wpc-button {
 	background-color: #ecf2fa;
 	border: 1px solid #dce6f5;
-	border-radius: 10px;
+	border-radius: var(--button-border-radius);
 	padding: 0.5rem 1rem;
 	color: inherit;
 	text-decoration: underline;

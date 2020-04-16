@@ -15,7 +15,7 @@
 	input[type="submit"] {
 		background-color: var(--wpc-blue-royal);
 		border: 1px solid var(--wpc-blue-royal);
-		border-radius: 0.25rem;
+		border-radius: var(--button-border-radius);
 		padding: 0.5rem 1rem;
 		font-size: 1.1rem;
 		color: #fff;
@@ -97,7 +97,7 @@
 						&:hover,
 						&:focus {
 							outline: 1px dotted #212121;
-  							outline: 5px auto -webkit-focus-ring-color;
+							outline: 5px auto -webkit-focus-ring-color;
 						}
 					}
 
