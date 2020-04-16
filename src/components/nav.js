@@ -197,7 +197,11 @@ const NavPrimaryItems = [
 // 	list: PropTypes.array.isRequired,
 // }
 
-const NavItem = ({ item }) => (
+// const NavLink = () => {
+
+// }
+
+const NavItem = ({ item }) => console.log(item) || (
 	<li>
 		{
 			item.children && <span className="nav-link--toggle">
