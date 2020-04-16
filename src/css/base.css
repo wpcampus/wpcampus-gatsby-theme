@@ -216,11 +216,16 @@ svg.wpc-logo {
 	}
 }
 
+button {
+	cursor: pointer;
+}
+
 .wpc-button {
 	background-color: #ecf2fa;
 	border: 1px solid #dce6f5;
 	border-radius: var(--button-border-radius);
 	padding: 0.5rem 1rem;
+	font-size: inherit;
 	color: inherit;
 	text-decoration: underline;
 	cursor: pointer;

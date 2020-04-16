@@ -148,6 +148,25 @@ const UserContextProvider = props => {
 			})*/
 	}
 
+	const LogoutButton = ({ isPlain }) => {
+		const buttonAttr = {
+			className: "wpc-button wpc-button--logout",
+			onClick: logout
+		}
+		if (isPlain) {
+			buttonAttr.className += " wpc-button--plain"
+		}
+		return <button {...buttonAttr}>Logout</button>
+	}
+
+	LogoutButton.propTypes = {
+		isPlain: PropTypes.bool
+	}
+
+	LogoutButton.defaultProps = {
+		isPlain: false
+	}
+
 	// Runs when the page loads to see if the user is logged in.
 	const initLogin = async () => {
 		const payload = {
@@ -213,6 +232,7 @@ const UserContextProvider = props => {
 				isLoggedIn: isLoggedIn,
 				login: login,
 				logout: logout,
+				LogoutButton: LogoutButton,
 			}}
 		>
 			{props.children}

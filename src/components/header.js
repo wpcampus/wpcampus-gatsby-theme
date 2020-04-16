@@ -68,10 +68,11 @@ const HeaderLoggedInActions = ({ user, classes }) => {
 	if (classes) {
 		actionsAttr.className += ` ${classes}`
 	}
+	const LogoutButton = user.LogoutButton
 	return <nav {...actionsAttr}>
 		<ul>
 			<li><Link className="wpc-button wpc-button--primary" to="/profile/">View profile</Link></li>
-			<li><button className="wpc-button wpc-button--plain wpc-button--logout" onClick={user.logout}>Logout</button></li>
+			<li><LogoutButton isPlain={true} /></li>
 		</ul>
 	</nav>
 }
