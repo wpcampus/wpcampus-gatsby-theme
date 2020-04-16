@@ -197,31 +197,33 @@ const NavPrimaryItems = [
 // 	list: PropTypes.array.isRequired,
 // }
 
+const NavItem = ({ item }) => (
+	<li>
+		{
+			item.children && <span className="nav-link--toggle">
+				{item.text}
+				<button
+					className="submenu-toggle js-submenu-toggle"
+					aria-label="open child menu"
+					aria-expanded="false"
+				></button>
+				<NavList list={item.children} hasSubmenuToggle={true} />
+			</span>
+		}
+		{
+			!item.children && <span>{item.text}</span>
+		}
+	</li>
+)
+
+NavItem.propTypes = {
+	item: PropTypes.object.isRequired
+}
 
 const NavList = ({ list, hasSubmenuToggle }) => (
-	<ul className={hasSubmenuToggle ? "has-submenu-toggle js-has-submenu-toggle" : ""}>
+	<ul className={!hasSubmenuToggle ? "has-submenu-toggle js-has-submenu-toggle" : "wpc-nav__sub"}>
 		{
-			list.map((item, i) => {
-				console.log(item)
-				return (
-					<li key={i}>
-						{
-							item.children && <span className="nav-link--toggle">
-								{item.text}
-								<button 
-									className="submenu-toggle js-submenu-toggle"
-									aria-label="open child menu"
-									aria-expanded="false"
-								></button>
-								<NavList list={item.children} hasSubmenuToggle={true} />
-							</span>
-						}
-						{
-							!item.children && <span>{item.text}</span>
-						}
-					</li>
-				)
-			})
+			list.map((item, i) => <NavItem item={item} key={i} />)
 		}
 	</ul>
 )
