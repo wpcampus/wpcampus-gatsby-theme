@@ -168,7 +168,7 @@ const UserContextProvider = props => {
 	}
 
 	// Runs when the page loads to see if the user is logged in.
-	const initLogin = async () => {
+	const authenticate = async () => {
 		const payload = {
 			user: null,
 			token: null,
@@ -204,7 +204,7 @@ const UserContextProvider = props => {
 
 	// Let's get things started. Will set the context to active.
 	if (!isActive()) {
-		initLogin()
+		authenticate()
 			.then(response => {
 				dispatch({
 					type: "updateUser",
