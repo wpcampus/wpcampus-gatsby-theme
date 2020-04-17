@@ -42,10 +42,14 @@ export const query = graphql`
           path
           author {
             id
-            wordpress_id
-            name
-            slug
-            path
+			path
+			display_name
+			email
+			twitter
+			website
+			company
+			company_position
+			bio
           }
           title
           status

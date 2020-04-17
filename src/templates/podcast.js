@@ -41,15 +41,14 @@ export const podcastQuery = graphql`
       path
       author {
         id
-        wordpress_id
-        name
-        slug
-        path
-		url
-		description
+		path
+		display_name
+		email
+		twitter
+		website
 		company
 		company_position
-		twitter
+		bio
       }
       title
       status

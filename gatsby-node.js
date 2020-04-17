@@ -4,8 +4,11 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
+const chalk = require("chalk")
+const fetch = require("node-fetch")
 const path = require("path")
 const slash = require("slash")
+const PropTypes = require("prop-types")
 
 // Returns the path from a full URL.
 const getNodePathFromLink = link => {
@@ -17,6 +20,44 @@ const getNodePathFromLink = link => {
 		return url.pathname
 	} catch (error) {
 		return link
+	}
+}
+
+/**
+ * Fetch our JWT token from the JWT token endpoint.
+ */
+async function getJWToken() {
+	try {
+
+		const auth = {
+			username: process.env.WPC_JWT_USER,
+			password: process.env.WPC_JWT_PASSWORD,
+		}
+
+		const authURL = `${process.env.WPC_API}/jwt-auth/v1/token`
+
+		const options = {
+			method: "POST",
+			headers: {
+				"Accept": "application/json",
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(auth)
+		}
+
+		let token
+
+		await fetch(authURL, options)
+			.then((response) => {
+				return response.json()
+			})
+			.then((data) => {
+				token = data.token
+			})
+
+		return token
+	} catch (e) {
+		return ""
 	}
 }
 
@@ -188,6 +229,230 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 	})
 }*/
 
+const contributorNodeType = "wordpress__wpc_contributors"
+const libraryNodeType = "wordpress__wpc_library"
+
+const fetchContributors = async (accessToken) => {
+
+	// Build request.
+	let options = {
+		method: "get",
+		headers: {
+			Authorization: `Bearer ${accessToken}`
+		}
+	}
+
+	const url = `${process.env.WPC_API}/wpcampus/contributors`
+
+	const contributors = await fetch(url, options)
+		.then((response) => {
+			return response.json()
+		})
+
+	// Logging progress.
+	console.log(chalk.green(" -> WPCampus contributors fetched: " + contributors.length))
+
+	return contributors
+}
+
+const createContributorNodes = async ({ contributors, createNode, createNodeId, createContentDigest }) => {
+	if (!contributors.length) {
+		return
+	}
+
+	// Create contributor nodes.
+	contributors.forEach(node => {
+
+		const contributorNode = {
+			id: createNodeId(`wpc-contributor-${node.ID}`),
+			wordpress_id: parseInt(node.ID),
+			path: node.path,
+			email: node.email,
+			website: node.website,
+			display_name: node.display_name,
+			twitter: node.twitter,
+			company: node.company,
+			company_position: node.company_position,
+			bio: node.bio
+		}
+
+		createNode({
+			...contributorNode,
+			parent: null,
+			children: [],
+			internal:
+			{
+				type: contributorNodeType,
+				contentDigest: createContentDigest(contributorNode)
+			}
+		})
+	})
+}
+
+createContributorNodes.propTypes = {
+	contributors: PropTypes.array.isRequired,
+	createNode: PropTypes.func.isRequired,
+	createNodeId: PropTypes.func.isRequired,
+	createContentDigest: PropTypes.func.isRequired
+}
+
+const fetchSessions = async (accessToken) => {
+
+	// Build request.
+	let options = {
+		method: "get",
+		headers: {
+			Authorization: `Bearer ${accessToken}`
+		}
+	}
+
+	const url = `${process.env.WPC_API}/wpcampus/data/public/sessions`
+
+	const sessions = await fetch(url, options)
+		.then((response) => {
+			return response.json()
+		})
+
+	// Logging progress.
+	console.log(chalk.green(" -> WPCampus sessions fetched: " + sessions.length))
+
+	return sessions
+}
+
+const createLibraryNodes = async ({ items, libraryType, contributorNodes, createNode, createNodeId, createContentDigest }) => {
+	if (!items.length) {
+		return
+	}
+
+	// Create library nodes.
+	items.forEach(node => {
+
+		const libraryNode = node
+
+		// Store ID for usage in logic and then delete/replace with node ID.
+		const thisNodeID = node.ID
+		delete node.ID
+
+		// Change key for WordPress id. 
+		libraryNode.wordpress_id = parseInt(thisNodeID)
+
+		// Add GraphQL ID
+		libraryNode.id = createNodeId(`wpc-library-${thisNodeID}`)
+
+		// Add library type.
+		libraryNode.type = libraryType
+
+		libraryNode.author___NODE = node.speakers
+			.map(speaker => {
+
+				if (!speaker.wordpress_user) {
+					return undefined
+				}
+
+				// Find the user.
+				const user = contributorNodes.find(u => u.wordpress_id === speaker.wordpress_user)
+
+				if (user) {
+					return user.id
+				}
+
+				return undefined
+			})
+			.filter(node => node !== undefined)
+
+		createNode({
+			...libraryNode,
+			parent: null,
+			children: [],
+			internal:
+			{
+				type: libraryNodeType,
+				contentDigest: createContentDigest(libraryNode)
+			}
+		})
+	})
+}
+
+createLibraryNodes.propTypes = {
+	items: PropTypes.array.isRequired,
+	libraryType: PropTypes.string.isRequired,
+	contributorNodes: PropTypes.object.isRequired,
+	createNode: PropTypes.func.isRequired,
+	createNodeId: PropTypes.func.isRequired,
+	createContentDigest: PropTypes.func.isRequired
+}
+
+/**
+ * Create nodes from our custom WP API endpoints.
+ */
+exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDigest }) => {
+	const { createNode } = actions
+
+	// Get access token.
+	const accessToken = await getJWToken()
+
+	// @TODO throw error?
+	if (!accessToken) {
+		return
+	}
+
+	// Add some spacing to our logs.
+	console.log("")
+
+	// Fetch and process contributors.
+	const contributors = await fetchContributors(accessToken)
+	createContributorNodes({ contributors, createNode, createNodeId, createContentDigest })
+
+	// Get contributor nodes so can be related to library nodes.
+	const contributorNodes = getNodes().filter(e => e.internal.type === contributorNodeType)
+
+	// Fetch and process library content.
+	const items = await fetchSessions(accessToken)
+	createLibraryNodes({ items, libraryType: "session", contributorNodes, createNode, createNodeId, createContentDigest })
+
+	// Add some spacing to our logs.
+	console.log("")
+
+	// No point in processing if no nodes.
+	if (!contributorNodes.length) {
+		return
+	}
+
+	/**
+	 * We have to tweak our content authors because we have a multi author setup.
+	 *
+	 * This connects an array of author IDs (instead of a single ID) to their contributor nodes.
+	 */
+	const hasContributorTypes = ["wordpress__wp_podcast", "wordpress__POST"]
+
+	getNodes()
+		.filter(node => { if (hasContributorTypes.includes(node.internal.type)) return node })
+		.map(node => {
+
+			if (!node.author || !node.author.length) {
+				return node
+			}
+
+			node.author___NODE = node.author
+				.map(userID => {
+
+					// Find the user.
+					const user = contributorNodes.find(u => u.wordpress_id === userID)
+
+					if (user) {
+						return user.id
+					}
+
+					return undefined
+				})
+				.filter(node => node !== undefined)
+
+			delete node.author
+
+			return node
+		})
+}
+
 /**
  * Build content from WordPress content.
  * 
@@ -304,7 +569,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		let template
 
 		// @TODO will be able to delete after deleted from WordPress app.
-		if ( "/blog/" === edge.node.path) {
+		if ("/blog/" === edge.node.path) {
 			return
 		}
 
@@ -595,24 +860,21 @@ exports.createPages = async ({ graphql, actions }) => {
    	 */
 	const authors = await graphql(`
 		query {
-			allWordpressWpUsers {
+			allWordpressWpcContributors {
 				edges {
 					node {
 						id
-						wordpress_id
-						name
-						slug
 						path
-						url
+						display_name											
 					}
 				}
 			}
 		}
   	`)
 	const authorTemplate = path.resolve("./src/templates/contributor.js")
-	authors.data.allWordpressWpUsers.edges.forEach(edge => {
+	authors.data.allWordpressWpcContributors.edges.forEach(edge => {
 
-		const contributorPath = "/about/contributors/" + edge.node.slug + "/"
+		const contributorPath = "/about/contributors/" + edge.node.path + "/"
 
 		createPage({
 			// will be the url for the page
@@ -626,7 +888,7 @@ exports.createPages = async ({ graphql, actions }) => {
 				crumbs: {
 					crumb: {
 						path: contributorPath,
-						text: edge.node.name,
+						text: edge.node.display_name,
 					},
 					parent_element: {
 						crumb: {

@@ -187,11 +187,11 @@ const UserLoggedIn = ({ user }) => {
 		<SlackIdentity user={user} />*/
 
 	const authorCard = {
-		slug: user.getUsername(),
-		name: displayName,
-		description: bio,
+		path: user.getUsername(),
+		display_name: displayName,
+		bio: bio,
 		twitter: twitter,
-		url: website,
+		website: website,
 		company: company,
 		company_position: company_position
 	}

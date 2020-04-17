@@ -22,7 +22,7 @@ export default function Template(props) {
 	}
 	return (
 		<Layout heading="Contributors" crumbs={crumbs} path={props.path}>
-			<AuthorCards authors={props.data.allWordpressWpUsers.nodes} />
+			<AuthorCards authors={props.data.allWordpressWpcContributors.nodes} />
 		</Layout>
 	)
 }
@@ -35,18 +35,17 @@ Template.propTypes = {
 // @TODO remove fields we're not using.
 export const query = graphql`
   query {
-    allWordpressWpUsers {
+    allWordpressWpcContributors {
 		nodes {
 			id
-			wordpress_id
-			name
-			slug
 			path
-			url
-			description
+			display_name
+			email
+			twitter
+			website
 			company
 			company_position
-			twitter
+			bio
 		}
     }
     site {

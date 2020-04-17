@@ -39,7 +39,7 @@ const AuthorCardMeta = ({ author }) => {
 	if (author.url) {
 		const authorURL = {
 			href: author.url,
-			aria_label: `Website of ${author.name}`,
+			aria_label: `Website of ${author.display_name}`,
 			text: "Website"
 		}
 		items.push(<NavAnchor item={authorURL} />)
@@ -80,7 +80,7 @@ AuthorCards.propTypes = {
 }
 
 const AuthorCard = ({ author, headingLevel }) => {
-	const authorLink = "/about/contributors/" + author.slug + "/"
+	const authorLink = "/about/contributors/" + author.path + "/"
 	let HeadingTag = `h${headingLevel}`
 	return (
 		<div className="wpc-author-card">
@@ -89,9 +89,9 @@ const AuthorCard = ({ author, headingLevel }) => {
 					<img className="wpc" src={avatarEduwapuuBW} alt="" />
 				</div>
 				<div className="wpc-area wpc-author-card__area wpc-author-card__area--main">
-					<HeadingTag className="wpc-author-card__heading"><Link to={authorLink}>{author.name}</Link></HeadingTag>
+					<HeadingTag className="wpc-author-card__heading"><Link to={authorLink}>{author.display_name}</Link></HeadingTag>
 					<AuthorCardMeta author={author} />
-					{!author.description ? "" : <p>{author.description}</p>}
+					{author.bio ? <p>{author.bio}</p> : ""}
 				</div>
 			</div>
 		</div >

@@ -30,9 +30,9 @@ const ArticleMetaAuthors = ({ authors }) => {
 	const contributorPathBase = "/about/contributors/"
 	return <ul>
 		{authors.map((item, i) => {
-			const contributorPath = contributorPathBase + item.slug + "/"
+			const contributorPath = contributorPathBase + item.path + "/"
 			return <li key={i}>
-				<Link to={contributorPath}>{item.name}</Link>
+				<Link to={contributorPath}>{item.display_name}</Link>
 			</li>
 		})}
 	</ul>
