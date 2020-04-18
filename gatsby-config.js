@@ -5,7 +5,7 @@ require("dotenv").config({
 module.exports = {
 	siteMetadata: {
 		title: "WPCampus: Where WordPress meets Higher Education",
-		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing higher education by providing support, resources, and training focused on open source web publishing technologies.",
+		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing Higher Education by providing support, resources, and training focused on open source web publishing technologies.",
 		author: "@wpcampusorg",
 	},
 	plugins: [
