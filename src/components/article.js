@@ -42,16 +42,25 @@ ArticleMetaAuthors.propTypes = {
 	authors: PropTypes.array.isRequired
 }
 
-const ArticleTitle = ({ data, isSingle }) => {
+const ArticleTitle = ({ data, headingLevel, includeLink }) => {
 	const className = "article__title"
-	if (isSingle) {
-		return <h1 className={className}>{data.title}</h1>
+	const HeadingTag = `h${headingLevel}`
+	let title = data.title
+	if (includeLink && data.path) {
+		title = <Link to={data.path}>{title}</Link>
 	}
-	return (
-		<h2 className={className}>
-			<Link to={data.path}>{data.title}</Link>
-		</h2>
-	)
+	return <HeadingTag className={className}>{title}</HeadingTag>
+}
+
+ArticleTitle.propTypes = {
+	data: PropTypes.object.isRequired,
+	headingLevel: PropTypes.number,
+	includeLink: PropTypes.bool
+}
+
+ArticleTitle.defaultProps = {
+	headingLevel: 1,
+	includeLink: false
 }
 
 const ArticleMeta = ({ data }) => {
@@ -96,9 +105,16 @@ const Article = ({
 	displayContent,
 	displayContentFull,
 }) => {
+	const articleTitleAttr = {
+		data: data
+	}
+	if (!isSingle) {
+		articleTitleAttr.headingLevel = 2,
+		articleTitleAttr.includeLink = true
+	}
 	return (
 		<article>
-			<ArticleTitle data={data} isSingle={isSingle} />
+			<ArticleTitle {...articleTitleAttr} />
 			<ProtectedContent wpc_protected={wpc_protected}>
 				{displayMeta ? <ArticleMeta data={data} /> : null}
 				{displayContent ? (
@@ -112,11 +128,6 @@ const Article = ({
 
 ArticleCategories.propTypes = {
 	list: PropTypes.array.isRequired,
-}
-
-ArticleTitle.propTypes = {
-	data: PropTypes.object.isRequired,
-	isSingle: PropTypes.bool,
 }
 
 ArticleMeta.propTypes = {
