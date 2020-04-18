@@ -23,14 +23,25 @@
 					li.wpc-numbers {
 						margin: 0 0 0.75rem;
 						display: flex;
-						align-items: center;
+						align-items: stretch;
+
+						.wpc-numbers__count,
+						.wpc-numbers__label {
+							display: flex;
+							align-items: center;
+						}
 
 						.wpc-numbers__count {
 							font-weight: 800;
 							margin: 0 0.7rem 0 0;
 						}
 
+						.wpc-numbers__label {
+							flex-grow: 1;
+						}
+
 						&--wpcampus {
+							width: 100%;
 							font-size: 3.5rem;
 						}
 
@@ -40,8 +51,9 @@
 					}
 
 					svg.wpc-logo {
-						width: auto;
-						max-height: 40px;
+						display: block;
+						width: 100%;
+						max-width: 400px;
 					}
 				}
 
