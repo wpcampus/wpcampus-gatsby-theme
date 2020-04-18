@@ -23,7 +23,7 @@ const ProfileTableRow = ({ th, td }) => {
 
 ProfileTableRow.propTypes = {
 	th: PropTypes.string.isRequired,
-	td: PropTypes.string
+	td: PropTypes.node
 }
 
 const InfoTable = ({ type, children, classes }) => {
