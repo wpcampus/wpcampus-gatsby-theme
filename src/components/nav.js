@@ -93,7 +93,28 @@ const NavPrimaryItems = [
 			}
 		]
 	},
-	{ path: "/learning/", text: "Learning" },
+	{
+		path: "/learning/",
+		text: "Learning",
+		children: [
+			{
+				path: "/learning/library/",
+				text: "Learning Library"
+			},
+			{
+				path: "/learning/audit/",
+				text: "Gutenberg audit"
+			},
+			{
+				path: "/learning/accessibility/",
+				text: "Accessibility resources"
+			},
+			{
+				path: "/learning/speaking/",
+				text: "Speaker training"
+			}
+		]
+	},
 	{ path: "/jobs/", text: "Job board" },
 	{ path: "/podcast/", text: "Podcast" },
 	{ href: "https://shop.wpcampus.org/", text: "Shop" },
