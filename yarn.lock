@@ -1702,10 +1702,10 @@
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.4"
 
-"@wpcampus/wpcampus-wc-tweets@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-tweets/-/wpcampus-wc-tweets-0.0.1.tgz#65a2e8df6ca20b257846f8883b9190c6f87a2f8c"
-  integrity sha512-orn6JQss8N4hMP4zikF9CZohpNB9Td3a4kRkm04x2nNYybvGX8OBuipoOE8jSdVw7HG055jbETeLYUENvX9fpg==
+"@wpcampus/wpcampus-wc-tweets@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-tweets/-/wpcampus-wc-tweets-0.0.2.tgz#474523f15630732c0bf72014aebcb83bfa3accf8"
+  integrity sha512-KHsq4WHPlSDWkw0RYTyYasWwEVIzZT3SzKYrIAndsfIQRjrUFb/up4ZutO92MSD2BmccNB5pW9M87CkZAfmDrw==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.4"
 
