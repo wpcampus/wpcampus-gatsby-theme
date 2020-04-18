@@ -333,8 +333,9 @@ table.wpc-table {
 	&__meta {
 		display: block;
 		list-style: none;
-		margin: 0 0 1rem;
+		margin: 0 0 0.5rem;
 		font-size: 0.9rem;
+		font-weight: 600;
 
 		li {
 			--dash-width: 6px;
@@ -374,6 +375,10 @@ table.wpc-table {
 		.wpc-author-card__area {
 			&--avatar {
 				grid-column: col-start / span 3;
+
+				img {
+					border: var(--area-border-gray-light);
+				}
 			}
 
 			&--main {
