@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 
 import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
+import { AuthorCard } from "../components/author"
 
 function sortByDateDesc(a, b) {
 	const aDate = new Date(a.node.date).getTime()
@@ -53,6 +54,7 @@ const ContributorTemplate = props => {
 
 	return (
 		<Layout heading={heading} crumbs={context.crumbs} path={props.path}>
+			<AuthorCard author={contributor} />
 			{posts}
 			{podcasts}
 			{sessions}
