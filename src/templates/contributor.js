@@ -6,7 +6,7 @@ import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
 import { AuthorCard } from "../components/author"
 
-function sortByDateDesc(a, b) {
+/*function sortByDateDesc(a, b) {
 	const aDate = new Date(a.node.date).getTime()
 	const bDate = new Date(b.node.date).getTime()
 	if (aDate < bDate) {
@@ -16,7 +16,7 @@ function sortByDateDesc(a, b) {
 		return -1
 	}
 	return 0
-}
+}*/
 
 const ContributorTemplate = props => {
 	const contributor = props.data.wordpressWpcContributors
