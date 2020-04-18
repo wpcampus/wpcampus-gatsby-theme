@@ -62,7 +62,7 @@
 	}
 
 	&__areas {
-		padding: 1.5rem 2rem;
+		padding: 1.75rem 2rem;
 		align-items: center;
 
 		.wpc-header__area {
@@ -84,7 +84,7 @@
 				}
 
 				svg {
-					max-height: 70px;
+					max-height: 60px;
 					margin: 0 auto;
 				}
 			}
