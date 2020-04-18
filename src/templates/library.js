@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react"
+import React from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
 import ReactHtmlParser from "react-html-parser"
@@ -7,17 +7,17 @@ import Layout from "../components/layout"
 
 const Library = props => {
 	const page = props.data.wordpressPage
-
-	useEffect(() => {
-		require("@wpcampus/wpcampus-wc-library")
-	}, [])
-
-	return useMemo(() => {
-		return <Layout heading={page.title} path={props.path}>
-			<div>{ReactHtmlParser(page.content)}</div>
-			<wpcampus-library></wpcampus-library>
-		</Layout>
-	})
+	const library = props.data.allWordpressWpcLibrary.edges
+	return <Layout heading={page.title} path={props.path}>
+		<div>{ReactHtmlParser(page.content)}</div>
+		{library.map(({ node }, i) => {
+			return <div className="session" key={i}>
+				<h2><a href={node.permalink}>{node.title}</a></h2>
+				<h3>{node.event_name}</h3>
+				<div>{ReactHtmlParser(node.content.rendered)}</div>
+			</div>
+		})}
+	</Layout>
 }
 
 Library.propTypes = {
@@ -39,7 +39,21 @@ export const pageQuery = graphql`
       status
       excerpt
       content
-    }
+	}
+	allWordpressWpcLibrary(
+		sort: { fields: event_date, order: DESC }
+	  ) {
+		edges {
+		  	node {
+				title
+				permalink
+				event_name
+				content {
+					rendered
+				}
+		  	}
+		}
+	}
     site {
       siteMetadata {
         title
