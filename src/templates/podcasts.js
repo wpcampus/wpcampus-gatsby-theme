@@ -10,11 +10,11 @@ export default function Template(props) {
 	const crumbs = {
 		crumb: {
 			path: props.path,
-			text: "Podcast"
+			text: "Podcasts"
 		}
 	}
 	return (
-		<Layout pageTitle="Podcast" heading="Podcasts" crumbs={crumbs} path={props.path}>
+		<Layout heading="Podcasts" crumbs={crumbs} path={props.path}>
 			<PodcastCallout />
 			<PodcastActions />
 			<ArticleArchive list={props.data.allWordpressWpPodcast.edges} />
