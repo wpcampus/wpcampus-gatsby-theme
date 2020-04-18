@@ -48,7 +48,7 @@ const AuthorCardMeta = ({ author }) => {
 		return ""
 	}
 	return (
-		<ul className="wpc-contributor__meta">
+		<ul className="wpc-meta wpc-contributor__meta">
 			{items.map((item, i) => (
 				<li key={i}>
 					{item}
@@ -62,12 +62,18 @@ AuthorCardMeta.propTypes = {
 	author: PropTypes.object.isRequired,
 }
 
-const AuthorCards = ({ authors, displayBio }) => {
+const AuthorCards = ({ authors, displayBio, classes }) => {
 	if (!authors) {
 		return ""
 	}
+	const attr = {
+		className: "wpc-contributors"
+	}
+	if (classes) {
+		attr.className += ` ${classes}`
+	}
 	return (
-		<div className="wpc-contributors">
+		<div {...attr}>
 			{authors.map((item, i) => (
 				<AuthorCard key={i} author={item} displayBio={displayBio} />
 			))}
@@ -77,7 +83,8 @@ const AuthorCards = ({ authors, displayBio }) => {
 
 AuthorCards.propTypes = {
 	authors: PropTypes.array.isRequired,
-	displayBio: PropTypes.bool
+	displayBio: PropTypes.bool,
+	classes: PropTypes.string
 }
 
 AuthorCards.defaultProps = {

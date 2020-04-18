@@ -182,8 +182,14 @@ NavAnchor.propTypes = {
 }
 
 const NavItem = ({ item }) => {
+	const itemAttr = {
+		className: "nav-listitem"
+	}
+	if (item.classes) {
+		itemAttr.className += ` ${item.classes}`
+	}
 	return (
-		<li className="nav-listitem">
+		<li {...itemAttr}>
 			{item.path ? <NavLink item={item} /> : <NavAnchor item={item} />}
 			{item.children && item.children.length ? (
 				<ul className="wpc-nav__sub">

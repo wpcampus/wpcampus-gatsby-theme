@@ -4,17 +4,18 @@ import PropTypes from "prop-types"
 
 import Article from "../components/article"
 import Layout from "../components/layout"
-import { PodcastPagination } from "../components/pagination"
+import { PodcastPaginationAdjacent } from "../components/pagination"
 
 const PodcastTemplate = props => {
 	const podcast = props.data.wordpressWpPodcast
 	const context = props.pageContext
 	const pagination = (
-		<PodcastPagination previous={context.previous} next={context.next} />
+		<PodcastPaginationAdjacent previous={context.previous} next={context.next} />
 	)
 	return (
 		<Layout pageTitle={podcast.title} crumbs={context.crumbs} path={props.path}>
 			{pagination}
+			<span className="wpc-article-prefix">From our podcast:</span>
 			<p>Duration: {podcast.meta.duration}</p>
 			<Article data={podcast} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
 			{pagination}

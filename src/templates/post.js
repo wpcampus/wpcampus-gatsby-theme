@@ -4,17 +4,18 @@ import PropTypes from "prop-types"
 
 import Article from "../components/article"
 import Layout from "../components/layout"
-import { PostPagination } from "../components/pagination"
+import { PostPaginationAdjacent } from "../components/pagination"
 
 const PostTemplate = props => {
 	const post = props.data.wordpressPost
 	const context = props.pageContext
 	const pagination = (
-		<PostPagination previous={context.previous} next={context.next} />
+		<PostPaginationAdjacent previous={context.previous} next={context.next} />
 	)
 	return (
 		<Layout pageTitle={post.title} crumbs={context.crumbs} path={props.path}>
 			{pagination}
+			<span className="wpc-article-prefix">From our blog:</span>
 			<Article data={post} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
 			{pagination}
 		</Layout>

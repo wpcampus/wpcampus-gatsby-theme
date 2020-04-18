@@ -32,18 +32,20 @@ const ArticleArchive = ({
 	displayMeta,
 	displayContent,
 	displayContentFull,
-}) =>
-	list.map(({ node }) => (
-		<Article
-			key={node.id}
-			data={node}
-			isSingle={false}
-			displayAuthor={displayAuthor}
-			displayMeta={displayMeta}
-			displayContent={displayContent}
-			displayContentFull={displayContentFull}
-		/>
-	))
+}) => {
+	return <div className="wpc-articles">
+		{list.map(({ node }) => (
+			<Article
+				key={node.id}
+				data={node}
+				isSingle={false}
+				displayAuthor={displayAuthor}
+				displayMeta={displayMeta}
+				displayContent={displayContent}
+				displayContentFull={displayContentFull}
+			/>
+		))}</div>
+}
 
 ArticleArchive.propTypes = {
 	list: PropTypes.array.isRequired,

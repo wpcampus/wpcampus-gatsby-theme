@@ -43,7 +43,7 @@ ArticleMetaAuthors.propTypes = {
 }
 
 const ArticleTitle = ({ data, headingLevel, includeLink }) => {
-	const className = "article__title"
+	const className = "wpc-article__title"
 	const HeadingTag = `h${headingLevel}`
 	let title = data.title
 	if (includeLink && data.path) {
@@ -64,20 +64,23 @@ ArticleTitle.defaultProps = {
 }
 
 const ArticleMeta = ({ data }) => {
+	const metaAttr = {
+		className: "wpc-meta wpc-article__meta"
+	}
 	return (
-		<ul className="article__metas">
-			<li className="article__meta article__meta--date">
+		<ul {...metaAttr}>
+			<li className="wpc-meta__item wpc-meta__item--date">
 				{data.dateFormatted}
 			</li>
 			{data.author ? (
-				<li className="article__meta article__meta--author">
-					Author:
+				<li className="wpc-meta__item wpc-meta__item--author">
+					<span className="wpc-meta__label">By</span>
 					<ArticleMetaAuthors authors={data.author} />
 				</li>
 			) : null}
 			{data.categories ? (
-				<li className="article__meta article__meta--categories">
-					Categories:
+				<li className="wpc-meta__item wpc-meta__item--categories">
+					<span className="wpc-meta__label">Categories:</span>
 					<ArticleCategories list={data.categories} />
 				</li>
 			) : null}
@@ -87,11 +90,11 @@ const ArticleMeta = ({ data }) => {
 
 const ArticleContent = ({ data, displayContentFull }) => {
 	let articleContent = getArticleContent(data, displayContentFull)
-	let className = "article__content"
+	let className = "wpc-article__content"
 	if (displayContentFull) {
-		className += " article__content--full"
+		className += " wpc-article__content--full"
 	} else {
-		className += " article__content--excerpt"
+		className += " wpc-article__content--excerpt"
 	}
 	return <div className={className}>{ReactHtmlParser(articleContent)}</div>
 }
@@ -112,8 +115,14 @@ const Article = ({
 		articleTitleAttr.headingLevel = 2,
 		articleTitleAttr.includeLink = true
 	}
+	const articleAttr = {
+		className: "wpc-article"
+	}
+	if (isSingle) {
+		articleAttr.className += " wpc-article--single"
+	}
 	return (
-		<article>
+		<article {...articleAttr}>
 			<ArticleTitle {...articleTitleAttr} />
 			<ProtectedContent wpc_protected={wpc_protected}>
 				{displayMeta ? <ArticleMeta data={data} /> : null}

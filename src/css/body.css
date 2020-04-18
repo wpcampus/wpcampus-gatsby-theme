@@ -76,6 +76,14 @@
 		& > h1:first-child {
 			margin-top: -0.25rem;
 		}
+
+		& > *:first-child {
+			margin-top: 0;
+		}
+
+		& > *:last-child {
+			margin-bottom: 0;
+		}
 	}
 
 	&__areas {
