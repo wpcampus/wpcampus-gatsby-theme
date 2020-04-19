@@ -1,0 +1,262 @@
+.wpcampus.wpc-post {
+	--area-padding-large-side: 4rem;
+	--header-height: 300px;
+
+	.wpc-hero {
+		display: none;
+		background: none;
+		height: 150px;
+		border-bottom: var(--area-border-gray-light);
+	}
+
+	.wpc-article-prefix {
+		display: block;
+		margin: 0 0 0.75rem;
+
+		a {
+			color: inherit;
+		}
+	}
+
+	.wpc-article__header {
+		text-align: center;
+		padding: 0 5rem 4rem;
+		margin: 0 0 4rem;
+		position: relative;
+
+		&::after {
+			content: '';
+			display: block;
+			position: absolute;
+			left: 20%;
+			bottom: 0;
+			background: #e1e1e1;
+			width: 60%;
+			height: 1px;
+		}
+	}
+
+	ul.wpc-meta.wpc-article__meta {
+		font-size: 1.1rem;
+		font-weight: 300;
+		line-height: 2;
+
+		& > li {
+			display: block;
+			margin: 0;
+			padding: 0;
+
+			&.wpc-meta__item--date {
+				text-transform: uppercase;
+			}
+
+			&.wpc-meta__item--author {
+				font-size: 1.2rem;
+				font-weight: 400;
+			}
+
+			&::before {
+				display: none;
+			}
+		}
+	}
+
+	.wpc-article__footer {
+		padding: 0;
+		margin: 4rem -4rem 0;
+		position: relative;
+
+		.wpc-contributors {
+			background: var(--wpc-yellow-light);
+			padding: 3rem 4rem 0.75rem;
+			margin: 0;
+
+			a {
+				color: inherit;
+			}
+		}
+
+		nav.wpc-pagination-adj {
+			font-size: 0.9rem;
+			line-height: 1.6;
+			margin: 0;
+			background: var(--wpc-yellow-light);
+			padding: 1.25rem var(--area-padding-large-side) 3rem;
+
+			a {
+				display: inline-block;
+				color: inherit;
+				opacity: 0.7;
+
+				&:hover,
+				&:focus {
+					opacity: 1;
+				}
+			}
+
+			.wpc-pagination-adj__label {
+				display: flex;
+				align-items: center;
+
+				svg {
+					display: block;
+					height: 18px;
+					margin: 0;
+					fill: #222;
+				}
+			}
+
+			ul {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				list-style: none;
+				margin: 0;
+
+				li {
+					&.wpc-pagination-adj__prev {
+						text-align: left;
+						padding-right: 3rem;
+
+						svg {
+							margin-right: 0.75rem;
+						}
+					}
+
+					&.wpc-pagination-adj__next {
+						text-align: right;
+						padding-left: 3rem;
+
+						svg {
+							margin-left: 0.75rem;
+						}
+					}
+				}
+			}
+
+			&.wpc-pagination-adj--prev.wpc-pagination-adj--next {
+				ul {
+					justify-content: space-between;
+
+					li {
+						width: 50%;
+					}
+				}
+			}
+		}
+
+		&::before {
+			content: '';
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 0;
+			background: var(--border-yellow-color);
+			width: 100%;
+			height: 1px;
+		}
+	}
+
+	.wpc-article__title + .wpc-meta {
+		margin-top: 0;
+	}
+
+	/* Laptop */
+	@media (min-width: 768px) {
+		.wpc-body__areas {
+			background: url(../images/heros/hero1.png) center -175px fixed;
+			grid-template-rows: var(--header-height) auto auto 1fr;
+			padding-top: 5rem;
+
+			.wpc-body__area {
+				&--nav {
+					grid-row: 2 / span 3;
+				}
+
+				&--main {
+					grid-row: 1 / span 2;
+					background: #fff;
+					position: relative;
+					z-index: 0;
+					padding: 0;
+
+					&::before {
+						content: '';
+						display: block;
+						position: absolute;
+						left: 0;
+						top: 0;
+						width: 100%;
+						height: var(--header-height);
+						box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.7);
+						z-index: -1;
+					}
+
+					main {
+						background: #fff;
+						padding: var(--area-padding-large) 4rem 0;
+					}
+				}
+
+				&--notifications {
+					grid-column: 4 / span 9;
+					grid-row: 3 / span 1;
+					border-top: var(--area-border-gray-light);
+
+					/* stylelint-disable selector-type-no-unknown */
+					wpcampus-notifications {
+						border-bottom: 0;
+					}
+					/* stylelint-disable */
+				}
+
+				&--sidebar {
+					grid-row: 4 / span 1;
+					border-top: 1px solid rgba(17, 89, 189, 0.15);
+				}
+			}
+		}
+	}
+
+	/* Desktop */
+	@media (min-width: 1260px) {
+
+		.wpc-body__areas {
+			grid-template-rows: var(--header-height) auto 1fr;
+
+			.wpc-body__area {
+				&--nav {
+					grid-row: 2 / span 2;
+				}
+
+				&--main {
+					grid-row: 1 / span 3;
+				}
+
+				&--notifications {
+					grid-column: 10 / span 3;
+					grid-row: 2 / span 1;
+					border-left: var(--area-border-gray-light);
+
+					wpcampus-notifications {
+						padding-left: 0;
+						overflow: hidden;
+
+						.wpc-notification__icon {
+							margin-left: -4px;
+							margin-right: 8px;
+
+							&__graphic {
+								width: 32px;
+							}
+						}
+					}
+				}
+
+				&--sidebar {
+					grid-row: 3 / span 1;
+				}
+			}
+		}
+	}
+}

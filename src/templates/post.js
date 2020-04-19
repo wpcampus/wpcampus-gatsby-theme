@@ -1,23 +1,36 @@
 import React from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
+import { Link } from "gatsby"
 
 import Article from "../components/article"
 import Layout from "../components/layout"
 import { PostPaginationAdjacent } from "../components/pagination"
 
+import "./../css/post.css"
+
 const PostTemplate = props => {
 	const post = props.data.wordpressPost
 	const context = props.pageContext
-	const pagination = (
+	const paginationAdj = (
 		<PostPaginationAdjacent previous={context.previous} next={context.next} />
 	)
+	const layoutAttr = {
+		classes: "wpc-post",
+		pageTitle: post.title,
+		path: props.path
+	}
+	const articleAttr = {
+		data: post,
+		wpc_protected: context.wpc_protected,
+		isSingle: true,
+		displayContentFull: true,
+		headerPrefix: <Link to="/blog/">From our blog</Link>,
+		paginationAdj: paginationAdj
+	}
 	return (
-		<Layout pageTitle={post.title} crumbs={context.crumbs} path={props.path}>
-			{pagination}
-			<span className="wpc-article-prefix">From our blog:</span>
-			<Article data={post} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
-			{pagination}
+		<Layout {...layoutAttr} >
+			<Article {...articleAttr} />
 		</Layout>
 	)
 }

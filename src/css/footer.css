@@ -164,7 +164,7 @@
 				&--desc,
 				&--social,
 				&--copyright {
-					grid-column: col-start 1 / span 3;
+					grid-column: 1 / span 3;
 				}
 
 				&--desc {
@@ -180,11 +180,11 @@
 				}
 
 				&--nav {
-					grid-column: col-start 6 / span 3;
+					grid-column: 6 / span 3;
 				}
 
 				&--actions {
-					grid-column: col-start 10 / span 3;
+					grid-column: 10 / span 3;
 				}
 
 				&--nav,
@@ -200,7 +200,7 @@
 		&__areas {
 			.wpc-footer__area {
 				&--actions {
-					grid-column: col-start 11 / span 2;
+					grid-column: 11 / span 2;
 				}
 			}
 		}

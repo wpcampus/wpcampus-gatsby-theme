@@ -4,11 +4,14 @@
 	--wpc-blue-light: #fafcfe;
 	--wpc-orange: #a76739;
 	--wpc-gray-lightest: #fafafa;
+	--wpc-yellow-light: rgba(255, 210, 0, 0.05);
 	--container-max-width: 80%;
 	--container-bp-nav: 960px;
 	--input-border: 1px solid rgba(0, 0, 0, 0.2);
+	--border-yellow-color: rgba(255, 210, 0, 0.2);
+	--border-yellow: 1px solid var(--border-yellow-color);
 	--area-border-dev: 1px solid rgba(0, 0, 255, 0.3);
-	--area-border-gray-light: 1px solid rgba(0, 0, 0, 0.1);
+	--area-border-gray-light: 1px solid #e1e1e1; /* rgba(0, 0, 0, 0.1); */
 	--area-padding: 2rem;
 	--area-padding-large: 3rem;
 	--button-border-radius: 0.25rem;

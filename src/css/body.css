@@ -113,13 +113,13 @@
 				padding: var(--area-padding);
 
 				&--notifications {
-					grid-column: col-start / span 12;
+					grid-column: 1 / span 12;
 					grid-row: 1 / span 1;
 					padding: 0;
 				}
 
 				&--nav {
-					grid-column: col-start / span 3;
+					grid-column: 1 / span 3;
 					grid-row: 2 / span 3;
 					background: var(--wpc-blue-dark);
 					color: #fff;
@@ -131,22 +131,22 @@
 				}
 
 				&--crumbs {
-					grid-column: col-start 4 / span 9;
+					grid-column: 4 / span 9;
 					grid-row: 2 / span 1;
-					background: rgba(255, 210, 0, 0.05);
-					border-bottom: 1px solid rgba(255, 210, 0, 0.2);
+					background: var(--wpc-yellow-light);
+					border-bottom: var(--border-yellow);
 					padding-top: 1rem;
 					padding-bottom: 1rem;
 				}
 
 				&--main {
-					grid-column: col-start 4 / span 9;
+					grid-column: 4 / span 9;
 					grid-row: 3 / span 1;
 					padding: var(--area-padding-large);
 				}
 
 				&--sidebar {
-					grid-column: col-start 4 / span 9;
+					grid-column: 4 / span 9;
 					grid-row: 4 / span 1;
 					padding-left: var(--area-padding-large);
 					padding-right: var(--area-padding-large);
@@ -160,27 +160,27 @@
 
 			.wpc-body__area {
 				&--notifications {
-					grid-column: col-start 3 / span 10;
+					grid-column: 3 / span 10;
 					grid-row: 1 / span 1;
 				}
 
 				&--nav {
-					grid-column: col-start / span 2;
+					grid-column: 1 / span 2;
 					grid-row: 1 / span 3;
 				}
 
 				&--crumbs {
-					grid-column: col-start 3 / span 7;
+					grid-column: 3 / span 7;
 					grid-row: 2 / span 1;
 				}
 
 				&--main {
-					grid-column: col-start 3 / span 7;
+					grid-column: 3 / span 7;
 					grid-row: 3 / span 1;
 				}
 
 				&--sidebar {
-					grid-column: col-start 10 / span 3;
+					grid-column: 10 / span 3;
 					grid-row: 2 / span 2;
 					border-top: 0;
 					border-left: 1px solid rgba(17, 89, 189, 0.15);

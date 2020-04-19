@@ -67,7 +67,7 @@
 
 		.wpc-header__area {
 			&--actions {
-				grid-column: col-start 1 / span 3;
+				grid-column: 1 / span 3;
 
 				.wpc-button {
 					max-width: 300px;
@@ -75,7 +75,7 @@
 			}
 
 			&--logo {
-				grid-column: col-start 5 / span 4;
+				grid-column: 5 / span 3;
 				align-self: center;
 
 				a,
@@ -90,7 +90,7 @@
 			}
 
 			&--meta {
-				grid-column: col-start 10 / span 3;
+				grid-column: 10 / span 3;
 			}
 		}
 	}

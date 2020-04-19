@@ -11,8 +11,7 @@ const CategoryTemplate = props => {
 	const pageTitle = category.name
 	return (
 		<Layout pageTitle={pageTitle} crumbs={context.crumbs} path={props.path}>
-			<span className="wpc-article-prefix">From our blog:</span>
-			<h1>{category.name}</h1>
+			<h1>Blog posts about {category.name}</h1>
 			{category.description ? <p>{category.description}</p> : ""}
 			<ArticleArchive list={props.data.allWordpressPost.edges} />
 		</Layout>

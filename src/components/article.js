@@ -20,11 +20,15 @@ const ArticleCategories = ({ list }) => (
 	<ul>
 		{list.map((item, i) => (
 			<li key={i}>
-				<Link to={item.path}>{item.name}</Link>
+				<Link to={item.path} aria-label={`Blog posts category: ${item.name}`}>{item.name}</Link>
 			</li>
 		))}
 	</ul>
 )
+
+ArticleCategories.propTypes = {
+	list: PropTypes.array.isRequired,
+}
 
 const ArticleMetaAuthors = ({ authors }) => {
 	const contributorPathBase = "/about/contributors/"
@@ -80,12 +84,45 @@ const ArticleMeta = ({ data }) => {
 			) : null}
 			{data.categories ? (
 				<li className="wpc-meta__item wpc-meta__item--categories">
-					<span className="wpc-meta__label">Categories:</span>
 					<ArticleCategories list={data.categories} />
 				</li>
 			) : null}
 		</ul>
 	)
+}
+
+ArticleMeta.propTypes = {
+	data: PropTypes.object.isRequired,
+}
+
+const ArticleHeader = ({ data, displayMeta, isSingle, headerPrefix }) => {
+	const articleTitleAttr = {
+		data: data
+	}
+	if (!isSingle) {
+		articleTitleAttr.headingLevel = 2
+		articleTitleAttr.includeLink = true
+	}
+	const headerAttr = {
+		className: "wpc-article__header"
+	}
+	return <header {...headerAttr}>
+		{headerPrefix ? <span className="wpc-article-prefix">{headerPrefix}:</span> : null}
+		<ArticleTitle {...articleTitleAttr} />
+		{displayMeta ? <ArticleMeta data={data} /> : null}
+	</header>
+}
+
+ArticleHeader.propTypes = {
+	data: PropTypes.object.isRequired,
+	isSingle: PropTypes.bool,
+	displayMeta: PropTypes.bool,
+	headerPrefix: PropTypes.node
+}
+
+ArticleHeader.defaultProps = {
+	isSingle: true,
+	displayMeta: true
 }
 
 const ArticleContent = ({ data, displayContentFull }) => {
@@ -99,50 +136,6 @@ const ArticleContent = ({ data, displayContentFull }) => {
 	return <div className={className}>{ReactHtmlParser(articleContent)}</div>
 }
 
-const Article = ({
-	data,
-	wpc_protected,
-	isSingle,
-	displayAuthor,
-	displayMeta,
-	displayContent,
-	displayContentFull,
-}) => {
-	const articleTitleAttr = {
-		data: data
-	}
-	if (!isSingle) {
-		articleTitleAttr.headingLevel = 2,
-		articleTitleAttr.includeLink = true
-	}
-	const articleAttr = {
-		className: "wpc-article"
-	}
-	if (isSingle) {
-		articleAttr.className += " wpc-article--single"
-	}
-	return (
-		<article {...articleAttr}>
-			<ArticleTitle {...articleTitleAttr} />
-			<ProtectedContent wpc_protected={wpc_protected}>
-				{displayMeta ? <ArticleMeta data={data} /> : null}
-				{displayContent ? (
-					<ArticleContent data={data} displayContentFull={displayContentFull} />
-				) : null}
-				{displayAuthor && data.author ? <AuthorCards authors={data.author} /> : null}
-			</ProtectedContent>
-		</article>
-	)
-}
-
-ArticleCategories.propTypes = {
-	list: PropTypes.array.isRequired,
-}
-
-ArticleMeta.propTypes = {
-	data: PropTypes.object.isRequired,
-}
-
 ArticleContent.propTypes = {
 	data: PropTypes.object.isRequired,
 	displayContentFull: PropTypes.bool,
@@ -152,14 +145,69 @@ ArticleContent.defaultProps = {
 	displayContentFull: false,
 }
 
+const ArticleFooter = ({ data, displayAuthor, paginationAdj }) => {
+	const footerAttr = {
+		className: "wpc-article__footer"
+	}
+	return <footer {...footerAttr}>
+		{displayAuthor && data.author ? <AuthorCards authors={data.author} /> : null}
+		{paginationAdj}
+	</footer>
+}
+
+ArticleFooter.propTypes = {
+	data: PropTypes.object.isRequired,
+	displayAuthor: PropTypes.bool,
+	paginationAdj: PropTypes.node
+}
+
+ArticleFooter.defaultProps = {
+	displayAuthor: true
+}
+
+const Article = ({
+	data,
+	children,
+	wpc_protected,
+	isSingle,
+	headerPrefix,
+	displayAuthor,
+	displayMeta,
+	displayContent,
+	displayContentFull,
+	paginationAdj
+}) => {
+	const articleAttr = {
+		className: "wpc-article"
+	}
+	if (isSingle) {
+		articleAttr.className += " wpc-article--single"
+	}
+	return (
+		<article {...articleAttr}>
+			<ProtectedContent wpc_protected={wpc_protected}>
+				<ArticleHeader data={data} isSingle={isSingle} headerPrefix={headerPrefix} displayMeta={displayMeta} />
+				{children}
+				{displayContent ? (
+					<ArticleContent data={data} displayContentFull={displayContentFull} />
+				) : null}
+				<ArticleFooter data={data} displayAuthor={displayAuthor} paginationAdj={paginationAdj} />
+			</ProtectedContent>
+		</article>
+	)
+}
+
 Article.propTypes = {
 	data: PropTypes.object.isRequired,
+	children: PropTypes.node,
 	wpc_protected: PropTypes.object,
+	headerPrefix: PropTypes.node,
 	isSingle: PropTypes.bool,
 	displayAuthor: PropTypes.bool,
 	displayMeta: PropTypes.bool,
 	displayContent: PropTypes.bool,
 	displayContentFull: PropTypes.bool,
+	paginationAdj: PropTypes.node
 }
 
 Article.defaultProps = {

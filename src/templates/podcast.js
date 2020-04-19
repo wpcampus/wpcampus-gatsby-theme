@@ -1,24 +1,38 @@
 import React from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
+import { Link } from "gatsby"
 
 import Article from "../components/article"
 import Layout from "../components/layout"
 import { PodcastPaginationAdjacent } from "../components/pagination"
 
+import "./../css/post.css"
+
 const PodcastTemplate = props => {
 	const podcast = props.data.wordpressWpPodcast
 	const context = props.pageContext
-	const pagination = (
+	const paginationAdj = (
 		<PodcastPaginationAdjacent previous={context.previous} next={context.next} />
 	)
+	const layoutAttr = {
+		classes: "wpc-post",
+		pageTitle: podcast.title,
+		path: props.path
+	}
+	const articleAttr = {
+		data: podcast, 
+		wpc_protected: context.wpc_protected,
+		isSingle: true,
+		displayContentFull: true,
+		headerPrefix: <Link to="/blog/">From our podcast</Link>,
+		paginationAdj: paginationAdj
+	}
 	return (
-		<Layout pageTitle={podcast.title} crumbs={context.crumbs} path={props.path}>
-			{pagination}
-			<span className="wpc-article-prefix">From our podcast:</span>
-			<p>Duration: {podcast.meta.duration}</p>
-			<Article data={podcast} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
-			{pagination}
+		<Layout {...layoutAttr}>
+			<Article {...articleAttr}>
+				<p>Duration: {podcast.meta.duration}</p>
+			</Article>
 		</Layout>
 	)
 }

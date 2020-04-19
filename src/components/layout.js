@@ -21,15 +21,17 @@ import WPCGridDev from "./grid-dev"
 
 const Layout = props => {
 
-	const searchQuery = props.searchQuery
-	const updateSearchQuery = props.updateSearchQuery
-	const isHome = props.isHome
-	const useTitleTemplate = props.useTitleTemplate
-	const heading = props.heading
-	const crumbs = props.crumbs
-	const classes = props.classes
-	const path = props.path
-	const children = props.children
+	const {
+		searchQuery,
+		updateSearchQuery,
+		isHome,
+		useTitleTemplate,
+		heading,
+		crumbs,
+		classes,
+		path,
+		children
+	} = props
 
 	let pageTitle = props.pageTitle
 	if (!pageTitle && heading) {
@@ -51,7 +53,7 @@ const Layout = props => {
 	}
 
 	// Add path as a wrapper class.
-	if (path){
+	if (path) {
 		let pathSlug = path.replace(/^\//i, "")
 		pathSlug = pathSlug.replace(/\/$/i, "")
 		pathSlug = pathSlug.replace(/\//gi, "-")
@@ -60,6 +62,11 @@ const Layout = props => {
 
 	if (classes) {
 		wpcampusAttr.className += ` ${classes}`
+	}
+
+	let crumbsComp
+	if (crumbs) {
+		crumbsComp = <Crumbs crumbs={crumbs} classes="wpc-area wpc-body__area wpc-body__area--crumbs" />
 	}
 
 	return (
@@ -72,13 +79,13 @@ const Layout = props => {
 			<div className="wpc-body wpc-wrapper">
 				<div className="wpc-container wpc-body__container">
 					<div className="wpc-areas wpc-areas--grid wpc-areas--grid--rows wpc-body__areas">
-						<div className="wpc-area wpc-body__area wpc-body__area--notifications">
-							<Notifications />
-						</div>
 						<div className="wpc-area wpc-body__area wpc-body__area--nav">
 							<NavPrimary />
 						</div>
-						<Crumbs crumbs={crumbs} classes="wpc-area wpc-body__area wpc-body__area--crumbs" />
+						<div className="wpc-area wpc-body__area wpc-body__area--notifications">
+							<Notifications />
+						</div>
+						{crumbsComp}
 						<div className="wpc-area wpc-body__area wpc-body__area--main">
 							<main id="main" className="wpc-main wpc-wrapper">
 								{!isHome && heading ? (<Heading level={1} heading={heading} />) : null}
