@@ -8,7 +8,7 @@ import Layout from "../components/layout"
 const Library = props => {
 	const page = props.data.wordpressPage
 	const library = props.data.allWordpressWpcLibrary.edges
-	return <Layout heading={page.title} path={props.path}>
+	return <Layout heading={page.title} crumbs={props.pageContext.crumbs} path={props.path}>
 		<div>{ReactHtmlParser(page.content)}</div>
 		{library.map(({ node }, i) => {
 			return <div className="session" key={i}>
@@ -23,6 +23,7 @@ const Library = props => {
 Library.propTypes = {
 	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired,
+	pageContext: PropTypes.object.isRequired,
 	edges: PropTypes.array,
 }
 
