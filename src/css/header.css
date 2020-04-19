@@ -96,9 +96,8 @@
 	}
 }
 
-/* @TODO: purchase graphic */
 .wpc-hero {
-	background: url(../images/heros/hero1.png) center -95px fixed;
+	background: url(../images/heros/hero1.png) center -175px fixed;
 	height: 150px;
 	border-bottom: var(--area-border-gray-light);
 }
