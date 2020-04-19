@@ -6,18 +6,6 @@ import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
 import { AuthorCard } from "../components/author"
 
-/*function sortByDateDesc(a, b) {
-	const aDate = new Date(a.node.date).getTime()
-	const bDate = new Date(b.node.date).getTime()
-	if (aDate < bDate) {
-		return 1
-	}
-	if (aDate > bDate) {
-		return -1
-	}
-	return 0
-}*/
-
 const ContributorTemplate = props => {
 	const contributor = props.data.wordpressWpcContributors
 	const heading = contributor.display_name

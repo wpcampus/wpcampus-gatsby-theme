@@ -1,90 +1,25 @@
 import React from "react"
-import { graphql } from "gatsby"
 import PropTypes from "prop-types"
 
 import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
 
-const CategoryTemplate = props => {
-	const category = props.data.wordpressCategory
-	const context = props.pageContext
-	const pageTitle = category.name
+const CategoryTemplate = ({ pageTitle, path, crumbs, category, categoryArchive }) => {
 	return (
-		<Layout pageTitle={pageTitle} crumbs={context.crumbs} path={props.path}>
-			<h1>Blog posts about {category.name}</h1>
+		<Layout pageTitle={pageTitle} crumbs={crumbs} path={path}>
+			<h1>{pageTitle}</h1>
 			{category.description ? <p>{category.description}</p> : ""}
-			<ArticleArchive list={props.data.allWordpressPost.edges} />
+			<ArticleArchive list={categoryArchive} />
 		</Layout>
 	)
 }
 
 CategoryTemplate.propTypes = {
-	path: PropTypes.string.isRequired,
-	data: PropTypes.object.isRequired,
-	edges: PropTypes.array,
-	pageContext: PropTypes.object.isRequired
+	pageTitle: PropTypes.string.isRequired,
+	path: PropTypes.string,
+	crumbs: PropTypes.array,
+	category: PropTypes.object.isRequired,
+	categoryArchive: PropTypes.array
 }
 
 export default CategoryTemplate
-
-// @TODO remove fields we're not using.
-export const query = graphql`
-  query($id: String!) {
-    wordpressCategory(id: { eq: $id }) {
-      id
-      wordpress_id
-      count
-      name
-      description
-      path
-    }
-    allWordpressPost(
-      filter: {
-        type: { eq: "post" }
-        status: { eq: "publish" }
-        categories: { elemMatch: { id: { eq: $id } } }
-      }
-      sort: { fields: date, order: DESC }
-    ) {
-      edges {
-        node {
-          id
-          wordpress_id
-          slug
-          path
-          author {
-            id
-			path
-			display_name
-			email
-			twitter
-			website
-			company
-			company_position
-			bio
-          }
-          title
-          status
-          date
-          dateFormatted: date(formatString: "MMMM D, YYYY")
-          excerpt
-          content
-          comment_status
-          categories {
-            id
-            wordpress_id
-            count
-            name
-            description
-            path
-          }
-        }
-      }
-    }
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`

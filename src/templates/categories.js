@@ -5,60 +5,38 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import { CategoryArchive } from "../components/archive"
 
-export default function Template(props) {
-	const crumbs = {
-		crumb: {
-			path: props.path,
-			text: "Categories",
-		},
-		parent_element: {
-			crumb: {
-				path: "/blog/",
-				text: "Blog"
-			}
-		}
+function sortByNameAsc(a, b) {
+	if (a.name < b.name) {
+		return -1
 	}
+	if (a.name > b.name) {
+		return 1
+	}
+	return 0
+}
+
+export default function Template(props) {
+	const context = props.pageContext
+	const categories = context.categories.sort(sortByNameAsc)
 	return (
-		<Layout heading="Categories" crumbs={crumbs} path={props.path}>
-			<CategoryArchive list={props.data.allWordpressCategory.edges} />
+		<Layout heading={context.heading} crumbs={context.crumbs} path={props.path}>
+			<CategoryArchive list={categories} />
 		</Layout>
 	)
 }
 
 Template.propTypes = {
 	path: PropTypes.string.isRequired,
-	data: PropTypes.object.isRequired
+	pageContext: PropTypes.object.isRequired
 }
 
 // @TODO remove fields we're not using.
 export const query = graphql`
-  query {
-    allWordpressCategory {
-      edges {
-        node {
-          id
-          wordpress_id
-          count
-          name
-          description
-          path
-          parent {
-            ... on wordpress__CATEGORY {
-              id
-              id
-              wordpress_id
-              count
-              name
-              path
-            }
-          }
-        }
-      }
-    }
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
+	query {
+		site {
+			siteMetadata {
+				title
+			}
+		}
+	}
 `

@@ -453,6 +453,175 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 		})
 }
 
+const postCategoriesQuery = `
+	query {
+		allWordpressPost {
+			edges {
+				node {
+					categories {
+						id
+						name
+						slug
+						description
+					}
+				}
+			}
+		}
+	}
+`
+
+const podcastCategoriesQuery = `
+	query {
+		allWordpressWpPodcast {
+			edges {
+				node {
+					categories {
+						id
+						name
+						slug
+						description
+					}
+				}
+			}
+		}
+	}
+`
+
+/**
+ * Build category archives.
+ * 
+ * One for blog posts and one for podcasts.
+ * 
+ * Query content and create a category page
+ * for all categories assigned to content.
+ * 
+ * We're getting all the category info because
+ * we're passing this info to the categories 
+ * page template.
+ */
+const createCategoriesPages = async ({ type, categoriesPath, parentCrumbs, archiveHeading, graphql, createPage }) => {
+
+	// Will hold categories that are assigned to posts.
+	const postCategories = []
+
+	// Will hold IDs of categories that have been processed.
+	const processedCategories = []
+
+	let categoriesQuery = false
+	if ("podcast" === type) {
+		categoriesQuery = podcastCategoriesQuery
+	} else if ("post" == type) {
+		categoriesQuery = postCategoriesQuery
+	}
+
+	if (!categoriesQuery) {
+		return
+	}
+
+	// Query our post type with categories.
+	const results = await graphql(categoriesQuery)
+
+	// Get the data.
+	let postData = []
+	if ("podcast" === type) {
+		postData = results.data.allWordpressWpPodcast.edges
+	} else if ("post" == type) {
+		postData = results.data.allWordpressPost.edges
+	}
+
+	if (!postData) {
+		return
+	}
+
+	const capitalType = type.replace(/^\w/, c => c.toUpperCase())
+
+	// Pricess the post and category data and create pages.
+	const categoryTemplate = path.resolve(`./src/templates/category${capitalType}.js`)
+	postData.forEach(edge => {
+
+		const post = edge.node
+
+		// Only neeed to process if the post has categories.
+		if (!post.categories || !post.categories.length) {
+			return
+		}
+
+		// Process each category.
+		post.categories.forEach(category => {
+
+			// So we don't process the same category more than once.
+			if (processedCategories.includes(category.id)) {
+				return
+			}
+			processedCategories.push(category.id)
+
+			// Create the path for this category.
+			category.path = categoriesPath + category.slug
+
+			// Store for categories template.
+			postCategories.push(category)
+
+			const crumbs = {
+				crumb: {
+					path: category.path,
+					text: category.name,
+				},
+				parent_element: {
+					crumb: {
+						path: categoriesPath,
+						text: "Categories"
+					}
+				}
+			}
+
+			if (parentCrumbs) {
+				crumbs.parent_element.parent_element = parentCrumbs
+			}
+
+			createPage({
+				path: category.path,
+				component: slash(categoryTemplate),
+				context: {
+					id: category.id,
+					crumbs: crumbs,
+					category: category
+				},
+			})
+		})
+	})
+
+	const archiveCrumbs = {
+		crumb: {
+			path: categoriesPath,
+			text: "Categories",
+		}
+	}
+
+	if (parentCrumbs) {
+		archiveCrumbs.parent_element = parentCrumbs
+	}
+
+	/*
+	 * Create categories archive page.
+	 */
+	createPage({
+		path: categoriesPath,
+		component: path.resolve("src/templates/categories.js"),
+		context: {
+			categories: postCategories,
+			heading: archiveHeading,
+			crumbs: archiveCrumbs
+		}
+	})
+}
+
+createCategoriesPages.propTypes = {
+	type: PropTypes.string.isRequired,
+	categoriesPath: PropTypes.string.isRequired,
+	archiveHeading: PropTypes.string.isRequired,
+	parentCrumbs: PropTypes.object
+}
+
 /**
  * Build content from WordPress content.
  * 
@@ -762,87 +931,34 @@ exports.createPages = async ({ graphql, actions }) => {
 		})
 	})
 
-	const categoriesPath = "/blog/categories/"
-
-	/*
-	 * Create main categories page.
-	 */
-	createPage({
-		path: categoriesPath,
-		component: path.resolve("src/templates/categories.js")
+	// Create category pages for blog posts.
+	createCategoriesPages({
+		type: "post",
+		categoriesPath: "/blog/categories/",
+		parentCrumbs: {
+			crumb: {
+				path: "/blog/",
+				text: "Blog"
+			}
+		},
+		archiveHeading: "Blog categories",
+		graphql,
+		createPage
 	})
 
-	/**
-	 * Build category archives from WordPress "categories" taxonomy.
-	 * 
-	 * @TODO remove fields we're not using.
-	 */
-	const categories = await graphql(`
-		query {
-			allWordpressCategory {
-				edges {
-					previous {
-						id
-						wordpress_id
-						count
-						name
-						description
-						path
-					}
-					next {
-						id
-						wordpress_id
-						count
-						name
-						description
-						path
-					}
-					node {
-						id
-						wordpress_id
-						count
-						name
-						description
-						path
-					}
-				}
+	// Create category pages for podcasts.
+	createCategoriesPages({
+		type: "podcast",
+		categoriesPath: "/podcast/categories/",
+		parentCrumbs: {
+			crumb: {
+				path: "/podcast/",
+				text: "Podcast"
 			}
-		}
-  	`)
-	const categoryTemplate = path.resolve("./src/templates/category.js")
-	categories.data.allWordpressCategory.edges.forEach(edge => {
-
-		createPage({
-			// will be the url for the page
-			path: edge.node.path,
-			// specify the component template of your choice
-			component: slash(categoryTemplate),
-			// In the ^template's GraphQL query, 'id' will be available
-			// as a GraphQL variable to query for this posts's data.
-			context: {
-				id: edge.node.id,
-				next: edge.next,
-				previous: edge.previous,
-				crumbs: {
-					crumb: {
-						path: edge.node.path,
-						text: edge.node.name,
-					},
-					parent_element: {
-						crumb: {
-							path: categoriesPath,
-							text: "Categories"
-						},
-						parent_element: {
-							crumb: {
-								path: "/blog/",
-								text: "Blog"
-							}
-						}
-					}
-				},
-			},
-		})
+		},
+		archiveHeading: "Podcast categories",
+		graphql,
+		createPage
 	})
 
 	/*

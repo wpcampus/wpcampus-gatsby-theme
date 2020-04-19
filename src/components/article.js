@@ -18,11 +18,21 @@ const getArticleContent = (data, displayContentFull) => {
 
 const ArticleCategories = ({ list }) => (
 	<ul>
-		{list.map((item, i) => (
-			<li key={i}>
-				<Link to={item.path} aria-label={`Blog posts category: ${item.name}`}>{item.name}</Link>
-			</li>
-		))}
+		{list.map((item, i) => {
+			const linkAttr = {
+				to: item.path
+			}
+			if (item.aria_label) {
+				linkAttr["aria-label"] = item.aria_label
+			} else {
+				linkAttr["aria-label"] = `Category: ${item.name}`
+			}
+			return (
+				<li key={i}>
+					<Link {...linkAttr}>{item.name}</Link>
+				</li>
+			)
+		})}
 	</ul>
 )
 

@@ -9,9 +9,18 @@ import { PostPaginationAdjacent } from "../components/pagination"
 
 import "./../css/post.css"
 
+const normalizeCategories = (categories) => {
+	return categories.map(category => {
+		category.path = `/blog/categories/${category.slug}`
+		category.aria_label = `Blog post category: ${category.name}`
+		return category
+	})
+}
+
 const PostTemplate = props => {
 	const post = props.data.wordpressPost
 	const context = props.pageContext
+	post.categories = normalizeCategories(post.categories)
 	const paginationAdj = (
 		<PostPaginationAdjacent previous={context.previous} next={context.next} />
 	)
@@ -76,7 +85,7 @@ export const postQuery = graphql`
         count
         name
         description
-        path
+        slug
       }
     }
     site {

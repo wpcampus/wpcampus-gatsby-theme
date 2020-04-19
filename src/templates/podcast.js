@@ -9,9 +9,18 @@ import { PodcastPaginationAdjacent } from "../components/pagination"
 
 import "./../css/post.css"
 
+const normalizeCategories = (categories) => {
+	return categories.map(category => {
+		category.path = `/podcast/categories/${category.slug}`
+		category.aria_label = `Podcast category: ${category.name}`
+		return category
+	})
+}
+
 const PodcastTemplate = props => {
 	const podcast = props.data.wordpressWpPodcast
 	const context = props.pageContext
+	podcast.categories = normalizeCategories(podcast.categories)
 	const paginationAdj = (
 		<PodcastPaginationAdjacent previous={context.previous} next={context.next} />
 	)
@@ -25,7 +34,7 @@ const PodcastTemplate = props => {
 		wpc_protected: context.wpc_protected,
 		isSingle: true,
 		displayContentFull: true,
-		headerPrefix: <Link to="/blog/">From our podcast</Link>,
+		headerPrefix: <Link to="/podcast/">From our podcast</Link>,
 		paginationAdj: paginationAdj
 	}
 	return (
@@ -78,7 +87,7 @@ export const podcastQuery = graphql`
         count
         name
         description
-        path
+        slug
 	  }
 	  meta {
 		  duration

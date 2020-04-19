@@ -116,7 +116,16 @@ const NavPrimaryItems = [
 		]
 	},
 	{ path: "/jobs/", text: "Job board" },
-	{ path: "/podcast/", text: "Podcast" },
+	{
+		path: "/podcast/",
+		text: "Podcast",
+		children: [
+			{
+				path: "/podcast/categories/",
+				text: "Categories"
+			}
+		]
+	},
 	{ href: "https://shop.wpcampus.org/", text: "Shop" },
 	{ path: "/search/", text: "Search" },
 	{ path: "/pages/", text: "Pages" }
