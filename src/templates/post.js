@@ -10,6 +10,9 @@ import { PostPaginationAdjacent } from "../components/pagination"
 import "./../css/post.css"
 
 const normalizeCategories = (categories) => {
+	if (!categories) {
+		return categories
+	}
 	return categories.map(category => {
 		category.path = `/blog/categories/${category.slug}`
 		category.aria_label = `Blog post category: ${category.name}`
