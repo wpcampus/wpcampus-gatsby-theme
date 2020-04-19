@@ -8,7 +8,7 @@
     "@wpcampus/wpcampus-wc-blog": "^0.0.5",
     "@wpcampus/wpcampus-wc-conduct": "^0.0.2",
     "@wpcampus/wpcampus-wc-footer": "^0.0.3",
-    "@wpcampus/wpcampus-wc-notifications": "^0.0.3",
+    "@wpcampus/wpcampus-wc-notifications": "^0.0.4",
     "@wpcampus/wpcampus-wc-tweets": "^0.0.2",
     "chalk": "^4.0.0",
     "dotenv": "^8.2.0",
