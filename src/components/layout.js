@@ -64,6 +64,7 @@ const Layout = props => {
 
 	return (
 		<div {...wpcampusAttr}>
+			<a href="#main" className="wpc-skip-to-main">Skip to content</a>
 			{showGrid ? <WPCGridDev /> : null}
 			<SEO title={pageTitle} useTitleTemplate={useTitleTemplate} />
 			<Header searchQuery={searchQuery} updateSearchQuery={updateSearchQuery} isHome={isHome} />

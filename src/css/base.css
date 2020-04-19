@@ -187,6 +187,45 @@ h4 {
 	margin: 0 0 0.5rem;
 }
 
+.wpc-skip-to-main {
+	display: block;
+	background: var(--wpc-orange);
+	position: fixed;
+	top: -1000px;
+	left: -1000px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	border: 0;
+	padding: 0 15px;
+	margin: 0;
+	z-index: -1;
+	clip: rect(1px, 1px, 1px, 1px);
+	color: #fff;
+	font-size: 1.1rem;
+	line-height: 1.5;
+	text-decoration: underline;
+	text-align: center;
+
+	&:visited {
+		color: #fff;
+	}
+
+	&:active,
+	&:focus,
+	&:hover {
+		clip: auto;
+		left: 0;
+		top: 0;
+		width: auto;
+		height: auto;
+		padding: 1.2rem 1.25rem;
+		overflow: visible;
+		z-index: 10000;
+		color: #fff;
+	}
+}
+
 .for-screen-reader {
 	border: 0;
 	clip: rect(0 0 0 0);
