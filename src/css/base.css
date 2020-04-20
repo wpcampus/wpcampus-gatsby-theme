@@ -245,19 +245,6 @@ svg.wpc-logo {
 	}
 }
 
-.wpc-icon {
-	&-text {
-		.wpc-icon {
-			display: inline-block;
-			width: 25px;
-			height: auto;
-			max-height: 22px;
-			vertical-align: bottom;
-			margin: 0 0.5rem 0 0;
-		}
-	}
-}
-
 button {
 	cursor: pointer;
 }

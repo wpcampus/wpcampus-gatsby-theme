@@ -2,9 +2,6 @@ import React, { useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 
-import QuotesIcon from "../svg/quotes"
-import TwitterIcon from "../svg/twitter"
-
 import "./../css/sidebar.css"
 
 const Widget = ({ type, classes, children }) => {
@@ -31,7 +28,9 @@ const BlogWidget = () => {
 	}, [])
 	return useMemo(() => {
 		return <Widget type="blog">
-			<h2 className="wpc-widget__heading"><Link className="wpc-icon-text" aria-label="The WPCampus Blog" to="/blog"><QuotesIcon />From our blog</Link></h2>
+			<h2 className="wpc-widget__heading">
+				<span className="wpc-icon wpc-icon--quotes"></span>
+				<Link aria-label="The WPCampus Blog" to="/blog">From our blog</Link></h2>
 			<wpcampus-blog></wpcampus-blog>
 		</Widget>
 	})
@@ -43,7 +42,10 @@ const TweetsWidget = () => {
 	}, [])
 	return useMemo(() => {
 		return <Widget type="tweets">
-			<h2 className="wpc-widget__heading"><a className="wpc-icon-text" href="https://twitter.com/wpcampusorg" aria-label="Follow WPCampus on Twitter"><TwitterIcon />@wpcampusorg</a></h2>
+			<h2 className="wpc-widget__heading">
+				<span className="wpc-icon wpc-icon--twitter"></span>
+				<a href="https://twitter.com/wpcampusorg" aria-label="Follow WPCampus on Twitter">@wpcampusorg</a>
+			</h2>
 			<wpcampus-tweets></wpcampus-tweets>
 		</Widget>
 	})

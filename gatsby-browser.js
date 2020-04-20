@@ -8,6 +8,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { UserContextProvider } from "./src/user/context"
 
+import "./src/css/fonts.css"
 import "./src/css/base.css"
 import "./src/css/grid.css"
 import "./src/css/body.css"
