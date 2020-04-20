@@ -105,7 +105,7 @@
 
 		/* Laptop */
 		@media (min-width: 768px) {
-			grid-template-rows: auto auto auto 1fr;
+			grid-template-rows: auto auto 1fr;
 			grid-column-gap: 0;
 			grid-row-gap: 0;
 
@@ -120,7 +120,7 @@
 
 				&--nav {
 					grid-column: 1 / span 3;
-					grid-row: 2 / span 3;
+					grid-row: 2 / span 2;
 					background: var(--wpc-blue-dark);
 					color: #fff;
 					padding: 0;
@@ -144,20 +144,28 @@
 					grid-row: 3 / span 1;
 					padding: var(--area-padding-large);
 				}
+			}
 
-				&--sidebar {
-					grid-column: 4 / span 9;
-					grid-row: 4 / span 1;
-					padding-left: var(--area-padding-large);
-					padding-right: var(--area-padding-large);
+			&--sidebar {
+				grid-template-rows: auto auto auto 1fr;
+
+				.wpc-body__area {
+					&--nav {
+						grid-row: 2 / span 3;
+					}
+
+					&--sidebar {
+						grid-column: 4 / span 9;
+						grid-row: 4 / span 1;
+						padding-left: var(--area-padding-large);
+						padding-right: var(--area-padding-large);
+					}
 				}
 			}
 		}
 
 		/* Desktop */
 		@media (min-width: 1260px) {
-			grid-template-rows: auto auto 1fr;
-
 			.wpc-body__area {
 				&--notifications {
 					grid-column: 3 / span 10;
@@ -166,24 +174,46 @@
 
 				&--nav {
 					grid-column: 1 / span 2;
-					grid-row: 1 / span 3;
+					grid-row: 1 / span 4;
 				}
 
 				&--crumbs {
-					grid-column: 3 / span 7;
+					grid-column: 3 / span 10;
 					grid-row: 2 / span 1;
 				}
 
 				&--main {
-					grid-column: 3 / span 7;
+					grid-column: 3 / span 10;
 					grid-row: 3 / span 1;
 				}
+			}
 
-				&--sidebar {
-					grid-column: 10 / span 3;
-					grid-row: 2 / span 2;
-					border-top: 0;
-					border-left: 1px solid rgba(17, 89, 189, 0.15);
+			&--sidebar--bottom {
+				.wpc-body__area {
+					&--sidebar {
+						grid-column: 3 / span 10;
+					}
+				}
+			}
+
+			&--sidebar:not(.wpc-body__areas--sidebar--bottom) {
+				grid-template-rows: auto auto 1fr;
+
+				.wpc-body__area {
+					&--nav {
+						grid-row: 1 / span 3;
+					}
+
+					&--main {
+						grid-column: 3 / span 7;
+					}
+
+					&--sidebar {
+						grid-column: 10 / span 3;
+						grid-row: 2 / span 2;
+						border-top: 0;
+						border-left: 1px solid rgba(17, 89, 189, 0.15);
+					}
 				}
 			}
 		}

@@ -25,6 +25,8 @@ const Layout = props => {
 		searchQuery,
 		updateSearchQuery,
 		isHome,
+		includeSidebar,
+		sidebarBottom,
 		useTitleTemplate,
 		heading,
 		crumbs,
@@ -48,6 +50,14 @@ const Layout = props => {
 		wpcampusAttr.className += " wpcampus--hasGridDev"
 	}
 
+	if (includeSidebar) {
+		wpcampusAttr.className += " wpcampus--sidebar"
+
+		if (sidebarBottom) {
+			wpcampusAttr.className += " wpcampus--sidebar--bottom"
+		}
+	}
+
 	if (isHome) {
 		wpcampusAttr.className += " wpcampus--home"
 	}
@@ -69,6 +79,25 @@ const Layout = props => {
 		crumbsComp = <Crumbs crumbs={crumbs} classes="wpc-area wpc-body__area wpc-body__area--crumbs" />
 	}
 
+	let sidebarArea
+	if (includeSidebar) {
+		sidebarArea = <div className="wpc-area wpc-body__area wpc-body__area--sidebar">
+			<Sidebar />
+		</div>
+	}
+
+	const bodyAreasAttr = {
+		className: "wpc-areas wpc-areas--grid wpc-areas--grid--rows wpc-body__areas"
+	}
+
+	if (includeSidebar) {
+		bodyAreasAttr.className += " wpc-body__areas--sidebar"
+
+		if (sidebarBottom) {
+			bodyAreasAttr.className += " wpc-body__areas--sidebar--bottom"
+		}
+	}
+
 	return (
 		<div {...wpcampusAttr}>
 			<a href="#main" className="wpc-skip-to-main">Skip to content</a>
@@ -78,7 +107,7 @@ const Layout = props => {
 			{!isHome ? <div className="wpc-hero"></div> : null}
 			<div className="wpc-body wpc-wrapper">
 				<div className="wpc-container wpc-body__container">
-					<div className="wpc-areas wpc-areas--grid wpc-areas--grid--rows wpc-body__areas">
+					<div {...bodyAreasAttr}>
 						<div className="wpc-area wpc-body__area wpc-body__area--nav">
 							<NavPrimary />
 						</div>
@@ -92,9 +121,7 @@ const Layout = props => {
 								{children}
 							</main>
 						</div>
-						<div className="wpc-area wpc-body__area wpc-body__area--sidebar">
-							<Sidebar />
-						</div>
+						{sidebarArea}
 					</div>
 				</div>
 			</div>
@@ -108,6 +135,8 @@ Layout.propTypes = {
 	searchQuery: PropTypes.string,
 	updateSearchQuery: PropTypes.func,
 	isHome: PropTypes.bool,
+	includeSidebar: PropTypes.bool,
+	sidebarBottom: PropTypes.bool,
 	pageTitle: PropTypes.string,
 	useTitleTemplate: PropTypes.bool,
 	heading: PropTypes.string,
@@ -119,6 +148,8 @@ Layout.propTypes = {
 
 Layout.defaultProps = {
 	isHome: false,
+	includeSidebar: true,
+	sidebarBottom: false,
 	useTitleTemplate: true
 }
 
