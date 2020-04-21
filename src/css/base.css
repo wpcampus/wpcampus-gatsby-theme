@@ -139,6 +139,10 @@ table {
 
 a {
 	color: var(--wpc-blue-royal);
+
+	&.wpc-link--inherit {
+		color: inherit;
+	}
 }
 
 strong {
@@ -416,7 +420,7 @@ ul.wpc-meta {
 	margin-top: 0.5rem;
 }
 
-.wpc-article__title + .wpc-meta {
+h2.wpc-article__title + .wpc-meta {
 	margin-top: -0.3rem;
 }
 

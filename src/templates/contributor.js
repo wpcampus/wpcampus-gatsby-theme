@@ -1,10 +1,12 @@
 import React from "react"
 import { graphql } from "gatsby"
+import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
 import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
 import { AuthorCard } from "../components/author"
+import LibraryLayout from "../components/library"
 
 const ContributorTemplate = props => {
 	const contributor = props.data.wordpressWpcContributors
@@ -14,38 +16,36 @@ const ContributorTemplate = props => {
 	// Separate content.
 	let posts
 	if (props.data.allWordpressPost.edges.length) {
-		posts = <div>
-			<h2>Blog posts</h2>
-			<ArticleArchive list={props.data.allWordpressPost.edges} />
+		posts = <div className="wpc-contributor-results__result wpc-contributor-results__result--blog">
+			<h2 className="wpc-contributor-results__result__heading"><span className="wpc-icon wpc-icon--quotes"></span> <Link className="wpc-link wpc-link--inherit" to="/blog/">From our Blog</Link></h2>
+			<ArticleArchive headingLevel={3} list={props.data.allWordpressPost.edges} />
 		</div>
 	}
 
 	let podcasts
 	if (props.data.allWordpressWpPodcast.edges.length) {
-		podcasts = <div>
-			<h2>Podcasts</h2>
-			<ArticleArchive list={props.data.allWordpressWpPodcast.edges} />
+		podcasts = <div className="wpc-contributor-results__result wpc-contributor-results__result--podcast">
+			<h2 className="wpc-contributor-results__result__heading"><span className="wpc-icon wpc-icon--quotes"></span> <Link className="wpc-link wpc-link--inherit" to="/podcast/">From our Podcast</Link></h2>
+			<ArticleArchive headingLevel={3} list={props.data.allWordpressWpPodcast.edges} />
 		</div>
 	}
 
 	let sessions
 	if (props.data.allWordpressWpcLibrary.edges.length) {
-		sessions = <div>
-			<h2>Sessions</h2>
-			{props.data.allWordpressWpcLibrary.edges.map(({ node }, i) => {
-				return <div key={i}>
-					<h3><a href={node.permalink}>{node.title}</a></h3>
-				</div>
-			})}
+		sessions = <div className="wpc-contributor-results__result wpc-contributor-results__result--library">
+			<h2 className="wpc-contributor-results__result__heading"><span className="wpc-icon wpc-icon--quotes"></span> <Link className="wpc-link wpc-link--inherit" to="/learning/library/">From our Learning Library</Link></h2>
+			<LibraryLayout itemHeadingLevel={3} enableFilters={false} library={props.data.allWordpressWpcLibrary.edges} />
 		</div>
 	}
 
 	return (
 		<Layout heading={heading} crumbs={context.crumbs} path={props.path}>
 			<AuthorCard author={contributor} />
-			{posts}
-			{podcasts}
-			{sessions}
+			<div className="wpc-contributor-results">
+				{posts}
+				{podcasts}
+				{sessions}
+			</div>
 		</Layout>
 	)
 }
@@ -60,7 +60,6 @@ ContributorTemplate.propTypes = {
 export default ContributorTemplate
 
 // @TODO remove fields we're not using.
-// @TODO need to set up for all of the various post types: podcasts, sessions, resources?
 export const query = graphql`
   query($id: String!) {
     wordpressWpcContributors(id: { eq: $id }) {
@@ -169,8 +168,74 @@ export const query = graphql`
 	  ) {
 		edges {
 		  	node {
-				title
+				author {
+					path
+					bio
+					company
+					company_position
+					display_name
+					email
+					id
+					twitter
+					website
+					wordpress_id
+				}
+				speakers {
+					avatar
+					ID
+					company
+					company_website
+					company_position
+					content {
+						raw
+						rendered
+					}
+					display_name
+					excerpt {
+						raw
+						rendered
+					}
+					facebook
+					first_name
+					headshot
+					instagram
+					last_name
+					linkedin
+					permalink
+					post_date
+					post_date_gmt
+					title
+					twitter
+					website
+					wordpress_user
+				}
+				best_session
+				comment_count
+				content {
+					raw
+					rendered
+				}
+				discussion
+				event_date
+				event_date_gmt
+				event_name
+				event_permalink
+				event_slug
+				excerpt {
+					raw
+					rendered
+				}
+				format
+				format_name
+				format_slug
+				future
 				permalink
+				session_slides_url
+				session_video
+				session_video_url
+				slug
+				subjects
+				title
 		  	}
 		}
 	}
