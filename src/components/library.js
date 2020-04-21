@@ -63,14 +63,24 @@ const LibraryItem = ({ item, format, headingLevel }) => {
 
 	// @TODO if contributor has no display name, display speaker profile name?
 	// @TODO or show speaker profile name always?
-	let speakerLabel = item.author.length == 1 ? "Speaker" : "Speakers"
-	let speakers = item.author.map((author, i) => {
-		return <span key={i}>{i > 0 ? ", " : ""}
-			<Link to={`/about/contributors/${author.path}/`}>{author.display_name}</Link>
-		</span>
-	})
+	let speakers = []
+
+	if (item.author && item.author) {
+		speakers = item.author
+	} else if (item.speakers && item.speakers.length) {
+		speakers = item.speakers
+	}
+
+	if (speakers) {
+		speakers = speakers.map((author, i) => {
+			return <span key={i}>{i > 0 ? ", " : ""}
+				<Link to={`/about/contributors/${author.path}/`}>{author.display_name}</Link>
+			</span>
+		})
+	}
 
 	if (speakers.length) {
+		let speakerLabel = speakers.length == 1 ? "Speaker" : "Speakers"
 		speakers = <div className="wpc-library__item__detail wpc-library__item__detail--speakers">
 			<span className="wpc-library__item__detail__label">{speakerLabel}:</span>
 			<span className="wpc-library__item__detail__value">{speakers}</span>
