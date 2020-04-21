@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
-import { LibraryLayout } from "../components/library"
+import LibraryLayout from "../components/library"
 
 import "../css/library.css"
 
