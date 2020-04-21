@@ -6,9 +6,26 @@ import ReactHtmlParser from "react-html-parser"
 import { AuthorCards } from "../components/author"
 import ProtectedContent from "../components/content"
 
+const getDateFormat = (dateObj) => {
+	const monthNames = ["January", "February", "March", "April", "May", "June",
+		"July", "August", "September", "October", "November", "December"
+	]
+	return monthNames[dateObj.getMonth()] + " " + dateObj.getDate() + ", " + dateObj.getFullYear()
+}
+
+const getDate = (dateStr) => {
+	return getDateFormat(new Date(dateStr))
+}
+
 const getArticleContent = (data, displayContentFull) => {
-	if (!displayContentFull && data.excerpt) {
-		return data.excerpt
+	if (!displayContentFull) {
+		if (data.excerpt.basic) {
+			return data.excerpt.basic
+		}
+		if (data.excerpt) {
+			return data.excerpt
+		}
+		return ""
 	}
 	if (data.content) {
 		return data.content
@@ -16,20 +33,49 @@ const getArticleContent = (data, displayContentFull) => {
 	return null
 }
 
-const ArticleCategories = ({ list }) => (
+const ArticleCategories = ({ list, type }) => (
 	<ul>
 		{list.map((item, i) => {
-			const linkAttr = {
-				to: item.path
+			let path
+			if (item.path) {
+				path = item.path
+			} else if (item.slug) {
+				if ("post" == type) {
+					path = `/blog/categories/${item.slug}/`
+				} else if ("podcast" == type) {
+					path = `/podcast/categories/${item.slug}/`
+				}
 			}
-			if (item.aria_label) {
-				linkAttr["aria-label"] = item.aria_label
+
+			let markup
+
+			if (path) {
+
+				const linkAttr = {
+					to: path
+				}
+
+				if (item.aria_label) {
+					linkAttr["aria-label"] = item.aria_label
+				} else {
+					if ("post" == type) {
+						linkAttr["aria-label"] = `Blog category: ${item.name}`
+					} else if ("podcast" == type) {
+						linkAttr["aria-label"] = `Podcast category: ${item.name}`
+					} else {
+						linkAttr["aria-label"] = `Category: ${item.name}`
+					}
+				}
+
+				markup = <Link {...linkAttr}>{item.name}</Link>
+
 			} else {
-				linkAttr["aria-label"] = `Category: ${item.name}`
+				markup = <span>{item.name}</span>
 			}
+
 			return (
 				<li key={i}>
-					<Link {...linkAttr}>{item.name}</Link>
+					{markup}
 				</li>
 			)
 		})}
@@ -38,6 +84,7 @@ const ArticleCategories = ({ list }) => (
 
 ArticleCategories.propTypes = {
 	list: PropTypes.array.isRequired,
+	type: PropTypes.string.isRequired
 }
 
 const ArticleMetaAuthors = ({ authors }) => {
@@ -81,20 +128,26 @@ const ArticleMeta = ({ data }) => {
 	const metaAttr = {
 		className: "wpc-meta wpc-article__meta"
 	}
+	let date
+	if (data.dateFormatted) {
+		date = data.dateFormatted
+	} else if (data.date) {
+		date = getDate(data.date)
+	}
 	return (
 		<ul {...metaAttr}>
 			<li className="wpc-meta__item wpc-meta__item--date">
-				{data.dateFormatted}
+				{date}
 			</li>
-			{data.author ? (
+			{data.author && data.author.length ? (
 				<li className="wpc-meta__item wpc-meta__item--author">
 					<span className="wpc-meta__label">By</span>
 					<ArticleMetaAuthors authors={data.author} />
 				</li>
 			) : null}
-			{data.categories ? (
+			{data.categories && data.categories.length ? (
 				<li className="wpc-meta__item wpc-meta__item--categories">
-					<ArticleCategories list={data.categories} />
+					<ArticleCategories type={data.type} list={data.categories} />
 				</li>
 			) : null}
 		</ul>

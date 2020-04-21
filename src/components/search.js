@@ -2,7 +2,8 @@ import React from "react"
 import { Link, navigate } from "gatsby"
 import PropTypes from "prop-types"
 
-import LibraryLayout from "../components/library"
+import { ArticleArchive } from "./archive"
+import LibraryLayout from "./library"
 
 import MagnifyingGlass from "../svg/magnifying-glass"
 
@@ -15,56 +16,24 @@ const navigateToSearch = (searchValue) => {
 	navigate("/search/" + searchValue)
 }
 
-const SearchResultSession = ({ result, headingLevel }) => {
-	const HeadingTag = `h${headingLevel}`
-	return <div>
-		<HeadingTag><Link to={result.path}>{result.title}</Link></HeadingTag>
-		<p>{result.excerpt.basic}</p>
-	</div>
-}
-
-SearchResultSession.propTypes = {
-	result: PropTypes.object.isRequired,
-	headingLevel: PropTypes.number
-}
-
-SearchResultSession.defaultProps = {
-	headingLevel: 3
-}
-
-const SearchResultPost = ({ result, headingLevel }) => {
-	const HeadingTag = `h${headingLevel}`
-	return <div>
-		<HeadingTag><Link to={result.path}>{result.title}</Link></HeadingTag>
-		<p>{result.excerpt.basic}</p>
-	</div>
-}
-
-SearchResultPost.propTypes = {
-	result: PropTypes.object.isRequired,
-	headingLevel: PropTypes.number
-}
-
-SearchResultPost.defaultProps = {
-	headingLevel: 3
-}
-
 const SearchResult = ({ result, headingLevel }) => {
-	let resultMarkup
-	if ("session" == result.type) {
-		resultMarkup = <SearchResultSession result={result} headingLevel={headingLevel} />
-	} else {
-		resultMarkup = <SearchResultPost result={result} headingLevel={headingLevel} />
-	}
+	const HeadingTag = `h${headingLevel}`
 	const resultAttr = {
 		className: `wpc-search__result wpc-search__result--${result.type}`
 	}
-	return <div {...resultAttr}>{resultMarkup}</div>
+	return <div {...resultAttr}>
+		<HeadingTag><Link to={result.path}>{result.title}</Link></HeadingTag>
+		<p>{result.excerpt.basic}</p>
+	</div>
 }
 
 SearchResult.propTypes = {
 	result: PropTypes.object.isRequired,
 	headingLevel: PropTypes.number
+}
+
+SearchResult.defaultProps = {
+	headingLevel: 3
 }
 
 const SearchResultsByType = ({ label, id, results, headingLevel, headingTo, plural }) => {
@@ -88,6 +57,15 @@ const SearchResultsByType = ({ label, id, results, headingLevel, headingTo, plur
 		})
 
 		resultsMarkup = <LibraryLayout itemHeadingLevel={headingLevel} enableFilters={false} library={results} />
+
+	} else if (["post","podcast"].includes(id)) {
+
+		// Have to modify to match component.
+		results = results.map(item => {
+			return { node: item }
+		})
+
+		resultsMarkup = <ArticleArchive list={results} />
 
 	} else {
 		resultsMarkup = results.map((item, i) => {
