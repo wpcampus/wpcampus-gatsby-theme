@@ -2,7 +2,10 @@
 	--wpc-blue-dark: #2e3641;
 	--wpc-blue-royal: #1159bd;
 	--wpc-blue-light: #fafcfe;
-	--wpc-orange: #a76739;
+	--wpc-red: #770000;
+	--wpc-gray-dark: #444;
+	--wpc-gray-medium: #D8D8D8;
+	--wpc-orange: #8D5228; /*#a76739;*/
 	--wpc-gray-lightest: #fafafa;
 	--wpc-yellow-light: rgba(255, 210, 0, 0.05);
 	--container-max-width: 80%;

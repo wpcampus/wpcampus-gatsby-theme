@@ -4,19 +4,16 @@ import PropTypes from "prop-types"
 import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
+import { LibraryLayout } from "../components/library"
+
+import "../css/library.css"
 
 const Library = props => {
 	const page = props.data.wordpressPage
 	const library = props.data.allWordpressWpcLibrary.edges
 	return <Layout heading={page.title} sidebarBottom={true} crumbs={props.pageContext.crumbs} path={props.path}>
 		<div>{ReactHtmlParser(page.content)}</div>
-		{library.map(({ node }, i) => {
-			return <div className="session" key={i}>
-				<h2><a href={node.permalink}>{node.title}</a></h2>
-				<h3>{node.event_name}</h3>
-				<div>{ReactHtmlParser(node.content.rendered)}</div>
-			</div>
-		})}
+		<LibraryLayout library={library} />
 	</Layout>
 }
 
@@ -29,6 +26,7 @@ Library.propTypes = {
 
 export default Library
 
+// @TODO remove fields we're not using.
 export const pageQuery = graphql`
   query($id: String!) {
     wordpressPage(id: { eq: $id }) {
@@ -46,12 +44,74 @@ export const pageQuery = graphql`
 	  ) {
 		edges {
 		  	node {
-				title
-				permalink
-				event_name
+				author {
+					path
+					bio
+					company
+					company_position
+					display_name
+					email
+					id
+					twitter
+					website
+					wordpress_id
+				}
+				speakers {
+					avatar
+					ID
+					company
+					company_website
+					company_position
+					content {
+						raw
+						rendered
+					}
+					display_name
+					excerpt {
+						raw
+						rendered
+					}
+					facebook
+					first_name
+					headshot
+					instagram
+					last_name
+					linkedin
+					permalink
+					post_date
+					post_date_gmt
+					title
+					twitter
+					website
+					wordpress_user
+				}
+				best_session
+				comment_count
 				content {
+					raw
 					rendered
 				}
+				discussion
+				event_date
+				event_date_gmt
+				event_name
+				event_permalink
+				event_slug
+				excerpt {
+					raw
+					rendered
+				}
+				format
+				format_name
+				format_slug
+				future
+				permalink
+				session_slides_url
+				session_video
+				session_video_url
+				slug
+				subjects
+				title
 		  	}
 		}
 	}
