@@ -2,6 +2,8 @@ import React from "react"
 import { Link, navigate } from "gatsby"
 import PropTypes from "prop-types"
 
+import LibraryLayout from "../components/library"
+
 import MagnifyingGlass from "../svg/magnifying-glass"
 
 const sanitizeSearchTerm = (str) => {
@@ -13,12 +15,51 @@ const navigateToSearch = (searchValue) => {
 	navigate("/search/" + searchValue)
 }
 
-const SearchResult = ({ result, headingLevel }) => {
+const SearchResultSession = ({ result, headingLevel }) => {
 	const HeadingTag = `h${headingLevel}`
-	return <div className="wpc-search__result">
+	return <div>
 		<HeadingTag><Link to={result.path}>{result.title}</Link></HeadingTag>
 		<p>{result.excerpt.basic}</p>
 	</div>
+}
+
+SearchResultSession.propTypes = {
+	result: PropTypes.object.isRequired,
+	headingLevel: PropTypes.number
+}
+
+SearchResultSession.defaultProps = {
+	headingLevel: 3
+}
+
+const SearchResultPost = ({ result, headingLevel }) => {
+	const HeadingTag = `h${headingLevel}`
+	return <div>
+		<HeadingTag><Link to={result.path}>{result.title}</Link></HeadingTag>
+		<p>{result.excerpt.basic}</p>
+	</div>
+}
+
+SearchResultPost.propTypes = {
+	result: PropTypes.object.isRequired,
+	headingLevel: PropTypes.number
+}
+
+SearchResultPost.defaultProps = {
+	headingLevel: 3
+}
+
+const SearchResult = ({ result, headingLevel }) => {
+	let resultMarkup
+	if ("session" == result.type) {
+		resultMarkup = <SearchResultSession result={result} headingLevel={headingLevel} />
+	} else {
+		resultMarkup = <SearchResultPost result={result} headingLevel={headingLevel} />
+	}
+	const resultAttr = {
+		className: `wpc-search__result wpc-search__result--${result.type}`
+	}
+	return <div {...resultAttr}>{resultMarkup}</div>
 }
 
 SearchResult.propTypes = {
@@ -26,22 +67,39 @@ SearchResult.propTypes = {
 	headingLevel: PropTypes.number
 }
 
-SearchResult.defaultProps = {
-	headingLevel: 3
-}
-
-const SearchResultsByType = ({ label, id, results, headingLevel, plural }) => {
+const SearchResultsByType = ({ label, id, results, headingLevel, headingTo, plural }) => {
 	const noResults = <p>There are no search results for {plural}.</p>
 	let headingLabel = label
-	if (results.length) {
-		headingLabel += ` (${results.length})`
+
+	if (headingTo) {
+		headingLabel = <Link to={headingTo} className="wpc-link wpc-link--inherit">{headingLabel}</Link>
 	}
+
 	const HeadingTag = `h${headingLevel}`
-	return <div className="wpc-search__results">
-		<HeadingTag id={id}>{headingLabel}</HeadingTag>
-		{!results.length ? noResults : results.map((item, i) => {
+
+	let resultsMarkup
+	if (!results.length) {
+		resultsMarkup = noResults
+	} else if ("session" == id) {
+
+		// Have to modify to match component.
+		results = results.map(item => {
+			return { node: item }
+		})
+
+		resultsMarkup = <LibraryLayout itemHeadingLevel={headingLevel} enableFilters={false} library={results} />
+
+	} else {
+		resultsMarkup = results.map((item, i) => {
 			return <SearchResult key={i} result={item} headingLevel={(headingLevel + 1)} />
-		})}
+		})
+	}
+
+	return <div className="wpc-search__results">
+		<HeadingTag id={id} className="wpc-search-results__heading">
+			<span className="wpc-icon wpc-icon--quotes"></span> {headingLabel} {results.length ? ` (${results.length})` : null}
+		</HeadingTag>
+		{resultsMarkup}
 	</div>
 }
 
@@ -50,6 +108,7 @@ SearchResultsByType.propTypes = {
 	id: PropTypes.string,
 	results: PropTypes.array,
 	headingLevel: PropTypes.number,
+	headingTo: PropTypes.string,
 	plural: PropTypes.string.isRequired
 }
 
@@ -64,6 +123,14 @@ const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete })
 			id: "post",
 			label: "Blog posts",
 			plural: "blog posts",
+			to: "/blog/",
+			results: []
+		},
+		session: {
+			id: "session",
+			label: "Learning Library",
+			plural: "sessions",
+			to: "/learning/library/",
 			results: []
 		},
 		page: {
@@ -76,6 +143,7 @@ const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete })
 			id: "podcast",
 			label: "Podcasts",
 			plural: "podcasts",
+			to: "/podcast/",
 			results: []
 		}
 	}
@@ -118,7 +186,8 @@ const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete })
 
 		resultsFormatted = Object.keys(sortByType).map(function (key, i) {
 			const type = sortByType[key]
-			return <SearchResultsByType key={i} id={type.id} label={type.label} plural={type.plural} results={type.results} headingLevel={headingLevel} />
+			const to = type.to || null
+			return <SearchResultsByType key={i} id={type.id} label={type.label} plural={type.plural} results={type.results} headingLevel={headingLevel} headingTo={to} />
 		})
 	}
 
@@ -431,12 +500,18 @@ class SearchLayout extends React.Component {
 			searchAttr.className += ` ${this.cssSearchPrefix}--processing`
 		}
 
+		const searchFormAttr = {
+			searchQuery: this.state.searchQuery,
+			updateSearchQuery: this.state.updateSearchQuery,
+			onSubmit: this.handleSubmit
+		}
+
 		const headingLevel = this.state.includeSearchHeading ? 3 : 2
 
 		return <div {...searchAttr}>
 			{this.state.children ? this.state.children : null}
 			{this.state.includeSearchHeading ? <h2>Search our website</h2> : null}
-			<SearchForm searchQuery={this.state.searchQuery} updateSearchQuery={this.state.updateSearchQuery} onSubmit={this.handleSubmit} />
+			<SearchForm {...searchFormAttr} />
 			<SearchResults headingLevel={headingLevel} isSearchComplete={this.state.isSearchComplete} searchQuery={this.state.resultsQuery} results={this.state.results} />
 		</div>
 	}
