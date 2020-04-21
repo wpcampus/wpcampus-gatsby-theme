@@ -68,8 +68,8 @@ const ArticleTitle = ({ data, headingLevel, includeLink }) => {
 
 ArticleTitle.propTypes = {
 	data: PropTypes.object.isRequired,
-	headingLevel: PropTypes.number,
-	includeLink: PropTypes.bool
+	headingLevel: PropTypes.number.isRequired,
+	includeLink: PropTypes.bool.isRequired
 }
 
 ArticleTitle.defaultProps = {
@@ -105,13 +105,13 @@ ArticleMeta.propTypes = {
 	data: PropTypes.object.isRequired,
 }
 
-const ArticleHeader = ({ data, displayMeta, isSingle, headerPrefix }) => {
+const ArticleHeader = ({ data, displayMeta, headingLevel, headerPrefix, includeLink }) => {
 	const articleTitleAttr = {
-		data: data
+		data: data,
+		includeLink: includeLink
 	}
-	if (!isSingle) {
-		articleTitleAttr.headingLevel = 2
-		articleTitleAttr.includeLink = true
+	if (headingLevel) {
+		articleTitleAttr.headingLevel = headingLevel
 	}
 	const headerAttr = {
 		className: "wpc-article__header"
@@ -125,13 +125,13 @@ const ArticleHeader = ({ data, displayMeta, isSingle, headerPrefix }) => {
 
 ArticleHeader.propTypes = {
 	data: PropTypes.object.isRequired,
-	isSingle: PropTypes.bool,
+	headingLevel: PropTypes.number,
 	displayMeta: PropTypes.bool,
-	headerPrefix: PropTypes.node
+	headerPrefix: PropTypes.node,
+	includeLink: PropTypes.bool
 }
 
 ArticleHeader.defaultProps = {
-	isSingle: true,
 	displayMeta: true
 }
 
@@ -181,6 +181,8 @@ const Article = ({
 	wpc_protected,
 	isSingle,
 	headerPrefix,
+	headingLevel,
+	includeLink,
 	displayAuthor,
 	displayMeta,
 	displayContent,
@@ -193,10 +195,29 @@ const Article = ({
 	if (isSingle) {
 		articleAttr.className += " wpc-article--single"
 	}
+
+	const articleHeaderAttr = {
+		data: data,
+		isSingle: isSingle,
+		headerPrefix: headerPrefix,
+		displayMeta: displayMeta,
+		includeLink: includeLink
+	}
+
+	if (headingLevel) {
+		articleHeaderAttr.headingLevel = headingLevel
+	} else if (!isSingle) {
+		articleHeaderAttr.headingLevel = 2
+	}
+
+	if (undefined === includeLink && !isSingle) {
+		articleHeaderAttr.includeLink = true
+	}
+
 	return (
 		<article {...articleAttr}>
 			<ProtectedContent wpc_protected={wpc_protected}>
-				<ArticleHeader data={data} isSingle={isSingle} headerPrefix={headerPrefix} displayMeta={displayMeta} />
+				<ArticleHeader {...articleHeaderAttr} />
 				{children}
 				{displayContent ? (
 					<ArticleContent data={data} displayContentFull={displayContentFull} />
@@ -212,6 +233,8 @@ Article.propTypes = {
 	children: PropTypes.node,
 	wpc_protected: PropTypes.object,
 	headerPrefix: PropTypes.node,
+	headingLevel: PropTypes.number,
+	includeLink: PropTypes.bool,
 	isSingle: PropTypes.bool,
 	displayAuthor: PropTypes.bool,
 	displayMeta: PropTypes.bool,

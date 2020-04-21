@@ -32,19 +32,27 @@ const ArticleArchive = ({
 	displayMeta,
 	displayContent,
 	displayContentFull,
+	headingLevel,
+	includeLink
 }) => {
 	return <div className="wpc-articles">
-		{list.map(({ node }) => (
-			<Article
-				key={node.id}
-				data={node}
-				isSingle={false}
-				displayAuthor={displayAuthor}
-				displayMeta={displayMeta}
-				displayContent={displayContent}
-				displayContentFull={displayContentFull}
-			/>
-		))}</div>
+		{list.map(({ node }, i) => {
+			const articleAttr = {
+				key: node.id,
+				data: node,
+				isSingle: false,
+				displayAuthor: displayAuthor,
+				displayMeta: displayMeta,
+				displayContent: displayContent,
+				displayContentFull: displayContentFull,
+				includeLink: includeLink
+			}
+			if (headingLevel) {
+				articleAttr.headingLevel = headingLevel
+			}
+			return <Article key={i} {...articleAttr} />
+		})}
+	</div>
 }
 
 ArticleArchive.propTypes = {
@@ -53,6 +61,8 @@ ArticleArchive.propTypes = {
 	displayMeta: PropTypes.bool,
 	displayContent: PropTypes.bool,
 	displayContentFull: PropTypes.bool,
+	headingLevel: PropTypes.number,
+	includeLink: PropTypes.bool
 }
 
 ArticleArchive.defaultProps = {
