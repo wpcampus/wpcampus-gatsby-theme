@@ -4,10 +4,15 @@ workflows:
   build_deploy_test:
     jobs:
       - pfe/gatsby_build_and_deploy
+        post-steps:
+          - run:
+            name: post deployment completion status
+            command: |
+              curl "https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/statuses/$CIRCLE_SHA1" -H "Authorization: token $GITHUB_TOKEN" -X POST -d '{"state": "success", "context": "pantheon/deployment", "description": "Deployment complete", "target_url": "https://'${TERMINUS_ENV}'--'${TERMINUS_SITE}'.my.pantheonfrontend.website/"}'
       - pfe/make_multidev:
-          filters:
-            branches:
-              ignore: "master"
+        filters:
+          branches:
+            ignore: "master"
 
 orbs:
   pfe: stevector/pantheon-frontend@0.1.0
