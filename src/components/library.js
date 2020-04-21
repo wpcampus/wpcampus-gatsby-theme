@@ -426,13 +426,13 @@ LibraryFilters.propTypes = {
 
 const filterMessage = (filters) => {
 	let messages = []
-	if (filters.event.length) {
+	if (filters.event && filters.event.length) {
 		messages.push("Event: " + filters.event.join(", "))
 	}
-	if (filters.format.length) {
+	if (filters.format && filters.format.length) {
 		messages.push("Format: " + filters.format.join(", "))
 	}
-	if (filters.subject.length) {
+	if (filters.subject && filters.subject.length) {
 		messages.push("Subject: " + filters.subject.join(", "))
 	}
 	if (filters.search) {
