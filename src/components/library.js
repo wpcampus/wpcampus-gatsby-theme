@@ -19,7 +19,7 @@ const sanitizeSearchTerm = (str) => {
 	return str.trim()
 }
 
-const LibraryItem = ({ item, format }) => {
+const LibraryItem = ({ item, format, headingLevel }) => {
 	if (false === item.active) {
 		return ""
 	}
@@ -145,9 +145,11 @@ const LibraryItem = ({ item, format }) => {
 		title = <a href={item.permalink}>{title}</a>
 	}
 
+	const HeadingTag = `h${headingLevel}`
+
 	return <div {...itemAttr}>
 		<div {...thumbAttr} />
-		<h2 className="wpc-library__item__title">{title}</h2>
+		<HeadingTag className="wpc-library__item__title">{title}</HeadingTag>
 		<div className="wpc-library__item__highlight">
 			<a {...eventAttr}>{item.event_name}</a>
 			{itemFormat}
@@ -166,24 +168,27 @@ const LibraryItem = ({ item, format }) => {
 
 LibraryItem.propTypes = {
 	item: PropTypes.object.isRequired,
-	format: PropTypes.string
+	format: PropTypes.string,
+	headingLevel: PropTypes.string.isRequired
 }
 
 LibraryItem.defaultProps = {
-	format: "basic"
+	format: "basic",
+	headingLevel: 2
 }
 
-const LibraryItems = ({ items, format }) => {
+const LibraryItems = ({ items, format, itemHeadingLevel }) => {
 	return <div className="wpc-library__items">
 		{items.map(({ node }, i) => {
-			return <LibraryItem key={i} format={format} item={node} />
+			return <LibraryItem key={i} format={format} item={node} headingLevel={itemHeadingLevel} />
 		})}
 	</div>
 }
 
 LibraryItems.propTypes = {
 	items: PropTypes.array.isRequired,
-	format: PropTypes.string
+	format: PropTypes.string,
+	itemHeadingLevel: PropTypes.string
 }
 
 LibraryItems.defaultProps = {
@@ -446,7 +451,7 @@ const filterMessage = (filters) => {
 	</div>
 }
 
-const LibraryLayout = ({ library, enableFilters }) => {
+const LibraryLayout = ({ library, enableFilters, itemHeadingLevel }) => {
 	const defaultState = {
 		format: "basic",
 		filters: {},
@@ -493,7 +498,7 @@ const LibraryLayout = ({ library, enableFilters }) => {
 			libraryMarkup = <div>
 				{libraryMarkup}
 				<p>There are {activeLibrary.length} items.</p>
-				<LibraryItems items={activeLibrary} format={state.format} />
+				<LibraryItems items={activeLibrary} format={state.format} itemHeadingLevel={itemHeadingLevel} />
 			</div>
 		}
 
@@ -503,7 +508,7 @@ const LibraryLayout = ({ library, enableFilters }) => {
 			{libraryMarkup}
 		</div>
 	} else {
-		libraryMarkup = <LibraryItems items={theLibrary} format={state.format} />
+		libraryMarkup = <LibraryItems items={theLibrary} format={state.format} itemHeadingLevel={itemHeadingLevel} />
 	}
 
 	return <div {...libraryAttr}>
@@ -514,7 +519,8 @@ const LibraryLayout = ({ library, enableFilters }) => {
 
 LibraryLayout.propTypes = {
 	library: PropTypes.array.isRequired,
-	enableFilters: PropTypes.bool
+	enableFilters: PropTypes.bool,
+	itemHeadingLevel: PropTypes.string
 }
 
 LibraryLayout.defaultProps = {
@@ -580,9 +586,5 @@ session_video
 slug
 subjects
 */
-
-LibraryItem.propTypes = {
-	item: PropTypes.object.isRequired
-}
 
 export default LibraryLayout
