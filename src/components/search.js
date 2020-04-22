@@ -65,7 +65,7 @@ const SearchResultsByType = ({ label, id, results, headingLevel, headingTo, plur
 			return { node: item }
 		})
 
-		resultsMarkup = <ArticleArchive list={results} />
+		resultsMarkup = <ArticleArchive headingLevel={3} list={results} />
 
 	} else {
 		resultsMarkup = results.map((item, i) => {
