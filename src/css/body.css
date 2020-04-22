@@ -10,6 +10,7 @@
 
 		ul {
 			display: flex;
+			flex-wrap: wrap;
 			list-style: none;
 			margin: 0;
 
@@ -87,7 +88,18 @@
 	}
 
 	&__areas {
+		grid-column-gap: 0;
+		grid-row-gap: 0;
+
 		.wpc-body__area {
+			&--crumbs {
+				background: var(--wpc-yellow-light);
+				padding: 1rem var(--area-padding);
+				border-bottom: var(--border-yellow);
+				font-size: 0.9rem;
+				line-height: 1.3;
+			}
+
 			&--nav {
 				box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.7);
 			}
@@ -98,19 +110,41 @@
 			}
 		}
 
-		/* Mobile */
+		/* ONLY Mobile */
 		@media (max-width: 767px) {
 			grid-template-columns: 1fr;
+
+			.wpc-body__area {
+				&--notifications {
+					/* stylelint-disable selector-type-no-unknown */
+					wpcampus-notifications .wpc-notifications {
+						padding-left: 0;
+						overflow: hidden;
+
+						.wpc-notification__icon {
+							margin-left: -4px;
+							margin-right: 0;
+
+							&__graphic {
+								width: 24px;
+							}
+						}
+					}
+					/* stylelint-disable */
+				}
+
+				&--main,
+				&--sidebar {
+					padding: var(--area-padding);
+				}
+			}
 		}
 
 		/* Laptop */
 		@media (min-width: 768px) {
 			grid-template-rows: auto auto 1fr;
-			grid-column-gap: 0;
-			grid-row-gap: 0;
 
 			.wpc-body__area {
-				padding: var(--area-padding);
 
 				&--notifications {
 					grid-column: 1 / span 12;
@@ -133,10 +167,6 @@
 				&--crumbs {
 					grid-column: 4 / span 9;
 					grid-row: 2 / span 1;
-					background: var(--wpc-yellow-light);
-					border-bottom: var(--border-yellow);
-					padding-top: 1rem;
-					padding-bottom: 1rem;
 				}
 
 				&--main {
@@ -157,8 +187,7 @@
 					&--sidebar {
 						grid-column: 4 / span 9;
 						grid-row: 4 / span 1;
-						padding-left: var(--area-padding-large);
-						padding-right: var(--area-padding-large);
+						padding: var(--area-padding) var(--area-padding-large);
 					}
 				}
 			}

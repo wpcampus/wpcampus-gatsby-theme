@@ -27,6 +27,7 @@ wpcampus-notifications {
 
 	.wpc-notifications {
 		background: var(--wpc-gray-lightest);
+		border-top: var(--area-border-gray-light);
 		border-bottom: var(--area-border-gray-light);
 		font-size: 0.95rem;
 		text-align: left;

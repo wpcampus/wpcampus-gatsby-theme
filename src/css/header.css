@@ -16,6 +16,7 @@
 					display: flex;
 					height: 100%;
 					align-items: center;
+					padding: 0.25rem 1rem;
 				}
 
 				li {
@@ -99,5 +100,4 @@
 .wpc-hero {
 	background: url(../images/heros/hero1.png) center -175px fixed;
 	height: 150px;
-	border-bottom: var(--area-border-gray-light);
 }
