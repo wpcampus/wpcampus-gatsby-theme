@@ -10,6 +10,7 @@
 		font-size: 1rem;
 		color: inherit;
 		border: var(--input-border);
+		-webkit-appearance: none;
 	}
 
 	input[type="submit"] {
@@ -73,6 +74,7 @@
 					padding: 0;
 					font-size: 1.3rem;
 					background: transparent;
+					height: var(--magnifying-width);
 				}
 
 				&__submit {
