@@ -1,3 +1,11 @@
+@media (max-width: 767px) {
+	body.menu-toggled-open {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+}
+
 #navPrimary {
 	--nav-padding-top: 0.8rem;
 	--nav-padding-right: 1.5rem;
@@ -43,52 +51,6 @@
 
 	li {
 		border-bottom: var(--nav-border);
-	}
-
-	button.wpc-nav__toggle {
-		display: flex;
-		align-items: center;
-		width: 100%;
-		height: auto;
-		border: 0;
-		border-radius: 0;
-		background: transparent;
-		color: #fff;
-		padding: 1rem 1rem 1rem var(--area-padding);
-		-webkit-appearance: none;
-		-webkit-border-radius: 0;
-
-		.wpc-nav__toggle__icon {
-			width: 30px;
-
-			svg {
-				display: block;
-				width: 100%;
-				height: auto;
-				fill: #fff;
-
-				rect {
-					width: 100%;
-					height: 2px;
-				}
-			}
-		}
-
-		.wpc-nav__toggle__labels {
-			display: flex;
-			align-items: center;
-			font-size: 1.4rem;
-			line-height: 0.85;
-			font-weight: 300;
-			text-transform: uppercase;
-			margin: 0 0 0 1rem;
-		}
-
-		.wpc-nav__toggle__label {
-			&--close {
-				display: none;
-			}
-		}
 	}
 
 	button.submenu-toggle {
@@ -162,7 +124,6 @@
 		}
 	}
 
-	&.toggled-open > ul,
 	li.toggled-open > ul {
 		display: block;
 	}
@@ -216,7 +177,123 @@
 		}
 	}
 
-	@media (min-width: 960px) {
+	@media (max-width: 767px) {
+		padding: 0.5rem;
+
+		button.wpc-nav__toggle {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			height: auto;
+			border: 0;
+			border-radius: 0;
+			background: transparent;
+			color: #fff;
+			padding: 1rem 1.75rem;
+			-webkit-appearance: none;
+			-webkit-border-radius: 0;
+	
+			.wpc-nav__toggle__icon {
+				width: 20px;
+	
+				svg {
+					display: block;
+					width: 100%;
+					height: auto;
+					fill: #fff;
+	
+					rect.toggle-bar {
+
+						&--four,
+						&--five {
+							display: none;
+						}
+					}
+				}
+			}
+	
+			.wpc-nav__toggle__labels {
+				display: flex;
+				align-items: center;
+				font-size: 1.4rem;
+				line-height: 0.85;
+				font-weight: 300;
+				text-transform: uppercase;
+				margin: 0 0 0 1rem;
+			}
+	
+			.wpc-nav__toggle__label {
+				&--open {
+					display: block;
+				}
+
+				&--close {
+					display: none;
+				}
+			}
+
+			&:hover,
+			&:focus {
+				background-color: var(--nav-focus-bg-color);
+			}
+		}
+
+		&.toggled-open {
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			overflow: scroll;
+			z-index: 1000;
+
+			& > ul {
+				display: block;
+			}
+
+			button.wpc-nav__toggle {
+
+				.wpc-nav__toggle__icon {
+		
+					svg {
+		
+						rect.toggle-bar {
+
+							&--one,
+							&--two,
+							&--three {
+								display: none;
+							}
+
+							&--four,
+							&--five {
+								display: block;
+							}
+						}
+					}
+				}
+
+				.wpc-nav__toggle__labels {
+					.wpc-nav__toggle__label {
+						&--open {
+							display: none;
+						}
+
+						&--close {
+							display: block;
+						}
+					}
+				}
+			}
+
+			.wpc-nav__menu {
+				border-top: var(--nav-border);
+			}
+		}
+	}
+	
+	@media (min-width: 768px) {
 		height: 100%;
 		box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.7);
 

@@ -173,9 +173,9 @@
 
 		target.parentNode.parentNode.classList.toggle("toggled-open")
 
-		resizeHandler()
+		//resizeHandler()
 
-		positionNav()
+		//positionNav()
 	}
 
 	/**
@@ -221,7 +221,7 @@
 			}
 
 			// Set `min-height` values for both the `main` and `nav` elements if appropriate.
-			if ("vertical" === settings.orientation && settings.minHeights) {
+			/*if ("vertical" === settings.orientation && settings.minHeights) {
 				const navHeight = settings.nav.querySelector("ul").scrollHeight
 				const windowHeight = window.innerHeight
 				const minHeight =
@@ -229,7 +229,7 @@
 
 				settings.main.style.minHeight = minHeight
 				settings.nav.style.minHeight = minHeight
-			}
+			}*/
 		}
 	}
 
@@ -317,10 +317,10 @@
 		// Remove event listeners.
 		settings.nav.removeEventListener("click", clickHandler, false)
 
-		if ("vertical" === settings.orientation) {
+		/*if ("vertical" === settings.orientation) {
 			window.addEventListener("resize", resizeHandler, true)
 			window.removeEventListener("scroll", scrollHandler, true)
-		}
+		}*/
 
 		// Reset variables.
 		settings = null
@@ -352,22 +352,22 @@
 
 		addSubmenuToggles()
 
-		resizeHandler()
+		//resizeHandler()
 
 		// Listen for click events on the navigation element.
 		settings.nav.addEventListener("click", clickHandler, false)
 
 		// Listen for resize events.
-		window.addEventListener("resize", resizeHandler, true)
+		//window.addEventListener("resize", resizeHandler, true)
 
-		if ("vertical" === settings.orientation) {
+		/*if ("vertical" === settings.orientation) {
 			window.addEventListener("scroll", scrollHandler, true)
 		}
 
 		if ("horizontal" === settings.orientation) {
 			settings.nav.addEventListener("focus", focusHandler, true)
 			settings.nav.addEventListener("blur", focusHandler, true)
-		}
+		}*/
 	}
 
 	return navigation

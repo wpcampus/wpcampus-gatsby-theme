@@ -5,7 +5,7 @@ import "./../css/nav.css"
 import { Nav, NavPrimaryItems } from "./nav"
 import navigation from "../js/nav-primary"
 
-import ToggleIcon from "../svg/toggle"
+import ToggleIcon from "../svg/toggleMenu"
 
 const NavPrimary = () => {
 
@@ -14,7 +14,7 @@ const NavPrimary = () => {
 	// @TODO add useRef
 	useEffect(() => {
 		navigation.init({
-			breakpoint: 960,
+			breakpoint: 768,
 			main: document.getElementById("main"),
 			nav: document.getElementById(navPrimaryID),
 			minHeights: false,
