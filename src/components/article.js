@@ -19,13 +19,13 @@ const getDate = (dateStr) => {
 
 const getArticleContent = (data, displayContentFull) => {
 	if (!displayContentFull) {
+		if (!data.excerpt) {
+			return ""
+		}
 		if (data.excerpt.basic) {
 			return data.excerpt.basic
 		}
-		if (data.excerpt) {
-			return data.excerpt
-		}
-		return ""
+		return data.excerpt
 	}
 	if (data.content) {
 		return data.content
