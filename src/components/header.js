@@ -144,7 +144,7 @@ const HeaderHomeBanner1 = () => {
 	</div>
 }
 
-const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
+const Header = ({ isHome }) => {
 
 	const handleUserDisplay = user => {
 		if (!user.isActive()) {
@@ -176,9 +176,7 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 	} else {
 
 		const searchFormAttr = {
-			showSubmitIcon: true,
-			searchQuery: searchQuery,
-			updateSearchQuery: updateSearchQuery
+			showSubmitIcon: true
 		}
 
 		headerAreas = <HeaderAreas>
@@ -206,8 +204,6 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 }
 
 Header.propTypes = {
-	searchQuery: PropTypes.string,
-	updateSearchQuery: PropTypes.func,
 	isHome: PropTypes.bool
 }
 

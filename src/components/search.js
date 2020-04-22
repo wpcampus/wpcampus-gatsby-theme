@@ -218,7 +218,6 @@ class SearchForm extends React.Component {
 
 		this.state = {
 			searchQuery: props.searchQuery,
-			updateSearchQuery: props.updateSearchQuery,
 			showSubmitIcon: props.showSubmitIcon,
 		}
 
@@ -263,11 +262,6 @@ class SearchForm extends React.Component {
 		searchValue = sanitizeSearchTerm(searchValue)
 
 		if (searchValue) {
-
-			if ("function" === typeof this.state.updateSearchQuery) {
-				this.state.updateSearchQuery(searchValue)
-			}
-
 			navigateToSearch(searchValue)
 		}
 	}
@@ -331,7 +325,6 @@ class SearchForm extends React.Component {
 
 SearchForm.propTypes = {
 	searchQuery: PropTypes.string,
-	updateSearchQuery: PropTypes.func,
 	showSubmitIcon: PropTypes.bool,
 	onSubmit: PropTypes.func
 }
@@ -351,7 +344,6 @@ class SearchLayout extends React.Component {
 			processing: false,
 			isSearchComplete: false,
 			searchQuery: props.searchQuery,
-			updateSearchQuery: props.updateSearchQuery,
 			includeSearchHeading: props.includeSearchHeading,
 			children: props.children,
 			results: []
@@ -406,11 +398,6 @@ class SearchLayout extends React.Component {
 			...prevState,
 			processing: true
 		}))
-
-		// @TODO doesnt need to run when component is mounted.
-		if ("function" === typeof this.state.updateSearchQuery) {
-			this.state.updateSearchQuery(searchStr)
-		}
 
 		// @TODO doesnt need to run when component is mounted because already set?
 		window.history.pushState({}, "", "/search/" + encodedSearchStr)
@@ -480,7 +467,6 @@ class SearchLayout extends React.Component {
 
 		const searchFormAttr = {
 			searchQuery: this.state.searchQuery,
-			updateSearchQuery: this.state.updateSearchQuery,
 			onSubmit: this.handleSubmit
 		}
 
@@ -497,7 +483,6 @@ class SearchLayout extends React.Component {
 
 SearchLayout.propTypes = {
 	searchQuery: PropTypes.string,
-	updateSearchQuery: PropTypes.func.isRequired,
 	includeSearchHeading: PropTypes.bool,
 	children: PropTypes.node
 }
