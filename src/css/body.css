@@ -100,10 +100,6 @@
 				line-height: 1.3;
 			}
 
-			&--nav {
-				box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.7);
-			}
-
 			&--sidebar {
 				background: var(--wpc-blue-light);
 				border-top: 1px solid rgba(17, 89, 189, 0.15);
@@ -155,8 +151,6 @@
 				&--nav {
 					grid-column: 1 / span 3;
 					grid-row: 2 / span 2;
-					background: var(--wpc-blue-dark);
-					color: #fff;
 					padding: 0;
 
 					* {

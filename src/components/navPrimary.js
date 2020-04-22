@@ -5,10 +5,13 @@ import "./../css/nav.css"
 import { Nav, NavPrimaryItems } from "./nav"
 import navigation from "../js/nav-primary"
 
+import ToggleIcon from "../svg/toggle"
+
 const NavPrimary = () => {
 
 	const navPrimaryID = "navPrimary"
 
+	// @TODO add useRef
 	useEffect(() => {
 		navigation.init({
 			breakpoint: 960,
@@ -27,7 +30,13 @@ const NavPrimary = () => {
 
 	return (
 		<Nav {...navPrimaryAttr}>
-			<button className="menu-toggle">Menu</button>
+			<button className="wpc-nav__toggle menu-toggle" aria-label="Toggle main menu">
+				<ToggleIcon classes="wpc-nav__toggle__icon" />
+				<div className="wpc-nav__toggle__labels">
+					<div className="wpc-nav__toggle__label wpc-nav__toggle__label--open">Menu</div>
+					<div className="wpc-nav__toggle__label wpc-nav__toggle__label--close">Close</div>
+				</div>
+			</button>
 		</Nav>
 	)
 }

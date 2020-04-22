@@ -217,7 +217,7 @@ NavItem.propTypes = {
 
 const NavList = ({ list }) => {
 	return (
-		<ul>
+		<ul className="wpc-nav__menu">
 			{list.map((item, i) => (
 				<NavItem key={i} item={item} />
 			))}
