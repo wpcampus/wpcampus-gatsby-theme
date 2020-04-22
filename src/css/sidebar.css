@@ -22,14 +22,26 @@
 			h3.wpc-blog__title {
 				font-size: 1.2rem;
 			}
+
+			.wpc-blog__meta {
+				margin: 0.2rem 0;
+			}
 		}
 
 		&--tweets {
 			.wpc-tweets__tweet {
 				margin: 0 0 1rem 0;
 
-				.wpc-tweets__text {
-					margin: 0;
+				.wpc-tweets {
+					&__text {
+						margin: 0;
+					}
+
+					&__link {
+						display: block;
+						color: inherit;
+						margin: 0.1rem 0 0;
+					}
 				}
 
 				&:last-child {
