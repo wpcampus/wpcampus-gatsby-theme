@@ -96,8 +96,9 @@
 			"status": 301
 		},
 		{
-			"source": "/product/*",
-			"destination": "https://shop.wpcampus.org/*",
+			"source": "/product/",
+			"destination": "https://shop.wpcampus.org/",
+			"prefix": true,
 			"status": 301
 		},
 		{
