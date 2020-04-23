@@ -23,6 +23,7 @@ const Layout = props => {
 
 	const {
 		isHome,
+		metaDescription,
 		noIndex,
 		noFollow,
 		includeSidebar,
@@ -112,6 +113,7 @@ const Layout = props => {
 	const seoAttr = {
 		title: pageTitle,
 		useTitleTemplate: useTitleTemplate,
+		description: metaDescription,
 		noIndex: noIndex,
 		noFollow: noFollow
 	}
@@ -151,6 +153,7 @@ const Layout = props => {
 
 Layout.propTypes = {
 	isHome: PropTypes.bool,
+	metaDescription: PropTypes.string,
 	noIndex: PropTypes.bool,
 	noFollow: PropTypes.bool,
 	includeSidebar: PropTypes.bool,
