@@ -133,6 +133,16 @@
 			"status": 301
 		},
 		{
+			"source": "/resources/accessibility/",
+			"destination": "/learning/accessibility/",
+			"status": 301
+		},
+		{
+			"source": "/blog/resources/accessibility/",
+			"destination": "/learning/accessibility/",
+			"status": 301
+		},
+		{
 			"source": "/resources/wallpapers/",
 			"destination": "/community/swag/",
 			"status": 301
