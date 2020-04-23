@@ -23,12 +23,27 @@
 			"status": 301
 		},
 		{
+			"source": "/blog/2019/04/announcing-wpcampus-2019-call-for-proposals-open/",
+			"destination": "/blog/2019/04/announcing-wpcampus-2019/",
+			"status": 301
+		},
+		{
 			"source": "/2019/05/announcing-the-diversity-inclusion-statement/",
 			"destination": "/blog/2019/05/announcing-diversity-equity-and-inclusion-statement/",
 			"status": 301
 		},
 		{
+			"source": "/blog/2019/05/announcing-the-diversity-inclusion-statement/",
+			"destination": "/blog/2019/05/announcing-diversity-equity-and-inclusion-statement/",
+			"status": 301
+		},
+		{
 			"source": "/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor-2",
+			"destination": "/blog/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor/",
+			"status": 301
+		},
+		{
+			"source": "/blog/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor-2",
 			"destination": "/blog/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor/",
 			"status": 301
 		},
@@ -40,6 +55,11 @@
 		},
 		{
 			"source": "/2018/11/fundraising-for-wpcampus-gutenberg-accessibility-audit/",
+			"destination": "/learning/audit/",
+			"status": 301
+		},
+		{
+			"source": "/blog/2018/11/fundraising-for-wpcampus-gutenberg-accessibility-audit/",
 			"destination": "/learning/audit/",
 			"status": 301
 		},
