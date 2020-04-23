@@ -23,6 +23,8 @@ const Layout = props => {
 
 	const {
 		isHome,
+		noIndex,
+		noFollow,
 		includeSidebar,
 		sidebarBottom,
 		useTitleTemplate,
@@ -107,11 +109,18 @@ const Layout = props => {
 
 	const mainHeading = <Heading {...mainHeadingAttr} />
 
+	const seoAttr = {
+		title: pageTitle,
+		useTitleTemplate: useTitleTemplate,
+		noIndex: noIndex,
+		noFollow: noFollow
+	}
+
 	return (
 		<div {...wpcampusAttr}>
 			<a href="#main" className="wpc-skip-to-main">Skip to content</a>
 			{showGrid ? <WPCGridDev /> : null}
-			<SEO title={pageTitle} useTitleTemplate={useTitleTemplate} />
+			<SEO {...seoAttr} />
 			<Header isHome={isHome} />
 			{!isHome ? <div className="wpc-hero"></div> : null}
 			<div className="wpc-body wpc-wrapper">
@@ -142,6 +151,8 @@ const Layout = props => {
 
 Layout.propTypes = {
 	isHome: PropTypes.bool,
+	noIndex: PropTypes.bool,
+	noFollow: PropTypes.bool,
 	includeSidebar: PropTypes.bool,
 	sidebarBottom: PropTypes.bool,
 	pageTitle: PropTypes.string,
@@ -155,6 +166,8 @@ Layout.propTypes = {
 
 Layout.defaultProps = {
 	isHome: false,
+	noIndex: false,
+	noFollow: false,
 	includeSidebar: true,
 	sidebarBottom: false,
 	useTitleTemplate: true
