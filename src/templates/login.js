@@ -5,8 +5,6 @@ import Layout from "../components/layout"
 import { User } from "../user/context"
 import { LoginLayout } from "../user/login"
 
-// @TODO tell robots dont index this page
-
 const Login = () => {
 	const handleDisplay = user => {
 		if (!user.isActive()) {
@@ -18,7 +16,7 @@ const Login = () => {
 		return <LoginLayout />
 	}
 	return (
-		<Layout heading="Login">
+		<Layout heading="Login" noIndex={true} noFollow={true}>
 			<User.Consumer>{handleDisplay}</User.Consumer>
 		</Layout>
 	)
