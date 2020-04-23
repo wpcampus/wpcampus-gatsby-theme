@@ -10,8 +10,6 @@ import { AuthorCard } from "../components/author"
 //import slackLogo from "../svg/slack_logo.svg"
 //import slackAvatarDefault from "../images/slack_avatar_default.png"
 
-// @TODO tell robots dont index this page
-
 import "./../css/profile.css"
 
 const ProfileTableRow = ({ th, td }) => {
@@ -225,7 +223,7 @@ const Profile = () => {
 		return <LoginLayout />
 	}
 	return (
-		<Layout heading="Your WPCampus profile">
+		<Layout heading="Your WPCampus profile" noIndex={true} noFollow={true}>
 			<User.Consumer>{handleDisplay}</User.Consumer>
 		</Layout>
 	)
