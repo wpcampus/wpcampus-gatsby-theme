@@ -307,7 +307,7 @@
 		},
 		{
 			"source": "/conferences/wpcampus-2020/",
-			"destination": "https://2020.wpcampus.org",
+			"destination": "https://2020.wpcampus.org/",
 			"status": 301
 		},
 		{
