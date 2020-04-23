@@ -30,7 +30,7 @@ const BlogWidget = () => {
 		return <Widget type="blog">
 			<h2 className="wpc-widget__heading">
 				<span className="wpc-icon wpc-icon--quotes"></span>
-				<Link aria-label="The WPCampus Blog" to="/blog">From our blog</Link></h2>
+				<Link aria-label="The WPCampus Blog" to="/blog">From our Blog</Link></h2>
 			<wpcampus-blog></wpcampus-blog>
 		</Widget>
 	})

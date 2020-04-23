@@ -37,7 +37,7 @@ const PostTemplate = props => {
 		wpc_protected: context.wpc_protected,
 		isSingle: true,
 		displayContentFull: true,
-		headerPrefix: <Link to="/blog/">From our blog</Link>,
+		headerPrefix: <Link to="/blog/">From our Blog</Link>,
 		paginationAdj: paginationAdj
 	}
 	return (
