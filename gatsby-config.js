@@ -4,7 +4,7 @@ require("dotenv").config({
 
 module.exports = {
 	siteMetadata: {
-		siteUrl: process.env.WPC_ROOT,
+		siteUrl: process.env.WPC_SITE,
 		title: "WPCampus: Where WordPress meets Higher Education",
 		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing Higher Education by providing support, resources, and training focused on open source web publishing technologies.",
 		author: "@wpcampusorg",
@@ -32,8 +32,8 @@ module.exports = {
 			resolve: "gatsby-plugin-robots-txt",
 			options: {
 				env: {
-					host: process.env.WPC_ROOT,
-					sitemap: `${process.env.WPC_ROOT}/sitemap.xml`,
+					host: process.env.WPC_SITE,
+					sitemap: `${process.env.WPC_SITE}/sitemap.xml`,
 					development: {
 						policy: [{ userAgent: "*", disallow: ["/"] }]
 					},
