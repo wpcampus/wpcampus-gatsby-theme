@@ -127,7 +127,6 @@ const NavPrimaryItems = [
 		]
 	},
 	{ href: "https://shop.wpcampus.org/", text: "Shop" },
-	{ path: "/search/", text: "Search" },
 	{ path: "/pages/", text: "Pages" }
 ]
 
