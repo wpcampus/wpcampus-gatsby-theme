@@ -1,245 +1,255 @@
 {
-  "redirects": [
-    {
-      "source": "/whats-in-a-name",
-      "destination": "/",
-      "status": 301
-    },
-    {
-      "source": "/podcast/1-wordpress-in-higher-education/",
-      "destination": "/podcast/wordpress-in-higher-education/",
-      "status": 301
-    },
-    {
-      "source": "/podcast/2-accessibility/",
-      "destination": "/podcast/accessibility/",
-      "status": 301
-    },
-    {
-      "source": "/online/(.+)?",
-      "destination": "https://online.wpcampus.org/",
-      "status": 301
-    },
-    {
-      "source": "/podcast/access-denied/",
-      "destination": "/podcast/access-denied-wordpress-security/",
-      "status": 301
-    },
-    {
-      "source": "/podcast/security/",
-      "destination": "/podcast/wordpress-security/",
-      "status": 301
-    },
-    {
-      "source": "/podcast/wpcampus-survey/",
-      "destination": "/podcast/2016-wpcampus-survey/",
-      "status": 301
-    },
-    {
-      "source": "/podcast/2016-wpcampus-retrospective/",
-      "destination": "/podcast/wpcampus-2016-retrospective/",
-      "status": 301
-    },
-    {
-      "source": "/online/?",
-      "destination": "https://online.wpcampus.org/",
-      "status": 301
-    },
-    {
-      "source": "/online",
-      "destination": "https://online.wpcampus.org/",
-      "status": 301
-    },
-    {
-      "source": "/apply-to-host",
-      "destination": "/conferences/apply-to-host/",
-      "status": 301
-    },
-    {
-      "source": "/product/womens-i-build-higher-ed-t-shirt-next-level-3900-ladies-the-boyfriend-tee/",
-      "destination": "/product/womens-i-build-higher-ed-shirt/",
-      "status": 301
-    },
-    {
-      "source": "/online-event-survey/",
-      "destination": "https://online.wpcampus.org/",
-      "status": 301
-    },
-    {
-      "source": "/planning/digital-media-initiative/",
-      "destination": "/planning/digital-media/",
-      "status": 301
-    },
-    {
-      "source": "/attending-wcus/",
-      "destination": "/",
-      "status": 301
-    },
-    {
-      "source": "/order-wpcampus-shirt/",
-      "destination": "/",
-      "status": 301
-    },
-    {
-      "source": "/shop/",
-      "destination": "https://shop.wpcampus.org/",
-      "status": 301
-    },
-    {
-      "source": "/product/*",
-      "destination": "https://shop.wpcampus.org/*",
-      "status": 301
-    },
-    {
-      "source": "/speaker-training/",
-      "destination": "/resources/speaker-training/",
-      "status": 301
-    },
-    {
-      "source": "/donation-confirmation/twitter-thank-you/",
-      "destination": "/audit",
-      "status": 301
-    },
-    {
-      "source": "/2018/11/fundraising-for-wpcampus-gutenberg-accessibility-audit/",
-      "destination": "/audit",
-      "status": 301
-    },
-    {
-      "source": "/conferences/apply-to-host/",
-      "destination": "/conferences/",
-      "status": 301
-    },
-    {
-      "source": "/2019/04/announcing-wpcampus-2019-call-for-proposals-open/",
-      "destination": "/2019/04/announcing-wpcampus-2019",
-      "status": 301
-    },
-    {
-      "source": "/conferences/wpcampus-2019/",
-      "destination": "https://2019.wpcampus.org/",
-      "status": 301
-    },
-    {
-      "source": "/call-for-speakers/apply/",
-      "destination": "/call-for-speakers/application/",
-      "status": 301
-    },
-    {
-      "source": "/diversity-and-inclusion/",
-      "destination": "/diversity-equity-and-inclusion/",
-      "status": 301
-    },
-    {
-      "source": "/diversity-equity-and-inclusion/",
-      "destination": "/diversity/",
-      "status": 301
-    },
-    {
-      "source": "/dei/",
-      "destination": "/diversity/",
-      "status": 301
-    },
-    {
-      "source": "/2019/05/announcing-the-diversity-inclusion-statement/",
-      "destination": "/2019/05/announcing-diversity-equity-and-inclusion-statement/",
-      "status": 301
-    },
-    {
-      "source": "/sessions/",
-      "destination": "/library/",
-      "status": 301
-    },
-    {
-      "source": "/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor-2",
-      "destination": "/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor",
-      "status": 301
-    },
-    {
-      "source": "/donate/",
-      "destination": "https://secure.givelively.org/donate/free-geek/wpcampus-support-digital-inclusion",
-      "status": 307
-    },
-    {
-      "source": "/planning/design/",
-      "destination": "/planning/",
-      "status": 301
-    },
-    {
-      "source": "/planning/digital-media/",
-      "destination": "/planning/",
-      "status": 301
-    },
-    {
-      "source": "/planning/editorial/",
-      "destination": "/planning/",
-      "status": 301
-    },
-    {
-      "source": "/planning/engineering/",
-      "destination": "/planning/",
-      "status": 301
-    },
-    {
-      "source": "/planning/conferences/",
-      "destination": "/planning/",
-      "status": 301
-    },
-    {
-      "source": "/planning/data/",
-      "destination": "/planning/",
-      "status": 301
-    },
-    {
-      "source": "/member-survey/",
-      "destination": "/members/survey/",
-      "status": 301
-    },
-    {
-      "source": "/videos/",
-      "destination": "/library/?assets=video",
-      "status": 301
-    },
-    {
-      "source": "/conferences/wpcampus-2020/",
-      "destination": "https://2020.wpcampus.org",
-      "status": 301
-    },
-    {
-      "source": "/user-registration/",
-      "destination": "/registration/",
-      "status": 301
-    },
-    {
-      "source": "/slack/",
-      "destination": "/community/slack/",
-      "status": 301
-    },
-    {
-      "source": "/slack/channels/",
-      "destination": "/community/slack/channels/",
-      "status": 301
-    },
-    {
-      "source": "/planning/calendar/",
-      "destination": "/community/calendar/",
-      "status": 301
-    },
-    {
-      "source": "/contributors/",
-      "destination": "/about/contributors/",
-      "status": 301
-    },
-    {
-      "source": "/contact/",
-      "destination": "/about/contact/",
-      "status": 301
-    },
-    {
-      "source": "/blog/category/",
-      "destination": "/blog/categories/",
-      "prefix": true,
-      "status": 301
-    }
-  ]
+	"redirects": [
+		{
+			"source": "/author/*",
+			"destination": "/about/contributors/*",
+			"status": 301
+		},
+		{
+			"source": "/blog/author/*",
+			"destination": "/about/contributors/*",
+			"status": 301
+		},
+		{
+			"source": "/whats-in-a-name",
+			"destination": "/",
+			"status": 301
+		},
+		{
+			"source": "/podcast/1-wordpress-in-higher-education/",
+			"destination": "/podcast/wordpress-in-higher-education/",
+			"status": 301
+		},
+		{
+			"source": "/podcast/2-accessibility/",
+			"destination": "/podcast/accessibility/",
+			"status": 301
+		},
+		{
+			"source": "/online/(.+)?",
+			"destination": "https://online.wpcampus.org/",
+			"status": 301
+		},
+		{
+			"source": "/podcast/access-denied/",
+			"destination": "/podcast/access-denied-wordpress-security/",
+			"status": 301
+		},
+		{
+			"source": "/podcast/security/",
+			"destination": "/podcast/wordpress-security/",
+			"status": 301
+		},
+		{
+			"source": "/podcast/wpcampus-survey/",
+			"destination": "/podcast/2016-wpcampus-survey/",
+			"status": 301
+		},
+		{
+			"source": "/podcast/2016-wpcampus-retrospective/",
+			"destination": "/podcast/wpcampus-2016-retrospective/",
+			"status": 301
+		},
+		{
+			"source": "/online/?",
+			"destination": "https://online.wpcampus.org/",
+			"status": 301
+		},
+		{
+			"source": "/online",
+			"destination": "https://online.wpcampus.org/",
+			"status": 301
+		},
+		{
+			"source": "/apply-to-host",
+			"destination": "/conferences/apply-to-host/",
+			"status": 301
+		},
+		{
+			"source": "/product/womens-i-build-higher-ed-t-shirt-next-level-3900-ladies-the-boyfriend-tee/",
+			"destination": "/product/womens-i-build-higher-ed-shirt/",
+			"status": 301
+		},
+		{
+			"source": "/online-event-survey/",
+			"destination": "https://online.wpcampus.org/",
+			"status": 301
+		},
+		{
+			"source": "/planning/digital-media-initiative/",
+			"destination": "/planning/digital-media/",
+			"status": 301
+		},
+		{
+			"source": "/attending-wcus/",
+			"destination": "/",
+			"status": 301
+		},
+		{
+			"source": "/order-wpcampus-shirt/",
+			"destination": "/",
+			"status": 301
+		},
+		{
+			"source": "/shop/",
+			"destination": "https://shop.wpcampus.org/",
+			"status": 301
+		},
+		{
+			"source": "/product/*",
+			"destination": "https://shop.wpcampus.org/*",
+			"status": 301
+		},
+		{
+			"source": "/speaker-training/",
+			"destination": "/resources/speaker-training/",
+			"status": 301
+		},
+		{
+			"source": "/donation-confirmation/twitter-thank-you/",
+			"destination": "/audit",
+			"status": 301
+		},
+		{
+			"source": "/2018/11/fundraising-for-wpcampus-gutenberg-accessibility-audit/",
+			"destination": "/audit",
+			"status": 301
+		},
+		{
+			"source": "/conferences/apply-to-host/",
+			"destination": "/conferences/",
+			"status": 301
+		},
+		{
+			"source": "/2019/04/announcing-wpcampus-2019-call-for-proposals-open/",
+			"destination": "/2019/04/announcing-wpcampus-2019",
+			"status": 301
+		},
+		{
+			"source": "/conferences/wpcampus-2019/",
+			"destination": "https://2019.wpcampus.org/",
+			"status": 301
+		},
+		{
+			"source": "/call-for-speakers/apply/",
+			"destination": "/call-for-speakers/application/",
+			"status": 301
+		},
+		{
+			"source": "/diversity-and-inclusion/",
+			"destination": "/diversity-equity-and-inclusion/",
+			"status": 301
+		},
+		{
+			"source": "/diversity-equity-and-inclusion/",
+			"destination": "/diversity/",
+			"status": 301
+		},
+		{
+			"source": "/dei/",
+			"destination": "/diversity/",
+			"status": 301
+		},
+		{
+			"source": "/2019/05/announcing-the-diversity-inclusion-statement/",
+			"destination": "/2019/05/announcing-diversity-equity-and-inclusion-statement/",
+			"status": 301
+		},
+		{
+			"source": "/sessions/",
+			"destination": "/library/",
+			"status": 301
+		},
+		{
+			"source": "/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor-2",
+			"destination": "/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor",
+			"status": 301
+		},
+		{
+			"source": "/donate/",
+			"destination": "https://secure.givelively.org/donate/free-geek/wpcampus-support-digital-inclusion",
+			"status": 307
+		},
+		{
+			"source": "/planning/design/",
+			"destination": "/planning/",
+			"status": 301
+		},
+		{
+			"source": "/planning/digital-media/",
+			"destination": "/planning/",
+			"status": 301
+		},
+		{
+			"source": "/planning/editorial/",
+			"destination": "/planning/",
+			"status": 301
+		},
+		{
+			"source": "/planning/engineering/",
+			"destination": "/planning/",
+			"status": 301
+		},
+		{
+			"source": "/planning/conferences/",
+			"destination": "/planning/",
+			"status": 301
+		},
+		{
+			"source": "/planning/data/",
+			"destination": "/planning/",
+			"status": 301
+		},
+		{
+			"source": "/member-survey/",
+			"destination": "/members/survey/",
+			"status": 301
+		},
+		{
+			"source": "/videos/",
+			"destination": "/library/?assets=video",
+			"status": 301
+		},
+		{
+			"source": "/conferences/wpcampus-2020/",
+			"destination": "https://2020.wpcampus.org",
+			"status": 301
+		},
+		{
+			"source": "/user-registration/",
+			"destination": "/registration/",
+			"status": 301
+		},
+		{
+			"source": "/slack/",
+			"destination": "/community/slack/",
+			"status": 301
+		},
+		{
+			"source": "/slack/channels/",
+			"destination": "/community/slack/channels/",
+			"status": 301
+		},
+		{
+			"source": "/planning/calendar/",
+			"destination": "/community/calendar/",
+			"status": 301
+		},
+		{
+			"source": "/contributors/",
+			"destination": "/about/contributors/",
+			"status": 301
+		},
+		{
+			"source": "/contact/",
+			"destination": "/about/contact/",
+			"status": 301
+		},
+		{
+			"source": "/blog/category/",
+			"destination": "/blog/categories/",
+			"prefix": true,
+			"status": 301
+		}
+	]
 }
