@@ -17,7 +17,7 @@
     },
     {
       "source": "/online/(.+)?",
-      "destination": "https://online.dev5290.wpcampus.org/",
+      "destination": "https://online.wpcampus.org/",
       "status": 301
     },
     {
@@ -42,12 +42,12 @@
     },
     {
       "source": "/online/?",
-      "destination": "https://online.dev5290.wpcampus.org/",
+      "destination": "https://online.wpcampus.org/",
       "status": 301
     },
     {
       "source": "/online",
-      "destination": "https://online.dev5290.wpcampus.org/",
+      "destination": "https://online.wpcampus.org/",
       "status": 301
     },
     {
@@ -62,7 +62,7 @@
     },
     {
       "source": "/online-event-survey/",
-      "destination": "https://online.dev5290.wpcampus.org/",
+      "destination": "https://online.wpcampus.org/",
       "status": 301
     },
     {
@@ -82,12 +82,12 @@
     },
     {
       "source": "/shop/",
-      "destination": "https://shop.dev5290.wpcampus.org/",
+      "destination": "https://shop.wpcampus.org/",
       "status": 301
     },
     {
       "source": "/product/*",
-      "destination": "https://shop.dev5290.wpcampus.org/*",
+      "destination": "https://shop.wpcampus.org/*",
       "status": 301
     },
     {
@@ -117,7 +117,7 @@
     },
     {
       "source": "/conferences/wpcampus-2019/",
-      "destination": "https://2019.dev5290.wpcampus.org/",
+      "destination": "https://2019.wpcampus.org/",
       "status": 301
     },
     {
@@ -202,7 +202,7 @@
     },
     {
       "source": "/conferences/wpcampus-2020/",
-      "destination": "https://2020.dev5290.wpcampus.org",
+      "destination": "https://2020.wpcampus.org",
       "status": 301
     },
     {
