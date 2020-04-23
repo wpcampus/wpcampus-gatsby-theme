@@ -1664,10 +1664,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@wpcampus/wpcampus-wc-blog@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.0.7.tgz#e69338a16169405fcd9fd32c757043bc13fcdadc"
-  integrity sha512-xbdLVeYPhC5awNZEW3HtbPkWTahmf2tLLV100WKIV9VqO4P00YO8EQBIObKB5bW+zW6NTEsYW46WlzS2s41pnA==
+"@wpcampus/wpcampus-wc-blog@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.0.8.tgz#c586009c1d8820953e3ca46a7b2fce5fed6923a3"
+  integrity sha512-P+XvhE0iqrnF4bXcCyhBZlapwwHmGn5QlPnOEnb0B+7xZU7eSAd7teUWZj0Lotd77E4pWbwAe8XkXSV7w98CgA==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.4"
 
