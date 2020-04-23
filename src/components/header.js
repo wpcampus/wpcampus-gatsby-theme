@@ -175,9 +175,7 @@ const Header = ({ isHome }) => {
 			<HeaderArea area="banner">
 				{banner}
 			</HeaderArea>
-			<HeaderArea area="search">
-				<SearchForm {...searchFormAttr} />
-			</HeaderArea>
+			<HeaderArea area="meta"></HeaderArea>
 		</HeaderAreas>
 	} else {
 
