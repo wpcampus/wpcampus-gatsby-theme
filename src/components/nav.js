@@ -19,7 +19,7 @@ const NavPrimaryItems = [
 	},
 	{
 		path: "/blog/",
-		text: "Our blog",
+		text: "Our Blog",
 		children: [
 			{
 				path: "/blog/categories/",
@@ -29,7 +29,7 @@ const NavPrimaryItems = [
 	},
 	{
 		path: "/community/",
-		text: "Our community",
+		text: "Our Community",
 		children: [
 			{
 				path: "/community/membership/",
@@ -47,7 +47,7 @@ const NavPrimaryItems = [
 			},
 			{
 				path: "/community/sme/",
-				text: "Subject matter experts"
+				text: "Subject Matter Experts"
 			},
 			{
 				path: "/community/calendar/",
@@ -61,7 +61,7 @@ const NavPrimaryItems = [
 	},
 	{
 		path: "/conferences/",
-		text: "Our conferences",
+		text: "Our Conferences",
 		children: [
 			{
 				href: "https://2021.wpcampus.org/",
@@ -115,7 +115,7 @@ const NavPrimaryItems = [
 			}
 		]
 	},
-	{ path: "/jobs/", text: "Job board" },
+	{ path: "/jobs/", text: "Job Board" },
 	{
 		path: "/podcast/",
 		text: "Podcast",
