@@ -1,6 +1,11 @@
 {
 	"redirects": [
 		{
+			"source": "/library/",
+			"destination": "/learning/library/",
+			"status": 301
+		},
+		{
 			"source": "/2020/",
 			"destination": "/blog/",
 			"prefix": true,
@@ -224,7 +229,7 @@
 		},
 		{
 			"source": "/sessions/",
-			"destination": "/library/",
+			"destination": "/learning/library/",
 			"status": 301
 		},
 		{
