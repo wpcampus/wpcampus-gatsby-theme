@@ -13,6 +13,9 @@ const SearchTemplate = (props) => {
 		defaultSearchQuery = sanitizeSearchTerm(defaultSearchQuery)
 	}
 
+	const noIndex = defaultSearchQuery != ""
+	const noFollow = defaultSearchQuery != ""
+
 	const crumbs = {
 		crumb: {
 			path: "/search/",
@@ -22,7 +25,7 @@ const SearchTemplate = (props) => {
 	}
 
 	return (
-		<Layout heading="Search" crumbs={crumbs} path={props.path}>
+		<Layout heading="Search" crumbs={crumbs} path={props.path} noIndex={noIndex} noFollow={noFollow}>
 			<p>If you can&lsquo;t find what you&lsquo;re looking for, please <Link to="/about/contact" aria-label="Contact us and let us know">let us know</Link>.</p>
 			<SearchLayout searchQuery={defaultSearchQuery} />
 		</Layout>
