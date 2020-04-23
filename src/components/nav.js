@@ -45,10 +45,10 @@ const NavPrimaryItems = [
 					}
 				]
 			},*/
-			{
+			/*{
 				path: "/community/sme/",
 				text: "Subject Matter Experts"
-			},
+			},*/
 			{
 				path: "/community/calendar/",
 				text: "Calendar of events"
