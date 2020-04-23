@@ -96,6 +96,17 @@ const Layout = props => {
 		}
 	}
 
+	const mainHeadingAttr = {
+		level: 1,
+		heading: heading
+	}
+
+	if (isHome) {
+		mainHeadingAttr.classes = "for-screen-reader"
+	}
+
+	const mainHeading = <Heading {...mainHeadingAttr} />
+
 	return (
 		<div {...wpcampusAttr}>
 			<a href="#main" className="wpc-skip-to-main">Skip to content</a>
@@ -115,7 +126,7 @@ const Layout = props => {
 						{crumbsComp}
 						<div className="wpc-area wpc-body__area wpc-body__area--main">
 							<main id="main" className="wpc-main wpc-wrapper">
-								{!isHome && heading ? (<Heading level={1} heading={heading} />) : null}
+								{mainHeading}
 								{children}
 							</main>
 						</div>
