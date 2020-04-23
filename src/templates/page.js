@@ -9,8 +9,20 @@ import ProtectedContent from "../components/content"
 const PageTemplate = props => {
 	const page = props.data.wordpressPage
 	const pageContext = props.pageContext
+
+	// @TODO short term fix to setup meta desc.
+	const excerptDiv = document.createElement("div")
+	excerptDiv.innerHTML = page.excerpt
+
+	const layoutAttr = {
+		metaDescription: excerptDiv.textContent || excerptDiv.innerText || "",
+		heading: page.title,
+		crumbs: pageContext.crumbs,
+		path: props.path
+	}
+
 	return (
-		<Layout heading={page.title} crumbs={pageContext.crumbs} path={props.path}>
+		<Layout {...layoutAttr}>
 			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
 				<div>{ReactHtmlParser(page.content)}</div>
 			</ProtectedContent>
