@@ -2,6 +2,8 @@ import React from "react"
 import { Link, navigate } from "gatsby"
 import PropTypes from "prop-types"
 
+import ReactHtmlParser from "react-html-parser"
+
 import { ArticleArchive } from "./archive"
 import LibraryLayout from "./library"
 
@@ -23,7 +25,7 @@ const SearchResult = ({ result, headingLevel }) => {
 	}
 	return <div {...resultAttr}>
 		<HeadingTag><Link to={result.path}>{result.title}</Link></HeadingTag>
-		<p>{result.excerpt.basic}</p>
+		{ReactHtmlParser(result.excerpt.rendered)}
 	</div>
 }
 

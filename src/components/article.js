@@ -22,6 +22,9 @@ const getArticleContent = (data, displayContentFull) => {
 		if (!data.excerpt) {
 			return ""
 		}
+		if (data.excerpt.rendered) {
+			return data.excerpt.rendered
+		}
 		if (data.excerpt.basic) {
 			return data.excerpt.basic
 		}
