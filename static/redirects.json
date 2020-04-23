@@ -19,17 +19,17 @@
 		},
 		{
 			"source": "/2019/04/announcing-wpcampus-2019-call-for-proposals-open/",
-			"destination": "/2019/04/announcing-wpcampus-2019/",
+			"destination": "/blog/2019/04/announcing-wpcampus-2019/",
 			"status": 301
 		},
 		{
 			"source": "/2019/05/announcing-the-diversity-inclusion-statement/",
-			"destination": "/2019/05/announcing-diversity-equity-and-inclusion-statement/",
+			"destination": "/blog/2019/05/announcing-diversity-equity-and-inclusion-statement/",
 			"status": 301
 		},
 		{
 			"source": "/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor-2",
-			"destination": "/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor/",
+			"destination": "/blog/2019/07/campuspress-wpmudev-wpcampus-2019-sponsor/",
 			"status": 301
 		},
 		{
