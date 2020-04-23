@@ -4,6 +4,7 @@ require("dotenv").config({
 
 module.exports = {
 	siteMetadata: {
+		siteUrl: process.env.WPC_ROOT,
 		title: "WPCampus: Where WordPress meets Higher Education",
 		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing Higher Education by providing support, resources, and training focused on open source web publishing technologies.",
 		author: "@wpcampusorg",
@@ -16,6 +17,25 @@ module.exports = {
 				name: "images",
 				path: `${__dirname}/src/images`,
 			},
+		},
+		{
+			resolve: "gatsby-plugin-sitemap",
+			options: {}
+		},
+		{
+			resolve: "gatsby-plugin-robots-txt",
+			options: {
+				env: {
+					host: process.env.WPC_ROOT,
+					sitemap: `${process.env.WPC_ROOT}/sitemap.xml`,
+					development: {
+						policy: [{ userAgent: "*", disallow: ["/"] }]
+					},
+					production: {
+						policy: [{ userAgent: "*", allow: "/" }]
+					}
+				}
+			}
 		},
 		"gatsby-transformer-sharp",
 		"gatsby-plugin-sharp",
