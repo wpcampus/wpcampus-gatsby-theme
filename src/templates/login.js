@@ -3,7 +3,7 @@ import { navigate } from "gatsby"
 
 import Layout from "../components/layout"
 import { User } from "../user/context"
-import LoginForm from "../user/loginForm"
+import { LoginLayout } from "../user/login"
 
 // @TODO tell robots dont index this page
 
@@ -15,7 +15,7 @@ const Login = () => {
 		if (user.isLoggedIn()) {
 			navigate( "/profile/" )
 		}
-		return <LoginForm />
+		return <LoginLayout />
 	}
 	return (
 		<Layout heading="Login">

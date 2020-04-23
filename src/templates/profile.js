@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 import Layout from "../components/layout"
 import { User } from "../user/context"
-import LoginForm from "../user/loginForm"
+import { LoginLayout } from "../user/login"
 import { AuthorCard } from "../components/author"
 
 //import slackLogo from "../svg/slack_logo.svg"
@@ -222,7 +222,7 @@ const Profile = () => {
 		if (user.isLoggedIn()) {
 			return <UserLoggedIn user={user} />
 		}
-		return <LoginForm />
+		return <LoginLayout />
 	}
 	return (
 		<Layout heading="Your WPCampus profile">
