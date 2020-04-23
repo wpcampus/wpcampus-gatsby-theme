@@ -10,12 +10,10 @@ const PageTemplate = props => {
 	const page = props.data.wordpressPage
 	const pageContext = props.pageContext
 
-	// @TODO short term fix to setup meta desc.
-	const excerptDiv = document.createElement("div")
-	excerptDiv.innerHTML = page.excerpt
+	// @TODO add meta description for pages without <p>.
 
 	const layoutAttr = {
-		metaDescription: excerptDiv.textContent || excerptDiv.innerText || "",
+		metaDescription: "",
 		heading: page.title,
 		crumbs: pageContext.crumbs,
 		path: props.path
