@@ -126,8 +126,7 @@ const NavPrimaryItems = [
 			}
 		]
 	},
-	{ href: "https://shop.wpcampus.org/", text: "Shop" },
-	{ path: "/pages/", text: "Pages" }
+	{ href: "https://shop.wpcampus.org/", text: "Shop" }
 ]
 
 const NavLink = ({ item }) => {
