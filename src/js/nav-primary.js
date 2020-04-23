@@ -10,6 +10,11 @@
 })(typeof self !== "undefined" ? self : this, () => {
 	"use strict"
 
+	const KEYMAP = {
+		ESC: 27,
+		TAB: 9,
+	}
+
 	// Object for public APIs.
 	const navigation = {}
 
@@ -75,7 +80,7 @@
 		toggleButton.classList.add("submenu-toggle", "js-submenu-toggle")
 
 		// Revisit for translation and internationalization.
-		toggleButton.setAttribute("aria-label", "Open child menu")
+		toggleButton.setAttribute("aria-label", "Toggle child menu")
 
 		toggleButton.setAttribute("aria-expanded", "false")
 
@@ -134,42 +139,106 @@
 	}
 
 	/**
+	 * Returns first focusable element in the container.
+	 *
+	 * @param {Object} container
+	 * @param {string} focusSelector
+	 * @return {Object} element
+	 */
+	const getfirstFocusableElement = ( container, focusSelector ) => {
+		const focusableElements = container.querySelectorAll( focusSelector )
+		return focusableElements[0]
+	}
+
+	/**
+	 * Returns last focusable element in the container.
+	 * 
+	 * @param {Object} container
+	 * @param {string} focusSelector
+	 * @return {Object} element
+	 */
+	const getlastFocusableElement = ( container, focusSelector ) => {
+		const focusableElements = container.querySelectorAll( focusSelector )
+		return focusableElements[ focusableElements.length - 1 ]
+	}
+
+	/**
+	 * Handles keyboard navigation of the "mobile" menu.
+	 *
+	 * @param {*} event 
+	 */
+	const navKeyDown = (event) => {
+
+		switch (event.keyCode) {
+
+		// ESC
+		case KEYMAP.ESC: {
+
+			let toggle = settings.nav.querySelector(".menu-toggle")
+
+			// Close the "mobile" menu.
+			toggleMenu(toggle, false)
+			toggle.focus()
+			break
+		}
+
+		// TAB
+		case KEYMAP.TAB: {
+
+			// Which elements are focus-able in the nav.
+			let focusSelector = "a, button"
+			
+			if ( event.shiftKey ) {
+
+				// Means we're tabbing out of the beginning of the submenu.
+				if (document.activeElement === getfirstFocusableElement(settings.nav, focusSelector)) {
+					event.preventDefault()
+					getlastFocusableElement(settings.nav, focusSelector).focus()
+				}
+
+				// Means we're tabbing out of the end of the submenu.
+			} else if (document.activeElement === getlastFocusableElement(settings.nav, focusSelector)) {
+				event.preventDefault()
+				getfirstFocusableElement(settings.nav, focusSelector).focus()
+			}
+			break
+		}
+		}
+	}
+
+	/**
      * Toggles classes and attributes used for handling the display of the menu.
 	 *
 	 * @private
      * @param {Event}  event    The click event target.
-     * @param {String} expanded The updated value for the `aria-expanded` attribute.
+     * @param {Boolean} expand True if we're expanding.
      */
-	const toggleMenu = (target, expanded) => {
-		const label =
-			"Open menu" === target.getAttribute("aria-label")
-				? "Close menu"
-				: "Open menu"
+	const toggleMenu = (target, expand) => {
 
-		target.setAttribute("aria-expanded", expanded)
-
-		target.setAttribute("aria-label", label)
+		const expandStr = true === expand ? "true" : "false"
+		target.setAttribute("aria-expanded", expandStr)
 
 		document.body.classList.toggle("menu-toggled-open")
 
 		settings.nav.classList.toggle("toggled-open")
+
+		if (expand) {
+			document.addEventListener("keydown", navKeyDown)
+		} else {
+			document.removeEventListener("keydown", navKeyDown)
+		}
 	}
 
 	/**
      * Toggles classes and attributes used for handling the display of submenus.
      * @private
      * @param {Event}  target   The click event target.
-     * @param {String} expanded The updated value for the `aria-expanded` attribute.
+     * @param {Boolean} expand True if we're expanding.
      */
-	const toggleSubmenu = (target, expanded) => {
-		const label =
-			"Open child menu" === target.getAttribute("aria-label")
-				? "Close child menu"
-				: "Open child menu"
+	const toggleSubmenu = (target, expand) => {
 
-		target.setAttribute("aria-expanded", expanded)
-
-		target.setAttribute("aria-label", label)
+		const expandStr = true === expand ? "true" : "false"
+		target.setAttribute("aria-expanded", expandStr)
 
 		target.parentNode.parentNode.classList.toggle("toggled-open")
 
@@ -186,14 +255,14 @@
 	const clickHandler = event => {
 		const target = event.target
 		const expanded =
-			"false" === target.getAttribute("aria-expanded") ? "true" : "false"
+			"false" === target.getAttribute("aria-expanded") ? false : true
 
 		if (target.classList.contains("js-menu-toggle")) {
-			toggleMenu(target, expanded)
+			toggleMenu(target, !expanded)
 		}
 
 		if (target.classList.contains("js-submenu-toggle")) {
-			toggleSubmenu(target, expanded)
+			toggleSubmenu(target, !expanded)
 		}
 	}
 
