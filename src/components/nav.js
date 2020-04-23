@@ -11,7 +11,7 @@ const NavPrimaryItems = [
 			{ path: "/about/contributors/", text: "Contributors" },
 			{ path: "/about/partners/", text: "Partners" },
 			/*{ path: "/about/mascots/", text: "Mascots" },*/
-			{ path: "/about/governance/", text: "Governance" },
+			/*{ path: "/about/governance/", text: "Governance" },*/
 			{ path: "/about/guidelines/", text: "Guidelines" },
 			{ path: "/about/newsletter/", text: "Our newsletter" },
 			{ path: "/about/contact/", text: "Contact us" },
