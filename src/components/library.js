@@ -179,7 +179,7 @@ const LibraryItem = ({ item, format, headingLevel }) => {
 LibraryItem.propTypes = {
 	item: PropTypes.object.isRequired,
 	format: PropTypes.string,
-	headingLevel: PropTypes.string.isRequired
+	headingLevel: PropTypes.number.isRequired
 }
 
 LibraryItem.defaultProps = {
@@ -268,7 +268,7 @@ const processLibrary = (library, filters) => {
 	})
 }
 
-const LibrarySearch = ({ defaultQuery }) => {
+const LibrarySearchInput = ({ id, defaultQuery }) => {
 	const [query, updateQuery] = useState(defaultQuery)
 
 	const changeSearch = event => {
@@ -277,10 +277,11 @@ const LibrarySearch = ({ defaultQuery }) => {
 	}
 
 	const inputSearchAttr = {
+		id: id,
 		type: "search",
 		name: "search",
-		placeholder: "Search the library",
-		"aria-label": "Search the library",
+		placeholder: "Search the Library",
+		"aria-label": "Search the Library",
 		value: query,
 		onBlur: event => changeSearch(event),
 		onChange: event => changeSearch(event),
@@ -289,7 +290,8 @@ const LibrarySearch = ({ defaultQuery }) => {
 	return <input {...inputSearchAttr} />
 }
 
-LibrarySearch.propTypes = {
+LibrarySearchInput.propTypes = {
+	id: PropTypes.string.isRequired,
 	defaultQuery: PropTypes.string
 }
 
@@ -301,7 +303,7 @@ const LibraryFilters = ({ state, updateLibraryState }) => {
 		event.preventDefault()
 		event.stopPropagation()
 
-		let { format, filters, library } = state
+		let { filters } = state
 
 		// Check <select> for filters.
 		let selects = filterFormRef.current.querySelectorAll("select")
@@ -333,14 +335,9 @@ const LibraryFilters = ({ state, updateLibraryState }) => {
 			}
 		}
 
-		// Update library.
-		library = processLibrary(library, filters)
-
 		updateLibraryState({
 			...state,
-			format: format,
-			filters: filters,
-			library: library
+			filters: filters
 		})
 	}
 
@@ -349,12 +346,6 @@ const LibraryFilters = ({ state, updateLibraryState }) => {
 		className: "wpc-library__filters",
 		action: "/",
 		onSubmit: onSubmit
-	}
-
-
-	const submitAttr = {
-		type: "submit",
-		value: "Filter",
 	}
 
 	const options = {
@@ -400,32 +391,41 @@ const LibraryFilters = ({ state, updateLibraryState }) => {
 		})
 	}
 
+	const submitAttr = {
+		type: "submit",
+		className: "wpc-library__filter__submit",
+		value: "Filter",
+	}
+
 	return <form {...formAttr}>
-		<div>
-			<label htmlFor="wpc-library-filter-event">Event</label>
-			<select id="wpc-library-filter-event" name="event" multiple>
-				<option value="">All events</option>
+		<div className="wpc-library__filter wpc-library__filter--event">
+			<label className="wpc-library__filter__label" htmlFor="wpc-library-filter-event">Event:</label>
+			<select id="wpc-library-filter-event" className="wpc-library__filter__select" name="event" multiple>
+				<option className="wpc-library-filter-select-all" value="">All events</option>
 				{eventOptions}
 			</select>
 		</div>
-		<div>
-			<label htmlFor="wpc-library-filter-format">Format</label>
-			<select id="wpc-session-filter-format" name="format" multiple>
-				<option value="">All formats</option>
+		<div className="wpc-library__filter wpc-library__filter--format">
+			<label className="wpc-library__filter__label" htmlFor="wpc-library-filter-format">Format:</label>
+			<select id="wpc-library-filter-format" className="wpc-library__filter__select" name="format" multiple>
+				<option className="wpc-library-filter-select-all" value="">All formats</option>
 				{formatOptions}
 			</select>
 		</div>
-		<div>
-			<label htmlFor="wpc-library-filter-subject">Subject</label>
-			<select id="wpc-session-filter-subject" name="subject" multiple>
-				<option value="">All subjects</option>
+		<div className="wpc-library__filter wpc-library__filter--subject">
+			<label className="wpc-library__filter__label" htmlFor="wpc-library-filter-subject">Subject:</label>
+			<select id="wpc-library-filter-subject" className="wpc-library__filter__select" name="subject" multiple>
+				<option className="wpc-library-filter-select-all" value="">All subjects</option>
 				{subjectOptions}
 			</select>
 		</div>
-		<div>
-			<LibrarySearch />
+		<div className="wpc-library__filter wpc-library__filter__meta">
+			<div className="wpc-library__filter wpc-library__filter__search">
+				<label className="wpc-library__filter__label" htmlFor="wpc-library-filter-search">Search:</label>
+				<LibrarySearchInput id="wpc-library-filter-search" />
+			</div>
+			<input {...submitAttr} onClick={event => onSubmit(event)} />
 		</div>
-		<input {...submitAttr} onClick={event => onSubmit(event)} />
 	</form>
 }
 
@@ -434,31 +434,87 @@ LibraryFilters.propTypes = {
 	updateLibraryState: PropTypes.func.isRequired
 }
 
-const filterMessage = (filters) => {
-	let messages = []
+const LibraryCount = ({ activeLibrary, state, updateLibraryState }) => {
+
+	let { filters } = state
+
+	const onReset = async event => {
+		event.preventDefault()
+		event.stopPropagation()
+
+		// Clear filters.
+		updateLibraryState({
+			...state,
+			filters: {},
+		})
+	}
+
+	let activeFilters = []
 	if (filters.event && filters.event.length) {
-		messages.push("Event: " + filters.event.join(", "))
+		activeFilters.push({
+			label: "Event",
+			message: filters.event.join(", ")
+		})
 	}
 	if (filters.format && filters.format.length) {
-		messages.push("Format: " + filters.format.join(", "))
+		activeFilters.push({
+			label: "Format",
+			message: filters.format.join(", ")
+		})
 	}
 	if (filters.subject && filters.subject.length) {
-		messages.push("Subject: " + filters.subject.join(", "))
+		activeFilters.push({
+			label: "Subject",
+			message: filters.subject.join(", ")
+		})
 	}
 	if (filters.search) {
-		messages.push("Search: " + "\"" + filters.search + "\"")
+		activeFilters.push({
+			label: "Search",
+			message: "\"" + filters.search + "\""
+		})
 	}
-	if (!messages.length) {
-		return ""
+	let mainMessage
+	if (1 === activeLibrary.length) {
+		mainMessage = "There is 1 item"
+	} else if (activeLibrary.length) {
+		mainMessage = `There are ${activeLibrary.length} items`
+	} else {
+		mainMessage = "There are no items"
 	}
-	return <div>
-		<p>Filters:</p>
-		<ul>
-			{messages.map((message, i) => {
-				return <li key={i}>{message}</li>
-			})}
-		</ul>
+	const hasFilters = activeFilters.length
+	if (hasFilters) {
+		if (1 === activeLibrary.length) {
+			mainMessage += " that matches"
+		} else {
+			mainMessage += " that match"
+		}
+		mainMessage += " the following filter"
+		if (activeFilters.length > 1) {
+			mainMessage += "s"
+		}
+		mainMessage += ":"
+	} else {
+		mainMessage += " in the catalog."
+	}
+
+	return <div className="wpc-library__data">
+		{hasFilters ? <button className="wpc-library__data__reset" onClick={onReset}><span>Clear filters</span></button> : ""}
+		<div className="wpc-library__data__count">
+			<p>{mainMessage}</p>
+			{hasFilters ? <ul>
+				{activeFilters.map((filter, i) => {
+					return <li key={i}><strong>{filter.label}:</strong> {filter.message}</li>
+				})}
+			</ul> : ""}
+		</div>
 	</div>
+}
+
+LibraryCount.propTypes = {
+	activeLibrary: PropTypes.array.isRequired,
+	state: PropTypes.object.isRequired,
+	updateLibraryState: PropTypes.func.isRequired
 }
 
 const LibraryLayout = ({ library, enableFilters, itemHeadingLevel }) => {
@@ -481,6 +537,9 @@ const LibraryLayout = ({ library, enableFilters, itemHeadingLevel }) => {
 		return null
 	}
 
+	// Update library.
+	library = processLibrary(theLibrary, state.filters)
+
 	const libraryAttr = {
 		className: "wpc-library"
 	}
@@ -494,28 +553,18 @@ const LibraryLayout = ({ library, enableFilters, itemHeadingLevel }) => {
 
 	if (enableFilters) {
 
-		libraryMarkup = filterMessage(state.filters)
-
 		// See how many active items we have.
 		const activeLibrary = theLibrary.filter(({ node }) => false !== node.active)
 
-		if (!activeLibrary.length) {
-			libraryMarkup = <div>
-				<p>There are no items.</p>
-				{libraryMarkup}
-			</div>
-		} else {
-			libraryMarkup = <div>
-				{libraryMarkup}
-				<p>There are {activeLibrary.length} items.</p>
-				<LibraryItems items={activeLibrary} format={state.format} itemHeadingLevel={itemHeadingLevel} />
-			</div>
-		}
-
-		libraryFilters = <LibraryFilters state={state} updateLibraryState={updateLibraryState} />
+		libraryFilters = <div>
+			<h2 className="wpc-library__heading">Filters</h2>
+			<LibraryFilters state={state} updateLibraryState={updateLibraryState} />
+		</div>
 
 		libraryMarkup = <div role="alert" aria-live="polite">
-			{libraryMarkup}
+			<h2 className="wpc-library__heading">Catalog</h2>
+			<LibraryCount activeLibrary={activeLibrary} state={state} updateLibraryState={updateLibraryState} />
+			{!activeLibrary.length ? "" : <LibraryItems items={activeLibrary} format={state.format} itemHeadingLevel={itemHeadingLevel} />}
 		</div>
 	} else {
 		libraryMarkup = <LibraryItems items={theLibrary} format={state.format} itemHeadingLevel={itemHeadingLevel} />
