@@ -193,6 +193,10 @@
 			-webkit-appearance: none;
 			-webkit-border-radius: 0;
 	
+			* {
+				pointer-events: none;
+			}
+	
 			.wpc-nav__toggle__icon {
 				width: 20px;
 	
