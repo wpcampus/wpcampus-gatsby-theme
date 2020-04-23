@@ -143,6 +143,16 @@
 			"status": 301
 		},
 		{
+			"source": "/resources/speaker-training/feedback/",
+			"destination": "/learning/speaking/",
+			"status": 301
+		},
+		{
+			"source": "/blog/resources/speaker-training/feedback/",
+			"destination": "/learning/speaking/",
+			"status": 301
+		},
+		{
 			"source": "/resources/wallpapers/",
 			"destination": "/community/swag/",
 			"status": 301
