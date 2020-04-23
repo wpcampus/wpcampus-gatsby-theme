@@ -103,7 +103,13 @@ const NavPrimaryItems = [
 			},
 			{
 				path: "/learning/audit/",
-				text: "Gutenberg audit"
+				text: "Gutenberg audit",
+				children: [
+					{
+						path: "/learning/audit/webinar/",
+						text: "Gutenberg audit webinar"
+					}
+				]
 			},
 			{
 				path: "/learning/accessibility/",
