@@ -97,7 +97,7 @@ const UserLoggedInActions = ({ user }) => {
 		<img className="wpc-user__avatar" src={avatarEduwapuuBW} alt="" />
 		<div className="wpc-user__info">
 			<span className="wpc-user__name">{userNameDisplay}</span>
-			<HeaderLoggedInActions user={user} classes="wpc-user__actions wpc-member__actions" />
+			<HeaderLoggedInActions user={user} classes="wpc-user__actions" />
 		</div>
 	</div>
 }
@@ -160,6 +160,10 @@ const Header = ({ isHome }) => {
 		className: "wpc-header wpc-wrapper"
 	}
 
+	const searchFormAttr = {
+		showSubmitIcon: true
+	}
+
 	let headerAreas
 	if (isHome) {
 
@@ -171,24 +175,22 @@ const Header = ({ isHome }) => {
 			<HeaderArea area="banner">
 				{banner}
 			</HeaderArea>
-			<HeaderArea area="meta"></HeaderArea>
+			<HeaderArea area="search">
+				<SearchForm {...searchFormAttr} />
+			</HeaderArea>
 		</HeaderAreas>
 	} else {
 
-		const searchFormAttr = {
-			showSubmitIcon: true
-		}
-
 		headerAreas = <HeaderAreas>
-			<HeaderArea area="actions">
-				<User.Consumer>{handleUserDisplay}</User.Consumer>
-			</HeaderArea>
 			<HeaderArea area="logo">
 				<span className="wpc-header__heading wpc-header__heading--site">
 					<Link to="/" aria-label="Home"><WPCampusLogo /></Link>
 				</span>
 			</HeaderArea>
-			<HeaderArea area="meta">
+			<HeaderArea area="actions">
+				<User.Consumer>{handleUserDisplay}</User.Consumer>
+			</HeaderArea>
+			<HeaderArea area="search">
 				<SearchForm {...searchFormAttr} />
 			</HeaderArea>
 		</HeaderAreas>
