@@ -128,11 +128,6 @@
 			"status": 301
 		},
 		{
-			"source": "/speaker-training/",
-			"destination": "/resources/speaker-training/",
-			"status": 301
-		},
-		{
 			"source": "/resources/accessibility/",
 			"destination": "/learning/accessibility/",
 			"status": 301
@@ -140,6 +135,21 @@
 		{
 			"source": "/blog/resources/accessibility/",
 			"destination": "/learning/accessibility/",
+			"status": 301
+		},
+		{
+			"source": "/speaker-training/",
+			"destination": "/learning/speaking/",
+			"status": 301
+		},
+		{
+			"source": "/resources/speaker-training/",
+			"destination": "/learning/speaking/",
+			"status": 301
+		},
+		{
+			"source": "/blog/resources/speaker-training/",
+			"destination": "/learning/speaking/",
 			"status": 301
 		},
 		{
