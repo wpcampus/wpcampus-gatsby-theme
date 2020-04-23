@@ -6,6 +6,12 @@
 			"status": 301
 		},
 		{
+			"source": "/audit/",
+			"destination": "/learning/audit/",
+			"prefix": true,
+			"status": 301
+		},
+		{
 			"source": "/2020/",
 			"destination": "/blog/",
 			"prefix": true,
@@ -178,13 +184,14 @@
 			"status": 301
 		},
 		{
-			"source": "/donation-confirmation/twitter-thank-you/",
-			"destination": "/audit",
+			"source": "/donation-confirmation/",
+			"destination": "/learning/audit/",
+			"prefix": true,
 			"status": 301
 		},
 		{
 			"source": "/2018/11/fundraising-for-wpcampus-gutenberg-accessibility-audit/",
-			"destination": "/audit",
+			"destination": "/learning/audit/",
 			"status": 301
 		},
 		{
