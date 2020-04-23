@@ -1,13 +1,15 @@
 {
 	"redirects": [
 		{
-			"source": "/author/*",
-			"destination": "/about/contributors/*",
+			"source": "/author/",
+			"destination": "/about/contributors/",
+			"prefix": true,
 			"status": 301
 		},
 		{
-			"source": "/blog/author/*",
-			"destination": "/about/contributors/*",
+			"source": "/blog/author/",
+			"destination": "/about/contributors/",
+			"prefix": true,
 			"status": 301
 		},
 		{
