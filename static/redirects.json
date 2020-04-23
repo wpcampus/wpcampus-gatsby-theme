@@ -108,13 +108,9 @@
 			"status": 301
 		},
 		{
-			"source": "/online/?",
+			"source": "/online/",
 			"destination": "https://online.wpcampus.org/",
-			"status": 301
-		},
-		{
-			"source": "/online",
-			"destination": "https://online.wpcampus.org/",
+			"prefix": true,
 			"status": 301
 		},
 		{
