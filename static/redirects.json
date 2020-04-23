@@ -13,7 +13,7 @@
 		},
 		{
 			"source": "/2020/",
-			"destination": "/blog/",
+			"destination": "/blog/2020/",
 			"prefix": true,
 			"status": 301
 		},
@@ -34,7 +34,7 @@
 		},
 		{
 			"source": "/2019/",
-			"destination": "/blog/",
+			"destination": "/blog/2019/",
 			"prefix": true,
 			"status": 301
 		},
@@ -45,13 +45,13 @@
 		},
 		{
 			"source": "/2018/",
-			"destination": "/blog/",
+			"destination": "/blog/2018/",
 			"prefix": true,
 			"status": 301
 		},
 		{
 			"source": "/2017/",
-			"destination": "/blog/",
+			"destination": "/blog/2017/",
 			"prefix": true,
 			"status": 301
 		},
