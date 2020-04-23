@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import ReactHtmlParser from "react-html-parser"
@@ -74,7 +74,7 @@ const LibraryItem = ({ item, format, headingLevel }) => {
 	if (speakers) {
 		speakers = speakers.map((author, i) => {
 			return <span key={i}>{i > 0 ? ", " : ""}
-				<Link to={`/about/contributors/${author.path}/`}>{author.display_name}</Link>
+				<Link to={`/about/contributors/${author.path}/`} aria-label={`Contributor: ${author.display_name}`}>{author.display_name}</Link>
 			</span>
 		})
 	}
@@ -105,12 +105,15 @@ const LibraryItem = ({ item, format, headingLevel }) => {
 
 	let actionsCount = 0
 
+	// @TODO escape attributes for titles.
 	let discussion
 	if (item.discussion && item.permalink) {
 		actionsCount++
 		discussion = <div className="wpc-library__item__action wpc-library__item__action--discussion">
 			<span className="wpc-icon wpc-icon--chat"></span>
-			<span className="wpc-library__item__action__value"><a href={`${item.permalink}#discussion`}>Discussion</a></span>
+			<span className="wpc-library__item__action__value">
+				<a href={`${item.permalink}#discussion`} aria-label={`Join discussion for ${item.title}`}>Discussion</a>
+			</span>
 		</div>
 	}
 
@@ -119,7 +122,7 @@ const LibraryItem = ({ item, format, headingLevel }) => {
 		actionsCount++
 		slides = <div className="wpc-library__item__action wpc-library__item__action--slides">
 			<span className="wpc-icon wpc-icon--slides"></span>
-			<a className="wpc-library__item__action__value" href={`${item.permalink}#slides`}>Slides</a>
+			<a className="wpc-library__item__action__value" href={`${item.permalink}#slides`} aria-label={`Slides for ${item.title}`}>Slides</a>
 		</div>
 	}
 
@@ -128,7 +131,7 @@ const LibraryItem = ({ item, format, headingLevel }) => {
 		actionsCount++
 		video = <div className="wpc-library__item__action wpc-library__item__action--video">
 			<span className="wpc-icon wpc-icon--video"></span>
-			<a className="wpc-library__item__action__value" href={`${item.permalink}#video`}>Video</a>
+			<a className="wpc-library__item__action__value" href={`${item.permalink}#video`} aria-label={`Video for ${item.title}`}>Video</a>
 		</div>
 	}
 
@@ -184,7 +187,7 @@ LibraryItem.propTypes = {
 
 LibraryItem.defaultProps = {
 	format: "basic",
-	headingLevel: 2
+	headingLevel: 3
 }
 
 const LibraryItems = ({ items, format, itemHeadingLevel }) => {
@@ -337,6 +340,7 @@ const LibraryFilters = ({ state, updateLibraryState }) => {
 
 		updateLibraryState({
 			...state,
+			reset: false,
 			filters: filters
 		})
 	}
@@ -395,25 +399,26 @@ const LibraryFilters = ({ state, updateLibraryState }) => {
 		type: "submit",
 		className: "wpc-library__filter__submit",
 		value: "Filter",
+		"aria-label": "Filter the library"
 	}
 
 	return <form {...formAttr}>
 		<div className="wpc-library__filter wpc-library__filter--event">
-			<label className="wpc-library__filter__label" htmlFor="wpc-library-filter-event">Event:</label>
+			<label className="wpc-library__filter__label" htmlFor="wpc-library-filter-event" aria-label="Filter by event">Event:</label>
 			<select id="wpc-library-filter-event" className="wpc-library__filter__select" name="event" multiple>
 				<option className="wpc-library-filter-select-all" value="">All events</option>
 				{eventOptions}
 			</select>
 		</div>
 		<div className="wpc-library__filter wpc-library__filter--format">
-			<label className="wpc-library__filter__label" htmlFor="wpc-library-filter-format">Format:</label>
+			<label className="wpc-library__filter__label" htmlFor="wpc-library-filter-format" aria-label="Filter by format">Format:</label>
 			<select id="wpc-library-filter-format" className="wpc-library__filter__select" name="format" multiple>
 				<option className="wpc-library-filter-select-all" value="">All formats</option>
 				{formatOptions}
 			</select>
 		</div>
 		<div className="wpc-library__filter wpc-library__filter--subject">
-			<label className="wpc-library__filter__label" htmlFor="wpc-library-filter-subject">Subject:</label>
+			<label className="wpc-library__filter__label" htmlFor="wpc-library-filter-subject" aria-label="Filter by subject">Subject:</label>
 			<select id="wpc-library-filter-subject" className="wpc-library__filter__select" name="subject" multiple>
 				<option className="wpc-library-filter-select-all" value="">All subjects</option>
 				{subjectOptions}
@@ -445,6 +450,7 @@ const LibraryCount = ({ activeLibrary, state, updateLibraryState }) => {
 		// Clear filters.
 		updateLibraryState({
 			...state,
+			reset: true,
 			filters: {},
 		})
 	}
@@ -489,25 +495,29 @@ const LibraryCount = ({ activeLibrary, state, updateLibraryState }) => {
 		} else {
 			mainMessage += " that match"
 		}
-		mainMessage += " the following filter"
+		mainMessage += " your filter"
 		if (activeFilters.length > 1) {
 			mainMessage += "s"
 		}
-		mainMessage += ":"
+		mainMessage += "."
 	} else {
 		mainMessage += " in the catalog."
 	}
 
 	return <div className="wpc-library__data">
-		{hasFilters ? <button className="wpc-library__data__reset" onClick={onReset}><span>Clear filters</span></button> : ""}
 		<div className="wpc-library__data__count">
-			<p>{mainMessage}</p>
+			<p role="alert" aria-live="polite">
+				<span className="for-screen-reader">The Library has been updated.</span>
+				{!hasFilters ? <span className="for-screen-reader">No filters have been set.</span> : ""}
+				{mainMessage}
+			</p>
 			{hasFilters ? <ul>
 				{activeFilters.map((filter, i) => {
 					return <li key={i}><strong>{filter.label}:</strong> {filter.message}</li>
 				})}
 			</ul> : ""}
 		</div>
+		{hasFilters ? <button className="wpc-library__data__reset" onClick={onReset}><span>Clear filters</span></button> : ""}
 	</div>
 }
 
@@ -518,12 +528,20 @@ LibraryCount.propTypes = {
 }
 
 const LibraryLayout = ({ library, enableFilters, itemHeadingLevel }) => {
+
 	const defaultState = {
 		format: "basic",
 		filters: {},
+		reset: false,
 		library: library
 	}
 	const [state, updateLibraryState] = useState(defaultState)
+
+	useEffect(() => {
+		if (true === state.reset) {
+			document.querySelector(".wpc-library__items a").focus()
+		}
+	}, state)
 
 	let theLibrary
 	if (!state.library || !state.library.length) {
@@ -561,7 +579,7 @@ const LibraryLayout = ({ library, enableFilters, itemHeadingLevel }) => {
 			<LibraryFilters state={state} updateLibraryState={updateLibraryState} />
 		</div>
 
-		libraryMarkup = <div role="alert" aria-live="polite">
+		libraryMarkup = <div>
 			<h2 className="wpc-library__heading">Catalog</h2>
 			<LibraryCount activeLibrary={activeLibrary} state={state} updateLibraryState={updateLibraryState} />
 			{!activeLibrary.length ? "" : <LibraryItems items={activeLibrary} format={state.format} itemHeadingLevel={itemHeadingLevel} />}

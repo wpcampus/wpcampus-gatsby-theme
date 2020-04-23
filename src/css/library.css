@@ -124,13 +124,11 @@
 		}
 
 		&__actions {
+			margin-top: 0.75rem;
+
 			.wpc-icon {
 				margin: 0 0.5rem 0 0;
 			}
-		}
-
-		&__details + &__actions {
-			margin-top: 0.75rem;
 		}
 
 		&__detail {
@@ -171,11 +169,6 @@
 		*:last-child {
 			margin-bottom: 0;
 		}
-
-		&:first-child {
-			border-top: 0;
-			padding-top: 0;
-		}
 	}
 
 	&__filter {
@@ -191,7 +184,6 @@
 		&__select {
 			display: block;
 			width: 100%;
-			min-height: 100px;
 			font-size: 1rem;
 			line-height: 1.4;
 			padding: 0.5rem;
@@ -273,8 +265,9 @@
 
 	/* stylelint-disable no-descending-specificity */
 	&__data {
-		display: flex;
-		justify-content: flex-start;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr auto;
 		align-items: stretch;
 		margin: 0 0 1.5rem;
 		border: var(--area-border-gray-light);
@@ -301,11 +294,10 @@
 		&__reset {
 			display: block;
 			background: var(--wpc-orange);
-			min-width: 10%;
 			border: 0;
 			-webkit-appearance: none;
 			font-size: 1.2rem;
-			padding: 0.5rem;
+			padding: 1rem;
 			color: #fff;
 			cursor: pointer;
 			text-decoration: underline;
@@ -352,6 +344,22 @@
 				justify-items: start;
 				grid-column: 2 / span 1;
 			}
+
+			&__actions {
+				margin: 0;
+			}
+
+			&:first-child {
+				border-top: 0;
+				padding-top: 0;
+			}
+		}
+
+		&__filter {
+
+			&__select {
+				min-height: 100px;
+			}
 		}
 
 		&__filters {
@@ -377,6 +385,21 @@
 				&__search {
 					margin: 0;
 				}
+			}
+		}
+
+		&__data {
+			display: flex;
+			justify-content: flex-start;
+
+			&__count {
+				order: 2;
+			}
+
+			&__reset {
+				min-width: calc(1.25rem + 10%);
+				padding: 0.5rem;
+				order: 1;
 			}
 		}
 
