@@ -280,6 +280,22 @@
 			"status": 301
 		},
 		{
+			"source": "/members/community-planning-survey/",
+			"destination": "/community/",
+			"status": 301
+		},
+		{
+			"source": "/members/survey/",
+			"destination": "/community/",
+			"status": 301
+		},
+		{
+			"source": "/members/",
+			"destination": "/community/",
+			"prefix": true,
+			"status": 301
+		},
+		{
 			"source": "/member-survey/",
 			"destination": "/members/survey/",
 			"status": 301
