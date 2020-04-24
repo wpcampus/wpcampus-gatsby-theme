@@ -7,7 +7,7 @@ module.exports = {
 		siteUrl: process.env.WPC_SITE,
 		title: "WPCampus: Where WordPress meets Higher Education",
 		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing Higher Education by providing support, resources, and training focused on open source web publishing technologies.",
-		author: "@wpcampusorg",
+		twitter: "@wpcampusorg",
 	},
 	plugins: [
 		"gatsby-plugin-react-helmet",
