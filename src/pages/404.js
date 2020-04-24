@@ -8,6 +8,8 @@ import TruckSheep from "../svg/trucksheep"
 
 import "./../css/trucksheep.css"
 
+// @TODO add meta description?
+
 // @TODO add back link to mascots when page is ready
 //<Link to="/about/mascots/" aria-label="Learn more about Truck Sheep">
 const NotFoundPage = () => {

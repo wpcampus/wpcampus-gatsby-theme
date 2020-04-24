@@ -7,6 +7,9 @@ import Layout from "../components/layout"
 import { ArticleArchive } from "../components/archive"
 
 export default function Template(props) {
+
+	// @TODO add meta description?
+
 	return (
 		<Layout heading="Pages" path={props.path}>
 			<ArticleArchive

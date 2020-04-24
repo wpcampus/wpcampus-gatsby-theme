@@ -28,6 +28,7 @@ const PostTemplate = props => {
 		<PostPaginationAdjacent previous={context.previous} next={context.next} />
 	)
 	const layoutAttr = {
+		metaDescription: post.wpc_seo.meta.description || null,
 		classes: "wpc-post",
 		pageTitle: post.title,
 		path: props.path
@@ -89,7 +90,13 @@ export const postQuery = graphql`
         name
         description
         slug
-      }
+	  }
+	  wpc_seo {
+		title
+		meta {
+			description
+		}
+	  }
     }
     site {
       siteMetadata {

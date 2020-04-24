@@ -21,6 +21,9 @@ export default function Template(props) {
 		}
 	}
 	const contributors = props.data.allWordpressWpcContributors.nodes
+
+	// @TODO add meta description?
+
 	return (
 		<Layout heading="Contributors" crumbs={crumbs} path={props.path}>
 			<p>At WPCampus, our mission is to advance Higher Education by providing a support structure and wealth of knowledge for anyone who uses, or is interested in using, WordPress in the world of Higher Education.</p>

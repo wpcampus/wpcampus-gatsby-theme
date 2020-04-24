@@ -18,6 +18,9 @@ function sortByNameAsc(a, b) {
 export default function Template(props) {
 	const context = props.pageContext
 	const categories = context.categories.sort(sortByNameAsc)
+
+	// @TODO add meta description?
+
 	return (
 		<Layout heading={context.heading} crumbs={context.crumbs} path={props.path}>
 			<CategoryArchive list={categories} />

@@ -24,6 +24,8 @@ const SearchTemplate = (props) => {
 		}
 	}
 
+	// @TODO add meta description?
+
 	return (
 		<Layout heading="Search" crumbs={crumbs} path={props.path} noIndex={noIndex} noFollow={noFollow}>
 			<p>If you can&lsquo;t find what you&lsquo;re looking for, please <Link to="/about/contact" aria-label="Contact us and let us know">let us know</Link>.</p>

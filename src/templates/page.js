@@ -13,7 +13,7 @@ const PageTemplate = props => {
 	// @TODO add meta description for pages without <p>.
 
 	const layoutAttr = {
-		metaDescription: "",
+		metaDescription: page.wpc_seo.meta.description || null,
 		heading: page.title,
 		crumbs: pageContext.crumbs,
 		path: props.path
@@ -48,6 +48,12 @@ export const pageQuery = graphql`
       status
       excerpt
       content
+	  wpc_seo {
+		  title
+		  meta {
+			  description
+		  }
+	  }
     }
     site {
       siteMetadata {

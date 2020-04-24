@@ -11,7 +11,16 @@ import "../css/library.css"
 const Library = props => {
 	const page = props.data.wordpressPage
 	const library = props.data.allWordpressWpcLibrary.edges
-	return <Layout heading={page.title} sidebarBottom={true} crumbs={props.pageContext.crumbs} path={props.path}>
+
+	const layoutAttr = {
+		metaDescription: page.wpc_seo.meta.description || null,
+		heading: page.title,
+		sidebarBottom: true,
+		crumbs: props.pageContext.crumbs,
+		path: props.path
+	}
+
+	return <Layout {...layoutAttr}>
 		<div>{ReactHtmlParser(page.content)}</div>
 		<LibraryLayout library={library} />
 	</Layout>
@@ -38,6 +47,12 @@ export const pageQuery = graphql`
       status
       excerpt
       content
+	  wpc_seo {
+		title
+		meta {
+		  description
+		}
+	  }
 	}
 	allWordpressWpcLibrary(
 		sort: { fields: event_date, order: DESC }

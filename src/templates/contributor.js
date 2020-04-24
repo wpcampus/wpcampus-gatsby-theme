@@ -38,6 +38,8 @@ const ContributorTemplate = props => {
 		</div>
 	}
 
+	// @TODO add meta description?
+
 	return (
 		<Layout heading={heading} crumbs={context.crumbs} path={props.path}>
 			<AuthorCard author={contributor} />

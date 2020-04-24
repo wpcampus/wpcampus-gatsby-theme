@@ -13,6 +13,9 @@ export default function Template(props) {
 			text: "Podcast"
 		}
 	}
+
+	// @TODO add meta description?
+
 	return (
 		<Layout heading="The WPCampus Podcast" crumbs={crumbs} path={props.path}>
 			<PodcastCallout />

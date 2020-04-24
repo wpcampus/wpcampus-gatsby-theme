@@ -5,6 +5,9 @@ import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
 
 const CategoryTemplate = ({ pageTitle, path, crumbs, category, categoryArchive }) => {
+
+	// @TODO add meta description?
+
 	return (
 		<Layout pageTitle={pageTitle} crumbs={crumbs} path={path}>
 			<h1>{pageTitle}</h1>

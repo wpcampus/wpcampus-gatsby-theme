@@ -28,6 +28,7 @@ const PodcastTemplate = props => {
 		<PodcastPaginationAdjacent previous={context.previous} next={context.next} />
 	)
 	const layoutAttr = {
+		metaDescription: podcast.wpc_seo.meta.description || null,
 		classes: "wpc-post",
 		pageTitle: podcast.title,
 		path: props.path
@@ -94,6 +95,12 @@ export const podcastQuery = graphql`
 	  }
 	  meta {
 		  duration
+	  }
+	  wpc_seo {
+		title
+		meta {
+			description
+		}
 	  }
     }
     site {
