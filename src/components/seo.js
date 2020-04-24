@@ -25,7 +25,7 @@ function SEO(
       		query {
         		site {
           			siteMetadata {
-						title
+						siteName
 						description
 						locale
 						twitter
@@ -49,7 +49,7 @@ function SEO(
 		},
 		{
 			property: "og:site_name",
-			content: "WPCampus: Where WordPress Meets Higher Education",
+			content: site.siteMetadata.siteName
 		},
 		{
 			property: "og:url",
@@ -140,7 +140,7 @@ function SEO(
 	}
 
 	if (useTitleTemplate) {
-		helmetAttr.titleTemplate = `%s | ${site.siteMetadata.title}`
+		helmetAttr.titleTemplate = `%s | ${site.siteMetadata.siteName}`
 	}
 
 	// @TODO audit font usage.

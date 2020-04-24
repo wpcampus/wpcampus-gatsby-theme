@@ -105,7 +105,7 @@ export const podcastQuery = graphql`
     }
     site {
       siteMetadata {
-        title
+        siteName
       }
     }
   }

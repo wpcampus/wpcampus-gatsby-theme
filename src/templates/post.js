@@ -100,7 +100,7 @@ export const postQuery = graphql`
     }
     site {
       siteMetadata {
-        title
+        siteName
       }
     }
   }

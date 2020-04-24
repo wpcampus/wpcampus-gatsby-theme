@@ -5,7 +5,7 @@ require("dotenv").config({
 module.exports = {
 	siteMetadata: {
 		siteUrl: process.env.WPC_SITE,
-		title: "WPCampus: Where WordPress meets Higher Education",
+		siteName: "WPCampus: Where WordPress Meets Higher Education",
 		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing Higher Education by providing support, resources, and training focused on open source web publishing technologies.",
 		locale: "en_US",
 		twitter: "@wpcampusorg",
