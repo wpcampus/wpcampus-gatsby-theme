@@ -24,6 +24,31 @@
 		margin: 0 0 4rem;
 		position: relative;
 
+		ul.wpc-meta.wpc-article__meta {
+			font-size: 1.1rem;
+			font-weight: 300;
+			line-height: 2;
+
+			& > li {
+				display: block;
+				margin: 0;
+				padding: 0;
+
+				&.wpc-meta__item--date {
+					text-transform: uppercase;
+				}
+
+				&.wpc-meta__item--author {
+					font-size: 1.2rem;
+					font-weight: 400;
+				}
+
+				&::before {
+					display: none;
+				}
+			}
+		}
+
 		&::after {
 			content: '';
 			display: block;
@@ -33,31 +58,6 @@
 			background: #e1e1e1;
 			width: 60%;
 			height: 1px;
-		}
-	}
-
-	ul.wpc-meta.wpc-article__meta {
-		font-size: 1.1rem;
-		font-weight: 300;
-		line-height: 2;
-
-		& > li {
-			display: block;
-			margin: 0;
-			padding: 0;
-
-			&.wpc-meta__item--date {
-				text-transform: uppercase;
-			}
-
-			&.wpc-meta__item--author {
-				font-size: 1.2rem;
-				font-weight: 400;
-			}
-
-			&::before {
-				display: none;
-			}
 		}
 	}
 
@@ -106,6 +106,7 @@
 				}
 			}
 
+			/* stylelint-disable no-descending-specificity */
 			ul {
 				display: flex;
 				justify-content: flex-end;
@@ -133,6 +134,7 @@
 					}
 				}
 			}
+			/* stylelint-disable */
 
 			&.wpc-pagination-adj--prev.wpc-pagination-adj--next {
 				ul {
@@ -203,11 +205,9 @@
 					grid-row: 3 / span 1;
 					border-top: var(--area-border-gray-light);
 
-					/* stylelint-disable selector-type-no-unknown */
 					wpcampus-notifications .wpc-notifications {
 						border-bottom: 0;
 					}
-					/* stylelint-disable */
 				}
 
 				&--sidebar {
