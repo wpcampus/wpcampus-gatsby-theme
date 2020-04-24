@@ -13,10 +13,16 @@ const NavPrimary = () => {
 
 	// @TODO add useRef
 	useEffect(() => {
+
+		const navPrimary = document.getElementById(navPrimaryID)
+
+		document.body.classList.remove("menu-toggled-open")
+		navPrimary.classList.remove("toggled-open")
+
 		navigation.init({
 			breakpoint: 768,
 			main: document.getElementById("main"),
-			nav: document.getElementById(navPrimaryID),
+			nav: navPrimary,
 			minHeights: false,
 		})
 	})
