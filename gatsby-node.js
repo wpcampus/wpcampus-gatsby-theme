@@ -92,6 +92,21 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			interfaces: ["Node"],
 		}),
 		schema.buildObjectType({
+			name: "wpcSEOMeta",
+			fields: {
+				description: "String",
+			},
+			interfaces: ["Node"],
+		}),
+		schema.buildObjectType({
+			name: "wpcSEO",
+			fields: {
+				title: "String",
+				meta: "wpcSEOMeta"
+			},
+			interfaces: ["Node"],
+		}),
+		schema.buildObjectType({
 			name: "wpcCrumb",
 			fields: {
 				path: {
@@ -115,10 +130,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			name: "wordpress__PAGE",
 			fields: {
 				wpc_protected: "wpcProtected",
+				wpc_seo: "wpcSEO",
 				crumb: "wpcCrumb"
 			},
 			interfaces: ["Node"],
-		}),
+		}),		  
 		schema.buildObjectType({
 			name: "wordpress__POST",
 			fields: {
