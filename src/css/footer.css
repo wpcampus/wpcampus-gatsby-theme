@@ -170,6 +170,10 @@
 
 			.wpc-copyright {
 				text-align: left;
+
+				a {
+					color: inherit;
+				}
 			}
 
 			.wpc-footer__area {
