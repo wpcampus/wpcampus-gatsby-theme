@@ -27,6 +27,7 @@ function SEO(
           			siteMetadata {
 						title
 						description
+						locale
 						twitter
 					}
         		}
@@ -48,6 +49,10 @@ function SEO(
 		{
 			property: "og:description",
 			content: metaDescription,
+		},
+		{
+			property: "og:locale",
+			content: site.siteMetadata.locale
 		},
 		{
 			property: "og:type",
