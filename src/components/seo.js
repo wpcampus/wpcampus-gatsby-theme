@@ -54,8 +54,12 @@ function SEO(
 			content: "website",
 		},
 		{
+			property: "twitter:image",
+			content: "https://wpcampus.org/wp-content/uploads/WPCampus-graphic-header.png"
+		},
+		{
 			name: "twitter:card",
-			content: "summary",
+			content: "summary_large_image",
 		},
 		{
 			name: "twitter:creator",
