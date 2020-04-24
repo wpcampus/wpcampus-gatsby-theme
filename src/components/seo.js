@@ -25,6 +25,7 @@ function SEO(
       		query {
         		site {
           			siteMetadata {
+						siteUrl
 						siteName
 						description
 						locale
@@ -53,7 +54,7 @@ function SEO(
 		},
 		{
 			property: "og:url",
-			content: "https://www.wpcampus.org/",
+			content: site.siteMetadata.siteUrl,
 		},
 		{
 			property: "og:title",
