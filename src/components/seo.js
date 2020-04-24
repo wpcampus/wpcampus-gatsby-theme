@@ -37,10 +37,23 @@ function SEO(
 
 	const metaDescription = description || site.siteMetadata.description
 
+	// @TODO add new twitter/og image
+	const og_image = "https://wpcampus.org/wp-content/uploads/WPCampus-graphic-header.png"
+	const og_image_width = "1200"
+	const og_image_height = "628"
+
 	const helmetMeta = [
 		{
 			name: "description",
 			content: metaDescription,
+		},
+		{
+			property: "og:site_name",
+			content: "WPCampus: Where WordPress Meets Higher Education",
+		},
+		{
+			property: "og:url",
+			content: "https://www.wpcampus.org/",
 		},
 		{
 			property: "og:title",
@@ -59,8 +72,24 @@ function SEO(
 			content: "website",
 		},
 		{
+			property: "og:image",
+			content: og_image
+		},
+		{
+			property: "og:image:secure_url",
+			content: og_image
+		},
+		{
+			property: "og:image:width",
+			content: og_image_width
+		},
+		{
+			property: "og:image:height",
+			content: og_image_height
+		},
+		{
 			property: "twitter:image",
-			content: "https://wpcampus.org/wp-content/uploads/WPCampus-graphic-header.png"
+			content: og_image
 		},
 		{
 			name: "twitter:card",
@@ -81,7 +110,7 @@ function SEO(
 		{
 			name: "twitter:description",
 			content: metaDescription,
-		},
+		}
 	]
 
 	const robots = []
