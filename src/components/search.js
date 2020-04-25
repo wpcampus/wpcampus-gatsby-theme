@@ -106,7 +106,6 @@ SearchResultsByType.defaultProps = {
 }
 
 const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete }) => {
-	// @TODO add library
 	const sortByType = {
 		post: {
 			id: "post",

@@ -10,8 +10,6 @@ const PageTemplate = props => {
 	const page = props.data.wordpressPage
 	const pageContext = props.pageContext
 
-	// @TODO add meta description for pages without <p>.
-
 	const layoutAttr = {
 		metaDescription: page.wpc_seo.meta.description || null,
 		metaRobots: page.wpc_seo.meta.robots || [],
