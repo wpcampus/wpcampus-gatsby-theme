@@ -27,7 +27,7 @@ export const pageQuery = graphql`
   query {
     site {
       siteMetadata {
-        title
+        siteName
       }
     }
     gfForm(formId: { eq: 3 }) {
