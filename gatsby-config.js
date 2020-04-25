@@ -4,7 +4,7 @@ require("dotenv").config({
 
 module.exports = {
 	siteMetadata: {
-		siteUrl: `${process.env.WPC_SITE}/`,
+		siteUrl: `${process.env.WPC_PUBLIC}/`,
 		siteName: "WPCampus: Where WordPress Meets Higher Education",
 		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing Higher Education by providing support, resources, and training focused on open source web publishing technologies.",
 		locale: "en_US",
@@ -15,7 +15,7 @@ module.exports = {
 		{
 			resolve: "gatsby-plugin-react-helmet-canonical-urls",
 			options: {
-				siteUrl: process.env.WPC_SITE,
+				siteUrl: process.env.WPC_PUBLIC,
 			},
 		},
 		{
@@ -39,8 +39,8 @@ module.exports = {
 			resolve: "gatsby-plugin-robots-txt",
 			options: {
 				env: {
-					host: process.env.WPC_SITE,
-					sitemap: `${process.env.WPC_SITE}/sitemap.xml`,
+					host: process.env.WPC_PUBLIC,
+					sitemap: `${process.env.WPC_PUBLIC}/sitemap.xml`,
 					development: {
 						policy: [{ userAgent: "*", disallow: ["/"] }]
 					},
@@ -73,7 +73,7 @@ module.exports = {
 		{
 			resolve: "gatsby-source-wordpress",
 			options: {
-				baseUrl: process.env.WPC_HOST,
+				baseUrl: process.env.WPC_WORDPRESS,
 				protocol: "https",
 				hostingWPCOM: false,
 				useACF: false,

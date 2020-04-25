@@ -36,7 +36,8 @@ Run `npm run css` in the command line.
 	* .env.development
 	* .env.production
 2. Set the data for your dev environment.
-    * [Talk to an administrator](./.github/CODEOWNERS) for the correct information.
+	* Descriptions are included in the .env.sample file.
+    * For more info or assistance, [talk to an administrator](./.github/CODEOWNERS).
 3. Add `WPC_SHOW_GRID=1` to .env.development to display CSS grid in development environment.
 
 ## Gatsby setup
