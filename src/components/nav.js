@@ -12,7 +12,20 @@ const NavPrimaryItems = [
 			{ path: "/about/partners/", text: "Partners" },
 			/*{ path: "/about/mascots/", text: "Mascots" },*/
 			/*{ path: "/about/governance/", text: "Governance" },*/
-			{ path: "/about/guidelines/", text: "Guidelines" },
+			{ 
+				path: "/about/guidelines/", 
+				text: "Guidelines" ,
+				children: [
+					{
+						path: "/about/guidelines/conduct/",
+						text: "Code of Conduct"
+					},
+					{
+						path: "/about/guidelines/diversity/",
+						text: "Diversity, Equity, and Inclusion"
+					}
+				]
+			},
 			{ path: "/about/newsletter/", text: "Our newsletter" },
 			{ path: "/about/contact/", text: "Contact us" },
 		]

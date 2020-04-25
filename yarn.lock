@@ -1664,17 +1664,17 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@wpcampus/wpcampus-wc-blog@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.0.8.tgz#c586009c1d8820953e3ca46a7b2fce5fed6923a3"
-  integrity sha512-P+XvhE0iqrnF4bXcCyhBZlapwwHmGn5QlPnOEnb0B+7xZU7eSAd7teUWZj0Lotd77E4pWbwAe8XkXSV7w98CgA==
+"@wpcampus/wpcampus-wc-blog@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.0.9.tgz#c83fd5d7803128ec723754a22439ce2d26cfc9e4"
+  integrity sha512-+2EquTbb8NRk6921R41Z58rXQScd3u15Ud+z45O9Qm/ySJYSurp9jmyKyEtp4p2VwqXq4tEYX9a56Of2gc61kg==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.4"
 
-"@wpcampus/wpcampus-wc-conduct@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-conduct/-/wpcampus-wc-conduct-0.0.4.tgz#8e39253c6ebcc9e08f1c696c099ddb9993eca515"
-  integrity sha512-L+pOKQQsqynIkVezN/AmojBZiXEEZoRGCHTQJ+KLISxQbng4jSN0nfA7AiCwfZZ2T+IGaMsV2bdMlxvvLIGtrg==
+"@wpcampus/wpcampus-wc-conduct@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-conduct/-/wpcampus-wc-conduct-0.0.5.tgz#cd1057067ba1f373cc9e54a543a7a9a0553c5c91"
+  integrity sha512-m3g7TFasTqhgNhRORluIkNpzMbwH32T5BLtLBW8liD70gXYZ4htSEVLMRVL2JalGZYWoWN5G0+Q2yk6o2oaQXw==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
 
@@ -1688,10 +1688,10 @@
   resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-default/-/wpcampus-wc-default-0.0.4.tgz#5ba8fdd8b96b9d1f46e8d34b4b295b484f83147f"
   integrity sha512-rQuP5Qj7qQifPGMilDPAUkiF0BVb2Zhc6q6bBQ0juJnOzwa4ilczHkQa4shLIopk16keqebjYHcMn2LoEa99pA==
 
-"@wpcampus/wpcampus-wc-footer@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-footer/-/wpcampus-wc-footer-0.0.4.tgz#280f98bb513df1229d1c23441eba9902a40b2e9d"
-  integrity sha512-ezgLf+qBCzuFUeK2yqyp2ZUTSrVqpfKih/AB9bfF9uJgijoP5xfbj2qS44FaidQ4nItFrc6qoimlnUo7ey+Bag==
+"@wpcampus/wpcampus-wc-footer@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-footer/-/wpcampus-wc-footer-0.0.5.tgz#da00d94040d829123a4f03523475ba0adbb85b9a"
+  integrity sha512-X2wUukKTLyG8lbghMpEySbuBulBlUghD59pKsS72h90oRiyhbZeThmOq3/Y2a3XSNdY8oCEm3yXt3mqEGtXEDA==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
 

@@ -1,6 +1,6 @@
 # WPCampus Gatsby theme
 
-The Gatsby theme for wpcampus.org.
+The Gatsby theme for https://www.wpcampus.org.
 
 ## Troubleshooting
 
