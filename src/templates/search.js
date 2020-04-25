@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 
@@ -39,7 +39,7 @@ const SearchTemplate = (props) => {
 }
 
 SearchTemplate.propTypes = {
-	//"*": PropTypes.string,
+	"*": PropTypes.string,
 	path: PropTypes.string.isRequired
 }
 
