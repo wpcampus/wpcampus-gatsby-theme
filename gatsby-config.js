@@ -93,7 +93,7 @@ module.exports = {
 		{
 			resolve: "gatsby-source-gravityforms",
 			options: {
-				baseUrl: `https://${process.env.WPC_HOST}`,
+				baseUrl: `https://${process.env.WPC_WORDPRESS}`,
 				api: {
 					key: process.env.WPC_GF_API_KEY,
 					secret: process.env.WPC_GF_API_SECRET,
