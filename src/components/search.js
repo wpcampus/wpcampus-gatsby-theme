@@ -9,6 +9,15 @@ import LibraryLayout from "./library"
 
 import MagnifyingGlass from "../svg/magnifying-glass"
 
+/*
+ * Set the search URL for search requests.
+ *
+ * Environment variables are only accessible in development.
+ */
+const isDev = "development" === process.env.NODE_ENV
+const wpcSearchRoot = isDev ? process.env.WPC_API : "https://wpcampus.org/wp-json"
+const wpcSearchURL = `${wpcSearchRoot}/wpcampus/search/`
+
 const sanitizeSearchTerm = (str) => {
 	str = str.replace(/[^a-z0-9áéíóúñü .,_-]/gim, "")
 	return str.trim()
@@ -404,7 +413,7 @@ class SearchLayout extends React.Component {
 		// @TODO doesnt need to run when component is mounted because already set?
 		window.history.pushState({}, "", "/search/" + encodedSearchStr)
 
-		let url = "https://wpcampus.org/wp-json/wpcampus/search/"
+		let url = wpcSearchURL
 
 		// What post types do we want?
 		url += "?subtype=page,post,podcast"
