@@ -2,6 +2,15 @@ import React from "react"
 import PropTypes from "prop-types"
 
 /*
+ * Set the root URL for API requests.
+ *
+ * Environment variables are only accessible in development.
+ */
+const isDev = "development" === process.env.NODE_ENV
+const entriesAPIRoot = isDev ? process.env.WPC_API : "https://wpcampus.org/wp-json"
+const entriesAPI = `${entriesAPIRoot}/gf/v2/entries`
+
+/*
  * @TODO:
  * - Add action
  */
@@ -464,7 +473,7 @@ const Form = ({ data }) => {
 		)
 		// @TODO COOOOOOOOOOOOOOOOOOOORS
 		return new Promise((resolve, reject) => {
-			let url = `https://${process.env.WPC_HOST}/wp-json/gf/v2/entries?form_id=${formId}`
+			let url = `${entriesAPI}?form_id=${formId}`
 			const request = new XMLHttpRequest()
 			request.open("POST", url)
 			request.responseType = "application/json"
