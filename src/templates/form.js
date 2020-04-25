@@ -38,7 +38,7 @@ PageTemplate.propTypes = {
 export default PageTemplate
 
 export const pageQuery = graphql`
-  query($id: String!) {
+  query($id: String!, $formId: Int!) {
     site {
       siteMetadata {
         siteName
@@ -56,7 +56,7 @@ export const pageQuery = graphql`
 			}
 		}
 	}
-    gfForm(formId: { eq: 3 }) {
+    gfForm(formId: { eq: $formId }) {
       formId
       title
       description

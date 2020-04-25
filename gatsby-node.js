@@ -803,7 +803,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		}
   	`)
 
-	const contactTemplate = path.resolve("./src/templates/contact.js")
+	const contactTemplate = path.resolve("./src/templates/form.js")
 	const pageTemplate = path.resolve("./src/templates/page.js")
 	const libraryTemplate = path.resolve("./src/templates/library.js")
 	const indexTemplate = path.resolve("./src/templates/index.js")
@@ -840,6 +840,7 @@ exports.createPages = async ({ graphql, actions }) => {
 			// as a GraphQL variable to query for this posts's data.
 			context: {
 				id: edge.node.id,
+				formId: 3,
 				crumbs: {
 					crumb: edge.node.crumb,
 					parent_element: edge.node.parent_element
