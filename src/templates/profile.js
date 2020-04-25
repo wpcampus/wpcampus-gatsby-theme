@@ -222,8 +222,12 @@ const Profile = () => {
 		}
 		return <LoginLayout />
 	}
+
+	// Don't index or follow.
+	const metaRobots = ["nofollow","noindex"]
+
 	return (
-		<Layout heading="Your WPCampus profile" noIndex={true} noFollow={true}>
+		<Layout heading="Your WPCampus profile" metaRobots={metaRobots}>
 			<User.Consumer>{handleDisplay}</User.Consumer>
 		</Layout>
 	)

@@ -13,8 +13,12 @@ const SearchTemplate = (props) => {
 		defaultSearchQuery = sanitizeSearchTerm(defaultSearchQuery)
 	}
 
-	const noIndex = defaultSearchQuery != ""
-	const noFollow = defaultSearchQuery != ""
+	// Don't index or follow if there's a search term.
+	const metaRobots = []
+	if (defaultSearchQuery != "") {
+		metaRobots.push("nofollow")
+		metaRobots.push("noindex")
+	}
 
 	const crumbs = {
 		crumb: {
@@ -27,7 +31,7 @@ const SearchTemplate = (props) => {
 	// @TODO add meta description?
 
 	return (
-		<Layout heading="Search" crumbs={crumbs} path={props.path} noIndex={noIndex} noFollow={noFollow}>
+		<Layout heading="Search" crumbs={crumbs} path={props.path} metaRobots={metaRobots}>
 			<p>If you can&lsquo;t find what you&lsquo;re looking for, please <Link to="/about/contact" aria-label="Contact us and let us know">let us know</Link>.</p>
 			<SearchLayout searchQuery={defaultSearchQuery} />
 		</Layout>

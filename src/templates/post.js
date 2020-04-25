@@ -23,16 +23,21 @@ const normalizeCategories = (categories) => {
 const PostTemplate = props => {
 	const post = props.data.wordpressPost
 	const context = props.pageContext
+
 	post.categories = normalizeCategories(post.categories)
+
 	const paginationAdj = (
 		<PostPaginationAdjacent previous={context.previous} next={context.next} />
 	)
+
 	const layoutAttr = {
 		metaDescription: post.wpc_seo.meta.description || null,
+		metaRobots: post.wpc_seo.meta.robots || [],
 		classes: "wpc-post",
 		pageTitle: post.title,
 		path: props.path
 	}
+
 	const articleAttr = {
 		data: post,
 		wpc_protected: context.wpc_protected,
@@ -95,6 +100,7 @@ export const postQuery = graphql`
 		title
 		meta {
 			description
+			robots
 		}
 	  }
     }

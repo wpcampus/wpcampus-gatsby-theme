@@ -95,6 +95,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			name: "wpcSEOMeta",
 			fields: {
 				description: "String",
+				robots: "[String]"
 			},
 			interfaces: ["Node"],
 		}),

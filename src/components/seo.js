@@ -17,8 +17,7 @@ function SEO(
 		meta,
 		title,
 		useTitleTemplate,
-		noIndex,
-		noFollow
+		metaRobots
 	}) {
 	const { site } = useStaticQuery(
 		graphql`
@@ -114,14 +113,15 @@ function SEO(
 		}
 	]
 
+	// Build robots meta.
 	const robots = []
 
-	if (true === noIndex) {
-		robots.push("noindex")
+	if (metaRobots.includes("nofollow")) {
+		robots.push("nofollow")
 	}
 
-	if (noFollow) {
-		robots.push("nofollow")
+	if (metaRobots.includes("noindex")) {
+		robots.push("noindex")
 	}
 
 	if (robots.length) {
@@ -157,8 +157,7 @@ SEO.defaultProps = {
 	meta: [],
 	description: "",
 	useTitleTemplate: true,
-	noIndex: false,
-	noFollow: false
+	metaRobots: []
 }
 
 SEO.propTypes = {
@@ -167,8 +166,7 @@ SEO.propTypes = {
 	meta: PropTypes.arrayOf(PropTypes.object),
 	title: PropTypes.string.isRequired,
 	useTitleTemplate: PropTypes.bool,
-	noIndex: PropTypes.bool,
-	noFollow: PropTypes.bool
+	metaRobots: PropTypes.array
 }
 
 export default SEO

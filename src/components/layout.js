@@ -24,8 +24,7 @@ const Layout = props => {
 	const {
 		isHome,
 		metaDescription,
-		noIndex,
-		noFollow,
+		metaRobots,
 		includeSidebar,
 		sidebarBottom,
 		useTitleTemplate,
@@ -114,8 +113,7 @@ const Layout = props => {
 		title: pageTitle,
 		useTitleTemplate: useTitleTemplate,
 		description: metaDescription,
-		noIndex: noIndex,
-		noFollow: noFollow
+		metaRobots: metaRobots
 	}
 
 	return (
@@ -154,8 +152,7 @@ const Layout = props => {
 Layout.propTypes = {
 	isHome: PropTypes.bool,
 	metaDescription: PropTypes.string,
-	noIndex: PropTypes.bool,
-	noFollow: PropTypes.bool,
+	metaRobots: PropTypes.array,
 	includeSidebar: PropTypes.bool,
 	sidebarBottom: PropTypes.bool,
 	pageTitle: PropTypes.string,
@@ -169,8 +166,7 @@ Layout.propTypes = {
 
 Layout.defaultProps = {
 	isHome: false,
-	noIndex: false,
-	noFollow: false,
+	metaRobots: [],
 	includeSidebar: true,
 	sidebarBottom: false,
 	useTitleTemplate: true

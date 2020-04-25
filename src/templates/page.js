@@ -14,6 +14,7 @@ const PageTemplate = props => {
 
 	const layoutAttr = {
 		metaDescription: page.wpc_seo.meta.description || null,
+		metaRobots: page.wpc_seo.meta.robots || [],
 		heading: page.title,
 		crumbs: pageContext.crumbs,
 		path: props.path
@@ -52,6 +53,7 @@ export const pageQuery = graphql`
 		  title
 		  meta {
 			  description
+			  robots
 		  }
 	  }
     }

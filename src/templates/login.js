@@ -15,8 +15,12 @@ const Login = () => {
 		}
 		return <LoginLayout />
 	}
+
+	// Don't index or follow.
+	const metaRobots = ["nofollow","noindex"]
+
 	return (
-		<Layout heading="Login" noIndex={true} noFollow={true}>
+		<Layout heading="Login" metaRobots={metaRobots}>
 			<User.Consumer>{handleDisplay}</User.Consumer>
 		</Layout>
 	)

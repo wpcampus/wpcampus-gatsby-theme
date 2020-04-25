@@ -14,6 +14,7 @@ const Library = props => {
 
 	const layoutAttr = {
 		metaDescription: page.wpc_seo.meta.description || null,
+		metaRobots: page.wpc_seo.meta.robots || [],
 		heading: page.title,
 		sidebarBottom: true,
 		crumbs: props.pageContext.crumbs,
@@ -51,6 +52,7 @@ export const pageQuery = graphql`
 		title
 		meta {
 		  description
+		  robots
 		}
 	  }
 	}

@@ -29,10 +29,12 @@ const PodcastTemplate = props => {
 	)
 	const layoutAttr = {
 		metaDescription: podcast.wpc_seo.meta.description || null,
+		metaRobots: podcast.wpc_seo.meta.robots || [],
 		classes: "wpc-post",
 		pageTitle: podcast.title,
 		path: props.path
 	}
+
 	const articleAttr = {
 		data: podcast, 
 		wpc_protected: context.wpc_protected,
@@ -100,6 +102,7 @@ export const podcastQuery = graphql`
 		title
 		meta {
 			description
+			robots
 		}
 	  }
     }
