@@ -31,7 +31,10 @@ Template.propTypes = {
 export const query = graphql`
   query {
     allWordpressPost(
-      filter: { type: { eq: "post" }, status: { eq: "publish" } }
+      filter: {
+		  status: { eq: "publish" },
+		  wpc_gatsby: { disable: { eq: false } }
+	  }
       sort: { fields: date, order: DESC }
     ) {
       edges {

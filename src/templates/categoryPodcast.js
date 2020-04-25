@@ -33,7 +33,8 @@ export const query = graphql`
     allWordpressWpPodcast(
       filter: {
         status: { eq: "publish" }
-        categories: { elemMatch: { id: { eq: $id } } }
+        categories: { elemMatch: { id: { eq: $id } } },
+		wpc_gatsby: { disable: { eq: false } }
       }
       sort: { fields: date, order: DESC }
     ) {

@@ -30,7 +30,10 @@ Template.propTypes = {
 export const query = graphql`
   query {
     allWordpressPage(
-      filter: { status: { eq: "publish" } }
+      filter: {
+		status: { eq: "publish" },
+	    wpc_gatsby: { disable: { eq: false } }
+	  }
       sort: { fields: title, order: ASC }
     ) {
       edges {

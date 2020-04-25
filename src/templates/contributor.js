@@ -74,11 +74,12 @@ export const query = graphql`
 		company
 		company_position
 		bio
-    }
+	}
     allWordpressPost(
       filter: {
         status: { eq: "publish" }
-        author: { elemMatch: { id: { eq: $id } } }
+        author: { elemMatch: { id: { eq: $id } } },
+		wpc_gatsby: { disable: { eq: false } }
       }
       sort: { fields: date, order: DESC }
     ) {
@@ -121,7 +122,8 @@ export const query = graphql`
     allWordpressWpPodcast(
       filter: {
         status: { eq: "publish" }
-        author: { elemMatch: { id: { eq: $id } } }
+		author: { elemMatch: { id: { eq: $id } } },
+		wpc_gatsby: { disable: { eq: false } }
       }
       sort: { fields: date, order: DESC }
     ) {

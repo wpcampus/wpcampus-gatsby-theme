@@ -108,6 +108,13 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			interfaces: ["Node"],
 		}),
 		schema.buildObjectType({
+			name: "wpcGatsby",
+			fields: {
+				disable: "Boolean"
+			},
+			interfaces: ["Node"],
+		}),
+		schema.buildObjectType({
 			name: "wpcCrumb",
 			fields: {
 				path: {
@@ -130,15 +137,17 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 		schema.buildObjectType({
 			name: "wordpress__PAGE",
 			fields: {
+				wpc_gatsby: "wpcGatsby",
 				wpc_protected: "wpcProtected",
 				wpc_seo: "wpcSEO",
 				crumb: "wpcCrumb"
 			},
 			interfaces: ["Node"],
-		}),		  
+		}),
 		schema.buildObjectType({
 			name: "wordpress__POST",
 			fields: {
+				wpc_gatsby: "wpcGatsby",
 				wpc_protected: "wpcProtected",
 			},
 			interfaces: ["Node"],
@@ -155,6 +164,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 						return source.episode_featured_image
 					}
 				},
+				wpc_gatsby: "wpcGatsby",
 			},
 			interfaces: ["Node"],
 		}),
@@ -472,7 +482,12 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 
 const postCategoriesQuery = `
 	query {
-		allWordpressPost {
+		allWordpressPost(
+			filter: { 
+				status: { eq: "publish" },
+				wpc_gatsby: { disable: { eq: false } }
+			}
+		) {
 			edges {
 				node {
 					categories {
@@ -489,7 +504,12 @@ const postCategoriesQuery = `
 
 const podcastCategoriesQuery = `
 	query {
-		allWordpressWpPodcast {
+		allWordpressWpPodcast(
+			filter: {
+				status: { eq: "publish" },
+				wpc_gatsby: { disable: { eq: false } }
+			}
+		) {
 			edges {
 				node {
 					categories {
@@ -681,7 +701,12 @@ exports.createPages = async ({ graphql, actions }) => {
    	 */
 	const pages = await graphql(`
 		query {
-			allWordpressPage(filter: { status: { eq: "publish" } }) {
+			allWordpressPage(
+				filter: {
+					status: { eq: "publish" },
+					wpc_gatsby: { disable: { eq: false } }
+				}
+			) {
 				edges {
 					node {
 						id
@@ -741,6 +766,9 @@ exports.createPages = async ({ graphql, actions }) => {
 							}
 							message
 						}
+						wpc_gatsby {
+							disable
+						}
 					}
 				}
 			}
@@ -756,6 +784,11 @@ exports.createPages = async ({ graphql, actions }) => {
 
 		// @TODO will be able to delete after deleted from WordPress app.
 		if ("/blog/" === edge.node.path) {
+			return
+		}
+
+		// Don't build disabled pages.
+		if (true === edge.node.wpc_gatsby.disable) {
 			return
 		}
 
@@ -793,7 +826,10 @@ exports.createPages = async ({ graphql, actions }) => {
 	const posts = await graphql(`
 		query {
 			allWordpressPost(
-				filter: { type: { eq: "post" }, status: { eq: "publish" } }
+				filter: { 
+					status: { eq: "publish" },
+					wpc_gatsby: { disable: { eq: false } }
+				}
 			) {
 				edges {
 					previous {
@@ -840,6 +876,9 @@ exports.createPages = async ({ graphql, actions }) => {
 							}
 							message
 						}
+						wpc_gatsby {
+							disable
+						}
 					}
 				}
 			}
@@ -847,6 +886,12 @@ exports.createPages = async ({ graphql, actions }) => {
   	`)
 	const postTemplate = path.resolve("./src/templates/post.js")
 	posts.data.allWordpressPost.edges.forEach(edge => {
+
+		// Don't build disabled posts.
+		if (true === edge.node.wpc_gatsby.disable) {
+			return
+		}
+
 		createPage({
 			// will be the url for the page
 			path: edge.node.path,
@@ -891,7 +936,10 @@ exports.createPages = async ({ graphql, actions }) => {
 	const podcasts = await graphql(`
 		query {
 			allWordpressWpPodcast(
-				filter: { type: { eq: "podcast" }, status: { eq: "publish" } }
+				filter: {
+					status: { eq: "publish" },
+					wpc_gatsby: { disable: { eq: false } }
+				}
 			) {
 				edges {
 					previous {
@@ -914,6 +962,9 @@ exports.createPages = async ({ graphql, actions }) => {
 						id
 						path
 						title
+						wpc_gatsby {
+							disable
+						}
 					}
 				}
 			}
@@ -921,6 +972,12 @@ exports.createPages = async ({ graphql, actions }) => {
 	`)
 	const podcastTemplate = path.resolve("./src/templates/podcast.js")
 	podcasts.data.allWordpressWpPodcast.edges.forEach(edge => {
+
+		// Don't build disabled podcasts.
+		if (true === edge.node.wpc_gatsby.disable) {
+			return
+		}
+
 		createPage({
 			// will be the url for the page
 			path: edge.node.path,
