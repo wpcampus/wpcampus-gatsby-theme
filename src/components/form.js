@@ -226,15 +226,15 @@ const Form = ({ data }) => {
 
 		let inputType
 		switch (field.type) {
-		case "name":
-			inputType = "text"
-			break
-		case field.type:
-			inputType = field.type
-			break
-		default:
-			inputType = "text"
-			break
+			case "name":
+				inputType = "text"
+				break
+			case field.type:
+				inputType = field.type
+				break
+			default:
+				inputType = "text"
+				break
 		}
 
 		let inputName
@@ -486,34 +486,34 @@ const Form = ({ data }) => {
 		let fieldMarkup
 
 		switch (field.type) {
-		/*case "section":
-					fieldMarkup = <FormFieldSection field={field} />
-					break*/
-		case "name":
-			fieldMarkup = <FormFieldName field={field} />
-			break
-		case "email":
-			fieldMarkup = <FormFieldEmail field={field} />
-			break
-		case "text":
-		case "password":
-			if (field.enablePasswordInput) {
-				field.type = "password"
-			}
-			fieldMarkup = <FormFieldInput field={field} />
-			break
+			/*case "section":
+						fieldMarkup = <FormFieldSection field={field} />
+						break*/
+			case "name":
+				fieldMarkup = <FormFieldName field={field} />
+				break
+			case "email":
+				fieldMarkup = <FormFieldEmail field={field} />
+				break
+			case "text":
+			case "password":
+				if (field.enablePasswordInput) {
+					field.type = "password"
+				}
+				fieldMarkup = <FormFieldInput field={field} />
+				break
 			/*case "hidden":
 				fieldMarkup = <FormFieldInput field={field} />
 				break*/
-		case "radio":
-			fieldMarkup = <FormFieldRadio field={field} />
-			break
-		case "textarea":
-			fieldMarkup = <FormFieldTextarea field={field} />
-			break
-		default:
-			fieldMarkup = null
-			break
+			case "radio":
+				fieldMarkup = <FormFieldRadio field={field} />
+				break
+			case "textarea":
+				fieldMarkup = <FormFieldTextarea field={field} />
+				break
+			default:
+				fieldMarkup = null
+				break
 		}
 
 		if (!fieldMarkup) {
@@ -592,7 +592,7 @@ const Form = ({ data }) => {
 		if (formErrors.length) {
 
 			let errorMessage = ""
-			if ( 1 === formErrors.length) {
+			if (1 === formErrors.length) {
 				errorMessage = "There was 1 error found in the information you submitted."
 			} else {
 				errorMessage = `There were ${formErrors.length} errors found in the information you submitted.`
@@ -649,7 +649,7 @@ const Form = ({ data }) => {
 		)
 		// @TODO COOOOOOOOOOOOOOOOOOOORS
 		return new Promise((resolve, reject) => {
-			let url = `https://${process.env.WPC_HOST}/wp-json/gf/v2/entries?form_id=${formId}`
+			let url = `${entriesAPI}?form_id=${formId}`
 			const request = new XMLHttpRequest()
 			request.open("POST", url)
 			request.responseType = "application/json"
@@ -887,17 +887,17 @@ const Form = ({ data }) => {
 
 		switch (field.type) {
 
-		case "name":
-			return await validateFormFieldName(form, field)
+			case "name":
+				return await validateFormFieldName(form, field)
 
-		case "email":
-			return await validateFormFieldEmail(form, field)
+			case "email":
+				return await validateFormFieldEmail(form, field)
 
-		case "radio":
-			return await validateFormFieldRadio(form, field)
+			case "radio":
+				return await validateFormFieldRadio(form, field)
 
-		case "textarea":
-			return await validateFormFieldTextarea(form, field)
+			case "textarea":
+				return await validateFormFieldTextarea(form, field)
 
 		}
 
@@ -972,15 +972,14 @@ const Form = ({ data }) => {
 				console.log("entry success")
 				console.log(formEntry)
 
-				// @TODO handle submit entry.
-				/*submitEntry(formEntry)
-					.then(function(response) {
-						//console.log("response")
-						//console.log(response)
+				submitEntry(formEntry)
+					.then(function (response) {
+						console.log("response")
+						console.log(response)
 					})
-					.catch(function(error) {
+					.catch(function (error) {
 						console.error(error) // @TODO how to handle error?
-					})*/
+					})
 			})
 			.catch(error => {
 				// @TODO how to handle the error?
