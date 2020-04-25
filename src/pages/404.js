@@ -8,13 +8,19 @@ import TruckSheep from "../svg/trucksheep"
 
 import "./../css/trucksheep.css"
 
-// @TODO add meta description?
-
 // @TODO add back link to mascots when page is ready
 //<Link to="/about/mascots/" aria-label="Learn more about Truck Sheep">
 const NotFoundPage = () => {
+
 	// Have to hard code 404 in case the dynamic 404 passes the URL location.
-	return <Layout heading="Page not found" path="/404/">
+	const layoutAttr = {
+		heading:"Page not found",
+		metaDescription: "Hmm. The URL you visited does not seem to exist.",
+		metaRobots: ["nofollow", "noindex"],
+		path: "/404/"
+	}
+
+	return <Layout {...layoutAttr}>
 		<TruckSheep />
 		<SearchLayout includeSearchHeading={true}>
 			<p>Hmm. The URL you visited does not seem to exist.</p>
