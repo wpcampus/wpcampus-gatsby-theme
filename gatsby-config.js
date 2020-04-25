@@ -13,6 +13,12 @@ module.exports = {
 	plugins: [
 		"gatsby-plugin-react-helmet",
 		{
+			resolve: "gatsby-plugin-react-helmet-canonical-urls",
+			options: {
+				siteUrl: process.env.WPC_SITE,
+			},
+		},
+		{
 			resolve: "gatsby-source-filesystem",
 			options: {
 				name: "images",
@@ -20,7 +26,7 @@ module.exports = {
 			},
 		},
 		{
-			resolve: `gatsby-plugin-google-analytics`,
+			resolve: "gatsby-plugin-google-analytics",
 			options: {
 				trackingId: "UA-73440483-2",
 			},
