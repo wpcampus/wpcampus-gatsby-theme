@@ -22,10 +22,17 @@ export default function Template(props) {
 	}
 	const contributors = props.data.allWordpressWpcContributors.nodes
 
-	// @TODO add meta description?
+	const metaDesc = "Our community is grateful to the many volunteer contributors who have donated their time, energy, and skills to provide content and resources in support of our mission."
+
+	const layoutAttr = {
+		heading: "Contributors",
+		metaDescription: metaDesc,
+		crumbs: crumbs,
+		path: props.path
+	}
 
 	return (
-		<Layout heading="Contributors" crumbs={crumbs} path={props.path}>
+		<Layout {...layoutAttr}>
 			<p>At WPCampus, our mission is to advance Higher Education by providing a support structure and wealth of knowledge for anyone who uses, or is interested in using, WordPress in the world of Higher Education.</p>
 			<p>Our community is grateful to the <strong>{contributors.length} volunteer contributors</strong> who have donated their time, energy, and skills to provide content and resources in support of our mission.</p>
 			<p><em>Note:</em> We are working on a plan to highlight those who contribute to our community in other ways, for example, donating their time to organize events and lead committees and working groups. We have a wonderful, giving community and we are so grateful to all who foster its growth.</p>
