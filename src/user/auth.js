@@ -4,8 +4,11 @@ const tokenKey = "wpc-auth-token"
 
 /*
  * Set the root URL for auth requests.
+ *
+ * Environment variables are only accessible in development.
  */
-const authRoot = "https://wpcampus.org/wp-json"
+const isDev = "development" === process.env.NODE_ENV
+const authRoot = isDev ? process.env.WPC_API : "https://wpcampus.org/wp-json"
 
 /*
  * When does authorization expire? 
