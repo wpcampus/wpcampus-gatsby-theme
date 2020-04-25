@@ -247,12 +247,27 @@
 		},
 		{
 			"source": "/diversity-equity-and-inclusion/",
-			"destination": "/diversity/",
+			"destination": "/about/guidelines/diversity/",
+			"status": 301
+		},
+		{
+			"source": "/code-of-conduct/report/",
+			"destination": "/about/guidelines/conduct/report/",
+			"status": 301
+		},
+		{
+			"source": "/code-of-conduct/",
+			"destination": "/about/guidelines/conduct/",
+			"status": 301
+		},
+		{
+			"source": "/diversity/",
+			"destination": "/about/guidelines/diversity/",
 			"status": 301
 		},
 		{
 			"source": "/dei/",
-			"destination": "/diversity/",
+			"destination": "/about/guidelines/diversity/",
 			"status": 301
 		},
 		{
