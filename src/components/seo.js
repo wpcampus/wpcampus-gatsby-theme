@@ -42,6 +42,19 @@ function SEO(
 	const og_image_width = "1200"
 	const og_image_height = "628"
 
+	const helmetAttr = {
+		htmlAttributes: {
+			lang,
+		},
+		title: title
+	}
+
+	if (useTitleTemplate) {
+		title = `${title} | ${site.siteMetadata.siteName}`
+		helmetAttr.titleTemplate = `%s | ${site.siteMetadata.siteName}`
+	}
+
+	// Create meta.
 	const helmetMeta = [
 		{
 			name: "description",
@@ -132,17 +145,8 @@ function SEO(
 			})
 	}
 
-	const helmetAttr = {
-		htmlAttributes: {
-			lang,
-		},
-		title: title,
-		meta: helmetMeta.concat(meta)
-	}
-
-	if (useTitleTemplate) {
-		helmetAttr.titleTemplate = `%s | ${site.siteMetadata.siteName}`
-	}
+	// Add meta to helmet.
+	helmetAttr.meta = helmetMeta.concat(meta)
 
 	// @TODO audit font usage.
 	return (
