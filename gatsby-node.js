@@ -825,6 +825,8 @@ exports.createPages = async ({ graphql, actions }) => {
 			template = libraryTemplate
 		} else if ("/" == edge.node.path) {
 			template = indexTemplate
+		} else if ("/about/contact/" == edge.node.path) {
+			template = contactTemplate
 		} else {
 			template = pageTemplate
 		}
@@ -845,16 +847,6 @@ exports.createPages = async ({ graphql, actions }) => {
 				wpc_protected: edge.node.wpc_protected,
 			},
 		})
-	})
-
-	createPage({
-		path: "/about/contact/",
-		component: slash(contactTemplate),
-		context: {
-			wpc_protected: {
-				protected: false,
-			},
-		},
 	})
 
 	/*

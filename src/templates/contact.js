@@ -1,15 +1,28 @@
 import React from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
+import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
 import Form from "../components/form"
 import ProtectedContent from "../components/content"
 
 const PageTemplate = props => {
+	const page = props.data.wordpressPage
+	const pageContext = props.pageContext
+
+	const layoutAttr = {
+		metaDescription: page.wpc_seo.meta.description || null,
+		metaRobots: page.wpc_seo.meta.robots || [],
+		heading: page.title,
+		crumbs: pageContext.crumbs,
+		path: props.path
+	}
+
 	return (
-		<Layout heading="Contact WPCampus">
-			<ProtectedContent wpc_protected={props.pageContext.wpc_protected}>
+		<Layout {...layoutAttr}>
+			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
+				<div>{ReactHtmlParser(page.content)}</div>
 				<Form data={props.data.gfForm} />
 			</ProtectedContent>
 		</Layout>
@@ -19,17 +32,30 @@ const PageTemplate = props => {
 PageTemplate.propTypes = {
 	pageContext: PropTypes.object.isRequired,
 	data: PropTypes.object.isRequired,
+	path: PropTypes.string.isRequired,
 }
 
 export default PageTemplate
 
 export const pageQuery = graphql`
-  query {
+  query($id: String!) {
     site {
       siteMetadata {
         siteName
       }
-    }
+	}
+	wordpressPage(id: { eq: $id }) {
+		id
+		title
+		content
+		wpc_seo {
+			title
+			meta {
+				description
+				robots
+			}
+		}
+	}
     gfForm(formId: { eq: 3 }) {
       formId
       title
