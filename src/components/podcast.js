@@ -5,14 +5,14 @@ import { Nav } from "./nav"
 const PodcastCallout = () => {
 	return (
 		<div>
-			<p>The WPCampus Podcast is a recurring show where members of the community come together to discuss relevant topics, unique ways that WordPress is being used in Higher Education, share tutorials and walkthroughs, and more. <strong><em>If you&apos;d like to be a guest on the show, or have a topic you&apos;d like us to discuss, please <a href="/contact/">let us know</a>.</em></strong></p>
+			<p>The WPCampus Podcast is a recurring show where members of the community come together to discuss relevant topics, unique ways that WordPress is being used in Higher Education, share tutorials and walkthroughs, and more. <strong><em>If you&apos;d like to be a guest on the show, or have a topic you&apos;d like us to discuss, please <a href="/about/contact/">let us know</a>.</em></strong></p>
 		</div>
 	)
 }
 
 const PodcastActions = () => {
 	const actionsAttr = {
-		label: "Find the WPCampus podcast on other platforms",
+		aria_label: "Find the WPCampus podcast on other platforms",
 		list: [
 			{
 				href: "https://open.spotify.com/show/0ULgPfGeMdkZYoRxkOJcMq?si=5_VGrpbnTd2CJIAx8yPWcQ",

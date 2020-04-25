@@ -82,9 +82,40 @@ form.gform {
 }
 
 .wpc-form {
+	input[type="text"],
+	input[type="search"],
+	input[type="email"],
+	input[type="password"] {
+		display: block;
+		width: 100%;
+		height: auto;
+		padding: 0.5rem;
+		font-size: 1rem;
+		color: inherit;
+		border: var(--input-border);
+		-webkit-appearance: none;
+	}
+
+	input[type="submit"] {
+		background-color: var(--wpc-blue-royal);
+		border: 1px solid var(--wpc-blue-royal);
+		border-radius: var(--button-border-radius);
+		padding: 0.5rem 1rem;
+		font-size: 1.1rem;
+		color: #fff;
+		cursor: pointer;
+
+		&:hover,
+		&:focus {
+			background-color: var(--wpc-blue-dark);
+			border-color: var(--wpc-blue-dark);
+			color: #fff;
+		}
+	}
+
 	&__alert {
 		margin: 0 0 0.5rem;
-		font-weight: bold;
+		font-weight: 600;
 	}
 
 	&__label {
@@ -93,11 +124,6 @@ form.gform {
 	}
 
 	&__input {
-		display: block;
-		width: 100%;
-		height: auto;
-		padding: 0.3rem;
-
 		&[aria-invalid="true"] {
 			border: 1px solid #900;
 		}
@@ -108,36 +134,95 @@ form.gform {
 		}
 	}
 
-	&--login {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		grid-column-gap: 0;
-		grid-row-gap: 0.5rem;
-		align-items: center;
-		font-size: 0.9rem;
-		border: 1px solid #ccc;
-		padding: 1rem;
-
-		.wpc-form__alert {
-			grid-column: 1 / span 2;
-		}
-
-		.wpc-form__label {
-			grid-column: 1 / span 1;
-		}
-
-		.wpc-form__inputWrapper {
-			grid-column: 2 / span 1;
-		}
-
-		.wpc-form__submit {
-			grid-column: 1 / span 2;
-			margin: 0.6rem 0 0;
-		}
-	}
-
 	&--processing {
 		opacity: 0.4;
 		pointer-events: none;
+	}
+
+	&--search {
+		--magnifying-width: 40px;
+
+		display: grid;
+		grid-template-columns: 1fr 10rem;
+		grid-column-gap: 0.75rem;
+		align-items: stretch;
+		border: var(--input-border);
+		padding: 0.75rem;
+		background: #fff;
+
+		&.wpc-search-form {
+			.wpc-search-form {
+				&__input[type="search"] {
+					border: 0;
+					padding: 0;
+					font-size: 1.3rem;
+					background: transparent;
+					height: var(--magnifying-width);
+				}
+
+				&__submit {
+					display: block;
+					width: 100%;
+				}
+			}
+
+			&--show-submit-icon {
+				grid-template-columns: 1fr var(--magnifying-width);
+
+				.wpc-search-form__submit-icon {
+					position: relative;
+
+					input[type="submit"] {
+						background: transparent;
+						border: 0;
+						padding: 0;
+						width: var(--magnifying-width);
+						height: var(--magnifying-width);
+
+						&:hover,
+						&:focus {
+							outline: 1px dotted #212121;
+							outline: 5px auto -webkit-focus-ring-color;
+						}
+					}
+
+					.wpc-search-form__magnifying {
+						position: absolute;
+						left: 0;
+						top: 0;
+						width: var(--magnifying-width);
+						height: var(--magnifying-width);
+						pointer-events: none;
+
+						svg {
+							display: block;
+							width: var(--magnifying-width);
+							height: var(--magnifying-width);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	&--login {
+		display: grid;
+		grid-template-rows: repeat(6, auto);
+		grid-row-gap: 0.5rem;
+		align-items: center;
+		font-size: 0.9rem;
+
+		input[type="submit"].wpc-form__submit {
+			font-size: 1.4rem;
+			line-height: 1.4;
+		}
+	}
+
+	&--password {
+		display: grid;
+		grid-template-rows: repeat(4, auto);
+		grid-row-gap: 0.5rem;
+		align-items: center;
+		font-size: 0.9rem;
 	}
 }

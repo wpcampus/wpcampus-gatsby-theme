@@ -38,7 +38,7 @@ const reducer = (state, action) => {
 		}
 		if (
 			action.payload.active !== undefined &&
-        action.payload.active === true
+				action.payload.active === true
 		) {
 			newState.active = true
 		}
@@ -74,9 +74,72 @@ const UserContextProvider = props => {
 		return state.user
 	}
 
+	const getUsername = () => {
+		if (state.user && state.user.username) {
+			return state.user.username
+		}
+		return ""
+	}
+
 	const getDisplayName = () => {
 		if (state.user && state.user.display_name) {
 			return state.user.display_name
+		}
+		return ""
+	}
+
+	const getFirstName = () => {
+		if (state.user && state.user.first_name) {
+			return state.user.first_name
+		}
+		return ""
+	}
+
+	const getLastName = () => {
+		if (state.user && state.user.last_name) {
+			return state.user.last_name
+		}
+		return ""
+	}
+
+	const getEmail = () => {
+		if (state.user && state.user.email) {
+			return state.user.email
+		}
+		return ""
+	}
+
+	const getWebsite = () => {
+		if (state.user && state.user.website) {
+			return state.user.website
+		}
+		return ""
+	}
+
+	const getTwitter = () => {
+		if (state.user && state.user.twitter) {
+			return state.user.twitter
+		}
+		return ""
+	}
+
+	const getBio = () => {
+		if (state.user && state.user.bio) {
+			return state.user.bio
+		}
+		return ""
+	}
+
+	const getCompany = () => {
+		if (state.user && state.user.company) {
+			return state.user.company
+		}
+		return ""
+	}
+
+	const getCompanyPosition = () => {
+		if (state.user && state.user.company_position) {
+			return state.user.company_position
 		}
 		return ""
 	}
@@ -142,14 +205,33 @@ const UserContextProvider = props => {
 					},
 				})
 			})
-			/*.catch(error => {
-				// @TODO handle error?
-				//console.error(error.message)
-			})*/
+		/*.catch(error => {
+			// @TODO handle error?
+			//console.error(error.message)
+		})*/
+	}
+
+	const LogoutButton = ({ isPlain }) => {
+		const buttonAttr = {
+			className: "wpc-button wpc-button--logout",
+			onClick: logout
+		}
+		if (isPlain) {
+			buttonAttr.className += " wpc-button--plain"
+		}
+		return <button {...buttonAttr}>Logout</button>
+	}
+
+	LogoutButton.propTypes = {
+		isPlain: PropTypes.bool
+	}
+
+	LogoutButton.defaultProps = {
+		isPlain: false
 	}
 
 	// Runs when the page loads to see if the user is logged in.
-	const initLogin = async () => {
+	const authenticate = async () => {
 		const payload = {
 			user: null,
 			token: null,
@@ -185,7 +267,7 @@ const UserContextProvider = props => {
 
 	// Let's get things started. Will set the context to active.
 	if (!isActive()) {
-		initLogin()
+		authenticate()
 			.then(response => {
 				dispatch({
 					type: "updateUser",
@@ -196,25 +278,35 @@ const UserContextProvider = props => {
 					},
 				})
 			})
-			/*.catch(error => {
+			.catch(() => {
 				// @TODO handle error?
 				//console.error(error.message)
 
 				logout()
-			})*/
+			})
+	}
+
+	const provider = {
+		...state,
+		getUsername: getUsername,
+		getDisplayName: getDisplayName,
+		getFirstName: getFirstName,
+		getLastName: getLastName,
+		getEmail: getEmail,
+		getWebsite: getWebsite,
+		getTwitter: getTwitter,
+		getBio: getBio,
+		getCompany: getCompany,
+		getCompanyPosition: getCompanyPosition,
+		isActive: isActive,
+		isLoggedIn: isLoggedIn,
+		login: login,
+		logout: logout,
+		LogoutButton: LogoutButton,
 	}
 
 	return (
-		<User.Provider
-			value={{
-				...state,
-				getDisplayName: getDisplayName,
-				isActive: isActive,
-				isLoggedIn: isLoggedIn,
-				login: login,
-				logout: logout,
-			}}
-		>
+		<User.Provider value={provider}>
 			{props.children}
 		</User.Provider>
 	)

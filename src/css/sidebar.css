@@ -1,0 +1,57 @@
+.wpc-sidebar {
+	font-size: 0.9rem;
+
+	.wpc-widget {
+		&__heading {
+			margin: 0 0 0.5rem;
+
+			.wpc-icon {
+				margin: 0 0.5rem 0 0;
+				font-size: 1.5rem;
+				vertical-align: -25%;
+			}
+		}
+
+		h2.wpc-widget__heading {
+			font-size: 1.2rem;
+			line-height: 1;
+			font-weight: 600;
+		}
+
+		&--blog {
+			h3.wpc-blog__title {
+				font-size: 1.2rem;
+			}
+
+			.wpc-blog__meta {
+				margin: 0.2rem 0;
+			}
+		}
+
+		&--tweets {
+			.wpc-tweets__tweet {
+				margin: 0 0 1rem 0;
+
+				.wpc-tweets {
+					&__text {
+						margin: 0;
+					}
+
+					&__link {
+						display: block;
+						color: inherit;
+						margin: 0.1rem 0 0;
+					}
+				}
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+
+		& + .wpc-widget {
+			margin-top: 1.5rem;
+		}
+	}
+}

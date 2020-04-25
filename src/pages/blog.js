@@ -6,14 +6,18 @@ import Layout from "../components/layout"
 import { ArticleArchive } from "../components/archive"
 
 export default function Template(props) {
-	const data = props.data
 	const crumbs = {
-		path: props.path,
-		title: "Blog",
+		crumb: {
+			path: props.path,
+			text: "Blog"
+		}
 	}
+
+	// @TODO add meta description?
+
 	return (
-		<Layout pageTitle="Blog" heading="Blog posts" crumbs={crumbs}>
-			<ArticleArchive list={data.allWordpressPost.edges} />
+		<Layout pageTitle="Blog" heading="The WPCampus Blog" crumbs={crumbs} path={props.path}>
+			<ArticleArchive list={props.data.allWordpressPost.edges} />
 		</Layout>
 	)
 }
@@ -27,7 +31,10 @@ Template.propTypes = {
 export const query = graphql`
   query {
     allWordpressPost(
-      filter: { type: { eq: "post" }, status: { eq: "publish" } }
+      filter: {
+		  status: { eq: "publish" },
+		  wpc_gatsby: { disable: { eq: false } }
+	  }
       sort: { fields: date, order: DESC }
     ) {
       edges {
@@ -38,10 +45,14 @@ export const query = graphql`
           path
           author {
             id
-            wordpress_id
-            name
-            slug
-            path
+			path
+			display_name
+			email
+			twitter
+			website
+			company
+			company_position
+			bio
           }
           title
           status
@@ -63,7 +74,7 @@ export const query = graphql`
     }
     site {
       siteMetadata {
-        title
+        siteName
       }
     }
   }

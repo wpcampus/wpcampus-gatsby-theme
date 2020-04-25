@@ -6,19 +6,23 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import { ArticleArchive } from "../components/archive"
 
-export default function Template({ data }) {
+export default function Template(props) {
+
+	// @TODO add meta description?
+
 	return (
-		<Layout heading="Pages">
+		<Layout heading="Pages" path={props.path}>
 			<ArticleArchive
 				displayMeta={false}
 				displayContent={false}
-				list={data.allWordpressPage.edges}
+				list={props.data.allWordpressPage.edges}
 			/>
 		</Layout>
 	)
 }
 
 Template.propTypes = {
+	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired
 }
 
@@ -26,7 +30,10 @@ Template.propTypes = {
 export const query = graphql`
   query {
     allWordpressPage(
-      filter: { status: { eq: "publish" } }
+      filter: {
+		status: { eq: "publish" },
+	    wpc_gatsby: { disable: { eq: false } }
+	  }
       sort: { fields: title, order: ASC }
     ) {
       edges {
@@ -46,7 +53,7 @@ export const query = graphql`
     }
     site {
       siteMetadata {
-        title
+        siteName
       }
     }
   }

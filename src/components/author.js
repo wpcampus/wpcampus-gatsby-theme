@@ -39,7 +39,8 @@ const AuthorCardMeta = ({ author }) => {
 	if (author.url) {
 		const authorURL = {
 			href: author.url,
-			text: author.url
+			aria_label: `Website of ${author.display_name}`,
+			text: "Website"
 		}
 		items.push(<NavAnchor item={authorURL} />)
 	}
@@ -47,7 +48,7 @@ const AuthorCardMeta = ({ author }) => {
 		return ""
 	}
 	return (
-		<ul>
+		<ul className="wpc-meta wpc-contributor__meta">
 			{items.map((item, i) => (
 				<li key={i}>
 					{item}
@@ -61,14 +62,20 @@ AuthorCardMeta.propTypes = {
 	author: PropTypes.object.isRequired,
 }
 
-const AuthorCards = ({ authors }) => {
+const AuthorCards = ({ authors, displayBio, classes }) => {
 	if (!authors) {
 		return ""
 	}
+	const attr = {
+		className: "wpc-contributors"
+	}
+	if (classes) {
+		attr.className += ` ${classes}`
+	}
 	return (
-		<div className="wpc-authors">
+		<div {...attr}>
 			{authors.map((item, i) => (
-				<AuthorCard key={i} author={item} />
+				<AuthorCard key={i} author={item} displayBio={displayBio} />
 			))}
 		</div>
 	)
@@ -76,21 +83,32 @@ const AuthorCards = ({ authors }) => {
 
 AuthorCards.propTypes = {
 	authors: PropTypes.array.isRequired,
+	displayBio: PropTypes.bool,
+	classes: PropTypes.string
 }
 
-const AuthorCard = ({ author }) => {
-	const authorLink = "/about/contributors/" + author.slug
+AuthorCards.defaultProps = {
+	displayBio: true
+}
+
+const AuthorCard = ({ author, headingLevel, displayBio }) => {
+	const authorLink = "/about/contributors/" + author.path + "/"
+	let HeadingTag = `h${headingLevel}`
+	let bio
+	if (displayBio && author.bio) {
+		bio = <div className="wpc-contributor__bio">
+			<p>{author.bio}</p>
+		</div>
+	}
 	return (
-		<div className="wpc-author">
-			<div className="wpc-areas wpc-areas--grid wpc-author__areas">
-				<div className="wpc-area wpc-author__area wpc-author__area--avatar">
-					<img className="wpc" src={avatarEduwapuuBW} />
-				</div>
-				<div className="wpc-area wpc-author__area wpc-author__area--main">
-					<Link to={authorLink}>{author.name}</Link>
-					<AuthorCardMeta author={author} />
-					{!author.description ? "" : <p>{author.description}</p>}
-				</div>
+		<div className="wpc-contributor">
+			<div className="wpc-contributor__avatar">
+				<img className="wpc" src={avatarEduwapuuBW} alt="" />
+			</div>
+			<div className="wpc-contributor__main">
+				<HeadingTag className="wpc-contributor__name"><Link to={authorLink}>{author.display_name}</Link></HeadingTag>
+				<AuthorCardMeta author={author} />
+				{bio}
 			</div>
 		</div >
 	)
@@ -98,6 +116,13 @@ const AuthorCard = ({ author }) => {
 
 AuthorCard.propTypes = {
 	author: PropTypes.object.isRequired,
+	headingLevel: PropTypes.number,
+	displayBio: PropTypes.bool
+}
+
+AuthorCard.defaultProps = {
+	headingLevel: 2,
+	displayBio: true
 }
 
 export { AuthorCard, AuthorCards }

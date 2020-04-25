@@ -3,16 +3,16 @@ import messages from "./messages"
 const tokenKey = "wpc-auth-token"
 
 /*
- * When does authorization expire? By default, every 48 hours
- * The duration is in milliseconds.
- *
- * You can override this value by defining WPC_AUTH_DURATION in the .env file.
+ * Set the root URL for auth requests.
  */
-const defaultDuration = 172800000
-const expDuration =
-    process.env.WPC_AUTH_DURATION &&
-        Number.isInteger(process.env.WPC_AUTH_DURATION) &&
-        process.env.WPC_AUTH_DURATION > 0 ? parseInt(process.env.WPC_AUTH_DURATION) : defaultDuration
+const authRoot = "https://wpcampus.org/wp-json"
+
+/*
+ * When does authorization expire? 
+ * By default, every 48 hours.
+ * The duration is in milliseconds.
+ */
+const authExpiration = 172800000 
 
 const removeJWTPrefix = message => {
 	return message.replace(/^\[jwt_auth\]\s/, "")
@@ -20,10 +20,13 @@ const removeJWTPrefix = message => {
 
 export default class Auth {
 	removeToken() {
-		localStorage.removeItem(tokenKey)
+		typeof localStorage !== "undefined" && localStorage.removeItem(tokenKey)
 	}
 
 	storeToken(tokenValue) {
+		if (typeof localStorage === "undefined") {
+			return false
+		}
 		let token = {
 			token: tokenValue,
 		}
@@ -33,6 +36,10 @@ export default class Auth {
 	}
 
 	getValidToken() {
+		if (typeof localStorage === "undefined") {
+			return false
+		}
+
 		let token = localStorage.getItem(tokenKey)
 		if (token === null) {
 			return false
@@ -45,7 +52,7 @@ export default class Auth {
 			return false
 		}
 
-		if (Date.now() - token.date > expDuration) {
+		if (Date.now() - token.date > authExpiration) {
 			this.removeToken()
 			return false
 		}
@@ -62,7 +69,7 @@ export default class Auth {
 
 	async login(username, password) {
 		return new Promise((resolve, reject) => {
-			if (!process.env.WPC_AUTH_API_BASE) {
+			if (!authRoot) {
 				reject(new Error(messages.missing_api))
 			}
 
@@ -70,7 +77,7 @@ export default class Auth {
 			formData.append("username", username)
 			formData.append("password", password)
 
-			return fetch(process.env.WPC_AUTH_API_BASE + "/jwt-auth/v1/token", {
+			return fetch(authRoot + "/jwt-auth/v1/token", {
 				method: "post",
 				headers: new Headers({
 					Accept: "application/json",
@@ -85,8 +92,10 @@ export default class Auth {
 						let messageCode = removeJWTPrefix(response.code)
 						if (messages[messageCode]) {
 							throw new Error(messages[messageCode])
-						} else {
+						} else if (response.message) {
 							throw new Error(response.message)
+						} else {
+							throw new Error(messages.login_error)
 						}
 					}
 					this.storeToken(response.token)
@@ -100,11 +109,11 @@ export default class Auth {
 
 	async authenticate(token) {
 		return new Promise((resolve, reject) => {
-			if (!process.env.WPC_AUTH_API_BASE) {
+			if (!authRoot) {
 				reject(new Error(messages.missing_api))
 			}
 
-			return fetch(process.env.WPC_AUTH_API_BASE + "/wpcampus/auth/user", {
+			return fetch(authRoot + "/wpcampus/auth/user", {
 				method: "get",
 				headers: new Headers({
 					Accept: "application/json",
@@ -119,8 +128,10 @@ export default class Auth {
 						let messageCode = removeJWTPrefix(response.code)
 						if (messages[messageCode]) {
 							throw new Error(messages[messageCode])
-						} else {
+						} else if (response.message) {
 							throw new Error(response.message)
+						} else {
+							throw new Error(messages.auth_problem)
 						}
 					}
 					response = {

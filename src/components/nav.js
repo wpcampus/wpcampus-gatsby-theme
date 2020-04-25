@@ -2,50 +2,79 @@ import React from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
-// @TODO revert usage of "blognew" to "blog".
+// @TODO remove search and pages menu item
 const NavPrimaryItems = [
 	{
-		slug: "/about/",
+		path: "/about/",
 		text: "About",
 		children: [
-			{ slug: "/about/contributors/", text: "Contributors" },
-			{ slug: "/about/partners/", text: "Partners" },
-			{ slug: "/about/mascots/", text: "Mascots" },
-			{ slug: "/about/governance/", text: "Governance" },
-			{ slug: "/about/contact/", text: "Contact us" },
+			{ path: "/about/contributors/", text: "Contributors" },
+			{ path: "/about/partners/", text: "Partners" },
+			/*{ path: "/about/mascots/", text: "Mascots" },*/
+			/*{ path: "/about/governance/", text: "Governance" },*/
+			{ 
+				path: "/about/guidelines/", 
+				text: "Guidelines" ,
+				children: [
+					{
+						path: "/about/guidelines/conduct/",
+						text: "Code of Conduct"
+					},
+					{
+						path: "/about/guidelines/diversity/",
+						text: "Diversity, Equity, and Inclusion"
+					}
+				]
+			},
+			{ path: "/about/newsletter/", text: "Our newsletter" },
+			{ path: "/about/contact/", text: "Contact us" },
 		]
 	},
 	{
-		slug: "/community/",
-		text: "Our community",
+		path: "/blog/",
+		text: "Our Blog",
 		children: [
 			{
-				slug: "/community/members",
-				text: "Become a member"
-			},
-			{
-				slug: "/community/slack",
-				text: "Slack"
-			},
-			{
-				slug: "/community/calendar",
-				text: "Calendar of events"
-			}
-		]
-	},
-	{
-		slug: "/blognew/",
-		text: "Our blog",
-		children: [
-			{
-				slug: "/blognew/categories",
+				path: "/blog/categories/",
 				text: "Categories"
 			}
 		]
 	},
 	{
-		slug: "/conferences/",
-		text: "Our conferences",
+		path: "/community/",
+		text: "Our Community",
+		children: [
+			{
+				path: "/community/membership/",
+				text: "Become a member"
+			},
+			/*{
+				path: "/community/slack/",
+				text: "Slack",
+				children: [
+					{
+						path: "/community/slack/channels/",
+						text: "Slack channels",
+					}
+				]
+			},*/
+			/*{
+				path: "/community/sme/",
+				text: "Subject Matter Experts"
+			},*/
+			{
+				path: "/community/calendar/",
+				text: "Calendar of events"
+			},
+			{
+				path: "/community/swag/",
+				text: "Swag"
+			}
+		]
+	},
+	{
+		path: "/conferences/",
+		text: "Our Conferences",
 		children: [
 			{
 				href: "https://2021.wpcampus.org/",
@@ -77,18 +106,72 @@ const NavPrimaryItems = [
 			}
 		]
 	},
-	{ slug: "/learning/", text: "Learning" },
-	{ slug: "/podcast/", text: "Podcast" },
-	{ href: "https://shop.wpcampus.org/", text: "Shop" },
-	{ slug: "/pages/", text: "Pages" }
+	{
+		path: "/learning/",
+		text: "Learning",
+		children: [
+			{
+				path: "/learning/library/",
+				text: "Learning Library"
+			},
+			{
+				path: "/learning/audit/",
+				text: "Gutenberg audit",
+				children: [
+					{
+						path: "/learning/audit/webinar/",
+						text: "Gutenberg audit webinar"
+					}
+				]
+			},
+			{
+				path: "/learning/accessibility/",
+				text: "Accessibility resources"
+			},
+			{
+				path: "/learning/speaking/",
+				text: "Speaker training"
+			}
+		]
+	},
+	{ path: "/jobs/", text: "Job Board" },
+	{
+		path: "/podcast/",
+		text: "Podcast",
+		children: [
+			{
+				path: "/podcast/categories/",
+				text: "Categories"
+			}
+		]
+	},
+	{ href: "https://shop.wpcampus.org/", text: "Shop" }
 ]
 
 const NavLink = ({ item }) => {
-	if (!item.slug || !item.text) {
+	if (!item.path || !item.text) {
 		return ""
 	}
+	const getLinkProps = ({ isCurrent, isPartiallyCurrent }) => {
+		const attrs = {
+			className: "nav-link"
+		}
+		if (isCurrent || true === item.isCurrent) {
+			attrs.className += " nav-link--current"
+		} else if (isPartiallyCurrent) {
+			attrs.className += " nav-link--current-parent"
+		}
+		return attrs
+	}
+	const linkAttr = {
+		getProps: getLinkProps,
+		to: item.path
+	}
+	if (item.aria_label) {
+		linkAttr["aria-label"] = item.aria_label
+	}
 	return (
-		<Link className="nav-link" activeClassName="nav-link--current" to={item.slug}>
+		<Link {...linkAttr}>
 			{item.text}
 		</Link>
 	)
@@ -108,8 +191,8 @@ const NavAnchor = ({ item }) => {
 	if (item.classes) {
 		anchorAttr.classes = item.classes
 	}
-	if (item["aria-label"]) {
-		anchorAttr["aria-label"] = item["aria-label"]
+	if (item.aria_label) {
+		anchorAttr["aria-label"] = item.aria_label
 	}
 	if (item.title) {
 		anchorAttr.title = item.title
@@ -125,9 +208,15 @@ NavAnchor.propTypes = {
 }
 
 const NavItem = ({ item }) => {
+	const itemAttr = {
+		className: "nav-listitem"
+	}
+	if (item.classes) {
+		itemAttr.className += ` ${item.classes}`
+	}
 	return (
-		<li>
-			{item.slug ? <NavLink item={item} /> : <NavAnchor item={item} />}
+		<li {...itemAttr}>
+			{item.path ? <NavLink item={item} /> : <NavAnchor item={item} />}
 			{item.children && item.children.length ? (
 				<ul className="wpc-nav__sub">
 					{item.children.map((child, i) => (
@@ -145,7 +234,7 @@ NavItem.propTypes = {
 
 const NavList = ({ list }) => {
 	return (
-		<ul>
+		<ul className="wpc-nav__menu">
 			{list.map((item, i) => (
 				<NavItem key={i} item={item} />
 			))}
@@ -157,7 +246,7 @@ NavList.propTypes = {
 	list: PropTypes.array.isRequired,
 }
 
-const Nav = ({ id, classes, label, list, children }) => {
+const Nav = ({ id, classes, aria_label, list, children }) => {
 	const navAttr = {}
 	if (id) {
 		navAttr.id = id
@@ -165,8 +254,8 @@ const Nav = ({ id, classes, label, list, children }) => {
 	if (classes) {
 		navAttr.className = classes
 	}
-	if (label) {
-		navAttr["aria-label"] = label
+	if (aria_label) {
+		navAttr["aria-label"] = aria_label
 	}
 	return (
 		<nav {...navAttr}>
@@ -179,7 +268,7 @@ const Nav = ({ id, classes, label, list, children }) => {
 Nav.propTypes = {
 	id: PropTypes.string,
 	classes: PropTypes.string,
-	label: PropTypes.string,
+	aria_label: PropTypes.string,
 	list: PropTypes.array.isRequired,
 	children: PropTypes.object,
 }

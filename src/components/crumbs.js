@@ -8,9 +8,9 @@ const Crumbs = ({ classes, crumbs }) => {
 	const breadcrumbs = []
 
 	let node = crumbs
-	while (node && node.path && node.title) {
+	while (node && node.crumb) {
 
-		breadcrumbs.push({ slug: node.path, text: node.title })
+		breadcrumbs.push(node.crumb)
 
 		if (node.parent_element) {
 			node = node.parent_element
@@ -25,13 +25,13 @@ const Crumbs = ({ classes, crumbs }) => {
 	}
 
 	// Always add home crumb.
-	breadcrumbs.push({ slug: "/", text: "Home" })
+	breadcrumbs.push({ path: "/", text: "Home" })
 
 	breadcrumbs.reverse()
 
 	const navAttr = {
 		classes: "wpc-crumbs",
-		label: "Breadcrumbs",
+		aria_label: "Breadcrumbs",
 		list: breadcrumbs
 	}
 

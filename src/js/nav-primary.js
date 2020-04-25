@@ -10,6 +10,11 @@
 })(typeof self !== "undefined" ? self : this, () => {
 	"use strict"
 
+	const KEYMAP = {
+		ESC: 27,
+		TAB: 9,
+	}
+
 	// Object for public APIs.
 	const navigation = {}
 
@@ -33,11 +38,11 @@
 	}
 
 	/**
-   * Merges user options with the default settings.
-   * @private
-   * @param {Object} defaults Default settings.
-   * @param {Object} options  User settings.
-   */
+     * Merges user options with the default settings.
+     * @private
+     * @param {Object} defaults Default settings.
+     * @param {Object} options  User settings.
+     */
 	const extendDefaults = (defaults, options) => {
 		let property
 
@@ -51,9 +56,9 @@
 	}
 
 	/**
-   * Updates the `button` element used for toggling the display of the menu.
-   * @private
-   */
+     * Updates the `button` element used for toggling the display of the menu.
+     * @private
+     */
 	const updateMenuToggle = () => {
 		const menuToggle = settings.nav.querySelector(".menu-toggle")
 
@@ -66,16 +71,16 @@
 	}
 
 	/**
-   * Returns the `button` element to use for toggling the display of submenus.
-   * @private
-   */
+     * Returns the `button` element to use for toggling the display of submenus.
+     * @private
+     */
 	const getSubmenuToggle = () => {
 		const toggleButton = document.createElement("button")
 
 		toggleButton.classList.add("submenu-toggle", "js-submenu-toggle")
 
 		// Revisit for translation and internationalization.
-		toggleButton.setAttribute("aria-label", "Open child menu")
+		toggleButton.setAttribute("aria-label", "Toggle child menu")
 
 		toggleButton.setAttribute("aria-expanded", "false")
 
@@ -83,9 +88,9 @@
 	}
 
 	/**
-   * Adds `button` elements for toggling the display of submenus.
-   * @private
-   */
+     * Adds `button` elements for toggling the display of submenus.
+     * @private
+     */
 	const addSubmenuToggles = () => {
 		const menu = settings.nav.querySelector("ul")
 
@@ -110,14 +115,95 @@
 			toggleSpan.classList.add("nav-link--toggle")
 			toggleSpan.appendChild(submenuParentLink)
 
+			// Create a toggle button for the submenu.
+			const thisToggleButton = toggleButton.cloneNode(true)
+
 			// Add the toggle button to the span.
-			toggleSpan.appendChild(toggleButton.cloneNode(true))
+			toggleSpan.appendChild(thisToggleButton)
 
 			// Add the span before the submenu.
 			submenu.parentNode.insertBefore(toggleSpan, submenu)
+
+			// If a parent menu is active, toggle the submenu.
+			if (submenuParentLink.classList.contains("nav-link--current")) {
+				toggleSubmenu(thisToggleButton, true)
+			} else if (submenuParentLink.classList.contains("nav-link--current-parent")) {
+
+				// If a submenu parent is a current parent, let the <li> know and toggle the submenu.
+				submenuParentLink.parentNode.parentNode.classList.add("nav-listitem--current-parent")
+				toggleSubmenu(thisToggleButton, true)
+			}
 		})
 
 		menu.classList.add("has-submenu-toggle", "js-has-submenu-toggle")
+	}
+
+	/**
+	 * Returns first focusable element in the container.
+	 *
+	 * @param {Object} container
+	 * @param {string} focusSelector
+	 * @return {Object} element
+	 */
+	const getfirstFocusableElement = ( container, focusSelector ) => {
+		const focusableElements = container.querySelectorAll( focusSelector )
+		return focusableElements[0]
+	}
+
+	/**
+	 * Returns last focusable element in the container.
+	 * 
+	 * @param {Object} container
+	 * @param {string} focusSelector
+	 * @return {Object} element
+	 */
+	const getlastFocusableElement = ( container, focusSelector ) => {
+		const focusableElements = container.querySelectorAll( focusSelector )
+		return focusableElements[ focusableElements.length - 1 ]
+	}
+
+	/**
+	 * Handles keyboard navigation of the "mobile" menu.
+	 *
+	 * @param {*} event 
+	 */
+	const navKeyDown = (event) => {
+
+		switch (event.keyCode) {
+
+		// ESC
+		case KEYMAP.ESC: {
+
+			let toggle = settings.nav.querySelector(".menu-toggle")
+
+			// Close the "mobile" menu.
+			toggleMenu(toggle, false)
+			toggle.focus()
+			break
+		}
+
+		// TAB
+		case KEYMAP.TAB: {
+
+			// Which elements are focus-able in the nav.
+			let focusSelector = "a, button"
+			
+			if ( event.shiftKey ) {
+
+				// Means we're tabbing out of the beginning of the submenu.
+				if (document.activeElement === getfirstFocusableElement(settings.nav, focusSelector)) {
+					event.preventDefault()
+					getlastFocusableElement(settings.nav, focusSelector).focus()
+				}
+
+				// Means we're tabbing out of the end of the submenu.
+			} else if (document.activeElement === getlastFocusableElement(settings.nav, focusSelector)) {
+				event.preventDefault()
+				getfirstFocusableElement(settings.nav, focusSelector).focus()
+			}
+			break
+		}
+		}
 	}
 
 	/**
@@ -125,70 +211,66 @@
 	 *
 	 * @private
      * @param {Event}  event    The click event target.
-     * @param {String} expanded The updated value for the `aria-expanded` attribute.
+     * @param {Boolean} expand True if we're expanding.
      */
-	const toggleMenu = (target, expanded) => {
-		const label =
-			"Open menu" === target.getAttribute("aria-label")
-				? "Close menu"
-				: "Open menu"
+	const toggleMenu = (target, expand) => {
 
-		target.setAttribute("aria-expanded", expanded)
-
-		target.setAttribute("aria-label", label)
+		const expandStr = true === expand ? "true" : "false"
+		target.setAttribute("aria-expanded", expandStr)
 
 		document.body.classList.toggle("menu-toggled-open")
 
 		settings.nav.classList.toggle("toggled-open")
+
+		if (expand) {
+			document.addEventListener("keydown", navKeyDown)
+		} else {
+			document.removeEventListener("keydown", navKeyDown)
+		}
 	}
 
 	/**
-   * Toggles classes and attributes used for handling the display of submenus.
-   * @private
-   * @param {Event}  target   The click event target.
-   * @param {String} expanded The updated value for the `aria-expanded` attribute.
-   */
-	const toggleSubmenu = (target, expanded) => {
-		const label =
-			"Open child menu" === target.getAttribute("aria-label")
-				? "Close child menu"
-				: "Open child menu"
+     * Toggles classes and attributes used for handling the display of submenus.
+     * @private
+     * @param {Event}  target   The click event target.
+     * @param {Boolean} expand True if we're expanding.
+     */
+	const toggleSubmenu = (target, expand) => {
 
-		target.setAttribute("aria-expanded", expanded)
-
-		target.setAttribute("aria-label", label)
+		const expandStr = true === expand ? "true" : "false"
+		target.setAttribute("aria-expanded", expandStr)
 
 		target.parentNode.parentNode.classList.toggle("toggled-open")
 
-		resizeHandler()
+		//resizeHandler()
 
-		positionNav()
+		//positionNav()
 	}
 
 	/**
-   * Handles click events on the navigation element.
-   * @private
-   * @param {Event} event The click event.
-   */
+     * Handles click events on the navigation element.
+     * @private
+     * @param {Event} event The click event.
+     */
 	const clickHandler = event => {
 		const target = event.target
 		const expanded =
-			"false" === target.getAttribute("aria-expanded") ? "true" : "false"
+			"false" === target.getAttribute("aria-expanded") ? false : true
 
 		if (target.classList.contains("js-menu-toggle")) {
-			toggleMenu(target, expanded)
+			toggleMenu(target, !expanded)
 		}
 
 		if (target.classList.contains("js-submenu-toggle")) {
-			toggleSubmenu(target, expanded)
+			toggleSubmenu(target, !expanded)
 		}
 	}
 
 	/**
-   * Ensures that the appropriate attributes and classes are in place
-   * on either side of the mobile styling breakpoint.
-   * @private
-   */
+     * Ensures that the appropriate attributes and classes are in place
+     * on either side of the mobile styling breakpoint.
+     * @private
+     */
 	const resizeHandler = () => {
 		// Return early if there is no breakpoint setting.
 		if (!settings.breakpoint) return
@@ -208,7 +290,7 @@
 			}
 
 			// Set `min-height` values for both the `main` and `nav` elements if appropriate.
-			if ("vertical" === settings.orientation && settings.minHeights) {
+			/*if ("vertical" === settings.orientation && settings.minHeights) {
 				const navHeight = settings.nav.querySelector("ul").scrollHeight
 				const windowHeight = window.innerHeight
 				const minHeight =
@@ -216,14 +298,14 @@
 
 				settings.main.style.minHeight = minHeight
 				settings.nav.style.minHeight = minHeight
-			}
+			}*/
 		}
 	}
 
 	/**
-   * Ensures proper positioning of the navigation when the page scrolled.
-   * @private
-   */
+     * Ensures proper positioning of the navigation when the page scrolled.
+     * @private
+     */
 	const positionNav = () => {
 		const windowTop = window.pageYOffset
 		const bottomedOut =
@@ -255,10 +337,10 @@
 	}
 
 	/**
-   * Ensures that the `positionNav` function fires only when needed,
-   * and uses the `requestAnimationFrame` method for optimal performance.
-   * @private
-   */
+     * Ensures that the `positionNav` function fires only when needed,
+     * and uses the `requestAnimationFrame` method for optimal performance.
+     * @private
+     */
 	const scrollHandler = () => {
 		if (
 			(!settings.breakpoint || settings.breakpoint < window.innerWidth) &&
@@ -270,10 +352,10 @@
 	}
 
 	/**
-   * Toggles the `focus` class for menu items with submenus.
-   * @private
-   * @param {Event} event The focus or blur event.
-   */
+     * Toggles the `focus` class for menu items with submenus.
+     * @private
+     * @param {Event} event The focus or blur event.
+     */
 	const focusHandler = event => {
 		if ("A" !== event.target.tagName) return
 
@@ -294,9 +376,9 @@
 	}
 
 	/**
-   * Destroys the current initialization.
-   * @public
-   */
+     * Destroys the current initialization.
+     * @public
+     */
 	navigation.destroy = () => {
 		// If plugin isn't already initialized, stop.
 		if (!settings) return
@@ -304,27 +386,27 @@
 		// Remove event listeners.
 		settings.nav.removeEventListener("click", clickHandler, false)
 
-		if ("vertical" === settings.orientation) {
+		/*if ("vertical" === settings.orientation) {
 			window.addEventListener("resize", resizeHandler, true)
 			window.removeEventListener("scroll", scrollHandler, true)
-		}
+		}*/
 
 		// Reset variables.
 		settings = null
 	}
 
 	/**
-   * Initializes the plugin.
-   *
-   * @public
-   * @param {Object}  options             User settings.
-   * @param {Number}  options.breakpoint  Pixel width at which the navigation is styled for mobile devices. Defaults to `null`
-   * @param {Object}  options.main        The element containing the page's content. Required. Defaults to `null`.
-   * @param {Boolean} options.minHeights  Whether the plugin should set min heights on the main and nav elements. Defaults to `true`.
-   * @param {Object}  options.nav         The element containing the navigation. Required. Defaults to `null`.
-   * @param {String}  options.orientation The orientation of the navigation. Accepts `vertical` or `horizontal`. Defaults to `vertical`.
-   * @param {Number}  options.position    Initial `top` value of the navigation element from CSS, if set. Defaults to `0`.
-   */
+     * Initializes the plugin.
+     *
+	 * @public
+     * @param {Object}  options             User settings.
+     * @param {Number}  options.breakpoint  Pixel width at which the navigation is styled for mobile devices. Defaults to `null`
+     * @param {Object}  options.main        The element containing the page's content. Required. Defaults to `null`.
+     * @param {Boolean} options.minHeights  Whether the plugin should set min heights on the main and nav elements. Defaults to `true`.
+     * @param {Object}  options.nav         The element containing the navigation. Required. Defaults to `null`.
+     * @param {String}  options.orientation The orientation of the navigation. Accepts `vertical` or `horizontal`. Defaults to `vertical`.
+     * @param {Number}  options.position    Initial `top` value of the navigation element from CSS, if set. Defaults to `0`.
+     */
 	navigation.init = options => {
 		// Check for required settings.
 		if (!options.nav || !options.main) return
@@ -339,22 +421,22 @@
 
 		addSubmenuToggles()
 
-		resizeHandler()
+		//resizeHandler()
 
 		// Listen for click events on the navigation element.
 		settings.nav.addEventListener("click", clickHandler, false)
 
 		// Listen for resize events.
-		window.addEventListener("resize", resizeHandler, true)
+		//window.addEventListener("resize", resizeHandler, true)
 
-		if ("vertical" === settings.orientation) {
+		/*if ("vertical" === settings.orientation) {
 			window.addEventListener("scroll", scrollHandler, true)
 		}
 
 		if ("horizontal" === settings.orientation) {
 			settings.nav.addEventListener("focus", focusHandler, true)
 			settings.nav.addEventListener("blur", focusHandler, true)
-		}
+		}*/
 	}
 
 	return navigation

@@ -2,57 +2,209 @@ import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 
-import WPCampusLogo from "./logo"
+import WPCampusLogo from "../svg/logo"
 import { User } from "../user/context"
-import userDisplay from "../user/display"
+import { SearchForm } from "../components/search"
+
+import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
 import "./../css/header.css"
 
-const Header = props => {
-	// Have to use separate function to process <User.Consumer> and pass args
-	const handleUserDisplay = user => {
-		const args = {
-			showLogin: true,
-		}
-		return userDisplay(user, args)
+const HeaderArea = ({ children, area }) => {
+	return <div className={`wpc-area wpc-header__area wpc-header__area--${area}`}>
+		{children}
+	</div>
+}
+
+HeaderArea.propTypes = {
+	area: PropTypes.string.isRequired,
+	children: PropTypes.node
+}
+
+const HeaderAreas = ({ children, hasGrid }) => {
+	const gridCSS = hasGrid ? " wpc-areas--grid" : ""
+	const attrs = {
+		className: `wpc-areas${gridCSS} wpc-header__areas`
+	}
+	return <div {...attrs}>
+		{children}
+	</div>
+}
+
+HeaderAreas.propTypes = {
+	hasGrid: PropTypes.bool,
+	children: PropTypes.node.isRequired
+}
+
+HeaderAreas.defaultProps = {
+	hasGrid: true
+}
+
+const HeaderMemberActions = ({ classes }) => {
+	const actionsAttr = {
+		className: "wpc-nav wpc-nav--actions",
+		"aria-label": "Become a member or login"
+	}
+	if (classes) {
+		actionsAttr.className += ` ${classes}`
+	}
+	return <nav {...actionsAttr}>
+		<ul>
+			<li><Link className="wpc-button wpc-button--primary" to="/community/membership/">Become a member</Link></li>
+			<li><Link className="wpc-button" to="/login/">Login</Link></li>
+		</ul>
+	</nav>
+}
+
+HeaderMemberActions.propTypes = {
+	classes: PropTypes.string
+}
+
+const HeaderLoggedInActions = ({ user, classes }) => {
+	const actionsAttr = {
+		className: "wpc-nav wpc-nav--actions",
+		"aria-label": "View profile or logout"
+	}
+	if (classes) {
+		actionsAttr.className += ` ${classes}`
+	}
+	const LogoutButton = user.LogoutButton
+	return <nav {...actionsAttr}>
+		<ul>
+			<li><Link className="wpc-button wpc-button--primary" to="/profile/">Your profile</Link></li>
+			<li><LogoutButton isPlain={true} /></li>
+		</ul>
+	</nav>
+}
+
+HeaderLoggedInActions.propTypes = {
+	user: PropTypes.object,
+	classes: PropTypes.string
+}
+
+const UserLoggedInActions = ({ user }) => {
+
+	const userName = user.getDisplayName()
+
+	let userNameDisplay
+	if (userName) {
+		userNameDisplay = "Hi, " + userName
+	} else {
+		userNameDisplay = "Hi!"
 	}
 
-	let HeadingTag
+	return <div className="wpc-user">
+		<img className="wpc-user__avatar" src={avatarEduwapuuBW} alt="" />
+		<div className="wpc-user__info">
+			<span className="wpc-user__name">{userNameDisplay}</span>
+			<HeaderLoggedInActions user={user} classes="wpc-user__actions" />
+		</div>
+	</div>
+}
 
-	if (props.isHome) {
-		HeadingTag = "h1"
+UserLoggedInActions.propTypes = {
+	user: PropTypes.object
+}
+
+// Going to make a few different banners.
+const HeaderHomeBanner1 = () => {
+
+	const handleUserDisplay = user => {
+		if (!user.isActive()) {
+			return ""
+		}
+		if (user.isLoggedIn()) {
+			return <UserLoggedInActions user={user} />
+		}
+		return <HeaderMemberActions classes="wpc-home-banner__actions wpc-member__actions" />
+	}
+
+	const searchFormAttr = {
+		showSubmitIcon: true
+	}
+
+	return <div className="wpc-home-banner">
+		<ul className="wpc-home-banner__numbers">
+			<li className="wpc-numbers wpc-numbers--members">
+				<span className="wpc-numbers__count">1,088</span>
+				<span className="wpc-numbers__label">Members</span>
+			</li>
+			<li className="wpc-numbers wpc-numbers--institutions">
+				<span className="wpc-numbers__count">524</span>
+				<span className="wpc-numbers__label">Institutions</span>
+			</li>
+			<li className="wpc-numbers wpc-numbers--wpcampus">
+				<span className="wpc-numbers__count">1</span>
+				<span className="wpc-numbers__label"><WPCampusLogo includeTagline={false} /></span>
+			</li>
+		</ul>
+		<p className="wpc-home-banner__tagline">Where WordPress meets Higher Education</p>
+		<SearchForm {...searchFormAttr} />
+		<User.Consumer>{handleUserDisplay}</User.Consumer>
+	</div>
+}
+
+const Header = ({ isHome }) => {
+
+	const handleUserDisplay = user => {
+		if (!user.isActive()) {
+			return ""
+		}
+		if (user.isLoggedIn()) {
+			return <UserLoggedInActions user={user} />
+		}
+		return <HeaderMemberActions classes="wpc-member__actions" />
+	}
+
+	const headerAttr = {
+		className: "wpc-header wpc-wrapper"
+	}
+
+	const searchFormAttr = {
+		showSubmitIcon: true
+	}
+
+	let headerAreas
+	if (isHome) {
+
+		// Select the home banner.
+		const banner = <HeaderHomeBanner1 />
+		headerAttr.className += " wpc-header--home-one"
+
+		headerAreas = <HeaderAreas hasGrid={false}>
+			<HeaderArea area="banner">
+				{banner}
+			</HeaderArea>
+			<HeaderArea area="meta"></HeaderArea>
+		</HeaderAreas>
 	} else {
-		HeadingTag = "span"
+
+		headerAreas = <HeaderAreas>
+			<HeaderArea area="logo">
+				<span className="wpc-header__heading wpc-header__heading--site">
+					<Link to="/" aria-label="Home"><WPCampusLogo /></Link>
+				</span>
+			</HeaderArea>
+			<HeaderArea area="actions">
+				<User.Consumer>{handleUserDisplay}</User.Consumer>
+			</HeaderArea>
+			<HeaderArea area="search">
+				<SearchForm {...searchFormAttr} />
+			</HeaderArea>
+		</HeaderAreas>
 	}
 
 	return (
-		<header className="wpc-header wpc-wrapper">
+		<header {...headerAttr}>
 			<div className="wpc-container wpc-header__container">
-				<div className="wpc-areas wpc-areas--grid wpc-header__areas">
-					<div className="wpc-area wpc-header__area wpc-header__area--actions">
-						<nav className="wpc-nav wpc-nav--actions" aria-label="Login or become a member">
-							<ul>
-								<li><a className="wpc-button wpc-button--primary" href="/">Login</a></li>
-								<li><a className="wpc-button" href="/">Become a member</a></li>
-							</ul>
-						</nav>
-					</div>
-					<div className="wpc-area wpc-header__area wpc-header__area--logo">
-						<HeadingTag className="wpc-header__heading wpc-header__heading--site">
-							<Link to="/" aria-label="Home"><WPCampusLogo /></Link>
-						</HeadingTag>
-					</div>
-					<div className="wpc-area wpc-header__area wpc-header__area--meta">
-						<User.Consumer>{handleUserDisplay}</User.Consumer>
-					</div>
-				</div>
+				{headerAreas}
 			</div>
 		</header>
 	)
 }
 
 Header.propTypes = {
-	isHome: PropTypes.bool,
+	isHome: PropTypes.bool
 }
 
 Header.defaultProps = {
