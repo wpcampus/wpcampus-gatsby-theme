@@ -149,6 +149,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			fields: {
 				wpc_gatsby: "wpcGatsby",
 				wpc_protected: "wpcProtected",
+				wpc_seo: "wpcSEO"
 			},
 			interfaces: ["Node"],
 		}),
@@ -165,6 +166,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 					}
 				},
 				wpc_gatsby: "wpcGatsby",
+				wpc_seo: "wpcSEO"
 			},
 			interfaces: ["Node"],
 		}),
