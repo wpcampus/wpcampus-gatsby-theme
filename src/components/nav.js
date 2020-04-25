@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
-// @TODO remove search and pages menu item
 const NavPrimaryItems = [
 	{
 		path: "/about/",
