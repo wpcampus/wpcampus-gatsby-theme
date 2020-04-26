@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react"
+import React, { useRef, useState, useContext } from "react"
+import { Link } from "gatsby"
 
-import { User } from "../user/context"
-import messages from "../user/messages"
+import { User } from "./context"
+import messages from "./messages"
 
 const LoginForm = () => {
 	const initialState = {
@@ -14,6 +15,9 @@ const LoginForm = () => {
 	}
 	const [state, setState] = useState(initialState)
 	const UserContext = useContext(User)
+
+	const inputUsernameRef = useRef()
+	const inputPasswordRef = useRef()
 
 	const IDs = {
 		alert: "login-alert",
@@ -32,12 +36,9 @@ const LoginForm = () => {
 		}
 
 		let value = event.target.value.trim()
-		let invalidKey = name + "Invalid"
-		let invalidValue = !value ? messages[name + "_empty"] : false
 
 		setState({
 			...state,
-			[invalidKey]: invalidValue,
 			[name]: value,
 		})
 	}
@@ -74,12 +75,12 @@ const LoginForm = () => {
 		})
 
 		if (!username) {
-			document.getElementById(IDs.username).focus()
+			inputUsernameRef.current.focus()
 			return
 		}
 
 		if (!password) {
-			document.getElementById(IDs.password).focus()
+			inputPasswordRef.current.focus()
 			return
 		}
 
@@ -96,20 +97,17 @@ const LoginForm = () => {
 				let errorText = div.textContent || div.innerText || ""
 
 				// @TODO need to setup a "lost password" page.
-				/*if (
-          errorText.startsWith(
-            "ERROR: The password you entered for the username"
-          )
-        )*/
-				errorText = errorText.replace(/^ERROR:\s/, "")
+
+				// Replace "error" prefix.
+				errorText = errorText.replace(/^(<strong>)?ERROR:(<\/strong>)?\s/i, "")
 
 				// Set the field errors.
 				if (errorText.startsWith("This username is unknown")) {
-					document.getElementById(IDs.username).focus()
+					inputUsernameRef.current.focus()
 					usernameInvalid = errorText
 					errorText = messages.login_errors
 				} else if (errorText.startsWith("The password you entered")) {
-					document.getElementById(IDs.password).focus()
+					inputPasswordRef.current.focus()
 					passwordInvalid = errorText
 					errorText = messages.login_errors
 				} else if (errorText.startsWith("NetworkError")) {
@@ -157,7 +155,14 @@ const LoginForm = () => {
 		alertAttr.className += " " + classes.alertHidden
 	}
 
-	const usernameAttr = {
+	const labelUsernameAttr = {
+		id: IDs.usernameLabel,
+		htmlFor: IDs.username,
+		className: classes.label
+	}
+
+	const inputUsernameAttr = {
+		ref: inputUsernameRef,
 		id: IDs.username,
 		className: classes.input,
 		type: "text",
@@ -171,10 +176,17 @@ const LoginForm = () => {
 	}
 
 	if (state.usernameInvalid) {
-		usernameAttr["aria-invalid"] = "true"
+		inputUsernameAttr["aria-invalid"] = "true"
 	}
 
-	const passwordAttr = {
+	const labelPasswordAttr = {
+		id: IDs.passwordLabel,
+		htmlFor: IDs.username,
+		className: classes.label
+	}
+
+	const inputPasswordAttr = {
+		ref: inputPasswordRef,
 		id: IDs.password,
 		className: classes.input,
 		type: "password",
@@ -188,7 +200,7 @@ const LoginForm = () => {
 	}
 
 	if (state.passwordInvalid) {
-		passwordAttr["aria-invalid"] = "true"
+		inputPasswordAttr["aria-invalid"] = "true"
 	}
 
 	const submitAttr = {
@@ -202,28 +214,16 @@ const LoginForm = () => {
 			<p {...alertAttr} aria-live="polite">
 				{state.alert}
 			</p>
-			<label
-				id={IDs.usernameLabel}
-				htmlFor={IDs.username}
-				className={classes.label}
-			>
-        Username
-			</label>
+			<label {...labelUsernameAttr}>Username or email address</label>
 			<div className={classes.inputWrapper}>
-				<input {...usernameAttr} />
+				<input {...inputUsernameAttr} />
 				<div id={IDs.usernameLabelError} className={classes.inputError}>
 					{state.usernameInvalid}
 				</div>
 			</div>
-			<label
-				id={IDs.passwordLabel}
-				htmlFor={IDs.username}
-				className={classes.label}
-			>
-        Password:
-			</label>
+			<label {...labelPasswordAttr}>Password:</label>
 			<div className={classes.inputWrapper}>
-				<input {...passwordAttr} />
+				<input {...inputPasswordAttr} />
 				<div id={IDs.passwordLabelError} className={classes.inputError}>
 					{state.passwordInvalid}
 				</div>
@@ -233,4 +233,114 @@ const LoginForm = () => {
 	)
 }
 
-export default LoginForm
+const PasswordForm = () => {
+	const initialState = {
+		alert: false,
+		processing: false,
+		username: null,
+		usernameInvalid: false,
+	}
+	const [state, setState] = useState(initialState)
+
+	const inputUsernameRef = useRef()
+
+	const changeField = event => {
+		let name = event.target.name
+		if (!["username"].includes(name)) {
+			return
+		}
+
+		let value = event.target.value.trim()
+
+		setState({
+			...state,
+			[name]: value,
+		})
+	}
+
+	const submit = async event => {
+		event.preventDefault()
+	}
+
+	const IDs = {
+		alert: "password-alert",
+		username: "password-user",
+		usernameLabel: "password-user-label",
+		usernameLabelError: "password-user-label-error",
+	}
+
+	const formAttr = {
+		action: "",
+		name: "password",
+		className: "wpc-form wpc-form--password",
+	}
+
+	const alertAttr = {
+		id: IDs.alert,
+		className: "wpc-form__alert",
+		role: "alert",
+	}
+
+	if (!state.alert) {
+		alertAttr.className += " for-screen-reader"
+	}
+
+	const labelUsernameAttr = {
+		id: IDs.usernameLabel,
+		htmlFor: IDs.username,
+		className: "wpc-form__label"
+	}
+
+	const inputUsernameAttr = {
+		ref: inputUsernameRef,
+		id: IDs.username,
+		className: "wpc-form__input",
+		type: "text",
+		name: "username",
+		placeholder: "Username",
+		required: "required",
+		"aria-required": "true",
+		"aria-labelledby": `${IDs.usernameLabel} ${IDs.usernameLabelError}`,
+		onBlur: event => changeField(event),
+		onChange: event => changeField(event),
+	}
+
+	if (state.usernameInvalid) {
+		inputUsernameAttr["aria-invalid"] = "true"
+	}
+
+	const submitAttr = {
+		className: "wpc-form__submit",
+		type: "submit",
+		value: "Submit your request",
+	}
+
+	return (
+		<form {...formAttr} aria-label="Reset WPCampus account password" onSubmit={event => submit(event)}>
+			<p {...alertAttr} aria-live="polite">
+				{state.alert}
+			</p>
+			<label {...labelUsernameAttr}>Username or email address</label>
+			<div className="wpc-form__inputWrapper">
+				<input {...inputUsernameAttr} />
+				<div id={IDs.usernameLabelError} className="wpc-form__input--error">
+					{state.usernameInvalid}
+				</div>
+			</div>
+			<input {...submitAttr} onClick={event => submit(event)} />
+		</form>
+	)
+}
+
+const LoginLayout = () => {
+	/*<h2>Forgot your password?</h2>
+		<p>Submit your username or email address and we&apos;ll send you an email to reset your password.</p>
+		<PasswordForm />
+		<h2>Don&apos;t have an account?</h2>
+		<Link to="/community/membership" className="wpc-button wpc-button--primary">Create an account</Link>*/
+	return <div>
+		<LoginForm />
+	</div>
+}
+
+export { LoginForm, LoginLayout }

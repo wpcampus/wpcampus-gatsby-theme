@@ -12,8 +12,11 @@ export default function Template(props) {
 			text: "Blog"
 		}
 	}
+
+	// @TODO add meta description?
+
 	return (
-		<Layout pageTitle="Blog" heading="Blog posts" crumbs={crumbs} path={props.path}>
+		<Layout pageTitle="Blog" heading="The WPCampus Blog" crumbs={crumbs} path={props.path}>
 			<ArticleArchive list={props.data.allWordpressPost.edges} />
 		</Layout>
 	)
@@ -28,7 +31,10 @@ Template.propTypes = {
 export const query = graphql`
   query {
     allWordpressPost(
-      filter: { type: { eq: "post" }, status: { eq: "publish" } }
+      filter: {
+		  status: { eq: "publish" },
+		  wpc_gatsby: { disable: { eq: false } }
+	  }
       sort: { fields: date, order: DESC }
     ) {
       edges {
@@ -39,10 +45,14 @@ export const query = graphql`
           path
           author {
             id
-            wordpress_id
-            name
-            slug
-            path
+			path
+			display_name
+			email
+			twitter
+			website
+			company
+			company_position
+			bio
           }
           title
           status
@@ -64,7 +74,7 @@ export const query = graphql`
     }
     site {
       siteMetadata {
-        title
+        siteName
       }
     }
   }

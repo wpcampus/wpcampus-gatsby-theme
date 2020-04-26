@@ -13,8 +13,11 @@ export default function Template(props) {
 			text: "Podcast"
 		}
 	}
+
+	// @TODO add meta description?
+
 	return (
-		<Layout pageTitle="Podcast" heading="Podcasts" crumbs={crumbs} path={props.path}>
+		<Layout heading="The WPCampus Podcast" crumbs={crumbs} path={props.path}>
 			<PodcastCallout />
 			<PodcastActions />
 			<ArticleArchive list={props.data.allWordpressWpPodcast.edges} />
@@ -31,7 +34,10 @@ Template.propTypes = {
 export const query = graphql`
   query {
     allWordpressWpPodcast(
-      filter: { type: { eq: "podcast" }, status: { eq: "publish" } }
+      filter: {
+		  status: { eq: "publish" },
+		  wpc_gatsby: { disable: { eq: false } }
+	  }
       sort: { fields: date, order: DESC }
     ) {
       edges {
@@ -42,10 +48,14 @@ export const query = graphql`
           path
           author {
             id
-            wordpress_id
-            name
-            slug
-            path
+			path
+			display_name
+			email
+			twitter
+			website
+			company
+			company_position
+			bio
           }
           title
           status
@@ -67,7 +77,7 @@ export const query = graphql`
     }
     site {
       siteMetadata {
-        title
+        siteName
       }
     }
   }

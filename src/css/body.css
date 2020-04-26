@@ -1,20 +1,4 @@
 .wpc-body {
-	.wpc-author {
-		margin: 0 0 1rem;
-
-		&__areas {
-			.wpc-author__area {
-				&--avatar {
-					grid-column: col-start / span 3;
-				}
-
-				&--main {
-					grid-column: col-start 4 / span 9;
-				}
-			}
-		}
-	}
-
 	nav.wpc-crumbs {
 		a {
 			color: inherit;
@@ -26,6 +10,7 @@
 
 		ul {
 			display: flex;
+			flex-wrap: wrap;
 			list-style: none;
 			margin: 0;
 
@@ -92,12 +77,27 @@
 		& > h1:first-child {
 			margin-top: -0.25rem;
 		}
+
+		& > *:first-child {
+			margin-top: 0;
+		}
+
+		& > *:last-child {
+			margin-bottom: 0;
+		}
 	}
 
 	&__areas {
+		grid-column-gap: 0;
+		grid-row-gap: 0;
+
 		.wpc-body__area {
-			&--nav {
-				box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.7);
+			&--crumbs {
+				background: var(--wpc-yellow-light);
+				padding: 1rem var(--area-padding);
+				border-bottom: var(--border-yellow);
+				font-size: 0.9rem;
+				line-height: 1.3;
 			}
 
 			&--sidebar {
@@ -106,31 +106,51 @@
 			}
 		}
 
-		/* Mobile */
+		/* ONLY Mobile */
 		@media (max-width: 767px) {
 			grid-template-columns: 1fr;
+
+			.wpc-body__area {
+				&--notifications {
+					/* stylelint-disable selector-type-no-unknown */
+					wpcampus-notifications .wpc-notifications {
+						padding-left: 0;
+						overflow: hidden;
+
+						.wpc-notification__icon {
+							margin-left: -4px;
+							margin-right: 0;
+
+							&__graphic {
+								width: 24px;
+							}
+						}
+					}
+					/* stylelint-disable */
+				}
+
+				&--main,
+				&--sidebar {
+					padding: var(--area-padding);
+				}
+			}
 		}
 
 		/* Laptop */
 		@media (min-width: 768px) {
-			grid-template-rows: auto auto auto 1fr;
-			grid-column-gap: 0;
-			grid-row-gap: 0;
+			grid-template-rows: auto auto 1fr;
 
 			.wpc-body__area {
-				padding: var(--area-padding);
 
 				&--notifications {
-					grid-column: col-start / span 12;
+					grid-column: 1 / span 12;
 					grid-row: 1 / span 1;
 					padding: 0;
 				}
 
 				&--nav {
-					grid-column: col-start / span 3;
-					grid-row: 2 / span 3;
-					background: var(--wpc-blue-dark);
-					color: #fff;
+					grid-column: 1 / span 3;
+					grid-row: 2 / span 2;
 					padding: 0;
 
 					* {
@@ -139,59 +159,84 @@
 				}
 
 				&--crumbs {
-					grid-column: col-start 4 / span 9;
+					grid-column: 4 / span 9;
 					grid-row: 2 / span 1;
-					background: rgba(255, 210, 0, 0.05);
-					border-bottom: 1px solid rgba(255, 210, 0, 0.2);
-					padding-top: 1rem;
-					padding-bottom: 1rem;
 				}
 
 				&--main {
-					grid-column: col-start 4 / span 9;
+					grid-column: 4 / span 9;
 					grid-row: 3 / span 1;
 					padding: var(--area-padding-large);
 				}
+			}
 
-				&--sidebar {
-					grid-column: col-start 4 / span 9;
-					grid-row: 4 / span 1;
-					padding-left: var(--area-padding-large);
-					padding-right: var(--area-padding-large);
+			&--sidebar {
+				grid-template-rows: auto auto auto 1fr;
+
+				.wpc-body__area {
+					&--nav {
+						grid-row: 2 / span 3;
+					}
+
+					&--sidebar {
+						grid-column: 4 / span 9;
+						grid-row: 4 / span 1;
+						padding: var(--area-padding) var(--area-padding-large);
+					}
 				}
 			}
 		}
 
 		/* Desktop */
 		@media (min-width: 1260px) {
-			grid-template-rows: auto auto 1fr;
-
 			.wpc-body__area {
 				&--notifications {
-					grid-column: col-start 3 / span 10;
+					grid-column: 3 / span 10;
 					grid-row: 1 / span 1;
 				}
 
 				&--nav {
-					grid-column: col-start / span 2;
-					grid-row: 1 / span 3;
+					grid-column: 1 / span 2;
+					grid-row: 1 / span 4;
 				}
 
 				&--crumbs {
-					grid-column: col-start 3 / span 7;
+					grid-column: 3 / span 10;
 					grid-row: 2 / span 1;
 				}
 
 				&--main {
-					grid-column: col-start 3 / span 7;
+					grid-column: 3 / span 10;
 					grid-row: 3 / span 1;
 				}
+			}
 
-				&--sidebar {
-					grid-column: col-start 10 / span 3;
-					grid-row: 2 / span 2;
-					border-top: 0;
-					border-left: 1px solid rgba(17, 89, 189, 0.15);
+			&--sidebar--bottom {
+				.wpc-body__area {
+					&--sidebar {
+						grid-column: 3 / span 10;
+					}
+				}
+			}
+
+			&--sidebar:not(.wpc-body__areas--sidebar--bottom) {
+				grid-template-rows: auto auto 1fr;
+
+				.wpc-body__area {
+					&--nav {
+						grid-row: 1 / span 3;
+					}
+
+					&--main {
+						grid-column: 3 / span 7;
+					}
+
+					&--sidebar {
+						grid-column: 10 / span 3;
+						grid-row: 2 / span 2;
+						border-top: 0;
+						border-left: 1px solid rgba(17, 89, 189, 0.15);
+					}
 				}
 			}
 		}

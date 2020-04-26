@@ -2,7 +2,6 @@ import React from "react"
 // import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
-// // @TODO remove search and pages menu item
 const NavPrimaryItems = [
 	{
 		path: "/about/",
@@ -10,16 +9,29 @@ const NavPrimaryItems = [
 		children: [
 			{ path: "/about/contributors/", text: "Contributors" },
 			{ path: "/about/partners/", text: "Partners" },
-			{ path: "/about/mascots/", text: "Mascots" },
-			{ path: "/about/governance/", text: "Governance" },
-			{ path: "/about/guidelines/", text: "Guidelines" },
+			/*{ path: "/about/mascots/", text: "Mascots" },*/
+			/*{ path: "/about/governance/", text: "Governance" },*/
+			{ 
+				path: "/about/guidelines/", 
+				text: "Guidelines" ,
+				children: [
+					{
+						path: "/about/guidelines/conduct/",
+						text: "Code of Conduct"
+					},
+					{
+						path: "/about/guidelines/diversity/",
+						text: "Diversity, Equity, and Inclusion"
+					}
+				]
+			},
 			{ path: "/about/newsletter/", text: "Our newsletter" },
 			{ path: "/about/contact/", text: "Contact us" },
 		]
 	},
 	{
 		path: "/blog/",
-		text: "Our blog",
+		text: "Our Blog",
 		children: [
 			{
 				path: "/blog/categories/",
@@ -29,13 +41,13 @@ const NavPrimaryItems = [
 	},
 	{
 		path: "/community/",
-		text: "Our community",
+		text: "Our Community",
 		children: [
 			{
 				path: "/community/membership/",
 				text: "Become a member"
 			},
-			{
+			/*{
 				path: "/community/slack/",
 				text: "Slack",
 				children: [
@@ -44,11 +56,11 @@ const NavPrimaryItems = [
 						text: "Slack channels",
 					}
 				]
-			},
-			{
+			},*/
+			/*{
 				path: "/community/sme/",
-				text: "Subject matter experts"
-			},
+				text: "Subject Matter Experts"
+			},*/
 			{
 				path: "/community/calendar/",
 				text: "Calendar of events"
@@ -61,7 +73,7 @@ const NavPrimaryItems = [
 	},
 	{
 		path: "/conferences/",
-		text: "Our conferences",
+		text: "Our Conferences",
 		children: [
 			{
 				href: "https://2021.wpcampus.org/",
@@ -93,13 +105,76 @@ const NavPrimaryItems = [
 			}
 		]
 	},
-	{ path: "/learning/", text: "Learning" },
-	{ path: "/jobs/", text: "Job board" },
-	{ path: "/podcast/", text: "Podcast" },
-	{ href: "https://shop.wpcampus.org/", text: "Shop" },
+	{
+		path: "/learning/",
+		text: "Learning",
+		children: [
+			{
+				path: "/learning/library/",
+				text: "Learning Library"
+			},
+			{
+				path: "/learning/audit/",
+				text: "Gutenberg audit",
+				children: [
+					{
+						path: "/learning/audit/webinar/",
+						text: "Gutenberg audit webinar"
+					}
+				]
+			},
+			{
+				path: "/learning/accessibility/",
+				text: "Accessibility resources"
+			},
+			{
+				path: "/learning/speaking/",
+				text: "Speaker training"
+			}
+		]
+	},
+	{ path: "/jobs/", text: "Job Board" },
+	{
+		path: "/podcast/",
+		text: "Podcast",
+		children: [
+			{
+				path: "/podcast/categories/",
+				text: "Categories"
+			}
+		]
+	},
+	{ href: "https://shop.wpcampus.org/", text: "Shop" }
 ]
 
-// // const NavToggle = () => 
+const NavLink = ({ item }) => {
+	if (!item.path || !item.text) {
+		return ""
+	}
+	const getLinkProps = ({ isCurrent, isPartiallyCurrent }) => {
+		const attrs = {
+			className: "nav-link"
+		}
+		if (isCurrent || true === item.isCurrent) {
+			attrs.className += " nav-link--current"
+		} else if (isPartiallyCurrent) {
+			attrs.className += " nav-link--current-parent"
+		}
+		return attrs
+	}
+	const linkAttr = {
+		getProps: getLinkProps,
+		to: item.path
+	}
+	if (item.aria_label) {
+		linkAttr["aria-label"] = item.aria_label
+	}
+	return (
+		<Link {...linkAttr}>
+			{item.text}
+		</Link>
+	)
+}
 
 
 // const NavLink = ({ item }) => {
@@ -134,91 +209,30 @@ const NavPrimaryItems = [
 // 	)
 // }
 
-// NavLink.propTypes = {
-// 	item: PropTypes.object.isRequired,
-// }
+NavLink.propTypes = {
+	item: PropTypes.object.isRequired,
+}
 
-// const NavAnchor = ({ item }) => {
-// 	if (!item.href || !item.text) {
-// 		return ""
-// 	}
-// 	const anchorAttr = {
-// 		href: item.href
-// 	}
-// 	if (item.classes) {
-// 		anchorAttr.classes = item.classes
-// 	}
-// 	if (item.aria_label) {
-// 		anchorAttr["aria-label"] = item.aria_label
-// 	}
-// 	if (item.title) {
-// 		anchorAttr.title = item.title
-// 	}
-// 	if (item.target) {
-// 		anchorAttr.target = item.target
-// 	}
-// 	return (<a {...anchorAttr}>{item.text}</a>)
-// }
-
-// NavAnchor.propTypes = {
-// 	item: PropTypes.object.isRequired,
-// }
-
-// const NavItem = ({ item }) => {
-// 	return (
-// 		<li className="nav-listitem">
-// 			{item.path ? <NavLink item={item} /> : <NavAnchor item={item} />}
-// 			{item.children && item.children.length ? (
-// 				<ul className="wpc-nav__sub">
-// 					{item.children.map((child, i) => (
-// 						<NavItem key={i} item={child} />
-// 					))}
-// 				</ul>
-// 			) : ""}
-// 		</li>
-// 	)
-// }
-
-// NavItem.propTypes = {
-// 	item: PropTypes.object.isRequired,
-// }
-
-// const NavList = ({ list }) => {
-// 	return (
-// 		<ul>
-// 			{list.map((item, i) => (
-// 				<NavItem key={i} item={item} />
-// 			))}
-// 		</ul>
-// 	)
-// }
-
-// NavList.propTypes = {
-// 	list: PropTypes.array.isRequired,
-// }
-
-// const NavLink = () => {
-
-// }
-
-const NavItem = ({ item }) => console.log(item) || (
-	<li>
-		{
-			item.children && <span className="nav-link--toggle">
-				{item.text}
-				<button
-					className="submenu-toggle js-submenu-toggle"
-					aria-label="open child menu"
-					aria-expanded="false"
-				></button>
-				<NavList list={item.children} hasSubmenuToggle={true} />
-			</span>
-		}
-		{
-			!item.children && <span>{item.text}</span>
-		}
-	</li>
-)
+const NavItem = ({ item }) => {
+	const itemAttr = {
+		className: "nav-listitem"
+	}
+	if (item.classes) {
+		itemAttr.className += ` ${item.classes}`
+	}
+	return (
+		<li {...itemAttr}>
+			{item.path ? <NavLink item={item} /> : <NavAnchor item={item} />}
+			{item.children && item.children.length ? (
+				<ul className="wpc-nav__sub">
+					{item.children.map((child, i) => (
+						<NavItem key={i} item={child} />
+					))}
+				</ul>
+			) : ""}
+		</li>
+	)
+}
 
 NavItem.propTypes = {
 	item: PropTypes.object.isRequired

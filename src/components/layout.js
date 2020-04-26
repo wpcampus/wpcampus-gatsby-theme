@@ -21,15 +21,19 @@ import WPCGridDev from "./grid-dev"
 
 const Layout = props => {
 
-	const searchQuery = props.searchQuery
-	const updateSearchQuery = props.updateSearchQuery
-	const isHome = props.isHome
-	const useTitleTemplate = props.useTitleTemplate
-	const heading = props.heading
-	const crumbs = props.crumbs
-	const classes = props.classes
-	const path = props.path
-	const children = props.children
+	const {
+		isHome,
+		metaDescription,
+		metaRobots,
+		includeSidebar,
+		sidebarBottom,
+		useTitleTemplate,
+		heading,
+		crumbs,
+		classes,
+		path,
+		children
+	} = props
 
 	let pageTitle = props.pageTitle
 	if (!pageTitle && heading) {
@@ -46,12 +50,20 @@ const Layout = props => {
 		wpcampusAttr.className += " wpcampus--hasGridDev"
 	}
 
+	if (includeSidebar) {
+		wpcampusAttr.className += " wpcampus--sidebar"
+
+		if (sidebarBottom) {
+			wpcampusAttr.className += " wpcampus--sidebar--bottom"
+		}
+	}
+
 	if (isHome) {
 		wpcampusAttr.className += " wpcampus--home"
 	}
 
 	// Add path as a wrapper class.
-	if (path){
+	if (path) {
 		let pathSlug = path.replace(/^\//i, "")
 		pathSlug = pathSlug.replace(/\/$/i, "")
 		pathSlug = pathSlug.replace(/\//gi, "-")
@@ -62,31 +74,72 @@ const Layout = props => {
 		wpcampusAttr.className += ` ${classes}`
 	}
 
+	let crumbsComp
+	if (crumbs) {
+		crumbsComp = <Crumbs crumbs={crumbs} classes="wpc-area wpc-body__area wpc-body__area--crumbs" />
+	}
+
+	let sidebarArea
+	if (includeSidebar) {
+		sidebarArea = <div className="wpc-area wpc-body__area wpc-body__area--sidebar">
+			<Sidebar />
+		</div>
+	}
+
+	const bodyAreasAttr = {
+		className: "wpc-areas wpc-areas--grid wpc-areas--grid--rows wpc-body__areas"
+	}
+
+	if (includeSidebar) {
+		bodyAreasAttr.className += " wpc-body__areas--sidebar"
+
+		if (sidebarBottom) {
+			bodyAreasAttr.className += " wpc-body__areas--sidebar--bottom"
+		}
+	}
+
+	const mainHeadingAttr = {
+		level: 1,
+		heading: heading
+	}
+
+	if (isHome) {
+		mainHeadingAttr.classes = "for-screen-reader"
+	}
+
+	const mainHeading = <Heading {...mainHeadingAttr} />
+
+	const seoAttr = {
+		title: pageTitle,
+		useTitleTemplate: useTitleTemplate,
+		description: metaDescription,
+		metaRobots: metaRobots
+	}
+
 	return (
 		<div {...wpcampusAttr}>
+			<a href="#main" className="wpc-skip-to-main">Skip to content</a>
 			{showGrid ? <WPCGridDev /> : null}
-			<SEO title={pageTitle} useTitleTemplate={useTitleTemplate} />
-			<Header searchQuery={searchQuery} updateSearchQuery={updateSearchQuery} isHome={isHome} />
+			<SEO {...seoAttr} />
+			<Header isHome={isHome} />
 			{!isHome ? <div className="wpc-hero"></div> : null}
 			<div className="wpc-body wpc-wrapper">
 				<div className="wpc-container wpc-body__container">
-					<div className="wpc-areas wpc-areas--grid wpc-areas--grid--rows wpc-body__areas">
-						<div className="wpc-area wpc-body__area wpc-body__area--notifications">
-							<Notifications />
-						</div>
+					<div {...bodyAreasAttr}>
 						<div className="wpc-area wpc-body__area wpc-body__area--nav">
 							<NavPrimary />
 						</div>
-						<Crumbs crumbs={crumbs} classes="wpc-area wpc-body__area wpc-body__area--crumbs" />
+						<div className="wpc-area wpc-body__area wpc-body__area--notifications">
+							<Notifications />
+						</div>
+						{crumbsComp}
 						<div className="wpc-area wpc-body__area wpc-body__area--main">
 							<main id="main" className="wpc-main wpc-wrapper">
-								{!isHome && heading ? (<Heading level={1} heading={heading} />) : null}
+								{mainHeading}
 								{children}
 							</main>
 						</div>
-						<div className="wpc-area wpc-body__area wpc-body__area--sidebar">
-							<Sidebar />
-						</div>
+						{sidebarArea}
 					</div>
 				</div>
 			</div>
@@ -97,9 +150,11 @@ const Layout = props => {
 }
 
 Layout.propTypes = {
-	searchQuery: PropTypes.string,
-	updateSearchQuery: PropTypes.func,
 	isHome: PropTypes.bool,
+	metaDescription: PropTypes.string,
+	metaRobots: PropTypes.array,
+	includeSidebar: PropTypes.bool,
+	sidebarBottom: PropTypes.bool,
 	pageTitle: PropTypes.string,
 	useTitleTemplate: PropTypes.bool,
 	heading: PropTypes.string,
@@ -111,6 +166,9 @@ Layout.propTypes = {
 
 Layout.defaultProps = {
 	isHome: false,
+	metaRobots: [],
+	includeSidebar: true,
+	sidebarBottom: false,
 	useTitleTemplate: true
 }
 

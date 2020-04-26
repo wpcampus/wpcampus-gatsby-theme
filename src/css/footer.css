@@ -3,7 +3,6 @@
 
 	& > .wpc-container {
 		padding: var(--area-padding-large);
-		max-width: 90%;
 		margin: 0 auto;
 	}
 
@@ -48,8 +47,8 @@
 		&--social {
 			svg {
 				display: block;
-				max-width: 40px;
-				height: auto;
+				width: 100%;
+				max-height: 40px;
 				fill: #222;
 			}
 
@@ -61,6 +60,7 @@
 
 			/* stylelint-disable no-descending-specificity */
 			li {
+				flex-grow: 1;
 				margin: 0 0 0 1rem;
 
 				&:first-child {
@@ -77,36 +77,75 @@
 		}
 	}
 
-	/* Mobile */
-	@media (max-width: 767px) {
+	&__areas {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto auto auto auto;
+		grid-row-gap: 1.25rem;
+
+		.wpc-footer__area {
+			&--logo {
+				grid-row: 1 / span 1;
+			}
+
+			&--desc {
+				grid-row: 2 / span 1;
+			}
+
+			&--actions {
+				grid-row: 3 / span 1;
+			}
+
+			&--nav {
+				grid-row: 4 / span 1;
+				text-align: center;
+				margin: 0 0 1rem;
+			}
+
+			&--social {
+				grid-row: 5 / span 1;
+			}
+
+			&--copyright {
+				grid-row: 6 / span 1;
+			}
+		}
+	}
+
+	/* Laptop */
+	@media (min-width: 768px) {
 		&__areas {
-			grid-template-columns: 50% 1fr;
-			grid-template-rows: auto auto auto auto auto;
-			grid-row-gap: 1.25rem;
+			grid-template-columns: 350px 1fr;
+			grid-template-rows: auto auto auto auto 1fr;
+			grid-column-gap: 4rem;
+			max-width: 90%;
+			margin: 0 auto;
 
 			.wpc-footer__area {
-				&--logo {
-					grid-column: 1 / span 2;
-					grid-row: 1 / span 1;
+				&--nav {
+					grid-column: 2 / span 1;
+					grid-row: 1 / span 2;
+					text-align: left;
+					margin: 0;
 				}
 
 				&--actions {
 					grid-column: 1 / span 2;
-					grid-row: 2 / span 1;
-				}
-
-				&--desc {
-					grid-column: 1 / span 1;
 					grid-row: 3 / span 1;
-				}
 
-				&--nav {
-					grid-column: 2 / span 1;
-					grid-row: 3 / span 2;
+					nav {
+						max-width: 60%;
+						margin: 0 auto;
+					}
 				}
 
 				&--social {
+					grid-column: 1 / span 2;
 					grid-row: 4 / span 1;
+
+					nav {
+						max-width: 60%;
+						margin: 0 auto;
+					}
 				}
 
 				&--copyright {
@@ -117,30 +156,13 @@
 		}
 	}
 
-	/* Mobile - smaller */
-	@media (max-width: 420px) {
+	/* Desktop-ish (breaks out before default desktop size) */
+	@media (min-width: 1100px) {
 		&__areas {
-			.wpc-footer__area {
-				&--nav {
-					grid-row: 3 / span 1;
-				}
-
-				&--social {
-					grid-column: 1 / span 2;
-					grid-row: 4 / span 1;
-
-					.wpc-nav ul {
-						justify-content: center;
-					}
-				}
-			}
-		}
-	}
-
-	/* Laptop */
-	@media (min-width: 768px) {
-		&__areas {
-			grid-template-rows: auto auto auto auto;
+			grid-template-columns: repeat(12, 1fr);
+			grid-template-rows: auto auto auto 1fr;
+			grid-column-gap: 0;
+			grid-row-gap: 1rem;
 
 			.wpc-logo {
 				max-width: 300px;
@@ -148,58 +170,49 @@
 
 			.wpc-copyright {
 				text-align: left;
-			}
 
-			.wpc-nav {
-				&--social {
-					ul {
-						justify-content: flex-start;
-					}
+				a {
+					color: inherit;
 				}
 			}
 
 			.wpc-footer__area {
-				&--logo,
-				&--desc,
-				&--social,
-				&--copyright {
-					grid-column: col-start 1 / span 3;
+				&--logo {
+					grid-column: 1 / span 3;
 				}
 
 				&--desc {
-					grid-row: 2 / span 1;
-				}
-
-				&--social {
-					grid-row: 3 / span 1;
-				}
-
-				&--copyright {
-					grid-row: 4 / span 1;
+					grid-column: 1 / span 3;
 				}
 
 				&--nav {
-					grid-column: col-start 6 / span 3;
-				}
-
-				&--actions {
-					grid-column: col-start 10 / span 3;
-				}
-
-				&--nav,
-				&--actions {
+					grid-column: 6 / span 2;
 					grid-row: 1 / span 4;
 				}
-			}
-		}
-	}
 
-	/* Desktop */
-	@media (min-width: 1260px) {
-		&__areas {
-			.wpc-footer__area {
 				&--actions {
-					grid-column: col-start 11 / span 2;
+					grid-column: 10 / span 3;
+					grid-row: 1 / span 4;
+
+					nav {
+						max-width: none;
+						margin: 0;
+					}
+				}
+
+				&--social {
+					grid-column: 1 / span 3;
+					grid-row: 3 / span 1;
+
+					nav {
+						max-width: none;
+						margin: 0;
+					}
+				}
+
+				&--copyright {
+					grid-column: 1 / span 3;
+					grid-row: 4 / span 1;
 				}
 			}
 		}

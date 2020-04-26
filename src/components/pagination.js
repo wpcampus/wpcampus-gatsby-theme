@@ -2,64 +2,77 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Nav } from "../components/nav"
 
-const Pagination = ({ path, single, plural, previous, next }) => {
-	let items = [
-		{
-			path: path,
-			text: `All ${plural}`,
-		},
-	]
+import { ArrowLeft, ArrowRight } from "../svg/arrows"
+
+const PaginationAdjacent = ({ single, previous, next }) => {
+	let classes = "wpc-pagination-adj"
+	let items = []
 	if (previous) {
+		const label = <span className="wpc-pagination-adj__label">
+			<ArrowLeft /> <span>{previous.title || previous.name}</span>
+		</span>
+		classes += " wpc-pagination-adj--prev"
 		items.push({
+			classes: "wpc-pagination-adj__prev",
 			path: previous.path,
-			text: `Previous ${single}: ` + (previous.title || previous.name),
+			text: label,
+			aria_label: `Previous ${single}: ` + (previous.title || previous.name),
 		})
 	}
 	if (next) {
+		const label = <span className="wpc-pagination-adj__label">
+			<span>{next.title || next.name}</span> <ArrowRight />
+		</span>
+		classes += " wpc-pagination-adj--next"
 		items.push({
+			classes: "wpc-pagination-adj__next",
 			path: next.path,
-			text: `Next ${single}: ` + (next.title || next.name),
+			text: label,
+			aria_label: `Next ${single}: ` + (next.title || next.name),
 		})
 	}
 	if (items) {
-		return <Nav aria_label="Pagination" list={items} />
+		const navAttr = {
+			classes: classes,
+			aria_label: "Pagination",
+			list: items
+		}
+		return <Nav {...navAttr} />
 	}
 	return null
 }
 
-const CategoryPagination = ({ previous, next }) => {
-	return <Pagination path="/blog/categories/" single="category" plural="categories" previous={previous} next={next} />
-}
-
-const PostPagination = ({ previous, next }) => {
-	return <Pagination path="/blog/" single="post" plural="posts" previous={previous} next={next} />
-}
-
-const PodcastPagination = ({ previous, next }) => {
-	return <Pagination path="/podcast/" single="podcast" plural="podcasts" previous={previous} next={next} />
-}
-
-Pagination.propTypes = {
+PaginationAdjacent.propTypes = {
 	previous: PropTypes.object,
 	next: PropTypes.object,
-	path: PropTypes.string,
-	single: PropTypes.string,
-	plural: PropTypes.string
+	single: PropTypes.string
 }
 
-CategoryPagination.propTypes = {
+const CategoryPaginationAdjacent = ({ previous, next }) => {
+	return <PaginationAdjacent single="category" previous={previous} next={next} />
+}
+
+CategoryPaginationAdjacent.propTypes = {
 	previous: PropTypes.object,
 	next: PropTypes.object,
 }
 
-PostPagination.propTypes = {
+const PostPaginationAdjacent = ({ previous, next }) => {
+	return <PaginationAdjacent single="post" previous={previous} next={next} />
+}
+
+PostPaginationAdjacent.propTypes = {
 	previous: PropTypes.object,
 	next: PropTypes.object,
 }
 
-PodcastPagination.propTypes = {
+const PodcastPaginationAdjacent = ({ previous, next }) => {
+	return <PaginationAdjacent single="podcast" previous={previous} next={next} />
+}
+
+PodcastPaginationAdjacent.propTypes = {
 	previous: PropTypes.object,
 	next: PropTypes.object,
 }
 
-export { Pagination, CategoryPagination, PodcastPagination, PostPagination }
+export { CategoryPaginationAdjacent, PodcastPaginationAdjacent, PostPaginationAdjacent }

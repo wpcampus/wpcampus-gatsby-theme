@@ -1,11 +1,5 @@
 /* stylelint-disable selector-type-no-unknown */
 wpcampus-notifications {
-	background: var(--wpc-gray-lightest);
-	border-bottom: var(--area-border-gray-light);
-	font-size: 0.95rem;
-	text-align: left;
-	padding: 1.5rem var(--area-padding);
-
 	a {
 		color: inherit;
 	}
@@ -28,6 +22,24 @@ wpcampus-notifications {
 			&:first-child {
 				margin-top: 0;
 			}
+		}
+	}
+
+	.wpc-notifications {
+		background: var(--wpc-gray-lightest);
+		border-top: var(--area-border-gray-light);
+		border-bottom: var(--area-border-gray-light);
+		font-size: 0.95rem;
+		text-align: left;
+		padding: 1.5rem var(--area-padding);
+		height: auto;
+		opacity: 1;
+		transition: opacity 1s;
+
+		&--loading {
+			height: 0;
+			opacity: 0;
+			padding: 0;
 		}
 	}
 

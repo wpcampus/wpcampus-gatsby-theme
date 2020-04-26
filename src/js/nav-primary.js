@@ -10,6 +10,11 @@
 })(typeof self !== "undefined" ? self : this, () => {
 	"use strict"
 
+	const KEYMAP = {
+		ESC: 27,
+		TAB: 9,
+	}
+
 	// Object for public APIs.
 	const navigation = {}
 
@@ -75,7 +80,7 @@
 		toggleButton.classList.add("submenu-toggle", "js-submenu-toggle")
 
 		// Revisit for translation and internationalization.
-		toggleButton.setAttribute("aria-label", "Open child menu")
+		toggleButton.setAttribute("aria-label", "Toggle child menu")
 
 		toggleButton.setAttribute("aria-expanded", "false")
 
@@ -134,11 +139,79 @@
 	// }
 
 	/**
+	 * Returns first focusable element in the container.
+	 *
+	 * @param {Object} container
+	 * @param {string} focusSelector
+	 * @return {Object} element
+	 */
+	const getfirstFocusableElement = ( container, focusSelector ) => {
+		const focusableElements = container.querySelectorAll( focusSelector )
+		return focusableElements[0]
+	}
+
+	/**
+	 * Returns last focusable element in the container.
+	 * 
+	 * @param {Object} container
+	 * @param {string} focusSelector
+	 * @return {Object} element
+	 */
+	const getlastFocusableElement = ( container, focusSelector ) => {
+		const focusableElements = container.querySelectorAll( focusSelector )
+		return focusableElements[ focusableElements.length - 1 ]
+	}
+
+	/**
+	 * Handles keyboard navigation of the "mobile" menu.
+	 *
+	 * @param {*} event 
+	 */
+	const navKeyDown = (event) => {
+
+		switch (event.keyCode) {
+
+		// ESC
+		case KEYMAP.ESC: {
+
+			let toggle = settings.nav.querySelector(".menu-toggle")
+
+			// Close the "mobile" menu.
+			toggleMenu(toggle, false)
+			toggle.focus()
+			break
+		}
+
+		// TAB
+		case KEYMAP.TAB: {
+
+			// Which elements are focus-able in the nav.
+			let focusSelector = "a, button"
+			
+			if ( event.shiftKey ) {
+
+				// Means we're tabbing out of the beginning of the submenu.
+				if (document.activeElement === getfirstFocusableElement(settings.nav, focusSelector)) {
+					event.preventDefault()
+					getlastFocusableElement(settings.nav, focusSelector).focus()
+				}
+
+				// Means we're tabbing out of the end of the submenu.
+			} else if (document.activeElement === getlastFocusableElement(settings.nav, focusSelector)) {
+				event.preventDefault()
+				getfirstFocusableElement(settings.nav, focusSelector).focus()
+			}
+			break
+		}
+		}
+	}
+
+	/**
      * Toggles classes and attributes used for handling the display of the menu.
 	 *
 	 * @private
      * @param {Event}  event    The click event target.
-     * @param {String} expanded The updated value for the `aria-expanded` attribute.
+     * @param {Boolean} expand True if we're expanding.
      */
 	// const toggleMenu = (target, expanded) => {
 	// 	const label =
@@ -159,7 +232,7 @@
      * Toggles classes and attributes used for handling the display of submenus.
      * @private
      * @param {Event}  target   The click event target.
-     * @param {String} expanded The updated value for the `aria-expanded` attribute.
+     * @param {Boolean} expand True if we're expanding.
      */
 	// const toggleSubmenu = (target, expanded) => {
 	// 	const label =
@@ -221,7 +294,7 @@
 			}
 
 			// Set `min-height` values for both the `main` and `nav` elements if appropriate.
-			if ("vertical" === settings.orientation && settings.minHeights) {
+			/*if ("vertical" === settings.orientation && settings.minHeights) {
 				const navHeight = settings.nav.querySelector("ul").scrollHeight
 				const windowHeight = window.innerHeight
 				const minHeight =
@@ -229,7 +302,7 @@
 
 				settings.main.style.minHeight = minHeight
 				settings.nav.style.minHeight = minHeight
-			}
+			}*/
 		}
 	}
 
@@ -317,10 +390,10 @@
 		// Remove event listeners.
 		// settings.nav.removeEventListener("click", clickHandler, false)
 
-		if ("vertical" === settings.orientation) {
+		/*if ("vertical" === settings.orientation) {
 			window.addEventListener("resize", resizeHandler, true)
 			window.removeEventListener("scroll", scrollHandler, true)
-		}
+		}*/
 
 		// Reset variables.
 		settings = null
@@ -352,22 +425,22 @@
 
 		// addSubmenuToggles()
 
-		resizeHandler()
+		//resizeHandler()
 
 		// Listen for click events on the navigation element.
 		// settings.nav.addEventListener("click", clickHandler, false)
 
 		// Listen for resize events.
-		window.addEventListener("resize", resizeHandler, true)
+		//window.addEventListener("resize", resizeHandler, true)
 
-		if ("vertical" === settings.orientation) {
+		/*if ("vertical" === settings.orientation) {
 			window.addEventListener("scroll", scrollHandler, true)
 		}
 
 		if ("horizontal" === settings.orientation) {
 			settings.nav.addEventListener("focus", focusHandler, true)
 			settings.nav.addEventListener("blur", focusHandler, true)
-		}
+		}*/
 	}
 
 	return navigation

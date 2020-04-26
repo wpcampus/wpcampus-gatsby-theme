@@ -1,91 +1,28 @@
 import React from "react"
-import { graphql } from "gatsby"
 import PropTypes from "prop-types"
 
 import { ArticleArchive } from "../components/archive"
 import Layout from "../components/layout"
-import { CategoryPagination } from "../components/pagination"
 
-const CategoryTemplate = props => {
-	const category = props.data.wordpressCategory
-	const context = props.pageContext
-	const pagination = (
-		<CategoryPagination previous={context.previous} next={context.next} />
-	)
-	const heading = `Category: ${category.name}`
+const CategoryTemplate = ({ pageTitle, path, crumbs, category, categoryArchive }) => {
+
+	// @TODO add meta description?
+
 	return (
-		<Layout heading={heading} crumbs={context.crumbs} path={props.path}>
+		<Layout pageTitle={pageTitle} crumbs={crumbs} path={path}>
+			<h1>{pageTitle}</h1>
 			{category.description ? <p>{category.description}</p> : ""}
-			{pagination}
-			<ArticleArchive list={props.data.allWordpressPost.edges} />
-			{pagination}
+			<ArticleArchive list={categoryArchive} />
 		</Layout>
 	)
 }
 
 CategoryTemplate.propTypes = {
-	path: PropTypes.string.isRequired,
-	data: PropTypes.object.isRequired,
-	edges: PropTypes.array,
-	pageContext: PropTypes.object.isRequired
+	pageTitle: PropTypes.string.isRequired,
+	path: PropTypes.string,
+	crumbs: PropTypes.array,
+	category: PropTypes.object.isRequired,
+	categoryArchive: PropTypes.array
 }
 
 export default CategoryTemplate
-
-// @TODO remove fields we're not using.
-export const query = graphql`
-  query($id: String!) {
-    wordpressCategory(id: { eq: $id }) {
-      id
-      wordpress_id
-      count
-      name
-      description
-      path
-    }
-    allWordpressPost(
-      filter: {
-        type: { eq: "post" }
-        status: { eq: "publish" }
-        categories: { elemMatch: { id: { eq: $id } } }
-      }
-      sort: { fields: date, order: DESC }
-    ) {
-      edges {
-        node {
-          id
-          wordpress_id
-          slug
-          path
-          author {
-            id
-            wordpress_id
-            name
-            slug
-            path
-          }
-          title
-          status
-          date
-          dateFormatted: date(formatString: "MMMM D, YYYY")
-          excerpt
-          content
-          comment_status
-          categories {
-            id
-            wordpress_id
-            count
-            name
-            description
-            path
-          }
-        }
-      }
-    }
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`

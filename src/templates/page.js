@@ -9,8 +9,17 @@ import ProtectedContent from "../components/content"
 const PageTemplate = props => {
 	const page = props.data.wordpressPage
 	const pageContext = props.pageContext
+
+	const layoutAttr = {
+		metaDescription: page.wpc_seo.meta.description || null,
+		metaRobots: page.wpc_seo.meta.robots || [],
+		heading: page.title,
+		crumbs: pageContext.crumbs,
+		path: props.path
+	}
+
 	return (
-		<Layout heading={page.title} crumbs={pageContext.crumbs} path={props.path}>
+		<Layout {...layoutAttr}>
 			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
 				<div>{ReactHtmlParser(page.content)}</div>
 			</ProtectedContent>
@@ -38,10 +47,17 @@ export const pageQuery = graphql`
       status
       excerpt
       content
+	  wpc_seo {
+		  title
+		  meta {
+			  description
+			  robots
+		  }
+	  }
     }
     site {
       siteMetadata {
-        title
+        siteName
       }
     }
   }

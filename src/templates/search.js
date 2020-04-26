@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 
@@ -13,20 +13,27 @@ const SearchTemplate = (props) => {
 		defaultSearchQuery = sanitizeSearchTerm(defaultSearchQuery)
 	}
 
-	// Will pass along updateSearchQuery() to change the state.
-	const [searchQuery, updateSearchQuery] = useState(defaultSearchQuery)
+	// Don't index or follow if there's a search term.
+	const metaRobots = []
+	if (defaultSearchQuery != "") {
+		metaRobots.push("nofollow")
+		metaRobots.push("noindex")
+	}
 
 	const crumbs = {
 		crumb: {
 			path: "/search/",
+			isCurrent: true,
 			text: "Search"
 		}
 	}
 
+	// @TODO add meta description?
+
 	return (
-		<Layout heading="Search" searchQuery={searchQuery} updateSearchQuery={updateSearchQuery} crumbs={crumbs} path={props.path}>
+		<Layout heading="Search" crumbs={crumbs} path={props.path} metaRobots={metaRobots}>
 			<p>If you can&lsquo;t find what you&lsquo;re looking for, please <Link to="/about/contact" aria-label="Contact us and let us know">let us know</Link>.</p>
-			<SearchLayout searchQuery={searchQuery} updateSearchQuery={updateSearchQuery} />
+			<SearchLayout searchQuery={defaultSearchQuery} />
 		</Layout>
 	)
 }

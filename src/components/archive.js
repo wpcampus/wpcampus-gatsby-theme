@@ -4,15 +4,15 @@ import PropTypes from "prop-types"
 import Article from "../components/article"
 
 const CategoryArchive = ({ list }) => {
-	return list.map(({ node }) => {
+	return list.map((category) => {
 		// Convert category data to match post data for component
-		node.title = node.name
-		node.content = "<p>" + node.description + "</p>"
+		category.title = category.name
+		category.content = "<p>" + category.description + "</p>"
 
 		return (
 			<Article
-				key={node.id}
-				data={node}
+				key={category.id}
+				data={category}
 				isSingle={false}
 				displayMeta={false}
 				displayContent={true}
@@ -32,18 +32,28 @@ const ArticleArchive = ({
 	displayMeta,
 	displayContent,
 	displayContentFull,
-}) =>
-	list.map(({ node }) => (
-		<Article
-			key={node.id}
-			data={node}
-			isSingle={false}
-			displayAuthor={displayAuthor}
-			displayMeta={displayMeta}
-			displayContent={displayContent}
-			displayContentFull={displayContentFull}
-		/>
-	))
+	headingLevel,
+	includeLink
+}) => {
+	return <div className="wpc-articles">
+		{list.map(({ node }, i) => {
+			const articleAttr = {
+				key: node.id,
+				data: node,
+				isSingle: false,
+				displayAuthor: displayAuthor,
+				displayMeta: displayMeta,
+				displayContent: displayContent,
+				displayContentFull: displayContentFull,
+				includeLink: includeLink
+			}
+			if (headingLevel) {
+				articleAttr.headingLevel = headingLevel
+			}
+			return <Article key={i} {...articleAttr} />
+		})}
+	</div>
+}
 
 ArticleArchive.propTypes = {
 	list: PropTypes.array.isRequired,
@@ -51,6 +61,8 @@ ArticleArchive.propTypes = {
 	displayMeta: PropTypes.bool,
 	displayContent: PropTypes.bool,
 	displayContentFull: PropTypes.bool,
+	headingLevel: PropTypes.number,
+	includeLink: PropTypes.bool
 }
 
 ArticleArchive.defaultProps = {

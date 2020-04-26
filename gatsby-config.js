@@ -2,52 +2,53 @@ require("dotenv").config({
 	path: `.env.${process.env.NODE_ENV}`,
 })
 
-/**
- * We have to tweak our content authors because we have a multi author setup.
- *
- * This connects an array of author IDs (instead of a single ID) to their nodes in the users query.
- */
-const mapAuthorsToUsers = ({ entities }) => {
-	const users = entities.filter(e => e.__type === "wordpress__wp_users")
-	return entities.map(entity => {
-		if (!users.length) {
-			return entity
-		}
-		if (!entity.author || !entity.author.length) {
-			return entity
-		}
-
-		entity.author___NODE = entity.author
-			.map(userID => {
-				// Find the user
-				const user = users.find(u => u.wordpress_id === userID)
-
-				if (user) {
-					return user.id
-				}
-				return undefined
-			})
-			.filter(node => node != undefined)
-		delete entity.author
-
-		return entity
-	})
-}
-
 module.exports = {
 	siteMetadata: {
-		title: "WPCampus: Where WordPress meets Higher Education",
-		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing higher education by providing support, resources, and training focused on open source web publishing technologies.",
-		author: "@wpcampusorg",
+		siteUrl: `${process.env.WPC_PUBLIC}/`,
+		siteName: "WPCampus: Where WordPress Meets Higher Education",
+		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing Higher Education by providing support, resources, and training focused on open source web publishing technologies.",
+		locale: "en_US",
+		twitter: "@wpcampusorg",
 	},
 	plugins: [
 		"gatsby-plugin-react-helmet",
+		{
+			resolve: "gatsby-plugin-react-helmet-canonical-urls",
+			options: {
+				siteUrl: process.env.WPC_PUBLIC,
+			},
+		},
 		{
 			resolve: "gatsby-source-filesystem",
 			options: {
 				name: "images",
 				path: `${__dirname}/src/images`,
 			},
+		},
+		{
+			resolve: "gatsby-plugin-google-analytics",
+			options: {
+				trackingId: "UA-73440483-2",
+			},
+		},
+		{
+			resolve: "gatsby-plugin-sitemap",
+			options: {}
+		},
+		{
+			resolve: "gatsby-plugin-robots-txt",
+			options: {
+				env: {
+					host: process.env.WPC_PUBLIC,
+					sitemap: `${process.env.WPC_PUBLIC}/sitemap.xml`,
+					development: {
+						policy: [{ userAgent: "*", disallow: ["/"] }]
+					},
+					production: {
+						policy: [{ userAgent: "*", allow: "/" }]
+					}
+				}
+			}
 		},
 		"gatsby-transformer-sharp",
 		"gatsby-plugin-sharp",
@@ -72,7 +73,7 @@ module.exports = {
 		{
 			resolve: "gatsby-source-wordpress",
 			options: {
-				baseUrl: process.env.WPC_HOST,
+				baseUrl: process.env.WPC_WORDPRESS,
 				protocol: "https",
 				hostingWPCOM: false,
 				useACF: false,
@@ -81,20 +82,12 @@ module.exports = {
 					"**/pages",
 					"**/categories",
 					"**/podcast",
-					"**/users", // @TODO security concern?
 					//"**/members", // @TODO security concern?
 				],
 				auth: {
 					jwt_user: process.env.WPC_JWT_USER,
 					jwt_pass: process.env.WPC_JWT_PASSWORD,
 				},
-				normalizers: normalizers => [
-					...normalizers,
-					{
-						name: "mapAuthorsToUsers",
-						normalizer: mapAuthorsToUsers,
-					},
-				],
 			},
 		},
 		// this (optional) plugin enables Progressive Web App + Offline functionality

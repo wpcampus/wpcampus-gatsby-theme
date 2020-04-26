@@ -68,10 +68,11 @@ const HeaderLoggedInActions = ({ user, classes }) => {
 	if (classes) {
 		actionsAttr.className += ` ${classes}`
 	}
+	const LogoutButton = user.LogoutButton
 	return <nav {...actionsAttr}>
 		<ul>
-			<li><Link className="wpc-button wpc-button--primary" to="/profile/">View profile</Link></li>
-			<li><button className="wpc-button wpc-button--plain wpc-button--logout" onClick={user.logout}>Logout</button></li>
+			<li><Link className="wpc-button wpc-button--primary" to="/profile/">Your profile</Link></li>
+			<li><LogoutButton isPlain={true} /></li>
 		</ul>
 	</nav>
 }
@@ -96,7 +97,7 @@ const UserLoggedInActions = ({ user }) => {
 		<img className="wpc-user__avatar" src={avatarEduwapuuBW} alt="" />
 		<div className="wpc-user__info">
 			<span className="wpc-user__name">{userNameDisplay}</span>
-			<HeaderLoggedInActions user={user} classes="wpc-user__actions wpc-member__actions" />
+			<HeaderLoggedInActions user={user} classes="wpc-user__actions" />
 		</div>
 	</div>
 }
@@ -119,7 +120,7 @@ const HeaderHomeBanner1 = () => {
 	}
 
 	const searchFormAttr = {
-		showSubmit: false
+		showSubmitIcon: true
 	}
 
 	return <div className="wpc-home-banner">
@@ -143,7 +144,7 @@ const HeaderHomeBanner1 = () => {
 	</div>
 }
 
-const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
+const Header = ({ isHome }) => {
 
 	const handleUserDisplay = user => {
 		if (!user.isActive()) {
@@ -157,6 +158,10 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 
 	const headerAttr = {
 		className: "wpc-header wpc-wrapper"
+	}
+
+	const searchFormAttr = {
+		showSubmitIcon: true
 	}
 
 	let headerAreas
@@ -174,22 +179,16 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 		</HeaderAreas>
 	} else {
 
-		const searchFormAttr = {
-			showSubmit: false,
-			searchQuery: searchQuery,
-			updateSearchQuery: updateSearchQuery
-		}
-
 		headerAreas = <HeaderAreas>
-			<HeaderArea area="actions">
-				<User.Consumer>{handleUserDisplay}</User.Consumer>
-			</HeaderArea>
 			<HeaderArea area="logo">
 				<span className="wpc-header__heading wpc-header__heading--site">
 					<Link to="/" aria-label="Home"><WPCampusLogo /></Link>
 				</span>
 			</HeaderArea>
-			<HeaderArea area="meta">
+			<HeaderArea area="actions">
+				<User.Consumer>{handleUserDisplay}</User.Consumer>
+			</HeaderArea>
+			<HeaderArea area="search">
 				<SearchForm {...searchFormAttr} />
 			</HeaderArea>
 		</HeaderAreas>
@@ -205,8 +204,6 @@ const Header = ({ isHome, searchQuery, updateSearchQuery }) => {
 }
 
 Header.propTypes = {
-	searchQuery: PropTypes.string,
-	updateSearchQuery: PropTypes.func,
 	isHome: PropTypes.bool
 }
 

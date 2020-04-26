@@ -5,15 +5,24 @@ import "./../css/nav.css"
 import { Nav, NavPrimaryItems } from "./nav"
 import navigation from "../js/nav-primary"
 
+import ToggleIcon from "../svg/toggleMenu"
+
 const NavPrimary = () => {
 
 	const navPrimaryID = "navPrimary"
 
+	// @TODO add useRef
 	useEffect(() => {
+
+		const navPrimary = document.getElementById(navPrimaryID)
+
+		document.body.classList.remove("menu-toggled-open")
+		navPrimary.classList.remove("toggled-open")
+
 		navigation.init({
-			breakpoint: 960,
+			breakpoint: 768,
 			main: document.getElementById("main"),
-			nav: document.getElementById(navPrimaryID),
+			nav: navPrimary,
 			minHeights: false,
 		})
 	})
@@ -27,7 +36,13 @@ const NavPrimary = () => {
 
 	return (
 		<Nav {...navPrimaryAttr}>
-			<button className="menu-toggle">Menu</button>
+			<button className="wpc-nav__toggle menu-toggle" aria-label="Toggle main menu">
+				<ToggleIcon classes="wpc-nav__toggle__icon" />
+				<div className="wpc-nav__toggle__labels">
+					<div className="wpc-nav__toggle__label wpc-nav__toggle__label--open">Menu</div>
+					<div className="wpc-nav__toggle__label wpc-nav__toggle__label--close">Close</div>
+				</div>
+			</button>
 		</Nav>
 	)
 }

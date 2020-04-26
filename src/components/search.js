@@ -2,7 +2,21 @@ import React from "react"
 import { Link, navigate } from "gatsby"
 import PropTypes from "prop-types"
 
+import ReactHtmlParser from "react-html-parser"
+
+import { ArticleArchive } from "./archive"
+import LibraryLayout from "./library"
+
 import MagnifyingGlass from "../svg/magnifying-glass"
+
+/*
+ * Set the search URL for search requests.
+ *
+ * Environment variables are only accessible in development.
+ */
+const isDev = "development" === process.env.NODE_ENV
+const wpcSearchRoot = isDev ? process.env.WPC_API : "https://wpcampus.org/wp-json"
+const wpcSearchURL = `${wpcSearchRoot}/wpcampus/search/`
 
 const sanitizeSearchTerm = (str) => {
 	str = str.replace(/[^a-z0-9áéíóúñü .,_-]/gim, "")
@@ -15,9 +29,12 @@ const navigateToSearch = (searchValue) => {
 
 const SearchResult = ({ result, headingLevel }) => {
 	const HeadingTag = `h${headingLevel}`
-	return <div className="wpc-search__result">
+	const resultAttr = {
+		className: `wpc-search__result wpc-search__result--${result.type}`
+	}
+	return <div {...resultAttr}>
 		<HeadingTag><Link to={result.path}>{result.title}</Link></HeadingTag>
-		<p>{result.excerpt.basic}</p>
+		{ReactHtmlParser(result.excerpt.rendered)}
 	</div>
 }
 
@@ -30,18 +47,48 @@ SearchResult.defaultProps = {
 	headingLevel: 3
 }
 
-const SearchResultsByType = ({ label, id, results, headingLevel, plural }) => {
+const SearchResultsByType = ({ label, id, results, headingLevel, headingTo, plural }) => {
 	const noResults = <p>There are no search results for {plural}.</p>
 	let headingLabel = label
-	if (results.length) {
-		headingLabel += ` (${results.length})`
+
+	if (headingTo) {
+		headingLabel = <Link to={headingTo} className="wpc-link wpc-link--inherit">{headingLabel}</Link>
 	}
+
 	const HeadingTag = `h${headingLevel}`
-	return <div className="wpc-search__results">
-		<HeadingTag id={id}>{headingLabel}</HeadingTag>
-		{!results.length ? noResults : results.map((item, i) => {
+
+	let resultsMarkup
+	if (!results.length) {
+		resultsMarkup = noResults
+	} else if ("session" == id) {
+
+		// Have to modify to match component.
+		results = results.map(item => {
+			return { node: item }
+		})
+
+		resultsMarkup = <LibraryLayout itemHeadingLevel={headingLevel} enableFilters={false} library={results} />
+
+	} else if (["post","podcast"].includes(id)) {
+
+		// Have to modify to match component.
+		results = results.map(item => {
+			return { node: item }
+		})
+
+		resultsMarkup = <ArticleArchive headingLevel={3} list={results} />
+
+	} else {
+		resultsMarkup = results.map((item, i) => {
 			return <SearchResult key={i} result={item} headingLevel={(headingLevel + 1)} />
-		})}
+		})
+	}
+
+	return <div className="wpc-search__results">
+		<HeadingTag id={id} className="wpc-search-results__heading">
+			<span className="wpc-icon wpc-icon--quotes"></span> {headingLabel} {results.length ? ` (${results.length})` : null}
+		</HeadingTag>
+		{resultsMarkup}
 	</div>
 }
 
@@ -50,6 +97,7 @@ SearchResultsByType.propTypes = {
 	id: PropTypes.string,
 	results: PropTypes.array,
 	headingLevel: PropTypes.number,
+	headingTo: PropTypes.string,
 	plural: PropTypes.string.isRequired
 }
 
@@ -58,12 +106,19 @@ SearchResultsByType.defaultProps = {
 }
 
 const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete }) => {
-	// @TODO add library
 	const sortByType = {
 		post: {
 			id: "post",
 			label: "Blog posts",
 			plural: "blog posts",
+			to: "/blog/",
+			results: []
+		},
+		session: {
+			id: "session",
+			label: "Learning Library",
+			plural: "sessions",
+			to: "/learning/library/",
 			results: []
 		},
 		page: {
@@ -76,6 +131,7 @@ const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete })
 			id: "podcast",
 			label: "Podcasts",
 			plural: "podcasts",
+			to: "/podcast/",
 			results: []
 		}
 	}
@@ -118,7 +174,8 @@ const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete })
 
 		resultsFormatted = Object.keys(sortByType).map(function (key, i) {
 			const type = sortByType[key]
-			return <SearchResultsByType key={i} id={type.id} label={type.label} plural={type.plural} results={type.results} headingLevel={headingLevel} />
+			const to = type.to || null
+			return <SearchResultsByType key={i} id={type.id} label={type.label} plural={type.plural} results={type.results} headingLevel={headingLevel} headingTo={to} />
 		})
 	}
 
@@ -171,8 +228,7 @@ class SearchForm extends React.Component {
 
 		this.state = {
 			searchQuery: props.searchQuery,
-			updateSearchQuery: props.updateSearchQuery,
-			showSubmit: props.showSubmit,
+			showSubmitIcon: props.showSubmitIcon,
 		}
 
 		if ("function" === typeof props.onSubmit) {
@@ -216,11 +272,6 @@ class SearchForm extends React.Component {
 		searchValue = sanitizeSearchTerm(searchValue)
 
 		if (searchValue) {
-
-			if ("function" === typeof this.state.updateSearchQuery) {
-				this.state.updateSearchQuery(searchValue)
-			}
-
 			navigateToSearch(searchValue)
 		}
 	}
@@ -244,8 +295,8 @@ class SearchForm extends React.Component {
 			onSubmit: this.state.onSubmit
 		}
 
-		if (!this.state.showSubmit) {
-			searchFormAttr.className += " wpc-form--hide-submit"
+		if (this.state.showSubmitIcon) {
+			searchFormAttr.className += " wpc-search-form--show-submit-icon"
 		}
 
 		const inputSearchAttr = {
@@ -259,35 +310,38 @@ class SearchForm extends React.Component {
 		}
 
 		const submitAttr = {
-			className: "wpc-form__submit",
+			className: "wpc-form__submit wpc-search-form__submit",
 			type: "submit",
-			value: "Search"
+			"aria-label": "Search"
 		}
 
-		if (!this.state.showSubmit) {
-			submitAttr.tabIndex = "-1"
+		if (this.state.showSubmitIcon) {
+			submitAttr.value = ""
+		} else {
+			submitAttr.value = "Search"
 		}
 
 		return <form {...searchFormAttr}>
-			<div className="wpc-search-form__magnifying">
-				<MagnifyingGlass />
-			</div>
 			<input {...inputSearchAttr} />
-			<input {...submitAttr} />
+			<div className="wpc-search-form__submit-icon">
+				<input {...submitAttr} />
+				{this.state.showSubmitIcon ? <div className="wpc-search-form__magnifying">
+					<MagnifyingGlass />
+				</div> : null}
+			</div>
 		</form>
 	}
 }
 
 SearchForm.propTypes = {
 	searchQuery: PropTypes.string,
-	updateSearchQuery: PropTypes.func,
-	showSubmit: PropTypes.bool,
+	showSubmitIcon: PropTypes.bool,
 	onSubmit: PropTypes.func
 }
 
 SearchForm.defaultProps = {
 	searchQuery: "",
-	showSubmit: true
+	showSubmitIcon: false
 }
 
 class SearchLayout extends React.Component {
@@ -300,7 +354,6 @@ class SearchLayout extends React.Component {
 			processing: false,
 			isSearchComplete: false,
 			searchQuery: props.searchQuery,
-			updateSearchQuery: props.updateSearchQuery,
 			includeSearchHeading: props.includeSearchHeading,
 			children: props.children,
 			results: []
@@ -325,6 +378,10 @@ class SearchLayout extends React.Component {
 
 		// If things changed, returns an object. Otherwise false.
 		if (false !== changed) {
+
+			if (changed.searchQuery && !this.state.processing) {
+				this.runSearch(this.props.searchQuery)
+			}
 
 			this.setState({
 				...prevState,
@@ -352,13 +409,10 @@ class SearchLayout extends React.Component {
 			processing: true
 		}))
 
-		if ("function" === typeof this.state.updateSearchQuery) {
-			this.state.updateSearchQuery(searchStr)
-		}
-
+		// @TODO doesnt need to run when component is mounted because already set?
 		window.history.pushState({}, "", "/search/" + encodedSearchStr)
 
-		let url = "https://wpcampus.org/wp-json/wpcampus/search/"
+		let url = wpcSearchURL
 
 		// What post types do we want?
 		url += "?subtype=page,post,podcast"
@@ -421,12 +475,17 @@ class SearchLayout extends React.Component {
 			searchAttr.className += ` ${this.cssSearchPrefix}--processing`
 		}
 
+		const searchFormAttr = {
+			searchQuery: this.state.searchQuery,
+			onSubmit: this.handleSubmit
+		}
+
 		const headingLevel = this.state.includeSearchHeading ? 3 : 2
 
 		return <div {...searchAttr}>
 			{this.state.children ? this.state.children : null}
 			{this.state.includeSearchHeading ? <h2>Search our website</h2> : null}
-			<SearchForm searchQuery={this.state.searchQuery} updateSearchQuery={this.state.updateSearchQuery} onSubmit={this.handleSubmit} />
+			<SearchForm {...searchFormAttr} />
 			<SearchResults headingLevel={headingLevel} isSearchComplete={this.state.isSearchComplete} searchQuery={this.state.resultsQuery} results={this.state.results} />
 		</div>
 	}
@@ -434,7 +493,6 @@ class SearchLayout extends React.Component {
 
 SearchLayout.propTypes = {
 	searchQuery: PropTypes.string,
-	updateSearchQuery: PropTypes.func.isRequired,
 	includeSearchHeading: PropTypes.bool,
 	children: PropTypes.node
 }

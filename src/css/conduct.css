@@ -2,6 +2,7 @@
 wpcampus-conduct {
 	background: var(--wpc-gray-lightest);
 	border-top: var(--area-border-gray-light);
+	overflow: hidden;
 
 	.wpc-conduct {
 		a {
@@ -31,13 +32,37 @@ wpcampus-conduct {
 		}
 
 		&__area {
-			padding: var(--area-padding) var(--area-padding-large);
+			padding: var(--area-padding);
+		}
 
-			@media (min-width: 768px) {
+		/* ONLY Mobile */
+		@media (max-width: 767px) {
+			position: relative;
+
+			.wpc-conduct__graphic {
+				position: absolute;
+				right: -15px;
+				top: 50%;
+				width: 100px;
+				transform: translateY(-50%);
+			}
+
+			.wpc-conduct__main {
+				padding-right: 60px;
+			}
+		}
+
+		/* Laptop */
+		@media (min-width: 768px) {
+			max-width: 90%;
+			margin: 0 auto;
+
+			&__area {
 				display: grid;
 				grid-template-columns: 100px 1fr;
 				grid-column-gap: 2rem;
 				align-items: center;
+				padding: var(--area-padding) var(--area-padding-large);
 
 				.wpc-conduct__main {
 					grid-column: 2 / span 1;
@@ -48,12 +73,6 @@ wpcampus-conduct {
 					grid-row: 1;
 				}
 			}
-		}
-
-		/* Laptop */
-		@media (min-width: 768px) {
-			max-width: 90%;
-			margin: 0 auto;
 		}
 	}
 }

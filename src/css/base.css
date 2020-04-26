@@ -1,5 +1,4 @@
 @import "variables.css";
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Roboto:wght@100;300;400&display=swap');
 
 html,
 body,
@@ -140,6 +139,18 @@ table {
 
 a {
 	color: var(--wpc-blue-royal);
+
+	&.wpc-link--inherit {
+		color: inherit;
+	}
+}
+
+em {
+	font-style: italic;
+}
+
+strong {
+	font-weight: 600;
 }
 
 img {
@@ -161,8 +172,8 @@ ol {
 }
 
 h1 {
-	font-size: 2.5rem;
-	line-height: 1.3;
+	font-size: 2.75rem;
+	line-height: 1.4;
 	margin: 0 0 1rem;
 }
 
@@ -184,6 +195,45 @@ h4 {
 	margin: 0 0 0.5rem;
 }
 
+.wpc-skip-to-main {
+	display: block;
+	background: var(--wpc-orange);
+	position: fixed;
+	top: -1000px;
+	left: -1000px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	border: 0;
+	padding: 0 15px;
+	margin: 0;
+	z-index: -1;
+	clip: rect(1px, 1px, 1px, 1px);
+	color: #fff;
+	font-size: 1.1rem;
+	line-height: 1.5;
+	text-decoration: underline;
+	text-align: center;
+
+	&:visited {
+		color: #fff;
+	}
+
+	&:active,
+	&:focus,
+	&:hover {
+		clip: auto;
+		left: 0;
+		top: 0;
+		width: auto;
+		height: auto;
+		padding: 1.2rem 1.25rem;
+		overflow: visible;
+		z-index: 10000;
+		color: #fff;
+	}
+}
+
 .for-screen-reader {
 	border: 0;
 	clip: rect(0 0 0 0);
@@ -203,24 +253,16 @@ svg.wpc-logo {
 	}
 }
 
-.wpc-icon {
-	&-text {
-		.wpc-icon {
-			display: inline-block;
-			width: 25px;
-			height: auto;
-			max-height: 22px;
-			vertical-align: bottom;
-			margin: 0 0.5rem 0 0;
-		}
-	}
+button {
+	cursor: pointer;
 }
 
 .wpc-button {
 	background-color: #ecf2fa;
 	border: 1px solid #dce6f5;
-	border-radius: 10px;
+	border-radius: var(--button-border-radius);
 	padding: 0.5rem 1rem;
+	font-size: inherit;
 	color: inherit;
 	text-decoration: underline;
 	cursor: pointer;
@@ -284,5 +326,185 @@ nav.wpc-nav {
 		float: right;
 		max-width: 200px;
 		margin: 0 0 3rem 4rem;
+	}
+}
+
+table.wpc-table {
+	width: 100%;
+	text-align: left;
+
+	th {
+		font-weight: 600;
+	}
+
+	&--profile {
+		font-size: 1.1rem;
+
+		th,
+		td {
+			padding: 0.25rem 0;
+		}
+
+		th {
+			width: 18%;
+			font-size: 1.2rem;
+			padding-right: 1rem;
+		}
+	}
+}
+
+/* stylelint-disable no-descending-specificity */
+ul.wpc-meta {
+	display: block;
+	list-style: none;
+	margin: 0.2rem 0 0;
+	font-size: 0.9rem;
+	line-height: 1.6;
+	font-weight: 600;
+
+	a {
+		color: inherit;
+	}
+
+	& > li {
+		--dash-width: 6px;
+		--dash-padding: 5px;
+
+		display: inline-block;
+		position: relative;
+		padding-left: calc(var(--dash-width) + var(--dash-padding));
+		margin-left: var(--dash-padding);
+
+		.wpc-meta__label {
+			margin-right: 0.25rem;
+		}
+
+		&::before {
+			content: '';
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 50%;
+			width: var(--dash-width);
+			height: 2px;
+			background: #888;
+		}
+
+		ul {
+			display: inline-block;
+			margin: 0;
+
+			& > li {
+				display: inline-block;
+
+				&::before {
+					content: ', ';
+				}
+
+				&:first-child {
+					&::before {
+						display: none;
+					}
+				}
+			}
+		}
+
+		&:first-child {
+			padding-left: 0;
+			margin-left: 0;
+
+			&::before {
+				display: none;
+			}
+		}
+	}
+}
+
+.wpc-article__header + .wpc-article__content--excerpt {
+	margin-top: 0.5rem;
+}
+
+h2.wpc-article__title + .wpc-meta {
+	margin-top: -0.3rem;
+}
+
+.wpc-contributor {
+	display: grid;
+	grid-template-columns: 150px 1fr;
+	grid-column-gap: 1.5rem;
+	align-items: flex-start;
+
+	&__avatar {
+		img {
+			display: block;
+			border: var(--area-border-gray-light);
+			margin: 0;
+		}
+	}
+
+	&__name {
+		font-size: 1.6rem;
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	&__bio {
+		margin: 0.25rem 0 0;
+	}
+}
+
+.wpc-contributors {
+	margin: 0 0 2.5rem;
+
+	.wpc-contributor {
+		margin: 0 0 1.5rem;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	&--archive {
+		margin: 2rem 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+
+		.wpc-contributor {
+			grid-template-columns: 65px 1fr;
+			grid-column-gap: 1rem;
+			align-items: center;
+			width: 50%;
+			padding: 0.5rem;
+
+			&__name {
+				font-size: 1.4rem;
+				line-height: 1.3;
+			}
+
+			&__meta {
+				font-weight: 400;
+			}
+		}
+	}
+}
+
+.wpc-article-prefix {
+	display: block;
+	font-size: 1.5rem;
+	font-weight: 300;
+	text-transform: uppercase;
+	opacity: 0.8;
+}
+
+.wpc-article {
+	&--single {
+		.wpc-meta {
+			font-size: 1rem;
+		}
+
+		.wpc-article__content {
+			margin: 1.5rem 0 2rem;
+		}
 	}
 }

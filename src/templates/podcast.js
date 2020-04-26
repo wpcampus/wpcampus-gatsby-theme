@@ -1,23 +1,53 @@
 import React from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
+import { Link } from "gatsby"
 
 import Article from "../components/article"
 import Layout from "../components/layout"
-import { PodcastPagination } from "../components/pagination"
+import { PodcastPaginationAdjacent } from "../components/pagination"
+
+import "./../css/post.css"
+
+const normalizeCategories = (categories) => {
+	if (!categories) {
+		return categories
+	}
+	return categories.map(category => {
+		category.path = `/podcast/categories/${category.slug}`
+		category.aria_label = `Podcast category: ${category.name}`
+		return category
+	})
+}
 
 const PodcastTemplate = props => {
 	const podcast = props.data.wordpressWpPodcast
 	const context = props.pageContext
-	const pagination = (
-		<PodcastPagination previous={context.previous} next={context.next} />
+	podcast.categories = normalizeCategories(podcast.categories)
+	const paginationAdj = (
+		<PodcastPaginationAdjacent previous={context.previous} next={context.next} />
 	)
+	const layoutAttr = {
+		metaDescription: podcast.wpc_seo.meta.description || null,
+		metaRobots: podcast.wpc_seo.meta.robots || [],
+		classes: "wpc-post",
+		pageTitle: podcast.title,
+		path: props.path
+	}
+
+	const articleAttr = {
+		data: podcast, 
+		wpc_protected: context.wpc_protected,
+		isSingle: true,
+		displayContentFull: true,
+		headerPrefix: <Link to="/podcast/">From our podcast</Link>,
+		paginationAdj: paginationAdj
+	}
 	return (
-		<Layout pageTitle={podcast.title} crumbs={context.crumbs} path={props.path}>
-			{pagination}
-			<p>Duration: {podcast.meta.duration}</p>
-			<Article data={podcast} wpc_protected={context.wpc_protected} isSingle={true} displayContentFull={true} />
-			{pagination}
+		<Layout {...layoutAttr}>
+			<Article {...articleAttr}>
+				<p>Duration: {podcast.meta.duration}</p>
+			</Article>
 		</Layout>
 	)
 }
@@ -41,15 +71,14 @@ export const podcastQuery = graphql`
       path
       author {
         id
-        wordpress_id
-        name
-        slug
-        path
-		url
-		description
+		path
+		display_name
+		email
+		twitter
+		website
 		company
 		company_position
-		twitter
+		bio
       }
       title
       status
@@ -64,15 +93,22 @@ export const podcastQuery = graphql`
         count
         name
         description
-        path
+        slug
 	  }
 	  meta {
 		  duration
 	  }
+	  wpc_seo {
+		title
+		meta {
+			description
+			robots
+		}
+	  }
     }
     site {
       siteMetadata {
-        title
+        siteName
       }
     }
   }

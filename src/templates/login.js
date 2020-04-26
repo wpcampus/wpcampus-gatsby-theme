@@ -3,9 +3,7 @@ import { navigate } from "gatsby"
 
 import Layout from "../components/layout"
 import { User } from "../user/context"
-import userDisplay from "../user/display"
-
-// @TODO tell robots dont index this page
+import { LoginLayout } from "../user/login"
 
 const Login = () => {
 	const handleDisplay = user => {
@@ -15,14 +13,14 @@ const Login = () => {
 		if (user.isLoggedIn()) {
 			navigate( "/profile/" )
 		}
-		//navigate("/login")
-		const args = {
-			showLogin: true,
-		}
-		return userDisplay(user, args)
+		return <LoginLayout />
 	}
+
+	// Don't index or follow.
+	const metaRobots = ["nofollow","noindex"]
+
 	return (
-		<Layout heading="Login">
+		<Layout heading="Login" metaRobots={metaRobots}>
 			<User.Consumer>{handleDisplay}</User.Consumer>
 		</Layout>
 	)

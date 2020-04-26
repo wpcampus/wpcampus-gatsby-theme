@@ -9,8 +9,19 @@ import "./../css/home.css"
 
 const PageTemplate = props => {
 	const page = props.data.wordpressPage
+
+	const layoutAttr = {
+		metaDescription: page.wpc_seo.meta.description || null,
+		metaRobots: page.wpc_seo.meta.robots || [],
+		isHome: true,
+		pageTitle: page.title,
+		useTitleTemplate: false,
+		heading: page.title,
+		path: props.path
+	}
+
 	return (
-		<Layout isHome={true} pageTitle={page.title} useTitleTemplate={false} heading={page.title} path={props.path}>
+		<Layout{...layoutAttr}>
 			<div>{ReactHtmlParser(page.content)}</div>
 		</Layout>
 	)
@@ -33,11 +44,18 @@ export const pageQuery = graphql`
       title
       status
       excerpt
-      content
+	  content
+	  wpc_seo {
+		title
+		meta {
+		  description
+		  robots
+		}
+	  }
     }
     site {
       siteMetadata {
-        title
+        siteName
       }
     }
   }
