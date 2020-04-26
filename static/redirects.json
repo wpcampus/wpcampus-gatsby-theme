@@ -1,6 +1,11 @@
 {
 	"redirects": [
 		{
+			"source": "/get-involved/",
+			"destination": "/community/membership/",
+			"status": 301
+		},
+		{
 			"source": "/library/",
 			"destination": "/learning/library/",
 			"status": 301
