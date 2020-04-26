@@ -94,6 +94,10 @@ const Form = ({ data }) => {
 		return "below_label" === field.labelPlacement ? "below" : "above"
 	}
 
+	const getFieldRequiredMessage = () => {
+		return <span className="gform__field__required">* <span className="for-screen-reader"> Required</span></span>
+	}
+
 	const FormFieldset = ({ field, children }) => {
 		const fieldId = fieldIdPrefix(field.id)
 
@@ -107,14 +111,20 @@ const Form = ({ data }) => {
 			className: `${formPrefix}__legend ${formPrefix}__legend--${field.type}`,
 		}
 
-		// @TODO need? <span className="gfield_required">* <span className="sr-only"> Required</span></span>
-
 		let fieldDesc = <FormFieldDescription field={field} />
 		const descPlacement = getDescriptionPlacement(field)
 
+		const legendLabel = <span>{field.label}</span>
+
+		let legendRequired
+		if (field.isRequired) {
+			legendAttr.className += ` ${formPrefix}__legend--required`
+			legendRequired = getFieldRequiredMessage()
+		}
+
 		return (
 			<fieldset {...fieldsetAttr}>
-				<legend {...legendAttr}>{field.label}</legend>
+				<legend {...legendAttr}>{legendLabel}{legendRequired}</legend>
 				{"above" === descPlacement ? fieldDesc : ""}
 				{children}
 				{"below" === descPlacement ? fieldDesc : ""}
@@ -143,9 +153,16 @@ const Form = ({ data }) => {
 		field: PropTypes.object.isRequired,
 	}
 
-	const FormFieldContainer = ({ field, children }) => {
+	const FormFieldContainer = ({ field, index, children }) => {
+
+		let fieldID = field.id
+
+		if (undefined !== index) {
+			fieldID += "." + index
+		}
+
 		const containerAttr = {
-			id: `${fieldIdPrefix(field.id)}-container`,
+			id: `${fieldIdPrefix(fieldID)}-container`,
 			className: `${formPrefix}__container ${formPrefix}__container--${field.type}`,
 		}
 		return <div {...containerAttr}>{children}</div>
@@ -153,11 +170,11 @@ const Form = ({ data }) => {
 
 	FormFieldContainer.propTypes = {
 		field: PropTypes.object.isRequired,
+		index: PropTypes.number,
 		children: PropTypes.node.isRequired,
 	}
 
-	// @TODO possible container classes: ginput_complex ginput_container no_prefix has_first_name no_middle_name has_last_name no_suffix gf_name_has_2 ginput_container_name
-	const FormFieldOptions = ({ field, options }) => {
+	const FormFieldOptions = ({ field, options, hideDescription }) => {
 		const optionsAttr = {
 			id: `${fieldIdPrefix(field.id)}-options`,
 			className: `${formPrefix}__options ${formPrefix}__options--${field.type}`,
@@ -165,16 +182,34 @@ const Form = ({ data }) => {
 		return (
 			<div {...optionsAttr}>
 				{options.map((input, i) => {
-					// If input has an ID, then any indexeing issues are resolved when we merge.
+
+					// If input has an ID, then any indexing issues are resolved when we merge.
 					const inputHasID = undefined !== input.id
+
 					let thisField = {
 						...field,
 						...input,
 					}
+
 					if (inputHasID) {
-						return <FormFieldInput key={i} field={thisField} />
+
+						const isSubField = ["email", "name"].includes(field.type)
+
+						return <FormFieldInput
+							key={i}
+							field={thisField}
+							isSubField={isSubField}
+							hideDescription={hideDescription}
+						/>
 					}
-					return <FormFieldInput key={i} field={thisField} index={i} />
+
+					return <FormFieldInput
+						key={i}
+						field={thisField}
+						isSubField={true}
+						index={i}
+						hideDescription={hideDescription}
+					/>
 				})}
 			</div>
 		)
@@ -183,6 +218,11 @@ const Form = ({ data }) => {
 	FormFieldOptions.propTypes = {
 		field: PropTypes.object.isRequired,
 		options: PropTypes.array.isRequired,
+		hideDescription: PropTypes.bool
+	}
+
+	FormFieldOptions.defaultProps = {
+		hideDescription: false
 	}
 
 	const getElementID = (field, index) => {
@@ -211,8 +251,12 @@ const Form = ({ data }) => {
 		return field.label
 	}
 
-	const getFieldErrorID = field => {
-		return `${fieldIdPrefix(field.id)}-error`
+	const getFieldErrorID = (field, index) => {
+		let fieldID = field.id
+		if (undefined !== index) {
+			fieldID += "." + index
+		}
+		return `${fieldIdPrefix(fieldID)}-error`
 	}
 
 	const onRadioChange = event => {
@@ -251,7 +295,7 @@ const Form = ({ data }) => {
 			name: inputName,
 			type: inputType,
 			className: `${formPrefix}__element ${formPrefix}__element--${inputType}`,
-			"aria-labelledby": `${getLabelID(field, index)} ${getFieldErrorID(field)}`,
+			"aria-labelledby": `${getLabelID(field, index)} ${getFieldErrorID(field, index)}`,
 		}
 
 		if (field.placeholder) {
@@ -288,76 +332,94 @@ const Form = ({ data }) => {
 		})
 	}
 
-	const FormFieldLabel = ({ field, placement, index }) => {
-		const isSubField = undefined !== index
+	const FormFieldLabel = ({ field, placement, index, isSubField }) => {
 		if (!showFieldLabel(field, isSubField)) {
 			return null
 		}
+
 		const fieldLabel = getFieldLabel(field, isSubField)
 		const cssLabel = `${formPrefix}__label`
 		let className = `${cssLabel} ${cssLabel}--${field.type}`
+
 		if (placement) {
 			className += ` ${cssLabel}--${placement}`
 		}
+
 		const labelAttr = {
 			htmlFor: getElementID(field, index),
 			id: getLabelID(field, index),
 			className: className
 		}
-		return <label {...labelAttr}>{fieldLabel}</label>
+
+		let labelRequired
+		if (field.isRequired && !isSubField) {
+			labelAttr.className += ` ${formPrefix}__label--required`
+			labelRequired = getFieldRequiredMessage()
+		}
+
+		return <label {...labelAttr}>{fieldLabel}{labelRequired}</label>
 	}
 
 	FormFieldLabel.propTypes = {
 		field: PropTypes.object.isRequired,
 		placement: PropTypes.string,
 		index: PropTypes.number,
+		isSubField: PropTypes.bool
 	}
 
 	FormFieldLabel.defaultProps = {
-		placement: ""
+		placement: "",
+		isSubField: false
 	}
 
-	// @TODO add type CSS somewhere
-	const FormFieldInput = ({ field, index }) => {
+	const FormFieldInput = ({ field, isSubField, index, hideDescription }) => {
 		if (true === field.isHidden) {
 			return null
 		}
 
-		const isSubField = undefined !== index
-
 		const inputAttr = getElementAttr(field, index)
 		const labelPlacement = getLabelPlacement(field, isSubField)
 
-		const fieldLabel = <FormFieldLabel field={field} index={index} placement={labelPlacement} />
+		const fieldLabel = <FormFieldLabel field={field} index={index} isSubField={isSubField} placement={labelPlacement} />
 
 		let descPlacement, fieldDesc
-		if (!isSubField) {
+		if (!isSubField && !hideDescription) {
 			descPlacement = getDescriptionPlacement(field)
 			fieldDesc = <FormFieldDescription field={field} />
 		}
 
 		return (
-			<FormFieldContainer field={field}>
+			<FormFieldContainer field={field} index={index}>
 				{"above" === labelPlacement ? fieldLabel : ""}
 				{fieldDesc && "above" === descPlacement ? fieldDesc : ""}
 				<input {...inputAttr} />
 				{"below" === labelPlacement ? fieldLabel : ""}
 				{fieldDesc && "below" === descPlacement ? fieldDesc : ""}
-				<FormFieldError field={field} />
+				<FormFieldError field={field} index={index} />
 			</FormFieldContainer>
 		)
 	}
 
 	FormFieldInput.propTypes = {
 		field: PropTypes.object.isRequired,
+		isSubField: PropTypes.bool,
 		index: PropTypes.number,
+		hideDescription: PropTypes.bool
 	}
 
-	// @TODO possible container CSS ginput_complex ginput_container ginput_container_email
+	FormFieldInput.defaultProps = {
+		isSubField: false,
+		hideDescription: false
+	}
+
 	const FormFieldEmail = ({ field }) => {
 		return (
 			<FormFieldset field={field}>
-				<FormFieldOptions field={field} options={field.inputs} />
+				<FormFieldOptions
+					field={field}
+					options={field.inputs}
+					hideDescription={true}
+				/>
 			</FormFieldset>
 		)
 	}
@@ -369,7 +431,10 @@ const Form = ({ data }) => {
 	const FormFieldName = ({ field }) => {
 		return (
 			<FormFieldset field={field}>
-				<FormFieldOptions field={field} options={field.inputs} />
+				<FormFieldOptions
+					field={field}
+					options={field.inputs}
+				/>
 			</FormFieldset>
 		)
 	}
@@ -394,43 +459,37 @@ const Form = ({ data }) => {
 		field: PropTypes.object.isRequired,
 	}
 
-	/*const FormFieldSection = ({ field }) => {
-    if (!field.label) {
-      return null
-    }
+	const FormFieldSection = ({ field }) => {
+		if (!field.label) {
+			return null
+		}
 
-    let cssFieldType = fieldTypePrefix(field.type)
+		const fieldId = fieldIdPrefix(field.id)
 
-    let elementAttr = {
-      id: fieldIdPrefix(field.id),
-      className: `${fieldPrefix} ${cssFieldType}`,
-    }
+		let sectionAttr = {
+			id: `${fieldId}-section`,
+			className: `${formPrefix}__section ${formPrefix}__section--${field.type}`,
+		}
 
-    const sectionAttr = {
-      className: `${cssFieldType}__title`,
-    }
+		let headingAttr = {
+			id: `${fieldId}-heading`,
+			className: `${formPrefix}__heading ${formPrefix}__heading--${field.type}`,
+		}
+		let fieldDesc = <FormFieldDescription field={field} />
 
-    return (
-      <div {...elementAttr}>
-        <h2 {...sectionAttr}>{field.label}</h2>
-        {field.description && !field.descriptionPlacement ? (
-          <div className={`${cssFieldType}__description`}>
-            {field.description}
-          </div>
-        ) : null}
-      </div>
-    )
-  }
+		return (
+			<div {...sectionAttr}>
+				<h2 {...headingAttr}>{field.label}</h2>
+				{fieldDesc}
+			</div>
+		)
+	}
 
-  FormFieldSection.propTypes = {
-    field: PropTypes.object.isRequired,
-  }*/
+	FormFieldSection.propTypes = {
+		field: PropTypes.object.isRequired,
+	}
 
 	const FormFieldTextarea = ({ field }) => {
-		// @TODO add?
-		/*<span className="gfield_required">
-      	{" "} * <span className="sr-only"> Required</span>
-    	</span>*/
 		const textAreaAttr = getElementAttr(field)
 
 		let fieldDesc = <FormFieldDescription field={field} />
@@ -456,13 +515,6 @@ const Form = ({ data }) => {
 		field: PropTypes.object.isRequired,
 	}
 
-	/*
-   	 * @TODO possible CSS:
-   	 * field_sublabel_below
-   	 * field_description_below
-   	 * gfield_visibility_visible
-   	 * gfield_contains_required
-   	 */
 	const FormField = ({ field }) => {
 		let fieldAttr = {
 			id: `${fieldIdPrefix(field.id)}-field`,
@@ -486,9 +538,9 @@ const Form = ({ data }) => {
 		let fieldMarkup
 
 		switch (field.type) {
-			/*case "section":
-						fieldMarkup = <FormFieldSection field={field} />
-						break*/
+			case "section":
+				fieldMarkup = <FormFieldSection field={field} />
+				break
 			case "name":
 				fieldMarkup = <FormFieldName field={field} />
 				break
@@ -549,12 +601,17 @@ const Form = ({ data }) => {
 		)
 	}
 
-	const FormFieldError = ({ field, isFieldset }) => {
+	const FormFieldError = ({ field, index, isFieldset }) => {
+
 		const errorAttr = {
-			id: getFieldErrorID(field),
+			id: getFieldErrorID(field, index),
 			className: `${formPrefix}__error ${formPrefix}__error--${field.type}`,
 			role: "alert",
 			"aria-live": "polite"
+		}
+
+		if (isFieldset) {
+			errorAttr.id += "-fieldset"
 		}
 
 		const errorMessage = isFieldset ? field.fieldsetErrorMessage : field.errorMessage
@@ -572,6 +629,7 @@ const Form = ({ data }) => {
 
 	FormFieldError.propTypes = {
 		field: PropTypes.object.isRequired,
+		index: PropTypes.number,
 		isFieldset: PropTypes.bool,
 	}
 

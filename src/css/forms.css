@@ -46,11 +46,22 @@ fieldset {
 
 form.gform {
 	border: 1px solid #ccc;
-	padding: 1rem;
+	padding: 1.5rem;
+
+	fieldset {
+		padding: 0;
+	}
 
 	.gform__label,
 	.gform__description {
 		margin: 0 0 0.75rem;
+	}
+
+	.gform__field__required {
+		font-size: 1.1rem;
+		color: #900;
+		vertical-align: middle;
+		margin: 0 0 0 0.25rem;
 	}
 
 	.gform__label {
@@ -58,6 +69,19 @@ form.gform {
 
 		&--radio {
 			display: inline-block;
+		}
+
+		&--required {
+			vertical-align: middle;
+		}
+	}
+
+	.gform__legend {
+		display: block;
+		width: 100%;
+
+		&--required {
+			vertical-align: middle;
 		}
 	}
 
@@ -74,6 +98,7 @@ form.gform {
 	}
 
 	.gform__field {
+
 		&--radio {
 			margin-bottom: 1rem;
 		}

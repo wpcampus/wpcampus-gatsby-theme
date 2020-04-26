@@ -22,7 +22,7 @@ const PageTemplate = props => {
 	// Get the first form.
 	let form
 	if (props.data.allGfForm.edges.length) {
-		form = props.data.allGfForm.edges.shift().node
+		form = props.data.allGfForm.edges[0].node
 	}
 
 	return (
