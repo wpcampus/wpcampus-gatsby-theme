@@ -110,7 +110,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 		schema.buildObjectType({
 			name: "wpcGatsby",
 			fields: {
-				disable: "Boolean"
+				disable: "Boolean",
+				template: "String",
+				forms: "[Int]"
 			},
 			interfaces: ["Node"],
 		}),
@@ -796,6 +798,7 @@ exports.createPages = async ({ graphql, actions }) => {
 						}
 						wpc_gatsby {
 							disable
+							template
 						}
 					}
 				}
@@ -821,9 +824,9 @@ exports.createPages = async ({ graphql, actions }) => {
 			return
 		}
 
-		if ("template-library.php" == edge.node.template) {
+		if ("library" === edge.node.wpc_gatsby.template) {
 			template = libraryTemplate
-		} else if ("/" == edge.node.path) {
+		} else if ("home" === edge.node.wpc_gatsby.template) {
 			template = indexTemplate
 		} else if ("/about/contact/" == edge.node.path) {
 			template = contactTemplate
