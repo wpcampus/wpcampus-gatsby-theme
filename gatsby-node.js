@@ -772,6 +772,7 @@ exports.createPages = async ({ graphql, actions }) => {
 						}
 						wpc_gatsby {
 							disable
+							template
 						}
 					}
 				}
@@ -796,9 +797,9 @@ exports.createPages = async ({ graphql, actions }) => {
 			return
 		}
 
-		if ("template-library.php" == edge.node.template) {
+		if ("library" === edge.node.wpc_gatsby.template) {
 			template = libraryTemplate
-		} else if ("/" == edge.node.path) {
+		} else if ("home" === edge.node.wpc_gatsby.template) {
 			template = indexTemplate
 		} else {
 			template = pageTemplate
