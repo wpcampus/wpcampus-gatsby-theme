@@ -28,26 +28,26 @@ const initialState = {
 
 const reducer = (state, action) => {
 	switch (action.type) {
-	case "updateUser":
-		var newState = {}
-		if (action.payload.user !== undefined) {
-			newState.user = action.payload.user
-		}
-		if (action.payload.token !== undefined) {
-			newState.token = action.payload.token
-		}
-		if (
-			action.payload.active !== undefined &&
+		case "updateUser":
+			var newState = {}
+			if (action.payload.user !== undefined) {
+				newState.user = action.payload.user
+			}
+			if (action.payload.token !== undefined) {
+				newState.token = action.payload.token
+			}
+			if (
+				action.payload.active !== undefined &&
 				action.payload.active === true
-		) {
-			newState.active = true
-		}
-		return {
-			...state,
-			...newState,
-		}
-	default:
-		return state
+			) {
+				newState.active = true
+			}
+			return {
+				...state,
+				...newState,
+			}
+		default:
+			return state
 	}
 }
 
