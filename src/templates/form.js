@@ -19,11 +19,17 @@ const PageTemplate = props => {
 		path: props.path
 	}
 
+	// Get the first form.
+	let form
+	if (props.data.allGfForm.edges.length) {
+		form = props.data.allGfForm.edges.shift().node
+	}
+
 	return (
 		<Layout {...layoutAttr}>
 			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
 				<div>{ReactHtmlParser(page.content)}</div>
-				<Form data={props.data.gfForm} />
+				<Form data={form} />
 			</ProtectedContent>
 		</Layout>
 	)
@@ -38,7 +44,7 @@ PageTemplate.propTypes = {
 export default PageTemplate
 
 export const pageQuery = graphql`
-  query($id: String!, $formId: Int!) {
+  query($id: String!, $forms: [Int]) {
     site {
       siteMetadata {
         siteName
@@ -56,76 +62,80 @@ export const pageQuery = graphql`
 			}
 		}
 	}
-    gfForm(formId: { eq: $formId }) {
-      formId
-      title
-      description
-      labelPlacement
-      subLabelPlacement
-      descriptionPlacement
-      button {
-        type
-        text
-        imageUrl
-      }
-      cssClass
-      version
-      requireLogin
-      requireLoginMessage
-      is_active
-      date_created
-      is_trash
-      formFields {
-        type
-        id
-        label
-        adminLabel
-        isRequired
-        size
-        errorMessage
-        nameFormat
-        inputs {
-          id
-          label
-          customLabel
-          name
-          placeholder
-          defaultValue
-          isHidden
-          inputType
-        }
-        labelPlacement
-        descriptionPlacement
-        subLabelPlacement
-        placeholder
-        enablePasswordInput
-        multipleFiles
-        maxFiles
-        calculationFormula
-        calculationRounding
-        enableCalculation
-        disableQuantity
-        displayAllCategories
-        inputMask
-        inputMaskValue
-        allowsPrepopulate
-        formId
-        pageNumber
-        description
-        inputType
-        cssClass
-        inputName
-        noDuplicates
-        defaultValue
-        choices
-        conditionalLogic
-        visibility
-        displayOnly
-        useRichTextEditor
-        fields
-        inputMaskIsCustom
-        maxLength
-      }
+    allGfForm(filter: {formId: { in: $forms }}) {
+		edges {
+			node {
+				formId
+				title
+				description
+				labelPlacement
+				subLabelPlacement
+				descriptionPlacement
+				button {
+					type
+					text
+					imageUrl
+				}
+				cssClass
+				version
+				requireLogin
+				requireLoginMessage
+				is_active
+				date_created
+				is_trash
+				formFields {
+					type
+					id
+					label
+					adminLabel
+					isRequired
+					size
+					errorMessage
+					nameFormat
+					inputs {
+					id
+					label
+					customLabel
+					name
+					placeholder
+					defaultValue
+					isHidden
+					inputType
+					}
+					labelPlacement
+					descriptionPlacement
+					subLabelPlacement
+					placeholder
+					enablePasswordInput
+					multipleFiles
+					maxFiles
+					calculationFormula
+					calculationRounding
+					enableCalculation
+					disableQuantity
+					displayAllCategories
+					inputMask
+					inputMaskValue
+					allowsPrepopulate
+					formId
+					pageNumber
+					description
+					inputType
+					cssClass
+					inputName
+					noDuplicates
+					defaultValue
+					choices
+					conditionalLogic
+					visibility
+					displayOnly
+					useRichTextEditor
+					fields
+					inputMaskIsCustom
+					maxLength
+				}
+			}
+      	}
     }
   }
 `

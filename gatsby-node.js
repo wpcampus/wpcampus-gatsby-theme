@@ -799,6 +799,7 @@ exports.createPages = async ({ graphql, actions }) => {
 						wpc_gatsby {
 							disable
 							template
+							forms
 						}
 					}
 				}
@@ -806,7 +807,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		}
   	`)
 
-	const contactTemplate = path.resolve("./src/templates/form.js")
+	const formTemplate = path.resolve("./src/templates/form.js")
 	const pageTemplate = path.resolve("./src/templates/page.js")
 	const libraryTemplate = path.resolve("./src/templates/library.js")
 	const indexTemplate = path.resolve("./src/templates/index.js")
@@ -824,32 +825,32 @@ exports.createPages = async ({ graphql, actions }) => {
 			return
 		}
 
+		const pageContext = {
+			id: edge.node.id,
+			crumbs: {
+				crumb: edge.node.crumb,
+				parent_element: edge.node.parent_element
+			},
+			wpc_protected: edge.node.wpc_protected,
+		}
+
 		if ("library" === edge.node.wpc_gatsby.template) {
 			template = libraryTemplate
 		} else if ("home" === edge.node.wpc_gatsby.template) {
 			template = indexTemplate
-		} else if ("/about/contact/" == edge.node.path) {
-			template = contactTemplate
-		} else {
+		} else if ("form" == edge.node.wpc_gatsby.template) {
+			template = formTemplate
+			pageContext.forms = edge.node.wpc_gatsby.forms
+		}
+
+		if (!template) {
 			template = pageTemplate
 		}
 
 		createPage({
-			// will be the url for the page
 			path: edge.node.path,
-			// specify the component template of your choice
 			component: slash(template),
-			// In the ^template's GraphQL query, 'id' will be available
-			// as a GraphQL variable to query for this posts's data.
-			context: {
-				id: edge.node.id,
-				formId: 3,
-				crumbs: {
-					crumb: edge.node.crumb,
-					parent_element: edge.node.parent_element
-				},
-				wpc_protected: edge.node.wpc_protected,
-			},
+			context: pageContext,
 		})
 	})
 
