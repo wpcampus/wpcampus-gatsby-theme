@@ -27,38 +27,32 @@ const getNodePathFromLink = link => {
  * Fetch our JWT token from the JWT token endpoint.
  */
 async function getJWToken() {
-	try {
-
-		const auth = {
-			username: process.env.WPC_JWT_USER,
-			password: process.env.WPC_JWT_PASSWORD,
-		}
-
-		const authURL = `${process.env.WPC_API}/jwt-auth/v1/token`
-
-		const options = {
-			method: "POST",
-			headers: {
-				"Accept": "application/json",
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(auth)
-		}
-
-		let token
-
-		await fetch(authURL, options)
-			.then((response) => {
-				return response.json()
-			})
-			.then((data) => {
-				token = data.token
-			})
-
-		return token
-	} catch (e) {
-		return ""
+	const auth = {
+		username: process.env.WPC_JWT_USER,
+		password: process.env.WPC_JWT_PASSWORD,
 	}
+
+	const authURL = `${process.env.WPC_API}/jwt-auth/v1/token`
+
+	const options = {
+		method: "POST",
+		headers: {
+			"Accept": "application/json",
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(auth)
+	}
+
+	return fetch(authURL, options)
+		.then((response) => {
+			return response.json()
+		})
+		.then((data) => {
+			return data.token
+		})
+		.catch(() => {
+			return ""
+		})
 }
 
 /**
