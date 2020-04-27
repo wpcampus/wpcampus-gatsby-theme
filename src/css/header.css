@@ -4,7 +4,6 @@
 	z-index: 1000;
 	position: relative;
 
-	/* stylelint-disable no-descending-specificity */
 	.wpc-member,
 	.wpc-user {
 		&__actions {
@@ -27,7 +26,6 @@
 			}
 		}
 	}
-	/* stylelint-disable */
 
 	.wpc-user {
 		display: grid;
@@ -82,7 +80,6 @@
 
 	/* ONLY Mobile */
 	@media (max-width: 767px) {
-
 		&__areas {
 			grid-template-columns: 1fr;
 			grid-template-rows: auto auto 1fr;
@@ -106,7 +103,6 @@
 
 	/* Laptop */
 	@media (min-width: 768px) {
-
 		&__areas {
 			grid-template-rows: auto 1fr;
 			grid-row-gap: 1rem;
@@ -132,7 +128,6 @@
 
 	/* Desktop */
 	@media (min-width: 1260px) {
-
 		.wpc-member {
 			&__actions {
 				ul {
