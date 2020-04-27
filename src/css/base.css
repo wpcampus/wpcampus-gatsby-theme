@@ -353,7 +353,6 @@ table.wpc-table {
 	}
 }
 
-/* stylelint-disable no-descending-specificity */
 ul.wpc-meta {
 	display: block;
 	list-style: none;
