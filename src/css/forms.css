@@ -144,6 +144,10 @@ form.gform {
 			color: inherit;
 		}
 
+		p {
+			line-height: 1.5;
+		}
+
 		& > *:first-child {
 			margin-top: 0;
 		}
@@ -159,8 +163,10 @@ form.gform {
 		}
 
 		&--error {
+			background: transparent;
 			border-top: 1px solid #900;
 			border-bottom: 1px solid #900;
+			color: #900;
 		}
 	}
 

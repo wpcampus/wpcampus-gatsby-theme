@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
+import { Link } from "gatsby"
 
 /*
  * Set the root URL for API requests.
@@ -16,6 +17,7 @@ const entriesAPI = `${entriesAPIRoot}/gf/v2/entries`
  */
 const Form = ({ data, token }) => {
 	const initialState = {
+		activeElement: null,
 		formSubmitted: false,
 		formSubmitError: false,
 		formErrors: [],
@@ -25,7 +27,19 @@ const Form = ({ data, token }) => {
 	}
 	const [state, setState] = useState(initialState)
 
-	let { formData, formSubmitted, formSubmitError, formErrors, formEntry } = state
+	let { activeElement, formData, formSubmitted, formSubmitError, formErrors, formEntry } = state
+
+	const formSubmittedSuccess = formSubmitted && !formSubmitError
+
+	useEffect(() => {
+		// Return focus to active element.
+		if (activeElement) {
+			const currentActiveElement = document.getElementById(activeElement)
+			if (currentActiveElement) {
+				currentActiveElement.focus()
+			}
+		}
+	})
 
 	if (!formData.formId) {
 		return null
@@ -262,10 +276,7 @@ const Form = ({ data, token }) => {
 		return `${fieldIdPrefix(fieldID)}-error`
 	}
 
-	const onRadioChange = event => {
-		//console.log("onRadioChange")
-		//console.log(event)
-	}
+	const onRadioChange = () => {}
 
 	const getElementAttr = (field, index) => {
 
@@ -307,7 +318,7 @@ const Form = ({ data, token }) => {
 
 		if ("radio" === field.type) {
 
-			if (!formSubmitted) {
+			if (!formSubmittedSuccess) {
 
 				if (field.value) {
 					elementAttr.defaultValue = field.value
@@ -319,7 +330,7 @@ const Form = ({ data, token }) => {
 			}
 			elementAttr.onChange = onRadioChange
 
-		} else if (field.value && !formSubmitted) {
+		} else if (field.value && !formSubmittedSuccess) {
 			elementAttr.defaultValue = field.value
 		} else if (field.defaultValue) {
 			elementAttr.defaultValue = field.defaultValue
@@ -666,8 +677,9 @@ const Form = ({ data, token }) => {
 		if (true === formSubmitError) {
 
 			confirmationHeader = <p className={`${formPrefix}__processed__heading`}>There was a problem submitting your entry.</p>
+			confirmationMessage = <p className={`${formPrefix}__processed__message`}>Please refresh the page and try again. If the problem persists, please <Link to="/about/contact/" aria-label="Contact us and let us know about the problem">let us know</Link>.</p>
 
-		} else if (true === formSubmitted && formData.confirmations.length) {
+		} else if (true === formSubmittedSuccess && formData.confirmations.length) {
 
 			formData.confirmations.forEach(item => {
 				if (item.isDefault && item.type === "message" && item.message != "") {
@@ -682,7 +694,7 @@ const Form = ({ data, token }) => {
 			}
 		}
 
-		if (!confirmationHeader || !confirmationMessage) {
+		if (!confirmationHeader && !confirmationMessage) {
 			processedAttr.className += " for-screen-reader"
 		}
 
@@ -708,7 +720,7 @@ const Form = ({ data, token }) => {
 		let errorsMessage = "",
 			errorsList = ""
 
-		if (true !== formSubmitted && formErrors.length) {
+		if (true !== formSubmittedSuccess && formErrors.length) {
 
 			let errorMessage = ""
 			if (1 === formErrors.length) {
@@ -1091,6 +1103,11 @@ const Form = ({ data, token }) => {
 	const handleFormSubmit = event => {
 		event.preventDefault()
 
+		// Store active element to return focus after re-render.
+		if (document.activeElement && document.activeElement.id) {
+			activeElement = document.activeElement.id
+		}
+
 		const form = event.target
 
 		// @TODO how to handle this error?
@@ -1120,33 +1137,42 @@ const Form = ({ data, token }) => {
 				}
 
 				return submitEntry(formEntry)
-					.then(response => response.json())
-					.then(function (response) {
+					.then(response => {
 
 						if (isDev) {
+							console.log("submitEntry response")
+							console.dir(response)
+						}
+
+						if (response.status && 200 !== response.status) {
+							throw "There was an issue submitting the form entry."
+						}
+
+						return response.json()
+					})
+					.then(function (response) {
+						if (isDev) {
 							console.log("entry response")
-							console.log(response)
+							console.dir(response)
 						}
 					})
 					.catch(function (error) {
 
 						formSubmitError = true
 
-						// @TODO how to handle error?
-						console.error("error 1:")
-						console.error(error)
+						if (isDev) {
+							console.error("submitEntry error:")
+							console.error(error)
+						}
 					})
 			})
 			.catch(error => {
-				// @TODO how to handle the error?
-				console.error("error 2:")
-				console.error(error)
+				if (isDev) {
+					console.error("validateForm error:")
+					console.error(error)
+				}
 			})
 			.finally(() => {
-
-				if (isDev) {
-					console.log("finally")
-				}
 
 				// Put the fields back into the state.
 				formData = {
@@ -1157,13 +1183,12 @@ const Form = ({ data, token }) => {
 				setState({
 					...state,
 					processing: false,
+					activeElement: activeElement,
 					formSubmitted: formSubmitted,
 					formSubmitError: formSubmitError,
 					formData: formData,
 					formErrors: formErrors
 				})
-
-				form.classList.remove(formProcessingCSS)
 			})
 
 		return false
@@ -1189,13 +1214,6 @@ const Form = ({ data, token }) => {
 
 	// Add classes to attributes.
 	formAttr = addClasses(formAttr, formClass)
-
-	useEffect(() => {
-		const firstInvalid = document.querySelector("input[aria-invalid=true]")
-		if (firstInvalid) {
-			firstInvalid.focus()
-		}
-	}, state)
 
 	return (
 		<form {...formAttr} onSubmit={handleFormSubmit}>
