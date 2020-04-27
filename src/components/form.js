@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 
 /*
@@ -28,6 +28,7 @@ const Form = ({ data }) => {
 	if (!formData.formId) {
 		return null
 	}
+
 	if (!formData.is_active || "1" === formData.is_trash) {
 		return null
 	}
@@ -701,18 +702,26 @@ const Form = ({ data }) => {
 		)
 	}
 
+	// @TODO COOOOOOOOOOOOOOOOOOOORS
 	const submitEntry = entry => {
-		let keyEncode = window.btoa(
-			process.env.WPC_GF_API_KEY + ":" + process.env.WPC_GF_API_SECRET
-		)
-		// @TODO COOOOOOOOOOOOOOOOOOOORS
 		return new Promise((resolve, reject) => {
 			let url = `${entriesAPI}?form_id=${formId}`
 			const request = new XMLHttpRequest()
 			request.open("POST", url)
 			request.responseType = "application/json"
 			request.setRequestHeader("Content-Type", "application/json")
-			request.setRequestHeader("Authorization", "Basic " + keyEncode)
+
+			/*
+			 * On DEV, we send an authorization key.
+			 * On PROD, we validate via CORS.
+			 */
+			if (isDev) {
+				const keyEncode = window.btoa(
+					process.env.WPC_GF_API_KEY + ":" + process.env.WPC_GF_API_SECRET
+				)
+				request.setRequestHeader("Authorization", "Basic " + keyEncode)
+			}
+
 			request.onload = () => resolve(request)
 			request.onerror = () => reject(request)
 			request.send(JSON.stringify(entry))
@@ -1084,6 +1093,13 @@ const Form = ({ data }) => {
 
 	// Add classes to attributes.
 	formAttr = addClasses(formAttr, formClass)
+
+	useEffect(() => {
+		const firstInvalid = document.querySelector("input[aria-invalid=true]")
+		if (firstInvalid) {
+			firstInvalid.focus()
+		}
+	}, state)
 
 	return (
 		<form {...formAttr} onSubmit={handleFormSubmit}>
