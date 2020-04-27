@@ -93,6 +93,16 @@ export const pageQuery = graphql`
 				is_active
 				date_created
 				is_trash
+				confirmations {
+					disableAutoformat
+					isDefault
+					id
+					message
+					name
+					queryString
+					type
+					url
+				}
 				formFields {
 					type
 					id

@@ -134,6 +134,36 @@ form.gform {
 		}
 	}
 
+	.gform__processed {
+		background: rgba(22, 98, 22, 0.05);
+		border: 1px solid rgba(22, 98, 22, 0.3);
+		padding: 1rem 1rem 1.25rem;
+		margin: 0 0 1rem;
+
+		a {
+			color: inherit;
+		}
+
+		& > *:first-child {
+			margin-top: 0;
+		}
+
+		& > *:last-child {
+			margin-bottom: 0;
+		}
+
+		&__heading {
+			font-size: 1.1rem;
+			font-weight: 600;
+			margin: 0 0 0.7rem;
+		}
+
+		&--error {
+			border-top: 1px solid #900;
+			border-bottom: 1px solid #900;
+		}
+	}
+
 	.gform__errors {
 		border-top: 1px solid #900;
 		border-bottom: 1px solid #900;
@@ -152,9 +182,7 @@ form.gform {
 		& > *:last-child {
 			margin-bottom: 0;
 		}
-	}
 
-	.gform__errors {
 		&__message {
 			font-weight: 600;
 			margin-bottom: 0.25rem;
@@ -170,10 +198,6 @@ form.gform {
 					margin-bottom: 0;
 				}
 			}
-		}
-
-		> *:last-child {
-			margin-bottom: 0;
 		}
 	}
 

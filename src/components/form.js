@@ -16,6 +16,8 @@ const entriesAPI = `${entriesAPIRoot}/gf/v2/entries`
  */
 const Form = ({ data, token }) => {
 	const initialState = {
+		formSubmitted: false,
+		formSubmitError: false,
 		formErrors: [],
 		processing: false,
 		formData: data,
@@ -23,7 +25,7 @@ const Form = ({ data, token }) => {
 	}
 	const [state, setState] = useState(initialState)
 
-	let { formData, formErrors, formEntry } = state
+	let { formData, formSubmitted, formSubmitError, formErrors, formEntry } = state
 
 	if (!formData.formId) {
 		return null
@@ -304,12 +306,20 @@ const Form = ({ data, token }) => {
 		}
 
 		if ("radio" === field.type) {
-			elementAttr.defaultValue = field.value
-			elementAttr.onChange = onRadioChange
-			if (field.isSelected) {
-				elementAttr.checked = "checked"
+
+			if (!formSubmitted) {
+
+				if (field.value) {
+					elementAttr.defaultValue = field.value
+				}
+
+				if (field.isSelected) {
+					elementAttr.checked = "checked"
+				}
 			}
-		} else if (field.value) {
+			elementAttr.onChange = onRadioChange
+
+		} else if (field.value && !formSubmitted) {
 			elementAttr.defaultValue = field.value
 		} else if (field.defaultValue) {
 			elementAttr.defaultValue = field.defaultValue
@@ -638,17 +648,67 @@ const Form = ({ data, token }) => {
 		isFieldset: false
 	}
 
-	const FormErrors = () => {
+	const FormProcessed = () => {
+
+		const processedAttr = {
+			id: `${formIdPrefix}-processed`,
+			className: `${formPrefix}__processed`,
+			role: "alert",
+			"aria-live": "assertive",
+		}
+
+		if (true === formSubmitError) {
+			processedAttr.className += ` ${formPrefix}__processed--error`
+		}
+
+		let confirmationHeader, confirmationMessage
+
+		if (true === formSubmitError) {
+
+			confirmationHeader = <p className={`${formPrefix}__processed__heading`}>There was a problem submitting your entry.</p>
+
+		} else if (true === formSubmitted && formData.confirmations.length) {
+
+			formData.confirmations.forEach(item => {
+				if (item.isDefault && item.type === "message" && item.message != "") {
+					confirmationMessage = item.message
+					return
+				}
+			})
+
+			if (confirmationMessage != "") {
+				confirmationHeader = <p className={`${formPrefix}__processed__heading`}>Your entry was submitted.</p>
+				confirmationMessage = <p className={`${formPrefix}__processed__message`}>{confirmationMessage}</p>
+			}
+		}
+
+		if (!confirmationHeader || !confirmationMessage) {
+			processedAttr.className += " for-screen-reader"
+		}
+
+		return (
+			<div {...processedAttr}>
+				{confirmationHeader}
+				{confirmationMessage}
+			</div>
+		)
+	}
+
+	const FormFieldErrors = () => {
+
 		const errorsPrefix = `${formPrefix}__errors`
+
 		const errorsAttr = {
 			id: `${formIdPrefix}-errors`,
 			className: errorsPrefix,
 			role: "alert",
 			"aria-live": "assertive",
 		}
+
 		let errorsMessage = "",
 			errorsList = ""
-		if (formErrors.length) {
+
+		if (true !== formSubmitted && formErrors.length) {
 
 			let errorMessage = ""
 			if (1 === formErrors.length) {
@@ -1047,29 +1107,46 @@ const Form = ({ data, token }) => {
 		form.classList.add(formProcessingCSS)
 
 		validateForm(form)
-			.then(function () {
+			.then(async () => {
+
+				formSubmitted = true
 
 				// Add form ID to entry.
 				formEntry.form_id = formId
 
-				console.log("entry success")
-				console.log(formEntry)
+				if (isDev) {
+					console.log("entry success")
+					console.log(formEntry)
+				}
 
-				submitEntry(formEntry)
+				return submitEntry(formEntry)
 					.then(response => response.json())
 					.then(function (response) {
-						console.log("response")
-						console.log(response)
+
+						if (isDev) {
+							console.log("entry response")
+							console.log(response)
+						}
 					})
 					.catch(function (error) {
-						console.error(error) // @TODO how to handle error?
+
+						formSubmitError = true
+
+						// @TODO how to handle error?
+						console.error("error 1:")
+						console.error(error)
 					})
 			})
 			.catch(error => {
 				// @TODO how to handle the error?
+				console.error("error 2:")
 				console.error(error)
 			})
 			.finally(() => {
+
+				if (isDev) {
+					console.log("finally")
+				}
 
 				// Put the fields back into the state.
 				formData = {
@@ -1080,6 +1157,8 @@ const Form = ({ data, token }) => {
 				setState({
 					...state,
 					processing: false,
+					formSubmitted: formSubmitted,
+					formSubmitError: formSubmitError,
 					formData: formData,
 					formErrors: formErrors
 				})
@@ -1120,7 +1199,8 @@ const Form = ({ data, token }) => {
 
 	return (
 		<form {...formAttr} onSubmit={handleFormSubmit}>
-			<FormErrors />
+			<FormProcessed />
+			<FormFieldErrors />
 			{processFormFields()}
 			<FormFooter />
 		</form>
