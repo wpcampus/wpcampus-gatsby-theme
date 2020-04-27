@@ -98,7 +98,6 @@ form.gform {
 	}
 
 	.gform__field {
-
 		&--radio {
 			margin-bottom: 1rem;
 		}
@@ -310,11 +309,6 @@ form.gform {
 			margin: 0.25rem 0 0;
 			color: #900;
 		}
-	}
-
-	&--processing {
-		opacity: 0.4;
-		pointer-events: none;
 	}
 
 	&--search {
