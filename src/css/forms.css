@@ -68,7 +68,7 @@ form.gform {
 		display: block;
 
 		&--radio {
-			display: inline-block;
+			display: inline;
 		}
 
 		&--required {
@@ -234,44 +234,34 @@ form.gform {
 		}
 	}
 
-	.gform__options {
-		&--radio {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: flex-start;
-			align-content: flex-start;
-			justify-content: flex-start;
+	/* Laptop */
+	@media (min-width: 768px) {
+		.gform__options {
+			&--name,
+			&--email {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				grid-column-gap: 1rem;
 
-			.gform__container {
-				flex-grow: 1;
-				width: 50%;
-				margin-bottom: 0.5rem;
+				.gform__container {
+					width: auto;
+				}
+			}
 
-				/* &:first-child:nth-last-child(2),
-				&:first-child:nth-last-child(2) ~ .gform__container {
+			&--radio {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: flex-start;
+				align-content: flex-start;
+				justify-content: flex-start;
+
+				.gform__container {
+					flex-grow: 1;
 					width: 50%;
-				} */
+					margin-bottom: 0.5rem;
+				}
 			}
 		}
-
-		&--name,
-		&--email {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			grid-column-gap: 1rem;
-
-			.gform__container {
-				width: auto;
-			}
-		}
-
-		/* &--radio {
-			flex-wrap: wrap;
-
-			.gform__container {
-				width: 50%;
-			}
-		} */
 	}
 
 	.gform__footer {
