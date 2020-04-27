@@ -14,7 +14,7 @@ const entriesAPI = `${entriesAPIRoot}/gf/v2/entries`
  * @TODO:
  * - Add action
  */
-const Form = ({ data }) => {
+const Form = ({ data, token }) => {
 	const initialState = {
 		formErrors: [],
 		processing: false,
@@ -702,29 +702,45 @@ const Form = ({ data }) => {
 		)
 	}
 
-	// @TODO COOOOOOOOOOOOOOOOOOOORS
 	const submitEntry = entry => {
 		return new Promise((resolve, reject) => {
+
 			let url = `${entriesAPI}?form_id=${formId}`
-			const request = new XMLHttpRequest()
-			request.open("POST", url)
-			request.responseType = "application/json"
-			request.setRequestHeader("Content-Type", "application/json")
+
+			const options = {
+				method: "POST",
+				headers: {
+					"Accept": "application/json",
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(entry)
+			}
 
 			/*
 			 * On DEV, we send an authorization key.
 			 * On PROD, we validate via CORS.
 			 */
-			if (isDev) {
+			if (isDev && token != "") {
+
 				const keyEncode = window.btoa(
 					process.env.WPC_GF_API_KEY + ":" + process.env.WPC_GF_API_SECRET
 				)
-				request.setRequestHeader("Authorization", "Basic " + keyEncode)
+
+				// Add Gravity Forms API key.
+				options.headers["Authorization"] = `Basic ${keyEncode}`
+
+				// Add JWT token.
+				options.headers["Authorization"] = `Bearer ${token}`
+
 			}
 
-			request.onload = () => resolve(request)
-			request.onerror = () => reject(request)
-			request.send(JSON.stringify(entry))
+			return fetch(url, options)
+				.then((response) => {
+					resolve(response)
+				})
+				.catch(error => {
+					reject(error)
+				})
 		})
 	}
 
@@ -1040,6 +1056,7 @@ const Form = ({ data }) => {
 				console.log(formEntry)
 
 				submitEntry(formEntry)
+					.then(response => response.json())
 					.then(function (response) {
 						console.log("response")
 						console.log(response)
@@ -1112,6 +1129,7 @@ const Form = ({ data }) => {
 
 Form.propTypes = {
 	data: PropTypes.object.isRequired,
+	token: PropTypes.string
 }
 
 export default Form

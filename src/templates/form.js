@@ -7,6 +7,8 @@ import Layout from "../components/layout"
 import Form from "../components/form"
 import ProtectedContent from "../components/content"
 
+const isDev = "development" === process.env.NODE_ENV
+
 const PageTemplate = props => {
 	const page = props.data.wordpressPage
 	const pageContext = props.pageContext
@@ -25,11 +27,19 @@ const PageTemplate = props => {
 		form = props.data.allGfForm.edges[0].node
 	}
 
+	const formAttr = {
+		data: form,
+	}
+
+	if (isDev && pageContext.token != "") {
+		formAttr.token = pageContext.token
+	}
+
 	return (
 		<Layout {...layoutAttr}>
 			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
 				<div>{ReactHtmlParser(page.content)}</div>
-				<Form data={form} />
+				<Form {...formAttr} />
 			</ProtectedContent>
 		</Layout>
 	)
