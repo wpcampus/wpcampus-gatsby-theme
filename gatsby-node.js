@@ -173,32 +173,6 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 		},
 		interfaces: ["Node"],
 		}),*/
-		// The GF source made this type.
-		schema.buildObjectType({
-			name: "GF__FormFormFields",
-			fields: {
-				useRichTextEditor: {
-					type: "Boolean",
-					resolve: source => true === source.useRichTextEditor || false,
-				},
-				inputs: "[GF__FormFormFieldsInputs]",
-			},
-		}),
-		// The GF source made this type.
-		schema.buildObjectType({
-			name: "GF__FormFormFieldsInputs",
-			fields: {
-				choices: "String",
-				customLabel: "String",
-				defaultValue: "String",
-				label: "String",
-				name: "String",
-				placeholder: "String",
-				inputType: "String",
-				isHidden: "Boolean",
-			},
-			interfaces: ["Node"],
-		}),
 	]
 	createTypes(typeDefs)
 }
