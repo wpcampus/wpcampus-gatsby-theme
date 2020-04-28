@@ -296,6 +296,16 @@
 			"status": 307
 		},
 		{
+			"source": "/planning/diversity-inclusion/",
+			"destination": "/about/governance/committees/#diversity",
+			"status": 301
+		},
+		{
+			"source": "/planning/community/",
+			"destination": "/about/governance/working/#community",
+			"status": 301
+		},
+		{
 			"source": "/planning/design/",
 			"destination": "/planning/",
 			"status": 301
@@ -323,6 +333,11 @@
 		{
 			"source": "/planning/data/",
 			"destination": "/planning/",
+			"status": 301
+		},
+		{
+			"source": "/planning/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
