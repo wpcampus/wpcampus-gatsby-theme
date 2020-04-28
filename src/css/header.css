@@ -103,6 +103,10 @@
 
 	/* Laptop */
 	@media (min-width: 768px) {
+		.wpc-logo {
+			max-height: 80px;
+		}
+
 		&__areas {
 			grid-template-rows: auto 1fr;
 			grid-row-gap: 1rem;
@@ -120,7 +124,7 @@
 
 				&--search {
 					grid-column: 8 / span 5;
-					grid-row: 2 / span 2;
+					grid-row: 2 / span 1;
 				}
 			}
 		}
@@ -128,6 +132,11 @@
 
 	/* Desktop */
 	@media (min-width: 1260px) {
+		.wpc-logo {
+			max-height: 60px;
+			margin: 0 auto;
+		}
+
 		.wpc-member {
 			&__actions {
 				ul {
@@ -145,11 +154,6 @@
 				&--logo {
 					grid-column: 5 / span 3;
 					grid-row: 1 / span 1;
-
-					svg {
-						max-height: 60px;
-						margin: 0 auto;
-					}
 				}
 
 				&--actions {
