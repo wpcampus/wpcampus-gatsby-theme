@@ -10,8 +10,6 @@ const path = require("path")
 const slash = require("slash")
 const PropTypes = require("prop-types")
 
-const isDev = "development" === process.env.NODE_ENV
-
 // Returns the path from a full URL.
 const getNodePathFromLink = link => {
 	if (!link) {
@@ -108,7 +106,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			fields: {
 				disable: "Boolean",
 				template: "String",
-				forms: "[Int]"
+				forms: "[String]"
 			},
 			interfaces: ["Node"],
 		}),
@@ -806,7 +804,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		}
   	`)
 
-	const formTemplate = path.resolve("./src/templates/form.js")
+	const formTemplate = path.resolve("./src/templates/formIframe.js")
 	const pageTemplate = path.resolve("./src/templates/page.js")
 	const libraryTemplate = path.resolve("./src/templates/library.js")
 	const indexTemplate = path.resolve("./src/templates/index.js")
@@ -851,7 +849,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		if (forms) {
 			pageContext.forms = forms
 
-			if (isDev) {
+			/*if (isDev) {
 
 				if (wpc_jwt_token != "") {
 					pageContext.wpc_jwt_token = wpc_jwt_token
@@ -860,7 +858,7 @@ exports.createPages = async ({ graphql, actions }) => {
 				if (process.env.WPC_GF_API_KEY && process.env.WPC_GF_API_SECRET) {
 					pageContext.wpc_gf_token = process.env.WPC_GF_API_KEY + ":" + process.env.WPC_GF_API_SECRET
 				}
-			}
+			}*/
 		}
 
 		createPage({
