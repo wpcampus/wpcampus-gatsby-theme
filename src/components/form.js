@@ -11,11 +11,7 @@ const isDev = "development" === process.env.NODE_ENV
 const entriesAPIRoot = isDev ? process.env.WPC_API : "https://wpcampus.org/wp-json"
 const entriesAPI = `${entriesAPIRoot}/gf/v2/entries`
 
-/*
- * @TODO:
- * - Add action
- */
-const Form = ({ data, token }) => {
+const Form = ({ data, wpc_jwt_token, wpc_gf_token }) => {
 	const initialState = {
 		activeElement: null,
 		formSubmitted: false,
@@ -276,7 +272,7 @@ const Form = ({ data, token }) => {
 		return `${fieldIdPrefix(fieldID)}-error`
 	}
 
-	const onRadioChange = () => {}
+	const onRadioChange = () => { }
 
 	const getElementAttr = (field, index) => {
 
@@ -792,18 +788,18 @@ const Form = ({ data, token }) => {
 			 * On DEV, we send an authorization key.
 			 * On PROD, we validate via CORS.
 			 */
-			if (isDev && token != "") {
-
-				const keyEncode = window.btoa(
-					process.env.WPC_GF_API_KEY + ":" + process.env.WPC_GF_API_SECRET
-				)
+			if (isDev) {
 
 				// Add Gravity Forms API key.
-				options.headers["Authorization"] = `Basic ${keyEncode}`
+				if (wpc_gf_token != "") {
+					wpc_gf_token = window.btoa(wpc_gf_token)
+					options.headers["Authorization"] = `Basic ${wpc_gf_token}`
+				}
 
 				// Add JWT token.
-				options.headers["Authorization"] = `Bearer ${token}`
-
+				if (wpc_jwt_token != "") {
+					options.headers["Authorization"] = `Bearer ${wpc_jwt_token}`
+				}
 			}
 
 			return fetch(url, options)
@@ -1144,9 +1140,11 @@ const Form = ({ data, token }) => {
 							console.dir(response)
 						}
 
-						if (response.status && 200 !== response.status) {
+						if (!response.status || 201 !== response.status) {
 							throw "There was an issue submitting the form entry."
 						}
+
+						formSubmitError = false
 
 						return response.json()
 					})
@@ -1167,6 +1165,10 @@ const Form = ({ data, token }) => {
 					})
 			})
 			.catch(error => {
+
+				formSubmitted = false
+				formSubmitError = false
+
 				if (isDev) {
 					console.error("validateForm error:")
 					console.error(error)
@@ -1227,7 +1229,8 @@ const Form = ({ data, token }) => {
 
 Form.propTypes = {
 	data: PropTypes.object.isRequired,
-	token: PropTypes.string
+	wpc_jwt_token: PropTypes.string,
+	wpc_gf_token: PropTypes.string
 }
 
 export default Form

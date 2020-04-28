@@ -31,8 +31,16 @@ const PageTemplate = props => {
 		data: form,
 	}
 
-	if (isDev && pageContext.token != "") {
-		formAttr.token = pageContext.token
+	// Add tokens on DEV.
+	if (isDev) {
+
+		if (pageContext.wpc_jwt_token != "") {
+			formAttr.wpc_jwt_token = pageContext.wpc_jwt_token
+		}
+
+		if (pageContext.wpc_gf_token != "") {
+			formAttr.wpc_gf_token = pageContext.wpc_gf_token
+		}
 	}
 
 	return (
