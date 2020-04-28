@@ -346,6 +346,11 @@
 			"status": 301
 		},
 		{
+			"source": "/members/survey/thank-you/",
+			"destination": "/community/",
+			"status": 301
+		},
+		{
 			"source": "/members/survey/",
 			"destination": "/community/",
 			"status": 301
