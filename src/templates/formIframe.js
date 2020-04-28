@@ -8,6 +8,8 @@ import ProtectedContent from "../components/content"
 
 import iFrameResize from "iframe-resizer"
 
+const isDev = "development" === process.env.NODE_ENV
+
 const PageTemplate = props => {
 	const page = props.data.wordpressPage
 	const pageContext = props.pageContext
@@ -36,12 +38,12 @@ const PageTemplate = props => {
 		iframe = <iframe {...iframeAttr} />
 	}
 
+	const origins = [ pageContext.formOrigin ]
+
 	useEffect(() => {
 		iFrameResize.iframeResizer({
-			log: true,
-			checkOrigin: [
-				"https://wpcampus.org",
-			],
+			log: isDev,
+			checkOrigin: origins,
 			warningTimeout: 10000,
 		}, "#" + iframeID)
 	}, [])
