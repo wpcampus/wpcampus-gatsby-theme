@@ -110,17 +110,17 @@
 			.wpc-header__area {
 				&--logo {
 					grid-column: 1 / span 6;
-					grid-row: 1 / span 1;
+					grid-row: 1 / span 2;
 				}
 
 				&--actions {
-					grid-column: 1 / span 6;
-					grid-row: 2 / span 1;
+					grid-column: 8 / span 5;
+					grid-row: 1 / span 1;
 				}
 
 				&--search {
 					grid-column: 8 / span 5;
-					grid-row: 1 / span 2;
+					grid-row: 2 / span 2;
 				}
 			}
 		}
