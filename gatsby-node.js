@@ -822,17 +822,6 @@ exports.createPages = async ({ graphql, actions }) => {
 
 		if (forms) {
 			pageContext.forms = forms
-
-			/*if (isDev) {
-
-				if (wpc_jwt_token != "") {
-					pageContext.wpc_jwt_token = wpc_jwt_token
-				}
-
-				if (process.env.WPC_GF_API_KEY && process.env.WPC_GF_API_SECRET) {
-					pageContext.wpc_gf_token = process.env.WPC_GF_API_KEY + ":" + process.env.WPC_GF_API_SECRET
-				}
-			}*/
 		}
 
 		createPage({
