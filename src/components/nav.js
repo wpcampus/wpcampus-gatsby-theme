@@ -62,6 +62,10 @@ const NavPrimaryItems = [
 				text: "Subject Matter Experts"
 			},*/
 			{
+				path: "/about/guidelines/",
+				text: "Community guidelines"
+			},
+			{
 				path: "/community/calendar/",
 				text: "Calendar of events"
 			},
