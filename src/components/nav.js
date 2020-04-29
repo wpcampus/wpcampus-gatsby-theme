@@ -10,10 +10,23 @@ const NavPrimaryItems = [
 			{ path: "/about/contributors/", text: "Contributors" },
 			{ path: "/about/partners/", text: "Partners" },
 			/*{ path: "/about/mascots/", text: "Mascots" },*/
-			/*{ path: "/about/governance/", text: "Governance" },*/
-			{ 
-				path: "/about/guidelines/", 
-				text: "Guidelines" ,
+			{
+				path: "/about/governance/",
+				text: "Governance",
+				children: [
+					{
+						path: "/about/governance/committees/",
+						text: "Committees"
+					},
+					{
+						path: "/about/governance/working/",
+						text: "Working Groups"
+					}
+				]
+			},
+			{
+				path: "/about/guidelines/",
+				text: "Guidelines",
 				children: [
 					{
 						path: "/about/guidelines/conduct/",
@@ -61,6 +74,10 @@ const NavPrimaryItems = [
 				path: "/community/sme/",
 				text: "Subject Matter Experts"
 			},*/
+			{
+				path: "/about/guidelines/",
+				text: "Community guidelines"
+			},
 			{
 				path: "/community/calendar/",
 				text: "Calendar of events"

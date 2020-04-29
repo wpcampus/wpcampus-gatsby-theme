@@ -106,7 +106,6 @@
 				}
 			}
 
-			/* stylelint-disable no-descending-specificity */
 			ul {
 				display: flex;
 				justify-content: flex-end;
@@ -134,7 +133,6 @@
 					}
 				}
 			}
-			/* stylelint-disable */
 
 			&.wpc-pagination-adj--prev.wpc-pagination-adj--next {
 				ul {
@@ -205,9 +203,11 @@
 					grid-row: 3 / span 1;
 					border-top: var(--area-border-gray-light);
 
+					/* stylelint-disable selector-type-no-unknown */
 					wpcampus-notifications .wpc-notifications {
 						border-bottom: 0;
 					}
+					/* stylelint-disable */
 				}
 
 				&--sidebar {
@@ -220,7 +220,6 @@
 
 	/* Desktop */
 	@media (min-width: 1260px) {
-
 		.wpc-body__areas {
 			grid-template-rows: var(--header-height) auto 1fr;
 

@@ -263,7 +263,6 @@
 		}
 	}
 
-	/* stylelint-disable no-descending-specificity */
 	&__data {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -308,7 +307,6 @@
 			}
 		}
 	}
-	/* stylelint-disable */
 
 	&__items {
 		margin: 1.5rem 0 0;
@@ -319,7 +317,6 @@
 	}
 
 	@media (min-width: 680px) {
-
 		&__item {
 			grid-column-gap: 1.25rem;
 
@@ -356,7 +353,6 @@
 		}
 
 		&__filter {
-
 			&__select {
 				min-height: 100px;
 			}
@@ -368,7 +364,6 @@
 			grid-column-gap: 1rem;
 
 			.wpc-library__filter {
-
 				&--event,
 				&--format,
 				&--subject {

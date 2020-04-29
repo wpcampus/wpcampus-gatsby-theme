@@ -353,7 +353,6 @@ table.wpc-table {
 	}
 }
 
-/* stylelint-disable no-descending-specificity */
 ul.wpc-meta {
 	display: block;
 	list-style: none;
@@ -507,4 +506,11 @@ h2.wpc-article__title + .wpc-meta {
 			margin: 1.5rem 0 2rem;
 		}
 	}
+}
+
+iframe {
+	display: block;
+	width: 100%;
+	border: 0;
+	margin: 0 0 1rem;
 }

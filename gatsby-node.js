@@ -27,38 +27,32 @@ const getNodePathFromLink = link => {
  * Fetch our JWT token from the JWT token endpoint.
  */
 async function getJWToken() {
-	try {
-
-		const auth = {
-			username: process.env.WPC_JWT_USER,
-			password: process.env.WPC_JWT_PASSWORD,
-		}
-
-		const authURL = `${process.env.WPC_API}/jwt-auth/v1/token`
-
-		const options = {
-			method: "POST",
-			headers: {
-				"Accept": "application/json",
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(auth)
-		}
-
-		let token
-
-		await fetch(authURL, options)
-			.then((response) => {
-				return response.json()
-			})
-			.then((data) => {
-				token = data.token
-			})
-
-		return token
-	} catch (e) {
-		return ""
+	const auth = {
+		username: process.env.WPC_JWT_USER,
+		password: process.env.WPC_JWT_PASSWORD,
 	}
+
+	const authURL = `${process.env.WPC_API}/jwt-auth/v1/token`
+
+	const options = {
+		method: "POST",
+		headers: {
+			"Accept": "application/json",
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(auth)
+	}
+
+	return fetch(authURL, options)
+		.then((response) => {
+			return response.json()
+		})
+		.then((data) => {
+			return data.token
+		})
+		.catch(() => {
+			return ""
+		})
 }
 
 /**
@@ -112,7 +106,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			fields: {
 				disable: "Boolean",
 				template: "String",
-				forms: "[Int]"
+				forms: "[String]"
 			},
 			interfaces: ["Node"],
 		}),
@@ -413,6 +407,9 @@ createLibraryNodes.propTypes = {
 	createContentDigest: PropTypes.func.isRequired
 }
 
+// Will hold our JWT token.
+let wpc_jwt_token
+
 /**
  * Create nodes from our custom WP API endpoints.
  */
@@ -420,10 +417,10 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 	const { createNode } = actions
 
 	// Get access token.
-	const accessToken = await getJWToken()
+	wpc_jwt_token = await getJWToken()
 
 	// @TODO throw error?
-	if (!accessToken) {
+	if (!wpc_jwt_token) {
 		return
 	}
 
@@ -431,14 +428,14 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 	console.log("")
 
 	// Fetch and process contributors.
-	const contributors = await fetchContributors(accessToken)
+	const contributors = await fetchContributors(wpc_jwt_token)
 	createContributorNodes({ contributors, createNode, createNodeId, createContentDigest })
 
 	// Get contributor nodes so can be related to library nodes.
 	const contributorNodes = getNodes().filter(e => e.internal.type === contributorNodeType)
 
 	// Fetch and process library content.
-	const items = await fetchSessions(accessToken)
+	const items = await fetchSessions(wpc_jwt_token)
 	createLibraryNodes({ items, libraryType: "session", contributorNodes, createNode, createNodeId, createContentDigest })
 
 	// Add some spacing to our logs.
@@ -773,6 +770,7 @@ exports.createPages = async ({ graphql, actions }) => {
 						wpc_gatsby {
 							disable
 							template
+							forms
 						}
 					}
 				}
@@ -780,6 +778,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		}
   	`)
 
+	const formTemplate = path.resolve("./src/templates/formIframe.js")
 	const pageTemplate = path.resolve("./src/templates/page.js")
 	const libraryTemplate = path.resolve("./src/templates/library.js")
 	const indexTemplate = path.resolve("./src/templates/index.js")
@@ -797,29 +796,39 @@ exports.createPages = async ({ graphql, actions }) => {
 			return
 		}
 
+		let forms
+
 		if ("library" === edge.node.wpc_gatsby.template) {
 			template = libraryTemplate
 		} else if ("home" === edge.node.wpc_gatsby.template) {
 			template = indexTemplate
-		} else {
+		} else if ("form" == edge.node.wpc_gatsby.template) {
+			template = formTemplate
+			forms = edge.node.wpc_gatsby.forms
+		}
+
+		if (!template) {
 			template = pageTemplate
 		}
 
-		createPage({
-			// will be the url for the page
-			path: edge.node.path,
-			// specify the component template of your choice
-			component: slash(template),
-			// In the ^template's GraphQL query, 'id' will be available
-			// as a GraphQL variable to query for this posts's data.
-			context: {
-				id: edge.node.id,
-				crumbs: {
-					crumb: edge.node.crumb,
-					parent_element: edge.node.parent_element
-				},
-				wpc_protected: edge.node.wpc_protected,
+		const pageContext = {
+			id: edge.node.id,
+			crumbs: {
+				crumb: edge.node.crumb,
+				parent_element: edge.node.parent_element
 			},
+			wpc_protected: edge.node.wpc_protected,
+		}
+
+		if (forms) {
+			pageContext.forms = forms
+			pageContext.formOrigin = `https://${process.env.WPC_WORDPRESS}`
+		}
+
+		createPage({
+			path: edge.node.path,
+			component: slash(template),
+			context: pageContext,
 		})
 	})
 

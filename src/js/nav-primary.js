@@ -171,38 +171,38 @@
 
 		switch (event.keyCode) {
 
-		// ESC
-		case KEYMAP.ESC: {
+			// ESC
+			case KEYMAP.ESC: {
 
-			let toggle = settings.nav.querySelector(".menu-toggle")
+				let toggle = settings.nav.querySelector(".menu-toggle")
 
-			// Close the "mobile" menu.
-			toggleMenu(toggle, false)
-			toggle.focus()
-			break
-		}
+				// Close the "mobile" menu.
+				toggleMenu(toggle, false)
+				toggle.focus()
+				break
+			}
 
-		// TAB
-		case KEYMAP.TAB: {
+			// TAB
+			case KEYMAP.TAB: {
 
-			// Which elements are focus-able in the nav.
-			let focusSelector = "a, button"
+				// Which elements are focus-able in the nav.
+				let focusSelector = "a, button"
 			
-			if ( event.shiftKey ) {
+				if ( event.shiftKey ) {
 
-				// Means we're tabbing out of the beginning of the submenu.
-				if (document.activeElement === getfirstFocusableElement(settings.nav, focusSelector)) {
-					event.preventDefault()
-					getlastFocusableElement(settings.nav, focusSelector).focus()
-				}
+					// Means we're tabbing out of the beginning of the submenu.
+					if (document.activeElement === getfirstFocusableElement(settings.nav, focusSelector)) {
+						event.preventDefault()
+						getlastFocusableElement(settings.nav, focusSelector).focus()
+					}
 
 				// Means we're tabbing out of the end of the submenu.
-			} else if (document.activeElement === getlastFocusableElement(settings.nav, focusSelector)) {
-				event.preventDefault()
-				getfirstFocusableElement(settings.nav, focusSelector).focus()
+				} else if (document.activeElement === getlastFocusableElement(settings.nav, focusSelector)) {
+					event.preventDefault()
+					getfirstFocusableElement(settings.nav, focusSelector).focus()
+				}
+				break
 			}
-			break
-		}
 		}
 	}
 

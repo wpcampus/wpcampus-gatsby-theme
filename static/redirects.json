@@ -1,6 +1,11 @@
 {
 	"redirects": [
 		{
+			"source": "/get-involved/",
+			"destination": "/community/membership/",
+			"status": 301
+		},
+		{
 			"source": "/library/",
 			"destination": "/learning/library/",
 			"status": 301
@@ -175,17 +180,17 @@
 			"status": 301
 		},
 		{
-			"source": "/resources/accessibility/",
-			"destination": "/learning/accessibility/",
-			"status": 301
-		},
-		{
 			"source": "/blog/resources/accessibility/",
 			"destination": "/learning/accessibility/",
 			"status": 301
 		},
 		{
-			"source": "/speaker-training/",
+			"source": "/resources/accessibility/",
+			"destination": "/learning/accessibility/",
+			"status": 301
+		},
+		{
+			"source": "/blog/resources/speaker-training/",
 			"destination": "/learning/speaking/",
 			"status": 301
 		},
@@ -195,12 +200,7 @@
 			"status": 301
 		},
 		{
-			"source": "/blog/resources/speaker-training/",
-			"destination": "/learning/speaking/",
-			"status": 301
-		},
-		{
-			"source": "/resources/speaker-training/feedback/",
+			"source": "/speaker-training/",
 			"destination": "/learning/speaking/",
 			"status": 301
 		},
@@ -210,13 +210,28 @@
 			"status": 301
 		},
 		{
-			"source": "/resources/wallpapers/",
-			"destination": "/community/swag/",
+			"source": "/resources/speaker-training/feedback/",
+			"destination": "/learning/speaking/",
 			"status": 301
 		},
 		{
 			"source": "/blog/resources/wallpapers/",
 			"destination": "/community/swag/",
+			"status": 301
+		},
+		{
+			"source": "/resources/wallpapers/",
+			"destination": "/community/swag/",
+			"status": 301
+		},
+		{
+			"source": "/blog/resources/",
+			"destination": "/learning/",
+			"status": 301
+		},
+		{
+			"source": "/resources/",
+			"destination": "/learning/",
 			"status": 301
 		},
 		{
@@ -281,6 +296,16 @@
 			"status": 307
 		},
 		{
+			"source": "/planning/diversity-inclusion/",
+			"destination": "/about/governance/committees/#diversity",
+			"status": 301
+		},
+		{
+			"source": "/planning/community/",
+			"destination": "/about/governance/working/#community",
+			"status": 301
+		},
+		{
 			"source": "/planning/design/",
 			"destination": "/planning/",
 			"status": 301
@@ -311,7 +336,17 @@
 			"status": 301
 		},
 		{
+			"source": "/planning/",
+			"destination": "/about/governance/",
+			"status": 301
+		},
+		{
 			"source": "/members/community-planning-survey/",
+			"destination": "/community/",
+			"status": 301
+		},
+		{
+			"source": "/members/survey/thank-you/",
 			"destination": "/community/",
 			"status": 301
 		},
