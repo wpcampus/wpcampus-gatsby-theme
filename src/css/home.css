@@ -54,6 +54,8 @@
 						display: block;
 						width: 100%;
 						max-width: 400px;
+						max-height: none;
+						margin: 0;
 					}
 				}
 
