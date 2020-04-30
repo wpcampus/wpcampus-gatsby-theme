@@ -20,7 +20,7 @@ const NavPrimary = () => {
 		navPrimary.classList.remove("toggled-open")
 
 		navigation.init({
-			breakpoint: 768,
+			breakpoint: 920,
 			main: document.getElementById("main"),
 			nav: navPrimary,
 			minHeights: false,

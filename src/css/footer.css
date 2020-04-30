@@ -109,7 +109,7 @@
 	}
 
 	/* Laptop */
-	@media (min-width: 768px) {
+	@media (min-width: 920px) {
 		&__areas {
 			grid-template-columns: 350px 1fr;
 			grid-template-rows: auto auto auto auto 1fr;

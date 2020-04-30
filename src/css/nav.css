@@ -1,4 +1,5 @@
-@media (max-width: 767px) {
+/* ONLY Mobile */
+@media (max-width: 919px) {
 	body.menu-toggled-open {
 		width: 100%;
 		height: 100%;
@@ -172,7 +173,8 @@
 		}
 	}
 
-	@media (max-width: 767px) {
+	/* ONLY Mobile */
+	@media (max-width: 919px) {
 		button.wpc-nav__toggle {
 			display: flex;
 			align-items: center;
@@ -286,7 +288,8 @@
 		}
 	}
 
-	@media (min-width: 768px) {
+	/* Laptop */
+	@media (min-width: 920px) {
 		height: 100%;
 		box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.7);
 
