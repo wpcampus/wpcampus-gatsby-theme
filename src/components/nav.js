@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 // import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
@@ -230,41 +230,120 @@ NavLink.propTypes = {
 	item: PropTypes.object.isRequired,
 }
 
-const NavItem = ({ item }) => {
-	const itemAttr = {
-		className: "nav-listitem"
+// const NavItem = ({ item }) => {
+// 	const itemAttr = {
+// 		className: "nav-listitem"
+// 	}
+// 	if (item.classes) {
+// 		itemAttr.className += ` ${item.classes}`
+// 	}
+// 	return (
+// 		<li {...itemAttr}>
+// 			{item.path ? <NavLink item={item} /> : <NavAnchor item={item} />}
+// 			{item.children && item.children.length ? (
+// 				<ul className="wpc-nav__sub">
+// 					{item.children.map((child, i) => (
+// 						<NavItem key={i} item={child} />
+// 					))}
+// 				</ul>
+// 			) : ""}
+// 		</li>
+// 	)
+// }
+
+// NavItem.propTypes = {
+// 	item: PropTypes.object.isRequired
+// }
+
+const NavListItem = ({ item, id, selectedItemId, topLevelItemId }) => {
+	// submenus start closed
+	let open = false
+	let topLevelOpen = false
+
+	// if the li's id matches the selectedItem, open the submenu
+	if (
+		selectedItemId !== null &&
+		selectedItemId !== undefined &&
+		selectedItemId === id
+	) {
+		open = true
 	}
-	if (item.classes) {
-		itemAttr.className += ` ${item.classes}`
+
+	const topLevelItem = document.querySelector(`#${topLevelItemId}`)
+	const selectedItem = document.querySelector(`#${selectedItemId}`)
+
+	// if the top level item exists, and it contains the selected item but it is not the same node as the selected item
+	if (
+		topLevelItem &&
+		topLevelItem.contains(selectedItem) &&
+		!topLevelItem.isSameNode(selectedItem) &&
+		id === topLevelItemId
+	) {
+		topLevelOpen = true
 	}
+
+	// select the elements to create based on if there are submenus
+	// if there are, make a new submenu with recursion
 	return (
-		<li {...itemAttr}>
-			{item.path ? <NavLink item={item} /> : <NavAnchor item={item} />}
-			{item.children && item.children.length ? (
-				<ul className="wpc-nav__sub">
-					{item.children.map((child, i) => (
-						<NavItem key={i} item={child} />
-					))}
-				</ul>
-			) : ""}
+		<li id={id} className={topLevelOpen ? "parent-open" : ""}>
+			{
+				// if the item has children, set the name followed by a button
+				// then add the new nav list with the children
+				// otherwise just return the name
+				item.children ? (
+					<>
+						<span>
+							{item.text}
+							<button id={`button-${id}`}>+</button>
+						</span>
+						<NavList
+							list={item.children}
+							isSubmenu={true}
+							open={open}
+							selectedItemId={selectedItemId}
+							topLevelItemId={topLevelItemId}
+						/>
+					</>
+				) : ( <span>{item.text}</span> )
+			}
 		</li>
 	)
 }
 
-NavItem.propTypes = {
-	item: PropTypes.object.isRequired
+NavListItem.propTypes = {
+	id: PropTypes.string.isRequired,
+	item: PropTypes.object.isRequired,
+	selectedItemId: PropTypes.string,
+	topLevelItemId: PropTypes.string
 }
 
-const NavList = ({ list, hasSubmenuToggle }) => (
-	<ul className={!hasSubmenuToggle ? "has-submenu-toggle js-has-submenu-toggle" : "wpc-nav__sub"}>
-		{
-			list.map((item, i) => <NavItem item={item} key={i} />)
-		}
-	</ul>
-)
+const NavList = ({ isSubmenu, open, list, selectedItemId, topLevelItemId }) => {
+
+	const submenuClass = isSubmenu ? "submenu" : ""
+	const openClass = isSubmenu && open ? "submenu-open" : ""
+
+	return (
+		<ul className={`${submenuClass} ${openClass}`}>
+			{
+				list.map((item, i) => (
+					<NavListItem
+						key={i}
+						item={item}
+						id={`item-${item.text.toLowerCase().replace(" ", "-")}`}
+						selectedItemId={selectedItemId}
+						topLevelItemId={topLevelItemId}
+					/>
+				))
+			}
+		</ul>
+	)
+}
 
 NavList.propTypes = {
-	hasSubmenuToggle: PropTypes.bool.isRequired,
+	isSubmenu: PropTypes.bool.isRequired,
+	open: PropTypes.bool,
+	selectedItemId: PropTypes.string,
+	topLevelItemId: PropTypes.string,
 	list: PropTypes.array.isRequired
 }
 
@@ -279,10 +358,44 @@ const Nav = ({ id, classes, aria_label, list, children }) => {
 	if (aria_label) {
 		navAttr["aria-label"] = aria_label
 	}
+
+	// set the state for the selected item
+	const [selectedItemId, setSelectedItemId] = useState(null)
+
+	// figure out if there's a top level item like the our community/slack combo
+	const [topLevelItemId, setTopLevelItemId] = useState(null)
+
+	// attach a click handler to the entire nav component
+	useEffect(() => {
+		const clickHandler = evt => {
+			const selectedId = evt.target.closest("li").id
+			const topLevelId = evt.target.closest("#navPrimary > ul > li").id
+
+			// select for the id of the target's parent <li>
+			// pass the id to the list
+			setSelectedItemId(selectedId)
+
+			// find the closest item at the top of the tree to keep it open
+			setTopLevelItemId(topLevelId)
+		}
+
+		document.addEventListener("click", clickHandler)
+
+		// clean up when the component unmounts
+		return () => document.removeEventListener("click", clickHandler)
+	}, [])
+
 	return (
 		<nav {...navAttr}>
 			{children}
-			<NavList list={list} hasSubmenuToggle={false} />
+			<NavList
+				isSubmenu={false}
+				open={true}
+				selectedItemId={selectedItemId}
+				topLevelItemId={topLevelItemId} 
+				list={list} 
+				hasSubmenuToggle={false} 
+			/>
 		</nav>
 	)
 }
