@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-// import { Link } from "gatsby"
+import { Link } from "gatsby"
 import PropTypes from "prop-types"
 
 const NavPrimaryItems = [
@@ -164,34 +164,34 @@ const NavPrimaryItems = [
 	{ href: "https://shop.wpcampus.org/", text: "Shop" }
 ]
 
-const NavLink = ({ item }) => {
-	if (!item.path || !item.text) {
-		return ""
-	}
-	const getLinkProps = ({ isCurrent, isPartiallyCurrent }) => {
-		const attrs = {
-			className: "nav-link"
-		}
-		if (isCurrent || true === item.isCurrent) {
-			attrs.className += " nav-link--current"
-		} else if (isPartiallyCurrent) {
-			attrs.className += " nav-link--current-parent"
-		}
-		return attrs
-	}
-	const linkAttr = {
-		getProps: getLinkProps,
-		to: item.path
-	}
-	if (item.aria_label) {
-		linkAttr["aria-label"] = item.aria_label
-	}
-	return (
-		<Link {...linkAttr}>
-			{item.text}
-		</Link>
-	)
-}
+// const NavLink = ({ item }) => {
+// 	if (!item.path || !item.text) {
+// 		return ""
+// 	}
+// 	const getLinkProps = ({ isCurrent, isPartiallyCurrent }) => {
+// 		const attrs = {
+// 			className: "nav-link"
+// 		}
+// 		if (isCurrent || true === item.isCurrent) {
+// 			attrs.className += " nav-link--current"
+// 		} else if (isPartiallyCurrent) {
+// 			attrs.className += " nav-link--current-parent"
+// 		}
+// 		return attrs
+// 	}
+// 	const linkAttr = {
+// 		getProps: getLinkProps,
+// 		to: item.path
+// 	}
+// 	if (item.aria_label) {
+// 		linkAttr["aria-label"] = item.aria_label
+// 	}
+// 	return (
+// 		<Link {...linkAttr}>
+// 			{item.text}
+// 		</Link>
+// 	)
+// }
 
 
 // const NavLink = ({ item }) => {
@@ -226,9 +226,9 @@ const NavLink = ({ item }) => {
 // 	)
 // }
 
-NavLink.propTypes = {
-	item: PropTypes.object.isRequired,
-}
+// NavLink.propTypes = {
+// 	item: PropTypes.object.isRequired,
+// }
 
 // const NavItem = ({ item }) => {
 // 	const itemAttr = {
@@ -254,6 +254,55 @@ NavLink.propTypes = {
 // NavItem.propTypes = {
 // 	item: PropTypes.object.isRequired
 // }
+
+const NavAnchor = ({ item, attrs }) => {
+	return (
+		<a href={item.href} {...attrs}>{item.text}</a>
+	)
+}
+
+NavAnchor.propTypes = {
+	item: PropTypes.object.isRequired,
+	attrs: PropTypes.object
+}
+
+const NavLink = ({ item, attrs }) => {
+	return <Link to={item.path} {...attrs}>{item.text}</Link>
+}
+
+NavLink.propTypes = {
+	item: PropTypes.object.isRequired,
+	attrs: PropTypes.object
+}
+
+const NavItemLink = ({ item }) => {
+	if (!item.path || !item.text) {
+		return ""
+	}
+
+	const linkAttr = {}
+
+	if (item.aria_label) {
+		linkAttr["aria-label"] = item.aria_label
+	}
+
+	return (
+		<>
+			{
+				// conditionally render a gatsby link or regular anchor
+				item.path ? (
+					<NavLink item={item} attrs={linkAttr} />
+				) : ( 
+					<NavAnchor item={item} attrs={linkAttr} />
+				)
+			}
+		</>
+	)
+}
+
+NavItemLink.propTypes = {
+	item: PropTypes.object.isRequired
+}
 
 const NavListItem = ({ item, id, selectedItemId, topLevelItemId }) => {
 	// submenus start closed
@@ -292,9 +341,14 @@ const NavListItem = ({ item, id, selectedItemId, topLevelItemId }) => {
 				// otherwise just return the name
 				item.children ? (
 					<>
-						<span>
-							{item.text}
-							<button id={`button-${id}`}>+</button>
+						<span className="nav-link--toggle">
+							<NavItemLink item={item} />
+							<button 
+								id={`button-${id}`}
+								className="submenu-toggle js-submenu-toggle"
+								aria-label="toggle child menu"
+								aria-expanded={open ? "true" : "false"}
+							></button>
 						</span>
 						<NavList
 							list={item.children}
@@ -304,7 +358,7 @@ const NavListItem = ({ item, id, selectedItemId, topLevelItemId }) => {
 							topLevelItemId={topLevelItemId}
 						/>
 					</>
-				) : ( <span>{item.text}</span> )
+				) : ( <span><NavItemLink item={item} /></span> )
 			}
 		</li>
 	)
@@ -368,6 +422,10 @@ const Nav = ({ id, classes, aria_label, list, children }) => {
 	// attach a click handler to the entire nav component
 	useEffect(() => {
 		const clickHandler = evt => {
+			const navPrimary = document.querySelector("#navPrimary")
+
+			if (!navPrimary.contains(evt.target)) return
+
 			const selectedId = evt.target.closest("li").id
 			const topLevelId = evt.target.closest("#navPrimary > ul > li").id
 
