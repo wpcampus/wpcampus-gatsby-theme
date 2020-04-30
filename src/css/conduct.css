@@ -36,7 +36,7 @@ wpcampus-conduct {
 		}
 
 		/* ONLY Mobile */
-		@media (max-width: 767px) {
+		@media (max-width: 919px) {
 			position: relative;
 
 			.wpc-conduct__graphic {
@@ -53,7 +53,7 @@ wpcampus-conduct {
 		}
 
 		/* Laptop */
-		@media (min-width: 768px) {
+		@media (min-width: 920px) {
 			max-width: 90%;
 			margin: 0 auto;
 

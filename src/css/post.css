@@ -162,7 +162,7 @@
 	}
 
 	/* Laptop */
-	@media (min-width: 768px) {
+	@media (min-width: 920px) {
 		.wpc-body__areas {
 			background: url(../images/heros/hero1.png) center -175px fixed;
 			grid-template-rows: var(--header-height) auto auto 1fr;

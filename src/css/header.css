@@ -79,7 +79,7 @@
 	}
 
 	/* ONLY Mobile */
-	@media (max-width: 767px) {
+	@media (max-width: 919px) {
 		&__areas {
 			grid-template-columns: 1fr;
 			grid-template-rows: auto auto 1fr;
@@ -102,7 +102,7 @@
 	}
 
 	/* Laptop */
-	@media (min-width: 768px) {
+	@media (min-width: 920px) {
 		.wpc-logo {
 			max-height: 80px;
 		}
