@@ -331,10 +331,15 @@ const NavListItem = ({ item, id, selectedItemId, topLevelItemId }) => {
 		topLevelOpen = true
 	}
 
+	const attrs = {
+		id,
+		className: `nav-listitem ${open || topLevelOpen ? "toggled-open" : ""}`
+	}
+
 	// select the elements to create based on if there are submenus
 	// if there are, make a new submenu with recursion
 	return (
-		<li id={id} className={topLevelOpen ? "parent-open" : ""}>
+		<li {...attrs}>
 			{
 				// if the item has children, set the name followed by a button
 				// then add the new nav list with the children
@@ -373,7 +378,7 @@ NavListItem.propTypes = {
 
 const NavList = ({ isSubmenu, open, list, selectedItemId, topLevelItemId }) => {
 
-	const submenuClass = isSubmenu ? "submenu" : ""
+	const submenuClass = isSubmenu ? "wpc-nav__sub" : ""
 	const openClass = isSubmenu && open ? "submenu-open" : ""
 
 	return (
