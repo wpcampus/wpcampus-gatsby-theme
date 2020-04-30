@@ -236,7 +236,7 @@ form.gform {
 	}
 
 	/* Laptop */
-	@media (min-width: 768px) {
+	@media (min-width: 920px) {
 		.gform__options {
 			&--name,
 			&--email {

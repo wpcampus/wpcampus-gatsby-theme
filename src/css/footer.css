@@ -108,8 +108,21 @@
 		}
 	}
 
+	/* ONLY Mobile */
+	@media (max-width: 919px) {
+		&__areas {
+			max-width: 600px;
+			margin: 0 auto;
+
+			nav {
+				max-width: 80%;
+				margin: 0 auto;
+			}
+		}
+	}
+
 	/* Laptop */
-	@media (min-width: 768px) {
+	@media (min-width: 920px) {
 		&__areas {
 			grid-template-columns: 350px 1fr;
 			grid-template-rows: auto auto auto auto 1fr;
@@ -123,6 +136,15 @@
 					grid-row: 1 / span 2;
 					text-align: left;
 					margin: 0;
+
+					nav {
+						text-align: center;
+
+						ul {
+							display: inline-block;
+							text-align: left;
+						}
+					}
 				}
 
 				&--actions {
@@ -154,11 +176,11 @@
 	}
 
 	/* Desktop-ish (breaks out before default desktop size) */
-	@media (min-width: 1100px) {
+	@media (min-width: 1200px) {
 		&__areas {
-			grid-template-columns: repeat(12, 1fr);
+			grid-template-columns: 350px auto 250px;
 			grid-template-rows: auto auto auto 1fr;
-			grid-column-gap: 0;
+			grid-column-gap: 1rem;
 			grid-row-gap: 1rem;
 
 			.wpc-logo {
@@ -175,30 +197,15 @@
 
 			.wpc-footer__area {
 				&--logo {
-					grid-column: 1 / span 3;
+					grid-column: 1 / span 1;
 				}
 
 				&--desc {
-					grid-column: 1 / span 3;
-				}
-
-				&--nav {
-					grid-column: 6 / span 2;
-					grid-row: 1 / span 4;
-				}
-
-				&--actions {
-					grid-column: 10 / span 3;
-					grid-row: 1 / span 4;
-
-					nav {
-						max-width: none;
-						margin: 0;
-					}
+					grid-column: 1 / span 1;
 				}
 
 				&--social {
-					grid-column: 1 / span 3;
+					grid-column: 1 / span 1;
 					grid-row: 3 / span 1;
 
 					nav {
@@ -208,8 +215,23 @@
 				}
 
 				&--copyright {
-					grid-column: 1 / span 3;
+					grid-column: 1 / span 1;
 					grid-row: 4 / span 1;
+				}
+
+				&--nav {
+					grid-column: 2 / span 1;
+					grid-row: 1 / span 4;
+				}
+
+				&--actions {
+					grid-column: 3 / span 1;
+					grid-row: 1 / span 4;
+
+					nav {
+						max-width: none;
+						margin: 0;
+					}
 				}
 			}
 		}

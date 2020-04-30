@@ -107,7 +107,7 @@
 		}
 
 		/* ONLY Mobile */
-		@media (max-width: 767px) {
+		@media (max-width: 919px) {
 			grid-template-columns: 1fr;
 
 			.wpc-body__area {
@@ -137,7 +137,7 @@
 		}
 
 		/* Laptop */
-		@media (min-width: 768px) {
+		@media (min-width: 920px) {
 			grid-template-rows: auto auto 1fr;
 
 			.wpc-body__area {

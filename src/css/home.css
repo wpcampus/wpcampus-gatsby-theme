@@ -74,6 +74,11 @@
 				.wpc-nav--actions {
 					ul {
 						display: flex;
+						grid-column-gap: 0;
+
+						li + li {
+							margin-left: 1rem;
+						}
 					}
 
 					a {
