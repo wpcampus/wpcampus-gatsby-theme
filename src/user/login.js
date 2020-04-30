@@ -333,13 +333,15 @@ const PasswordForm = () => {
 }
 
 const LoginLayout = () => {
-	/*<h2>Forgot your password?</h2>
+	/*
 		<p>Submit your username or email address and we&apos;ll send you an email to reset your password.</p>
 		<PasswordForm />
 		<h2>Don&apos;t have an account?</h2>
 		<Link to="/community/membership" className="wpc-button wpc-button--primary">Create an account</Link>*/
 	return <div>
 		<LoginForm />
+		<h2>Forgot your password?</h2>
+		<p>Use the <a href="https://wpcampus.org/wp-login.php?action=lostpassword">legacy login form</a> to reset your password.</p>		
 	</div>
 }
 
