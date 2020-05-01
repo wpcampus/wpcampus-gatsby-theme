@@ -290,7 +290,7 @@ const NavListItem = ({ item, id, selectedItemId, topLevelItemId }) => {
 							topLevelItemId={topLevelItemId}
 						/>
 					</>
-				) : ( <span><NavItemLink item={item} /></span> )
+				) : ( <NavItemLink item={item} /> )
 			}
 		</li>
 	)
