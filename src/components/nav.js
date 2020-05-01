@@ -164,98 +164,9 @@ const NavPrimaryItems = [
 	{ href: "https://shop.wpcampus.org/", text: "Shop" }
 ]
 
-// const NavLink = ({ item }) => {
-// 	if (!item.path || !item.text) {
-// 		return ""
-// 	}
-// 	const getLinkProps = ({ isCurrent, isPartiallyCurrent }) => {
-// 		const attrs = {
-// 			className: "nav-link"
-// 		}
-// 		if (isCurrent || true === item.isCurrent) {
-// 			attrs.className += " nav-link--current"
-// 		} else if (isPartiallyCurrent) {
-// 			attrs.className += " nav-link--current-parent"
-// 		}
-// 		return attrs
-// 	}
-// 	const linkAttr = {
-// 		getProps: getLinkProps,
-// 		to: item.path
-// 	}
-// 	if (item.aria_label) {
-// 		linkAttr["aria-label"] = item.aria_label
-// 	}
-// 	return (
-// 		<Link {...linkAttr}>
-// 			{item.text}
-// 		</Link>
-// 	)
-// }
-
-
-// const NavLink = ({ item }) => {
-// 	console.log(item, 'item');
-// 	if (!item.path || !item.text) {
-// 		return ""
-// 	}
-// 	const isActiveParent = ({ isCurrent, isPartiallyCurrent }) => {
-// 		const attrs = {
-// 			className: "nav-link"
-// 		}
-// 		if (isCurrent) {
-// 			attrs.className += " nav-link--current"
-// 		} else if (isPartiallyCurrent) {
-// 			attrs.className += " nav-link--current-parent"
-// 		}
-// 		return attrs
-// 	}
-// 	const linkAttr = {
-// 		getProps: isActiveParent,
-// 		to: item.path
-// 	}
-// 	if (item.aria_label) {
-// 		linkAttr["aria-label"] = item.aria_label
-// 	}
-// 	return (
-// 		<>
-// 			<Link {...linkAttr}>
-// 				{item.text}
-// 			</Link>
-// 		</>
-// 	)
-// }
-
-// NavLink.propTypes = {
-// 	item: PropTypes.object.isRequired,
-// }
-
-// const NavItem = ({ item }) => {
-// 	const itemAttr = {
-// 		className: "nav-listitem"
-// 	}
-// 	if (item.classes) {
-// 		itemAttr.className += ` ${item.classes}`
-// 	}
-// 	return (
-// 		<li {...itemAttr}>
-// 			{item.path ? <NavLink item={item} /> : <NavAnchor item={item} />}
-// 			{item.children && item.children.length ? (
-// 				<ul className="wpc-nav__sub">
-// 					{item.children.map((child, i) => (
-// 						<NavItem key={i} item={child} />
-// 					))}
-// 				</ul>
-// 			) : ""}
-// 		</li>
-// 	)
-// }
-
-// NavItem.propTypes = {
-// 	item: PropTypes.object.isRequired
-// }
-
 const NavAnchor = ({ item, attrs }) => {
+	if (item.text === "" || item.href === "") return
+
 	return (
 		<a href={item.href} {...attrs}>{item.text}</a>
 	)
@@ -267,7 +178,9 @@ NavAnchor.propTypes = {
 }
 
 const NavLink = ({ item, attrs }) => {
-	return <Link to={item.path} {...attrs}>{item.text}</Link>
+	if (item.text === "" || item.path === "") return
+
+	return ( <Link to={item.path} {...attrs}>{item.text}</Link> )
 }
 
 NavLink.propTypes = {
@@ -276,11 +189,21 @@ NavLink.propTypes = {
 }
 
 const NavItemLink = ({ item }) => {
-	if (!item.path || !item.text) {
-		return ""
-	}
 
 	const linkAttr = {}
+
+	if (item.classes) {
+		linkAttr.className = item.classes
+	}
+
+	if (item.title) {
+		linkAttr.title = item.title
+	}
+
+	if (item.target) {
+		linkAttr.target = item.target
+		linkAttr.rel = item.target === "_blank" ? "noopener" : ""
+	}
 
 	if (item.aria_label) {
 		linkAttr["aria-label"] = item.aria_label
@@ -336,6 +259,10 @@ const NavListItem = ({ item, id, selectedItemId, topLevelItemId }) => {
 		className: `nav-listitem ${open || topLevelOpen ? "toggled-open" : ""}`
 	}
 
+	if (item.classes) {
+		attrs.className = `${attrs.className} ${item.classes}`
+	}
+
 	// select the elements to create based on if there are submenus
 	// if there are, make a new submenu with recursion
 	return (
@@ -344,7 +271,7 @@ const NavListItem = ({ item, id, selectedItemId, topLevelItemId }) => {
 				// if the item has children, set the name followed by a button
 				// then add the new nav list with the children
 				// otherwise just return the name
-				item.children ? (
+				item.children && item.children.length ? (
 					<>
 						<span className="nav-link--toggle">
 							<NavItemLink item={item} />
