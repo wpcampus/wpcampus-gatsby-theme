@@ -660,6 +660,18 @@ createCategoriesPages.propTypes = {
 	parentCrumbs: PropTypes.object
 }
 
+exports.onCreatePage = async ({ page, actions }) => {
+	const { createPage } = actions
+
+	// Used for matching pages only on the client.
+	if (page.path.match(/^\/account/)) {
+		page.matchPath = "/account/*"
+
+		// Update the page.
+		createPage(page)
+	}
+}
+
 /**
  * Build content from WordPress content.
  * 
@@ -667,22 +679,6 @@ createCategoriesPages.propTypes = {
  */
 exports.createPages = async ({ graphql, actions }) => {
 	const { createPage } = actions
-
-	/*
-	 * Create login page.
-	 */
-	createPage({
-		path: "/login/",
-		component: path.resolve("src/templates/login.js")
-	})
-
-	/*
-	 * Create profile page.
-	 */
-	createPage({
-		path: "/profile/",
-		component: path.resolve("src/templates/profile.js")
-	})
 
 	/*
 	 * Create search page.
@@ -1154,4 +1150,26 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })*/
+}
+
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+	if (stage === "build-html") {
+		/*
+		 * During the build step, `auth0-js` will break because it relies on
+		 * browser-specific APIs. Fortunately, we don’t need it during the build.
+		 * Using Webpack’s null loader, we’re able to effectively ignore `auth0-js`
+		 * during the build. (See `src/utils/auth.js` to see how we prevent this
+		 * from breaking the app.)
+		 */
+		actions.setWebpackConfig({
+			module: {
+				rules: [
+					{
+						test: /auth0-js/,
+						use: loaders.null(),
+					},
+				],
+			},
+		})
+	}
 }

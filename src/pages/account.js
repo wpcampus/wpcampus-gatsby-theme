@@ -1,11 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
-//import { Link } from "gatsby"
+import { Link } from "gatsby"
+import { Router } from "@reach/router"
+import { login, logout, isAuthenticated, getDisplayName } from "../utils/auth"
 
 import Layout from "../components/layout"
-import { User } from "../user/context"
-import { LoginLayout } from "../user/login"
-import { AuthorCard } from "../components/author"
+//import { AuthorCard } from "../components/author"
 
 //import slackLogo from "../svg/slack_logo.svg"
 //import slackAvatarDefault from "../images/slack_avatar_default.png"
@@ -49,7 +49,7 @@ const PersonalInfo = ({ user }) => {
 		<ProfileTableRow th="Username" td={user.getUsername()} />
 		<ProfileTableRow th="First name" td={user.getFirstName()} />
 		<ProfileTableRow th="Last name" td={user.getLastName()} />
-		<ProfileTableRow th="Display name" td={user.getDisplayName()} />
+		<ProfileTableRow th="Display name" td={getDisplayName()} />
 		<ProfileTableRow th="Bio" td={user.getBio()} />
 	</InfoTable>
 }
@@ -157,14 +157,18 @@ SlackIdentity.propTypes = {
 	user: PropTypes.object.isRequired
 }*/
 
-const UserLoggedIn = ({ user }) => {
+const Home = () => {
 
-	const profileAttr = {
+	const displayName = getDisplayName()
+
+	return <p>Hi, {displayName ? displayName : "friend"}!</p>
+
+	/*const profileAttr = {
 		className: "wpc-profile"
 	}
 
 	const firstName = user.getFirstName()
-	const displayName = user.getDisplayName()
+	const displayName = getDisplayName()
 	const bio = user.getBio()
 	const twitter = user.getTwitter()
 	const website = user.getWebsite()
@@ -176,15 +180,13 @@ const UserLoggedIn = ({ user }) => {
 		welcome = `Hi, ${firstName}!`
 	} else {
 		welcome = "Hi!"
-	}
-
-	const LogoutButton = user.LogoutButton
+	}*/
 
 	/*<h2>Your Slack information</h2>
 		<p>The majority of WPCampus conversations and interactions take place in <Link to="/community/slack/" aria-label="WPCampus Slack account">our Slack account</Link>.</p>
 		<SlackIdentity user={user} />*/
 
-	const authorCard = {
+	/*const authorCard = {
 		path: user.getUsername(),
 		display_name: displayName,
 		bio: bio,
@@ -205,32 +207,41 @@ const UserLoggedIn = ({ user }) => {
 		<ProfessionalInfo user={user} />
 		<h2>Your contributor card</h2>
 		<AuthorCard author={authorCard} headingLevel={3} />
-	</div>
+	</div>*/
 }
 
-UserLoggedIn.propTypes = {
+Home.propTypes = {
 	user: PropTypes.object
 }
 
-const Profile = () => {
-	const handleDisplay = user => {
-		if (!user.isActive()) {
-			return ""
-		}
-		if (user.isLoggedIn()) {
-			return <UserLoggedIn user={user} />
-		}
-		return <LoginLayout />
+const Account = () => {
+	if (!isAuthenticated()) {
+		login()
+		// @TODO make this look prettier.
+		return <p>Redirecting to login.</p>
 	}
 
 	// Don't index or follow.
-	const metaRobots = ["nofollow","noindex"]
+	const metaRobots = ["nofollow", "noindex"]
+
+	const onLogout = (e => {
+		logout()
+		e.preventDefault()
+	})
 
 	return (
 		<Layout heading="Your WPCampus profile" metaRobots={metaRobots}>
-			<User.Consumer>{handleDisplay}</User.Consumer>
+			<nav>
+				<ul>
+					<li><Link to="/account/">Home</Link></li>
+				</ul>
+				<button onClick={onLogout}>Logout</button>
+			</nav>
+			<Router>
+				<Home path="/account/" />
+			</Router>
 		</Layout>
 	)
 }
 
-export default Profile
+export default Account
