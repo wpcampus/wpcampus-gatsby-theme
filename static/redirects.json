@@ -23,6 +23,11 @@
 			"status": 301
 		},
 		{
+			"source": "/review/",
+			"destination": "https://wpcampus.org/review/",
+			"status": 301
+		},
+		{
 			"source": "/2019/04/announcing-wpcampus-2019-call-for-proposals-open/",
 			"destination": "/blog/2019/04/announcing-wpcampus-2019/",
 			"status": 301
