@@ -93,6 +93,24 @@ export const login = () => {
 	window.location = auth.code.getUri()
 }
 
+const loginRedirectKey = "wpAuthRedirect"
+
+const deleteAuthRedirect = () => {
+	localStorage.removeItem(loginRedirectKey)
+}
+
+export const setAuthRedirect = (redirect) => {
+	localStorage.setItem(loginRedirectKey, redirect)
+}
+
+const getAuthRedirect = (deleteRedirect) => {
+	const redirect = localStorage.getItem(loginRedirectKey)
+	if (true === deleteRedirect) {
+		deleteAuthRedirect()
+	}
+	return redirect
+}
+
 // Return true if "logged in".
 export const isAuthenticated = () => {
 	if (!isBrowser) {
@@ -186,6 +204,8 @@ export const handleAuthentication = () => {
 		return
 	}
 
+	const redirect = getAuthRedirect(true)
+
 	auth.code.getToken(window.location.href)
 		.then(function (user) {
 
@@ -208,16 +228,14 @@ export const handleAuthentication = () => {
 		.then(response => {
 			setSession(response)
 				.then(() => {
-					// @TODO be able to set custom redirect.
-					navigate("/")
+					navigate(redirect || "/")
 				})
 		})
 		.catch(() => {
 			// @TODO how to handle error
 			deleteSession()
 				.then(() => {
-					// @TODO be able to set custom redirect.
-					navigate("/")
+					navigate(redirect || "/")
 				})
 		})
 }
@@ -247,21 +265,35 @@ export const silentAuth = callback => {
 				return response.json()
 			})
 			.then(response => {
-				setUser(response)
-					.then(callback)
+
+				if (response.error) {
+					throw response.error_description
+				}
+
+				setUser(response).then(callback)
 			})
 			.catch(() => {
 				// @TODO handle error
-				//console.error(error)
+				deleteSession().then(callback)
 			})
 	}
 }
 
 // Handles logout by redirecting to SSO.
-export const logout = () => {
+export const logout = (redirectPath) => {
 
 	let access = getAccessCookie(true)
 	if (access != "") {
+
+		if (redirectPath) {
+
+			// Never logout redirect to account page.
+			if ("/account/" === redirectPath) {
+				redirectPath = "/"
+			}
+
+			setAuthRedirect(redirectPath)
+		}
 
 		const user = auth.createToken(access, "", "token", { expires: new Date() })
 
@@ -276,10 +308,13 @@ export const logout = () => {
 }
 
 // Displays the logout button.
-export const LogoutButton = ({ isPlain }) => {
+export const LogoutButton = ({ isPlain, redirectPath }) => {
 	const buttonAttr = {
 		className: "wpc-button wpc-button--logout",
-		onClick: logout
+		onClick: (e) => {
+			e.preventDefault()
+			logout(redirectPath)
+		}
 	}
 	if (isPlain) {
 		buttonAttr.className += " wpc-button--plain"
@@ -288,9 +323,11 @@ export const LogoutButton = ({ isPlain }) => {
 }
 
 LogoutButton.propTypes = {
-	isPlain: PropTypes.bool
+	isPlain: PropTypes.bool,
+	redirectPath: PropTypes.string,
 }
 
 LogoutButton.defaultProps = {
-	isPlain: false
+	isPlain: false,
+	redirectPath: "/"
 }

@@ -194,7 +194,7 @@ const Home = ({ user }) => {
 
 	return <div {...profileAttr}>
 		<p>{welcome}</p>
-		<LogoutButton />
+		<LogoutButton redirectPath="/" />
 		<h2>Your personal information</h2>
 		<PersonalInfo user={user} />
 		<h2>Your contact information</h2>
