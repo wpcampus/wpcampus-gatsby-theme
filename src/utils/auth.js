@@ -123,9 +123,7 @@ export const isAuthenticated = () => {
 	const cookies = Cookies.get()
 	let loggedIntoWP = false
 
-	console.log("cookies")
 	for (var key of Object.keys(cookies)) {
-		console.log(key + " -> " + cookies[key])
 		if (cookies[key].startsWith("wordpress_logged_in_")) {
 			loggedIntoWP = true
 		}
