@@ -12,15 +12,14 @@ const Login = () => {
 		return <p>Redirecting to login.</p>
 	}
 
+	// @TODO setup custom redirect.
 	navigate("/account/")
 
 	// Don't index or follow.
 	/*const metaRobots = ["nofollow", "noindex"]
 
 	return (
-		<Layout heading="Login" metaRobots={metaRobots}>
-			<LoginLayout />
-		</Layout>
+		<Layout heading="Login" metaRobots={metaRobots}></Layout>
 	)*/
 }
 

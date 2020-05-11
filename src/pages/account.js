@@ -2,10 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import { Router } from "@reach/router"
-import { login, logout, isAuthenticated, getDisplayName } from "../utils/auth"
+import { login, LogoutButton, isAuthenticated, getUser } from "../utils/auth"
 
 import Layout from "../components/layout"
-//import { AuthorCard } from "../components/author"
+import { AuthorCard } from "../components/author"
 
 //import slackLogo from "../svg/slack_logo.svg"
 //import slackAvatarDefault from "../images/slack_avatar_default.png"
@@ -49,7 +49,7 @@ const PersonalInfo = ({ user }) => {
 		<ProfileTableRow th="Username" td={user.getUsername()} />
 		<ProfileTableRow th="First name" td={user.getFirstName()} />
 		<ProfileTableRow th="Last name" td={user.getLastName()} />
-		<ProfileTableRow th="Display name" td={getDisplayName()} />
+		<ProfileTableRow th="Display name" td={user.getDisplayName()} />
 		<ProfileTableRow th="Bio" td={user.getBio()} />
 	</InfoTable>
 }
@@ -157,18 +157,14 @@ SlackIdentity.propTypes = {
 	user: PropTypes.object.isRequired
 }*/
 
-const Home = () => {
+const Home = ({ user }) => {
 
-	const displayName = getDisplayName()
-
-	return <p>Hi, {displayName ? displayName : "friend"}!</p>
-
-	/*const profileAttr = {
+	const profileAttr = {
 		className: "wpc-profile"
 	}
 
 	const firstName = user.getFirstName()
-	const displayName = getDisplayName()
+	const displayName = user.getDisplayName()
 	const bio = user.getBio()
 	const twitter = user.getTwitter()
 	const website = user.getWebsite()
@@ -180,13 +176,13 @@ const Home = () => {
 		welcome = `Hi, ${firstName}!`
 	} else {
 		welcome = "Hi!"
-	}*/
+	}
 
 	/*<h2>Your Slack information</h2>
 		<p>The majority of WPCampus conversations and interactions take place in <Link to="/community/slack/" aria-label="WPCampus Slack account">our Slack account</Link>.</p>
 		<SlackIdentity user={user} />*/
 
-	/*const authorCard = {
+	const authorCardAttr = {
 		path: user.getUsername(),
 		display_name: displayName,
 		bio: bio,
@@ -206,8 +202,8 @@ const Home = () => {
 		<h2>Your professional information</h2>
 		<ProfessionalInfo user={user} />
 		<h2>Your contributor card</h2>
-		<AuthorCard author={authorCard} headingLevel={3} />
-	</div>*/
+		<AuthorCard author={authorCardAttr} headingLevel={3} />
+	</div>
 }
 
 Home.propTypes = {
@@ -224,10 +220,7 @@ const Account = () => {
 	// Don't index or follow.
 	const metaRobots = ["nofollow", "noindex"]
 
-	const onLogout = (e => {
-		logout()
-		e.preventDefault()
-	})
+	const user = getUser()
 
 	return (
 		<Layout heading="Your WPCampus profile" metaRobots={metaRobots}>
@@ -235,10 +228,9 @@ const Account = () => {
 				<ul>
 					<li><Link to="/account/">Home</Link></li>
 				</ul>
-				<button onClick={onLogout}>Logout</button>
 			</nav>
 			<Router>
-				<Home path="/account/" />
+				<Home path="/account/" user={user} />
 			</Router>
 		</Layout>
 	)

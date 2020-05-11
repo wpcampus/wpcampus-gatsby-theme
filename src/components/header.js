@@ -4,7 +4,7 @@ import React from "react"
 
 import WPCampusLogo from "../svg/logo"
 import { SearchForm } from "../components/search"
-import { isAuthenticated, getDisplayName, LogoutButton } from "../utils/auth"
+import { isAuthenticated, getUser, LogoutButton } from "../utils/auth"
 
 import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
@@ -83,7 +83,8 @@ HeaderLoggedInActions.propTypes = {
 
 const UserLoggedInActions = () => {
 
-	const userName = getDisplayName()
+	const user = getUser()
+	const userName = user.getDisplayName()
 
 	let userNameDisplay
 	if (userName) {

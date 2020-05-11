@@ -1,170 +1,273 @@
-import auth0 from "auth0-js"
+import Cookies from "js-cookie"
+import ClientOAuth2 from "client-oauth2"
+import crypto from "crypto"
 import React from "react"
 import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 
+import wpcMember from "./member"
+
+const authAccessCookieKey = "wpAuthAccess"
+const algorithm = "aes-256-cbc"
+const key = process.env.WPAUTH_CRYPTO_KEY
+const iv = process.env.WPAUTH_CRYPTO_IV
+
 const isBrowser = typeof window !== "undefined"
 
-const auth = isBrowser
-	? new auth0.WebAuth({
-		domain: process.env.AUTH0_DOMAIN,
-		clientID: process.env.AUTH0_CLIENTID,
-		redirectUri: process.env.AUTH0_CALLBACK,
-		responseType: "token id_token",
-		scope: "openid profile email",
-	})
-	: {}
-
-const tokens = {
-	accessToken: false,
-	idToken: false,
-	expiresAt: false,
+// Encrypt a string of text.
+function encrypt(text) {
+	let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv)
+	let encrypted = cipher.update(text)
+	encrypted = Buffer.concat([encrypted, cipher.final()])
+	return encrypted.toString("hex")
 }
 
-let user = {}
+// Decrypt a string of text.
+function decrypt(text) {
+	let encryptedText = Buffer.from(text, "hex")
+	let decipher = crypto.createDecipheriv(algorithm, Buffer.from(key), iv)
+	let decrypted = decipher.update(encryptedText)
+	decrypted = Buffer.concat([decrypted, decipher.final()])
+	return decrypted.toString()
+}
 
-export const isAuthenticated = () => {
+// Generate a random string.
+function randomString(length) {
 	if (!isBrowser) {
-		return
+		return null
 	}
-	return localStorage.getItem("isLoggedIn") === "true"
+	var bytes = new Uint8Array(length)
+	var result = []
+	var charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._~"
+	var cryptoObj = window.crypto || window.msCrypto
+	if (!cryptoObj) {
+		return null
+	}
+	var random = cryptoObj.getRandomValues(bytes)
+	for (var a = 0; a < random.length; a++) {
+		result.push(charset[random[a] % charset.length])
+	}
+	return result.join("")
 }
 
+// Setup our auth client.
+const auth = isBrowser
+	? new ClientOAuth2({
+		clientId: process.env.WPAUTH_CLIENTID,
+		clientSecret: process.env.WPAUTH_CLIENTSECRET,
+		accessTokenUri: process.env.WPAUTH_DOMAIN + "/token",
+		authorizationUri: process.env.WPAUTH_DOMAIN + "/authorize",
+		redirectUri: process.env.WPAUTH_CALLBACK,
+		nonce: randomString(32),
+		//scopes: ["profile", "email", "openid"], @TODO dont need?
+		//state: randomString(32) @TODO add? WordPress doesn't return state so errors out
+	}) : {}
+
+/*
+ * @TODO check on token expiration.
+
+ * When does authorization expire?
+ * By default, every 48 hours.
+ * The duration is in milliseconds.
+ */
+//const authExpiration = 172800000
+
+/*if (Date.now() - token.date > authExpiration) {
+	this.removeToken()
+	return false
+}*/
+
+// Will hold user data if logged in.
+let loggedInUser = false
+
+// Returns instance of logged in user.
+export const getUser = () => {
+	return loggedInUser
+}
+
+// Redirect to SSO login page.
 export const login = () => {
 	if (!isBrowser) {
 		return
 	}
-	auth.authorize()
+	window.location = auth.code.getUri()
 }
 
-const setSession = (cb = () => { }) => (err, authResult) => {
-	if (err) {
-		navigate("/")
-		cb()
-		return
+// Return true if "logged in".
+export const isAuthenticated = () => {
+	if (!isBrowser) {
+		return false
 	}
-
-	if (authResult && authResult.accessToken && authResult.idToken) {
-		let expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
-		tokens.accessToken = authResult.accessToken
-		tokens.idToken = authResult.idToken
-		tokens.expiresAt = expiresAt
-		user = authResult.idTokenPayload
-		localStorage.setItem("isLoggedIn", true)
-
-		// @TODO be able to set custom redirect.
-		navigate("/account")
-
-		cb()
+	let access = getAccessCookie(false)
+	if (undefined === access || !access) {
+		return false
 	}
+	return true
 }
 
+// Get our access cookie. Pass true to decrypt.
+const getAccessCookie = (decryptToken) => {
+	const value = Cookies.get(authAccessCookieKey)
+	if (true === decryptToken) {
+		return decrypt(value)
+	}
+	return value
+}
+
+// Store access token in cookie.
+const setAccessCookie = (token, expires) => {
+	const encrypedToken = encrypt(token)
+	Cookies.set(authAccessCookieKey, encrypedToken, {
+		expires: expires,
+		//domain: @TODO?
+		secure: true,
+		sameSite: "strict"
+	})
+}
+
+// Delete access token cookie.
+const deleteAccessCookie = () => {
+	Cookies.remove(authAccessCookieKey)
+}
+
+// Delete session data.
+const deleteSession = () => {
+	return new Promise((resolve) => {
+		deleteAccessCookie()
+		resolve()
+	})
+}
+
+// Store user data.
+const setUser = (resource) => {
+	return new Promise((resolve) => {
+		loggedInUser = new wpcMember(resource)
+		resolve(loggedInUser)
+	})
+}
+
+// Store session data.
+const setSession = (authResult) => {
+	return new Promise((resolve, reject) => {
+
+		if (authResult === undefined) {
+			reject()
+		}
+
+		if (!authResult.user || !authResult.resource) {
+			reject()
+		}
+
+		// Store user info.
+		setUser(authResult.resource)
+			.then(() => {
+
+				setAccessCookie(authResult.user.accessToken, authResult.user.expires)
+
+				resolve()
+			})
+			.catch(error => {
+				reject(error)
+			})
+	})
+}
+
+// Handles login authentication.
 export const handleAuthentication = () => {
 	if (!isBrowser) {
 		return
 	}
-	auth.parseHash(setSession())
+
+	auth.code.getToken(window.location.href)
+		.then(function (user) {
+
+			const request = user.sign({
+				method: "get",
+				url: process.env.WPAUTH_DOMAIN + "/resource"
+			})
+
+			return fetch(request.url, request)
+				.then(response => {
+					return response.json()
+				})
+				.then(response => {
+					return {
+						user: user,
+						resource: response
+					}
+				})
+		})
+		.then(response => {
+			setSession(response)
+				.then(() => {
+					// @TODO be able to set custom redirect.
+					navigate("/")
+				})
+		})
+		.catch(() => {
+			// @TODO how to handle error
+			deleteSession()
+				.then(() => {
+					// @TODO be able to set custom redirect.
+					navigate("/")
+				})
+		})
 }
 
-export const getProfile = () => {
-	return user
-}
-
-// @TODO update.
-export const getDisplayName = () => {
-	const user = getProfile()
-	return user.name
-	/*if (state.user && state.user.display_name) {
-		return state.user.display_name
-	}*/
-}
-
-/*const getUserInfo = () => {
-	if (!state.user) {
-		return false
-	}
-	if (!state.user.ID) {
-		return false
-	}
-	if (!state.user.display_name) {
-		return false
-	}
-	return state.user
-}
-
-const getUsername = () => {
-	if (state.user && state.user.username) {
-		return state.user.username
-	}
-	return ""
-}
-
-const getFirstName = () => {
-	if (state.user && state.user.first_name) {
-		return state.user.first_name
-	}
-	return ""
-}
-
-const getLastName = () => {
-	if (state.user && state.user.last_name) {
-		return state.user.last_name
-	}
-	return ""
-}
-
-const getEmail = () => {
-	if (state.user && state.user.email) {
-		return state.user.email
-	}
-	return ""
-}
-
-const getWebsite = () => {
-	if (state.user && state.user.website) {
-		return state.user.website
-	}
-	return ""
-}
-
-const getTwitter = () => {
-	if (state.user && state.user.twitter) {
-		return state.user.twitter
-	}
-	return ""
-}
-
-const getBio = () => {
-	if (state.user && state.user.bio) {
-		return state.user.bio
-	}
-	return ""
-}
-
-const getCompany = () => {
-	if (state.user && state.user.company) {
-		return state.user.company
-	}
-	return ""
-}
-
-const getCompanyPosition = () => {
-	if (state.user && state.user.company_position) {
-		return state.user.company_position
-	}
-	return ""
-}*/
-
+// Handles authentication "silently" in the background on app load.
 export const silentAuth = callback => {
 	if (!isAuthenticated()) return callback()
-	auth.checkSession({}, setSession(callback))
+
+	let access = getAccessCookie(true)
+	if (access != "") {
+
+		/*
+		 * @TODO do we need to refresh the token?
+		 * I'm ok with asking for login again.
+		 */
+		//console.log(user.refresh())
+
+		const user = auth.createToken(access, "", "code", { expires: new Date() })
+
+		const request = user.sign({
+			method: "get",
+			url: process.env.WPAUTH_DOMAIN + "/resource"
+		})
+
+		fetch(request.url, request)
+			.then(response => {
+				return response.json()
+			})
+			.then(response => {
+				setUser(response)
+					.then(callback)
+			})
+			.catch(() => {
+				// @TODO handle error
+				//console.error(error)
+			})
+	}
 }
 
+// Handles logout by redirecting to SSO.
 export const logout = () => {
-	localStorage.setItem("isLoggedIn", false)
-	auth.logout()
+
+	let access = getAccessCookie(true)
+	if (access != "") {
+
+		const user = auth.createToken(access, "", "token", { expires: new Date() })
+
+		const request = user.sign({
+			method: "get",
+			url: process.env.WPAUTH_DOMAIN + "/logout",
+		})
+
+		window.location = request.url + "&redirect_uri=" + encodeURIComponent(process.env.WPAUTH_CALLBACK)
+
+	}
 }
 
+// Displays the logout button.
 export const LogoutButton = ({ isPlain }) => {
 	const buttonAttr = {
 		className: "wpc-button wpc-button--logout",
