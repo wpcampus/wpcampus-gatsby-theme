@@ -4,6 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
+const btoa = require("btoa")
 const chalk = require("chalk")
 const fetch = require("node-fetch")
 const path = require("path")
@@ -21,38 +22,6 @@ const getNodePathFromLink = link => {
 	} catch (error) {
 		return link
 	}
-}
-
-/**
- * Fetch our JWT token from the JWT token endpoint.
- */
-async function getJWToken() {
-	const auth = {
-		username: process.env.WPC_JWT_USER,
-		password: process.env.WPC_JWT_PASSWORD,
-	}
-
-	const authURL = `${process.env.WPC_API}/jwt-auth/v1/token`
-
-	const options = {
-		method: "POST",
-		headers: {
-			"Accept": "application/json",
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(auth)
-	}
-
-	return fetch(authURL, options)
-		.then((response) => {
-			return response.json()
-		})
-		.then((data) => {
-			return data.token
-		})
-		.catch(() => {
-			return ""
-		})
 }
 
 /**
@@ -257,13 +226,24 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 const contributorNodeType = "wordpress__wpc_contributors"
 const libraryNodeType = "wordpress__wpc_library"
 
-const fetchContributors = async (accessToken) => {
+/**
+ * Create basic auth header.
+ *
+ * @param  {string} username
+ * @param  {string} password
+ * @return {string}
+ */
+const basicAuth = (username, password) => {
+	return "Basic " + btoa(username + ":" + password)
+}
+
+const fetchContributors = async () => {
 
 	// Build request.
 	let options = {
 		method: "get",
 		headers: {
-			Authorization: `Bearer ${accessToken}`
+			Authorization: basicAuth(process.env.WPC_JWT_USER, process.env.WPC_JWT_PASSWORD)
 		}
 	}
 
@@ -272,6 +252,10 @@ const fetchContributors = async (accessToken) => {
 	const contributors = await fetch(url, options)
 		.then((response) => {
 			return response.json()
+		})
+		.catch(() => {
+			// @TODO throw error
+			return []
 		})
 
 	// Logging progress.
@@ -321,13 +305,13 @@ createContributorNodes.propTypes = {
 	createContentDigest: PropTypes.func.isRequired
 }
 
-const fetchSessions = async (accessToken) => {
+const fetchSessions = async () => {
 
 	// Build request.
 	let options = {
 		method: "get",
 		headers: {
-			Authorization: `Bearer ${accessToken}`
+			Authorization: basicAuth(process.env.WPC_JWT_USER, process.env.WPC_JWT_PASSWORD)
 		}
 	}
 
@@ -336,6 +320,10 @@ const fetchSessions = async (accessToken) => {
 	const sessions = await fetch(url, options)
 		.then((response) => {
 			return response.json()
+		})
+		.catch(() => {
+			// @TODO throw error
+			return []
 		})
 
 	// Logging progress.
@@ -407,35 +395,24 @@ createLibraryNodes.propTypes = {
 	createContentDigest: PropTypes.func.isRequired
 }
 
-// Will hold our JWT token.
-let wpc_jwt_token
-
 /**
  * Create nodes from our custom WP API endpoints.
  */
 exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDigest }) => {
 	const { createNode } = actions
 
-	// Get access token.
-	wpc_jwt_token = await getJWToken()
-
-	// @TODO throw error?
-	if (!wpc_jwt_token) {
-		return
-	}
-
 	// Add some spacing to our logs.
 	console.log("")
 
 	// Fetch and process contributors.
-	const contributors = await fetchContributors(wpc_jwt_token)
+	const contributors = await fetchContributors()
 	createContributorNodes({ contributors, createNode, createNodeId, createContentDigest })
 
 	// Get contributor nodes so can be related to library nodes.
 	const contributorNodes = getNodes().filter(e => e.internal.type === contributorNodeType)
 
 	// Fetch and process library content.
-	const items = await fetchSessions(wpc_jwt_token)
+	const items = await fetchSessions()
 	createLibraryNodes({ items, libraryType: "session", contributorNodes, createNode, createNodeId, createContentDigest })
 
 	// Add some spacing to our logs.

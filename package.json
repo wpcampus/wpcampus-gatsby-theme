@@ -12,6 +12,7 @@
     "@wpcampus/wpcampus-wc-notifications": "^0.0.6",
     "@wpcampus/wpcampus-wc-tweets": "^0.0.4",
     "auth0-js": "^9.13.2",
+    "btoa": "^1.2.1",
     "chalk": "^4.0.0",
     "dotenv": "^8.2.0",
     "gatsby": "^2.19.45",
