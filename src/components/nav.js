@@ -9,7 +9,7 @@ const NavPrimaryItems = [
 		children: [
 			{ path: "/about/contributors/", text: "Contributors" },
 			{ path: "/about/partners/", text: "Partners" },
-			/*{ path: "/about/mascots/", text: "Mascots" },*/
+			{ path: "/about/mascots/", text: "Mascots" },
 			{
 				path: "/about/governance/",
 				text: "Governance",
