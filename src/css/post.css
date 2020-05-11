@@ -219,7 +219,7 @@
 	}
 
 	/* Desktop */
-	@media (min-width: 1260px) {
+	@media (min-width: 1380px) {
 		.wpc-body__areas {
 			grid-template-rows: var(--header-height) auto 1fr;
 

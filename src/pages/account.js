@@ -1,10 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
-//import { Link } from "gatsby"
+import { Link } from "gatsby"
+import { Router } from "@reach/router"
+import { login, LogoutButton, isAuthenticated, getUser } from "../utils/auth"
 
 import Layout from "../components/layout"
-import { User } from "../user/context"
-import { LoginLayout } from "../user/login"
 import { AuthorCard } from "../components/author"
 
 //import slackLogo from "../svg/slack_logo.svg"
@@ -157,7 +157,7 @@ SlackIdentity.propTypes = {
 	user: PropTypes.object.isRequired
 }*/
 
-const UserLoggedIn = ({ user }) => {
+const Home = ({ user }) => {
 
 	const profileAttr = {
 		className: "wpc-profile"
@@ -178,13 +178,11 @@ const UserLoggedIn = ({ user }) => {
 		welcome = "Hi!"
 	}
 
-	const LogoutButton = user.LogoutButton
-
 	/*<h2>Your Slack information</h2>
 		<p>The majority of WPCampus conversations and interactions take place in <Link to="/community/slack/" aria-label="WPCampus Slack account">our Slack account</Link>.</p>
 		<SlackIdentity user={user} />*/
 
-	const authorCard = {
+	const authorCardAttr = {
 		path: user.getUsername(),
 		display_name: displayName,
 		bio: bio,
@@ -204,33 +202,38 @@ const UserLoggedIn = ({ user }) => {
 		<h2>Your professional information</h2>
 		<ProfessionalInfo user={user} />
 		<h2>Your contributor card</h2>
-		<AuthorCard author={authorCard} headingLevel={3} />
+		<AuthorCard author={authorCardAttr} headingLevel={3} />
 	</div>
 }
 
-UserLoggedIn.propTypes = {
+Home.propTypes = {
 	user: PropTypes.object
 }
 
-const Profile = () => {
-	const handleDisplay = user => {
-		if (!user.isActive()) {
-			return ""
-		}
-		if (user.isLoggedIn()) {
-			return <UserLoggedIn user={user} />
-		}
-		return <LoginLayout />
+const Account = () => {
+	if (!isAuthenticated()) {
+		login()
+		// @TODO make this look prettier.
+		return <p>Redirecting to login.</p>
 	}
 
 	// Don't index or follow.
-	const metaRobots = ["nofollow","noindex"]
+	const metaRobots = ["nofollow", "noindex"]
+
+	const user = getUser()
 
 	return (
 		<Layout heading="Your WPCampus profile" metaRobots={metaRobots}>
-			<User.Consumer>{handleDisplay}</User.Consumer>
+			<nav>
+				<ul>
+					<li><Link to="/account/">Home</Link></li>
+				</ul>
+			</nav>
+			<Router>
+				<Home path="/account/" user={user} />
+			</Router>
 		</Layout>
 	)
 }
 
-export default Profile
+export default Account

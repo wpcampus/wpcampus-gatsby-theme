@@ -6,7 +6,7 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-import { UserContextProvider } from "./src/user/context"
+import { silentAuth } from "./src/utils/auth"
 
 import "./src/css/fonts.css"
 import "./src/css/base.css"
@@ -14,8 +14,38 @@ import "./src/css/grid.css"
 import "./src/css/body.css"
 import "./src/css/forms.css"
 
+class SessionCheck extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			loading: true,
+		}
+		this.handleCheckSession = this.handleCheckSession.bind(this)
+	}
+
+	handleCheckSession() {
+		this.setState({ loading: false })
+	}
+
+	componentDidMount() {
+		silentAuth(this.handleCheckSession)
+	}
+
+	render() {
+		return (
+			this.state.loading === false && (
+				<React.Fragment>{this.props.children}</React.Fragment>
+			)
+		)
+	}
+}
+
+SessionCheck.propTypes = {
+	children: PropTypes.node
+}
+
 export const wrapRootElement = ({ element }) => (
-	<UserContextProvider>{element}</UserContextProvider>
+	<SessionCheck>{element}</SessionCheck>
 )
 
 wrapRootElement.propTypes = {
