@@ -9,8 +9,8 @@ import wpcMember from "./member"
 
 const authAccessCookieKey = "wpAuthAccess"
 const algorithm = "aes-256-cbc"
-const key = process.env.WPAUTH_CRYPTO_KEY
-const iv = process.env.WPAUTH_CRYPTO_IV
+const key = process.env.GATSBY_WPAUTH_CRYPTO_KEY
+const iv = process.env.GATSBY_WPAUTH_CRYPTO_IV
 
 const isBrowser = typeof window !== "undefined"
 
@@ -53,11 +53,11 @@ function randomString(length) {
 // Setup our auth client.
 const auth = isBrowser
 	? new ClientOAuth2({
-		clientId: process.env.WPAUTH_CLIENTID,
-		clientSecret: process.env.WPAUTH_CLIENTSECRET,
-		accessTokenUri: process.env.WPAUTH_DOMAIN + "/token",
-		authorizationUri: process.env.WPAUTH_DOMAIN + "/authorize",
-		redirectUri: process.env.WPAUTH_CALLBACK,
+		clientId: process.env.GATSBY_WPAUTH_CLIENTID,
+		clientSecret: process.env.GATSBY_WPAUTH_CLIENTSECRET,
+		accessTokenUri: process.env.GATSBY_WPAUTH_DOMAIN + "/token",
+		authorizationUri: process.env.GATSBY_WPAUTH_DOMAIN + "/authorize",
+		redirectUri: process.env.GATSBY_WPAUTH_CALLBACK,
 		nonce: randomString(32),
 		//scopes: ["profile", "email", "openid"], @TODO dont need?
 		//state: randomString(32) @TODO add? WordPress doesn't return state so errors out
@@ -183,7 +183,7 @@ export const handleAuthentication = () => {
 
 			const request = user.sign({
 				method: "get",
-				url: process.env.WPAUTH_DOMAIN + "/resource"
+				url: process.env.GATSBY_WPAUTH_DOMAIN + "/resource"
 			})
 
 			return fetch(request.url, request)
@@ -231,7 +231,7 @@ export const silentAuth = callback => {
 
 		const request = user.sign({
 			method: "get",
-			url: process.env.WPAUTH_DOMAIN + "/resource"
+			url: process.env.GATSBY_WPAUTH_DOMAIN + "/resource"
 		})
 
 		fetch(request.url, request)
@@ -259,10 +259,10 @@ export const logout = () => {
 
 		const request = user.sign({
 			method: "get",
-			url: process.env.WPAUTH_DOMAIN + "/logout",
+			url: process.env.GATSBY_WPAUTH_DOMAIN + "/logout",
 		})
 
-		window.location = request.url + "&redirect_uri=" + encodeURIComponent(process.env.WPAUTH_CALLBACK)
+		window.location = request.url + "&redirect_uri=" + encodeURIComponent(process.env.GATSBY_WPAUTH_CALLBACK)
 
 	}
 }
