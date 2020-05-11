@@ -98,11 +98,38 @@ export const isAuthenticated = () => {
 	if (!isBrowser) {
 		return false
 	}
-	let access = getAccessCookie(false)
+
+	// Chek our access cookie.
+	const access = getAccessCookie(false)
 	if (undefined === access || !access) {
 		return false
 	}
-	return true
+
+	/*
+	 * The following functionality checks for our WP cookie.
+	 * Only works on PROD environment.
+	 * 
+	 * This handles situations where the user logins
+	 * via Gatsby app and then logs out via WordPress app.
+	 * 
+	 * We check for the WP logged in cookie so
+	 * we don't treat them as logged in via Gatsby
+	 * if they are not logged in via WP.
+	 */
+	if (window.location !== "https://www.wpcampus.org") {
+		return true
+	}
+
+	const cookies = Cookies.get()
+	let loggedIntoWP = false
+
+	for (var key of Object.keys(cookies)) {
+		if (cookies[key].startsWith("wordpress_logged_in_")) {
+			loggedIntoWP = true
+		}
+	}
+
+	return loggedIntoWP
 }
 
 // Get our access cookie. Pass true to decrypt.
