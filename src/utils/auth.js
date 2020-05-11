@@ -116,11 +116,19 @@ const getAccessCookie = (decryptToken) => {
 
 // Store access token in cookie.
 const setAccessCookie = (token, expires) => {
+
+	let secure = true
+
+	// For local builds.
+	if ("http://localhost:9000" === window.location.origin) {
+		secure = false
+	}
+
 	const encrypedToken = encrypt(token)
 	Cookies.set(authAccessCookieKey, encrypedToken, {
 		expires: expires,
 		//domain: @TODO?
-		secure: true,
+		secure: secure,
 		sameSite: "strict"
 	})
 }
