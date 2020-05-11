@@ -6,6 +6,11 @@
 			"status": 301
 		},
 		{
+			"source": "/profile/",
+			"destination": "/account/",
+			"status": 301
+		},
+		{
 			"source": "/library/",
 			"destination": "/learning/library/",
 			"status": 301

@@ -131,7 +131,7 @@
 	}
 
 	/* Desktop */
-	@media (min-width: 1260px) {
+	@media (min-width: 1380px) {
 		.wpc-logo {
 			max-height: 60px;
 			margin: 0 auto;

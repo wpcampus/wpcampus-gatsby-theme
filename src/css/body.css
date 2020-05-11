@@ -188,7 +188,7 @@
 		}
 
 		/* Desktop */
-		@media (min-width: 1260px) {
+		@media (min-width: 1380px) {
 			.wpc-body__area {
 				&--notifications {
 					grid-column: 3 / span 10;
