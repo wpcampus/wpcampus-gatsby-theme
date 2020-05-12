@@ -17,7 +17,8 @@ function SEO(
 		meta,
 		title,
 		useTitleTemplate,
-		metaRobots
+		metaRobots,
+		htmlClass
 	}) {
 	const { site } = useStaticQuery(
 		graphql`
@@ -42,11 +43,17 @@ function SEO(
 	const og_image_width = "1200"
 	const og_image_height = "628"
 
+	const htmlAttributes = {
+		lang: lang,
+	}
+
+	if (htmlClass) {
+		htmlAttributes.class = htmlClass
+	}
+
 	const helmetAttr = {
-		htmlAttributes: {
-			lang,
-		},
-		title: title
+		htmlAttributes: htmlAttributes,
+		title: title,
 	}
 
 	if (useTitleTemplate) {
@@ -170,7 +177,8 @@ SEO.propTypes = {
 	meta: PropTypes.arrayOf(PropTypes.object),
 	title: PropTypes.string.isRequired,
 	useTitleTemplate: PropTypes.bool,
-	metaRobots: PropTypes.array
+	metaRobots: PropTypes.array,
+	htmlClass: PropTypes.string
 }
 
 export default SEO

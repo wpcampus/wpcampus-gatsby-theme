@@ -5,6 +5,7 @@ import { Router } from "@reach/router"
 import { login, LogoutButton, isAuthenticated, getUser } from "../utils/auth"
 
 import Layout from "../components/layout"
+import LoadingLayout from "../components/loadingLayout"
 import { AuthorCard } from "../components/author"
 
 //import slackLogo from "../svg/slack_logo.svg"
@@ -212,9 +213,16 @@ Home.propTypes = {
 
 const Account = () => {
 	if (!isAuthenticated()) {
+
+		// Initiate login process.
 		login()
-		// @TODO make this look prettier.
-		return <p>Redirecting to login.</p>
+
+		const layoutAttr = {
+			pageTitle: "Redirecting to login",
+			message: "Redirecting to login"
+		}
+
+		return <LoadingLayout {...layoutAttr} />
 	}
 
 	// Don't index or follow.
