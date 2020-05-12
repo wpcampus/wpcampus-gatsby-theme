@@ -147,7 +147,7 @@ function SEO(
 	if (robots.length) {
 		helmetMeta.push(
 			{
-				property: "robots",
+				name: "robots",
 				content: robots.join(","),
 			})
 	}
