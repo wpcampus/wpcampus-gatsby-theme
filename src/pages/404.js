@@ -8,8 +8,6 @@ import TruckSheep from "../svg/trucksheep"
 
 import "./../css/trucksheep.css"
 
-// @TODO add back link to mascots when page is ready
-//<Link to="/about/mascots/" aria-label="Learn more about Truck Sheep">
 const NotFoundPage = () => {
 
 	// Have to hard code 404 in case the dynamic 404 passes the URL location.
@@ -21,10 +19,10 @@ const NotFoundPage = () => {
 	}
 
 	return <Layout {...layoutAttr}>
-		<TruckSheep />
+		<Link to="/about/mascots/" aria-label="Learn more about Truck Sheep"><TruckSheep /></Link>
 		<SearchLayout includeSearchHeading={true}>
 			<p>Hmm. The URL you visited does not seem to exist.</p>
-			<p>Truck Sheep made sure we included our search form to help you find what you&apos;re looking for.</p>
+			<p><Link to="/about/mascots/" aria-label="Learn more about Truck Sheep">Truck Sheep</Link> made sure we included our search form to help you find what you&apos;re looking for.</p>
 			<p>If you need further assistance, please <Link to="/about/contact" aria-label="Contact us and let us know">let us know</Link>.</p>
 		</SearchLayout>
 	</Layout>
