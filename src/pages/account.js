@@ -234,7 +234,7 @@ const Account = () => {
 		<Layout heading="Your WPCampus profile" metaRobots={metaRobots}>
 			<nav>
 				<ul>
-					<li><Link to="/account/">Home</Link></li>
+					<li><Link to="/account/" rel="preload">Home</Link></li>
 				</ul>
 			</nav>
 			<Router>
