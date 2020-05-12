@@ -8,8 +8,6 @@ import { isAuthenticated, getUser, LogoutButton } from "../utils/auth"
 
 import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
-import "./../css/header.css"
-
 const HeaderArea = ({ children, area }) => {
 	return <div className={`wpc-area wpc-header__area wpc-header__area--${area}`}>
 		{children}
