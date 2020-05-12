@@ -68,47 +68,47 @@ function SEO(
 			content: metaDescription,
 		},
 		{
-			name: "og:site_name",
+			property: "og:site_name",
 			content: site.siteMetadata.siteName
 		},
 		{
-			name: "og:url",
+			property: "og:url",
 			content: site.siteMetadata.siteUrl,
 		},
 		{
-			name: "og:title",
+			property: "og:title",
 			content: title,
 		},
 		{
-			name: "og:description",
+			property: "og:description",
 			content: metaDescription,
 		},
 		{
-			name: "og:locale",
+			property: "og:locale",
 			content: site.siteMetadata.locale
 		},
 		{
-			name: "og:type",
+			property: "og:type",
 			content: "website",
 		},
 		{
-			name: "og:image",
+			property: "og:image",
 			content: og_image
 		},
 		{
-			name: "og:image:secure_url",
+			property: "og:image:secure_url",
 			content: og_image
 		},
 		{
-			name: "og:image:width",
+			property: "og:image:width",
 			content: og_image_width
 		},
 		{
-			name: "og:image:height",
+			property: "og:image:height",
 			content: og_image_height
 		},
 		{
-			name: "twitter:image",
+			property: "twitter:image",
 			content: og_image
 		},
 		{
@@ -147,7 +147,7 @@ function SEO(
 	if (robots.length) {
 		helmetMeta.push(
 			{
-				name: "robots",
+				property: "robots",
 				content: robots.join(","),
 			})
 	}
