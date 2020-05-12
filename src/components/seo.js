@@ -108,7 +108,7 @@ function SEO(
 			content: og_image_height
 		},
 		{
-			property: "twitter:image",
+			name: "twitter:image",
 			content: og_image
 		},
 		{
