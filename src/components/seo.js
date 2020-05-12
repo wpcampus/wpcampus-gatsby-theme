@@ -138,10 +138,14 @@ function SEO(
 
 	if (metaRobots.includes("nofollow")) {
 		robots.push("nofollow")
+	} else {
+		robots.push("follow")
 	}
 
 	if (metaRobots.includes("noindex")) {
 		robots.push("noindex")
+	} else {
+		robots.push("index")
 	}
 
 	if (robots.length) {
