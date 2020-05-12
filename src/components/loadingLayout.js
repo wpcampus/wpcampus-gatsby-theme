@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 import SEO from "./seo"
 
 import TruckSheep from "../svg/trucksheep"
-import "./../css/loading.css"
 
 const LoadingLayout = props => {
 
