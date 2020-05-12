@@ -90,7 +90,11 @@ export const login = () => {
 	if (!isBrowser) {
 		return
 	}
-	window.location = auth.code.getUri()
+
+	// Delay redirect a little so loading page doesn't flash.
+	setTimeout(function () {
+		window.location = auth.code.getUri()
+	}, 500)
 }
 
 const loginRedirectKey = "wpAuthRedirect"
@@ -206,6 +210,15 @@ export const handleAuthentication = () => {
 
 	const redirect = getAuthRedirect(true)
 
+	// If no query parameters, then we're logging out.
+	if (!window.location.search) {
+		deleteSession()
+			.then(() => {
+				navigate(redirect || "/")
+			})
+	}
+
+	// This means we're logging in.
 	auth.code.getToken(window.location.href)
 		.then(function (user) {
 
@@ -232,7 +245,7 @@ export const handleAuthentication = () => {
 				})
 		})
 		.catch(() => {
-			// @TODO how to handle error
+			// @TODO handle error?
 			deleteSession()
 				.then(() => {
 					navigate(redirect || "/")

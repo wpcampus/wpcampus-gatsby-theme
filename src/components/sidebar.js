@@ -2,8 +2,6 @@ import React, { useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 
-import "./../css/sidebar.css"
-
 const Widget = ({ type, classes, children }) => {
 	const widgetAttr = {
 		className: `wpc-widget wpc-widget--${type}`

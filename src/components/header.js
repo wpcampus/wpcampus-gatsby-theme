@@ -8,8 +8,6 @@ import { isAuthenticated, getUser, LogoutButton } from "../utils/auth"
 
 import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
-import "./../css/header.css"
-
 const HeaderArea = ({ children, area }) => {
 	return <div className={`wpc-area wpc-header__area wpc-header__area--${area}`}>
 		{children}
@@ -51,7 +49,7 @@ const HeaderMemberActions = ({ classes }) => {
 	return <nav {...actionsAttr}>
 		<ul>
 			<li><Link className="wpc-button wpc-button--primary" to="/community/membership/">Become a member</Link></li>
-			<li><Link className="wpc-button" to="/login/" state={{ prevPath: location.pathname }}>Login</Link></li>
+			<li><Link className="wpc-button" to="/login/" state={{ prevPath: location.pathname }} rel="preload">Login</Link></li>
 		</ul>
 	</nav>
 }
@@ -70,7 +68,7 @@ const HeaderLoggedInActions = ({ classes }) => {
 	}
 	return <nav {...actionsAttr}>
 		<ul>
-			<li><Link className="wpc-button wpc-button--primary" to="/account/">Your account</Link></li>
+			<li><Link className="wpc-button wpc-button--primary" to="/account/" rel="preload">Your account</Link></li>
 			<li><LogoutButton isPlain={true} redirectPath={location.pathname} /></li>
 		</ul>
 	</nav>

@@ -3,9 +3,8 @@ import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 
 import { login, isAuthenticated, setAuthRedirect } from "../utils/auth"
+import LoadingLayout from "../components/loadingLayout"
 
-// @TODO delete? we need to create an "add account" page.
-// @TODO add "add account" button to WP login screen.
 const Login = ({ location }) => {
 
 	const prevPath = location.state && location.state.prevPath || null
@@ -15,21 +14,21 @@ const Login = ({ location }) => {
 	}
 
 	if (!isAuthenticated()) {
+
+		// Initiate login process.
 		login()
-		// @TODO make this look prettier.
-		return <p>Redirecting to login.</p>
+
+		const layoutAttr = {
+			pageTitle: "Redirecting to login",
+			message: "Redirecting to login"
+		}
+
+		return <LoadingLayout {...layoutAttr} />
 	}
 
 	navigate(prevPath || "/account/")
 
 	return null
-
-	// Don't index or follow.
-	/*const metaRobots = ["nofollow", "noindex"]
-
-	return (
-		<Layout heading="Login" metaRobots={metaRobots}></Layout>
-	)*/
 }
 
 Login.propTypes = {
