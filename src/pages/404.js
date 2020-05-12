@@ -6,8 +6,6 @@ import { SearchLayout } from "../components/search"
 
 import TruckSheep from "../svg/trucksheep"
 
-import "./../css/trucksheep.css"
-
 const NotFoundPage = () => {
 
 	// Have to hard code 404 in case the dynamic 404 passes the URL location.
