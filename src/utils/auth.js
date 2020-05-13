@@ -257,6 +257,8 @@ export const handleAuthentication = () => {
 export const silentAuth = callback => {
 	if (!isAuthenticated()) return callback()
 
+	return callback()
+
 	let access = getAccessCookie(true)
 	if (access != "") {
 
