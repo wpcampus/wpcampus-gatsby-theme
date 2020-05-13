@@ -85,6 +85,11 @@ export const getUser = () => {
 	return loggedInUser
 }
 
+// Returns true if user is logged in and has data.
+export const isLoggedIn = () => {
+	return loggedInUser !== false
+}
+
 // Redirect to SSO login page.
 export const login = () => {
 	if (!isBrowser) {
