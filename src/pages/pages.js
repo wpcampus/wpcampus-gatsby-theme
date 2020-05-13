@@ -10,8 +10,14 @@ export default function Template(props) {
 
 	// @TODO add meta description?
 
+	const layoutAttr = {
+		heading: "Pages",
+		path: props.path,
+		metaRobots: ["nofollow", "noindex"],
+	}
+
 	return (
-		<Layout heading="Pages" path={props.path}>
+		<Layout {...layoutAttr}>
 			<ArticleArchive
 				displayMeta={false}
 				displayContent={false}
