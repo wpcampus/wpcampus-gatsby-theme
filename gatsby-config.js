@@ -68,7 +68,7 @@ module.exports = {
 				short_name: "starter",
 				start_url: "/",
 				background_color: "#663399",
-				theme_color: "#663399",
+				theme_color: "#2e3641",
 				display: "minimal-ui",
 				icon: "src/svg/wpcampus-favicon.svg",
 			},
