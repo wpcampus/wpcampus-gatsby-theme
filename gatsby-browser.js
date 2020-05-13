@@ -4,7 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { silentAuth } from "./src/utils/auth"
 
@@ -22,30 +22,14 @@ import "./src/css/sidebar.css"
 import "./src/css/conduct.css"
 import "./src/css/footer.css"
 
-class SessionCheck extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			loading: true,
-		}
-		this.handleCheckSession = this.handleCheckSession.bind(this)
-	}
-
-	handleCheckSession() {
-		this.setState({ loading: false })
-	}
-
-	componentDidMount() {
-		silentAuth(this.handleCheckSession)
-	}
-
-	render() {
-		return (
-			this.state.loading === false && (
-				<React.Fragment>{this.props.children}</React.Fragment>
-			)
-		)
-	}
+const SessionCheck = ({ children }) => {
+	const [loading, setLoading] = useState(true)
+	useEffect(() => {
+		silentAuth(function() {
+			setLoading(false)
+		})
+	}, [])
+	return loading ? null : <React.Fragment>{children}</React.Fragment>
 }
 
 SessionCheck.propTypes = {

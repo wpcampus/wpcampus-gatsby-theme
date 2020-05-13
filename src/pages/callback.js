@@ -3,12 +3,14 @@ import React from "react"
 import { handleAuthentication } from "../utils/auth"
 import LoadingLayout from "../components/loadingLayout"
 
+const isBrowser = typeof window !== "undefined"
+
 const Callback = () => {
 
 	const layoutAttr = {}
 
 	// If no query parameters, then we're logging out.
-	if (!window.location.search) {
+	if (isBrowser && !window.location.search) {
 
 		layoutAttr.message = "Logging you out"
 

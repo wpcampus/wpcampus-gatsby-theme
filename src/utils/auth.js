@@ -142,7 +142,7 @@ const setAccessCookie = (token, expires) => {
 	let secure = true
 
 	// For local builds.
-	if ("http://localhost:9000" === window.location.origin) {
+	if (isBrowser && "http://localhost:9000" === window.location.origin) {
 		secure = false
 	}
 

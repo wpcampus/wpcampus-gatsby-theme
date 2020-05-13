@@ -8,6 +8,8 @@ import { isAuthenticated, getUser, LogoutButton } from "../utils/auth"
 
 import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
+const isBrowser = typeof window !== "undefined"
+
 const HeaderArea = ({ children, area }) => {
 	return <div className={`wpc-area wpc-header__area wpc-header__area--${area}`}>
 		{children}
@@ -46,10 +48,13 @@ const HeaderMemberActions = ({ classes }) => {
 	if (classes) {
 		actionsAttr.className += ` ${classes}`
 	}
+
+	const prevPath = isBrowser ? window.location.pathname : "/"
+
 	return <nav {...actionsAttr}>
 		<ul>
 			<li><Link className="wpc-button wpc-button--primary" to="/community/membership/">Become a member</Link></li>
-			<li><Link className="wpc-button" to="/login/" state={{ prevPath: location.pathname }} rel="preload">Login</Link></li>
+			<li><Link className="wpc-button" to="/login/" state={{ prevPath: prevPath }} rel="preload">Login</Link></li>
 		</ul>
 	</nav>
 }
@@ -66,10 +71,13 @@ const HeaderLoggedInActions = ({ classes }) => {
 	if (classes) {
 		actionsAttr.className += ` ${classes}`
 	}
+
+	const redirectPath = isBrowser ? window.location.pathname : "/"
+
 	return <nav {...actionsAttr}>
 		<ul>
 			<li><Link className="wpc-button wpc-button--primary" to="/account/" rel="preload">Your account</Link></li>
-			<li><LogoutButton isPlain={true} redirectPath={location.pathname} /></li>
+			<li><LogoutButton isPlain={true} redirectPath={redirectPath} /></li>
 		</ul>
 	</nav>
 }
