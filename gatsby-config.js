@@ -11,6 +11,7 @@ module.exports = {
 		twitter: "@wpcampusorg",
 	},
 	plugins: [
+		"gatsby-plugin-remove-generator",
 		"gatsby-plugin-react-helmet",
 		{
 			resolve: "gatsby-plugin-react-helmet-canonical-urls",
