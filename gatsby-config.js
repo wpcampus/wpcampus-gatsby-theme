@@ -67,7 +67,7 @@ module.exports = {
 				name: "gatsby-starter-default",
 				short_name: "starter",
 				start_url: "/",
-				background_color: "#663399",
+				background_color: "#ffffff",
 				theme_color: "#2e3641",
 				display: "minimal-ui",
 				icon: "src/svg/wpcampus-favicon.svg",
