@@ -33,7 +33,16 @@ module.exports = {
 		},
 		{
 			resolve: "gatsby-plugin-sitemap",
-			options: {}
+			options: {
+				exclude: [
+					"/404/",
+					"/account/",
+					"/callback/",
+					"/login/",
+					"/pages/",
+					"/search/*",
+				]
+			}
 		},
 		{
 			resolve: "gatsby-plugin-robots-txt",
