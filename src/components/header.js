@@ -4,7 +4,7 @@ import React from "react"
 
 import WPCampusLogo from "../svg/logo"
 import { SearchForm } from "../components/search"
-import { isAuthenticated, getUser, LogoutButton } from "../utils/auth"
+import { isLoggedIn, getUser, LogoutButton } from "../utils/auth"
 
 import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
@@ -114,14 +114,14 @@ UserLoggedInActions.propTypes = {
 
 // @TODO do we need to pass user as an object so updates when necessary?
 const HeaderUser = () => {
-	if (!isAuthenticated()) {
+	if (!isLoggedIn()) {
 		return <HeaderMemberActions classes="wpc-member__actions" />
 	}
 	return <UserLoggedInActions />
 }
 
 const HeaderHomeUser = () => {
-	if (!isAuthenticated()) {
+	if (!isLoggedIn()) {
 		return <HeaderMemberActions classes="wpc-home-banner__actions wpc-member__actions" />
 	}
 	return <UserLoggedInActions />
