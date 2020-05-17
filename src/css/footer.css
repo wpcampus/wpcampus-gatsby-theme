@@ -126,7 +126,6 @@
 		&__areas {
 			grid-template-columns: 350px 1fr;
 			grid-template-rows: auto auto auto auto 1fr;
-			grid-column-gap: 4rem;
 			max-width: 90%;
 			margin: 0 auto;
 
@@ -134,15 +133,17 @@
 				&--nav {
 					grid-column: 2 / span 1;
 					grid-row: 1 / span 2;
-					text-align: left;
+					align-self: center;
 					margin: 0;
 
 					nav {
-						text-align: center;
+						display: inline-block;
+						text-align: left;
 
 						ul {
-							display: inline-block;
-							text-align: left;
+							display: grid;
+							grid-template-columns: auto 1fr;
+							grid-column-gap: 2rem;
 						}
 					}
 				}
@@ -170,6 +171,20 @@
 				&--copyright {
 					grid-column: 1 / span 2;
 					grid-row: 5 / span 1;
+				}
+			}
+		}
+	}
+
+	@media (min-width: 1200px) and (max-width: 1400px) {
+		&__areas {
+			.wpc-footer__area {
+				&--nav {
+					nav {
+						ul {
+							display: inline-block;
+						}
+					}
 				}
 			}
 		}
@@ -222,6 +237,13 @@
 				&--nav {
 					grid-column: 2 / span 1;
 					grid-row: 1 / span 4;
+					align-self: flex-start;
+
+					nav {
+						ul {
+							grid-column-gap: 3rem;
+						}
+					}
 				}
 
 				&--actions {

@@ -82,6 +82,7 @@ export const postQuery = graphql`
 		bio
       }
       title
+	  type
       status
       date
       dateFormatted: date(formatString: "MMMM D, YYYY")

@@ -98,16 +98,20 @@ const Layout = props => {
 		}
 	}
 
-	const mainHeadingAttr = {
-		level: 1,
-		heading: heading
-	}
+	let mainHeading
 
-	if (isHome) {
-		mainHeadingAttr.classes = "for-screen-reader"
-	}
+	if (heading) {
+		const mainHeadingAttr = {
+			level: 1,
+			heading: heading
+		}
 
-	const mainHeading = <Heading {...mainHeadingAttr} />
+		if (isHome) {
+			mainHeadingAttr.classes = "for-screen-reader"
+		}
+
+		mainHeading = <Heading {...mainHeadingAttr} />
+	}
 
 	const seoAttr = {
 		title: pageTitle,

@@ -1,8 +1,6 @@
 import PropTypes from "prop-types"
-import React from "react"
-import ReactHtmlParser from "react-html-parser"
-
-import { User } from "../user/context"
+//import React from "react"
+//import ReactHtmlParser from "react-html-parser"
 
 const defaultProtectedMessage = "<p>This content is restricted.</p>"
 
@@ -13,8 +11,9 @@ const ProtectedContent = ({ children, wpc_protected }) => {
 	const displayContent = () => {
 		return children
 	}
+	// @TODO setup with new auth.
 	// @TODO need to customize message.
-	const displayProtectedMessage = () => {
+	/*const displayProtectedMessage = () => {
 		if (wpc_protected.message) {
 			return ReactHtmlParser(wpc_protected.message)
 		}
@@ -27,9 +26,7 @@ const ProtectedContent = ({ children, wpc_protected }) => {
 		if (!user.isLoggedIn()) {
 			return displayProtectedMessage()
 		}
-		/*
-     * @TODO Need to consider how we want this handled for administrators.
-     */
+		// @TODO Need to consider how we want this handled for administrators.
 		if (wpc_protected.user_roles.disable) {
 			if (user.user.roles.filter(value => wpc_protected.user_roles.disable.includes(value)).length) {
 				return displayProtectedMessage()
@@ -44,7 +41,7 @@ const ProtectedContent = ({ children, wpc_protected }) => {
 	}
 	if (wpc_protected.protected) {
 		return <User.Consumer>{handleProtectedContent}</User.Consumer>
-	}
+	}*/
 	return displayContent()
 }
 

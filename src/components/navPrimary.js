@@ -1,7 +1,5 @@
 import React, { useEffect } from "react"
 
-import "./../css/nav.css"
-
 import { Nav, NavPrimaryItems } from "./nav"
 import navigation from "../js/nav-primary"
 
