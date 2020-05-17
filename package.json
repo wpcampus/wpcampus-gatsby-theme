@@ -40,7 +40,8 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
-    "react-html-parser": "^2.0.2"
+    "react-html-parser": "^2.0.2",
+    "react-redux": "^7.2.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
