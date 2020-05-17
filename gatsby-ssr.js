@@ -4,4 +4,5 @@
  * See: https://www.gatsbyjs.org/docs/ssr-apis/
  */
 
-export { wrapRootElement } from "./gatsby-browser"
+import SessionProvider from "./src/utils/provider"
+export const wrapRootElement = SessionProvider

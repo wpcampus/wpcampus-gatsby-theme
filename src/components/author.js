@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Link } from "gatsby"
 
 import { NavAnchor } from "../components/nav"
-import { sanitizeTwitterHandle } from "../utilities"
+import { sanitizeTwitterHandle } from "../utils/utilities"
 
 import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
