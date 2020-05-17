@@ -18,6 +18,5 @@ import "./src/css/sidebar.css"
 import "./src/css/conduct.css"
 import "./src/css/footer.css"
 
-import SessionCheck from "./session-check"
-const wrapRootElement = SessionCheck
-export default { wrapRootElement }
+import SessionProvider from "./src/utils/provider"
+export const wrapRootElement = SessionProvider

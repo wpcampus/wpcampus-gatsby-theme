@@ -3,16 +3,16 @@ import ClientOAuth2 from "client-oauth2"
 import crypto from "crypto"
 import React from "react"
 import PropTypes from "prop-types"
-import { navigate } from "gatsby"
 
-import wpcMember from "./member"
+import { Link } from "gatsby"
+import { isBrowser } from "../utils/utilities"
 
 const authAccessCookieKey = "wpAuthAccess"
 const algorithm = "aes-256-cbc"
 const key = process.env.GATSBY_WPAUTH_CRYPTO_KEY
 const iv = process.env.GATSBY_WPAUTH_CRYPTO_IV
 
-const isBrowser = typeof window !== "undefined"
+const hasLocalStorage = typeof localStorage !== "undefined"
 
 // Encrypt a string of text.
 function encrypt(text) {
@@ -71,74 +71,50 @@ const auth = isBrowser
  * The duration is in milliseconds.
  */
 //const authExpiration = 172800000
-
 /*if (Date.now() - token.date > authExpiration) {
 	this.removeToken()
 	return false
 }*/
 
-// Will hold user data if logged in.
-let loggedInUser = false
-
-// Returns instance of logged in user.
-export const getUser = () => {
-	return loggedInUser
-}
-
-// Returns true if user is logged in and has data.
-export const isLoggedIn = () => {
-	return loggedInUser !== false
-}
-
-// Redirect to SSO login page.
-export const login = () => {
-	if (!isBrowser) {
-		return
-	}
-
-	// Delay redirect a little so loading page doesn't flash.
-	setTimeout(function () {
-		window.location = auth.code.getUri()
-	}, 500)
-}
-
+// Key we use to store the redirect path for after authentication.
 const loginRedirectKey = "wpAuthRedirect"
 
 const deleteAuthRedirect = () => {
-	localStorage.removeItem(loginRedirectKey)
+	hasLocalStorage && localStorage.removeItem(loginRedirectKey)
 }
 
 export const setAuthRedirect = (redirect) => {
-	localStorage.setItem(loginRedirectKey, redirect)
+	hasLocalStorage && localStorage.setItem(loginRedirectKey, redirect)
 }
 
-const getAuthRedirect = (deleteRedirect) => {
-	const redirect = localStorage.getItem(loginRedirectKey)
+export const getAuthRedirect = (deleteRedirect) => {
+	const redirect = hasLocalStorage && localStorage.getItem(loginRedirectKey)
 	if (true === deleteRedirect) {
 		deleteAuthRedirect()
 	}
 	return redirect
 }
 
-// Return true if "logged in".
-export const isAuthenticated = () => {
+// Returns access token if valid, false otherwise.
+export const getAccessToken = () => {
 	if (!isBrowser) {
 		return false
 	}
-	let access = getAccessCookie(false)
+	let access = getAccessCookie()
 	if (undefined === access || !access) {
+		deleteAccessCookie()
 		return false
 	}
-	return true
+	return access
 }
 
 // Get our access cookie. Pass true to decrypt.
-const getAccessCookie = (decryptToken) => {
+export const getAccessCookie = () => {
 	const value = Cookies.get(authAccessCookieKey)
-	if (true === decryptToken) {
-		return decrypt(value)
+	if (undefined === value || !value) {
+		return value
 	}
-	return value
+	return decrypt(value)
 }
 
 // Store access token in cookie.
@@ -162,27 +138,19 @@ const setAccessCookie = (token, expires) => {
 
 // Delete access token cookie.
 const deleteAccessCookie = () => {
-	Cookies.remove(authAccessCookieKey)
-}
-
-// Delete session data.
-const deleteSession = () => {
 	return new Promise((resolve) => {
-		deleteAccessCookie()
+		Cookies.remove(authAccessCookieKey)
 		resolve()
 	})
 }
 
-// Store user data.
-const setUser = (resource) => {
-	return new Promise((resolve) => {
-		loggedInUser = new wpcMember(resource)
-		resolve(loggedInUser)
-	})
+// Delete session data.
+const deleteSession = () => {
+	return deleteAccessCookie()
 }
 
 // Store session data.
-const setSession = (authResult) => {
+const setSession = (authResult, setUser) => {
 	return new Promise((resolve, reject) => {
 
 		if (authResult === undefined) {
@@ -193,38 +161,30 @@ const setSession = (authResult) => {
 			reject()
 		}
 
+		setAccessCookie(authResult.user.accessToken, authResult.user.expires)
+
 		// Store user info.
 		setUser(authResult.resource)
-			.then(() => {
 
-				setAccessCookie(authResult.user.accessToken, authResult.user.expires)
-
-				resolve()
-			})
-			.catch(error => {
-				reject(error)
-			})
+		resolve()
 	})
 }
 
-// Handles login authentication.
-export const handleAuthentication = () => {
-	if (!isBrowser) {
-		return
-	}
+export const handleLogout = () => {
+	return deleteSession()
+}
 
-	const redirect = getAuthRedirect(true)
+export const handleLogin = ({ user, setUser }) => {
+	return new Promise((resolve) => {
+		if (user.isLoggedIn()) {
+			return resolve()
+		}
+		return validateToken({ setUser })
+	})
+}
 
-	// If no query parameters, then we're logging out.
-	if (!window.location.search) {
-		deleteSession()
-			.then(() => {
-				navigate(redirect || "/")
-			})
-	}
-
-	// This means we're logging in.
-	auth.code.getToken(window.location.href)
+const validateToken = ({ setUser }) => {
+	return auth.code.getToken(window.location.href)
 		.then(function (user) {
 
 			const request = user.sign({
@@ -244,108 +204,123 @@ export const handleAuthentication = () => {
 				})
 		})
 		.then(response => {
-			setSession(response)
-				.then(() => {
-					navigate(redirect || "/")
-				})
+			return setSession(response, setUser)
 		})
 		.catch(() => {
 			// @TODO handle error?
-			deleteSession()
-				.then(() => {
-					navigate(redirect || "/")
-				})
+			return deleteSession()
 		})
 }
 
+const finishLoading = (dispatch) => {
+	return dispatch(
+		{
+			type: "finishLoading",
+		}
+	)
+}
+
+// Don't silent auth for these routes.
+const noAauthRoutes = ["/callback/", "/logout/"]
+
 // Handles authentication "silently" in the background on app load.
-export const silentAuth = callback => {
-	if (!isAuthenticated()) return callback()
-
-	let access = getAccessCookie(true)
-	if (access != "") {
-
-		/*
-		 * @TODO do we need to refresh the token?
-		 * I'm ok with asking for login again.
-		 */
-		//console.log(user.refresh())
-
-		const user = auth.createToken(access, "", "code", { expires: new Date() })
-
-		const request = user.sign({
-			method: "get",
-			url: process.env.GATSBY_WPAUTH_DOMAIN + "/resource"
-		})
-
-		fetch(request.url, request)
-			.then(response => {
-				return response.json()
-			})
-			.then(response => {
-
-				if (response.error) {
-					throw response.error_description
-				}
-
-				setUser(response).then(callback)
-			})
-			.catch(() => {
-				// @TODO handle error
-				deleteSession().then(callback)
-			})
+export const silentAuth = (store) => {
+	if (!isBrowser) {
+		return finishLoading(store.dispatch)
 	}
+
+	if (noAauthRoutes.includes(window.location.pathname)) {
+		return finishLoading(store.dispatch)
+	}
+
+	// If authenticated, returns the access key.
+	const access = getAccessToken()
+	if (!access) {
+		return finishLoading(store.dispatch)
+	}
+
+	const userToken = auth.createToken(access, "", "code")
+
+	const request = userToken.sign({
+		method: "get",
+		url: process.env.GATSBY_WPAUTH_DOMAIN + "/resource"
+	})
+
+	fetch(request.url, request)
+		.then(response => {
+			return response.json()
+		})
+		.then(response => {
+
+			if (response.error) {
+				throw response.error_description
+			}
+
+			store.dispatch(
+				{
+					type: "setUser",
+					payload: {
+						user: response
+					}
+				}
+			)
+		})
+		.catch(() => {
+			// @TODO handle error?
+			return deleteSession()
+		})
+		.finally(() => {
+			return finishLoading(store.dispatch)
+		})
+}
+
+// Redirect to SSO login page.
+export const login = () => {
+	if (!isBrowser) {
+		return
+	}
+
+	// Delay redirect a little so loading page doesn't flash.
+	setTimeout(function () {
+		window.location = auth.code.getUri()
+	}, 500)
 }
 
 // Handles logout by redirecting to SSO.
-export const logout = (redirectPath) => {
+export const logout = (access) => {
 
-	let access = getAccessCookie(true)
-	if (access != "") {
+	const user = auth.createToken(access, "", "token", { expires: new Date() })
 
-		if (redirectPath) {
+	const request = user.sign({
+		method: "get",
+		url: process.env.GATSBY_WPAUTH_DOMAIN + "/logout",
+	})
 
-			// Never logout redirect to account page.
-			if ("/account/" === redirectPath) {
-				redirectPath = "/"
-			}
+	window.location = request.url + "&redirect_uri=" + encodeURIComponent(process.env.GATSBY_WPAUTH_CALLBACK)
 
-			setAuthRedirect(redirectPath)
-		}
-
-		const user = auth.createToken(access, "", "token", { expires: new Date() })
-
-		const request = user.sign({
-			method: "get",
-			url: process.env.GATSBY_WPAUTH_DOMAIN + "/logout",
-		})
-
-		window.location = request.url + "&redirect_uri=" + encodeURIComponent(process.env.GATSBY_WPAUTH_CALLBACK)
-
-	}
 }
 
-// Displays the logout button.
-export const LogoutButton = ({ isPlain, redirectPath }) => {
+// Displays the logout "button".
+export const LogoutLink = ({ isPlain, redirectPath }) => {
 	const buttonAttr = {
+		to: "/logout/",
 		className: "wpc-button wpc-button--logout",
-		onClick: (e) => {
-			e.preventDefault()
-			logout(redirectPath)
-		}
 	}
 	if (isPlain) {
 		buttonAttr.className += " wpc-button--plain"
 	}
-	return <button {...buttonAttr}>Logout</button>
+	if (redirectPath) {
+		buttonAttr.state = { prevPath: redirectPath }
+	}
+	return <Link {...buttonAttr}>Logout</Link>
 }
 
-LogoutButton.propTypes = {
+LogoutLink.propTypes = {
 	isPlain: PropTypes.bool,
 	redirectPath: PropTypes.string,
 }
 
-LogoutButton.defaultProps = {
+LogoutLink.defaultProps = {
 	isPlain: false,
 	redirectPath: "/"
 }

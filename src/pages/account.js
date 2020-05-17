@@ -1,17 +1,23 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Link } from "gatsby"
+import { navigate } from "gatsby"
 import { Router } from "@reach/router"
-import { login, LogoutButton, isAuthenticated, getUser } from "../utils/auth"
+import { connect } from "react-redux"
+import { LogoutLink } from "../utils/auth"
 
 import Layout from "../components/layout"
 import LoadingLayout from "../components/loadingLayout"
 import { AuthorCard } from "../components/author"
+import { isBrowser } from "../utils/utilities"
 
 //import slackLogo from "../svg/slack_logo.svg"
 //import slackAvatarDefault from "../images/slack_avatar_default.png"
 
 import "./../css/profile.css"
+
+const mapStateToProps = ({ user, isLoading }) => {
+	return { user, isLoading }
+}
 
 const ProfileTableRow = ({ th, td }) => {
 	return <tr>
@@ -195,7 +201,7 @@ const Home = ({ user }) => {
 
 	return <div {...profileAttr}>
 		<p>{welcome}</p>
-		<LogoutButton redirectPath="/" />
+		<LogoutLink redirectPath="/" />
 		<h2>Your personal information</h2>
 		<PersonalInfo user={user} />
 		<h2>Your contact information</h2>
@@ -211,32 +217,41 @@ Home.propTypes = {
 	user: PropTypes.object
 }
 
-const Account = () => {
-	if (!isAuthenticated()) {
+const Account = ({ user, isLoading }) => {
+	if (!isBrowser) {
+		return <LoadingLayout />
+	}
 
-		// Initiate login process.
-		login()
+	// Silent auth is running.
+	if (isLoading) {
+		return <LoadingLayout />
+	}
 
-		const layoutAttr = {
-			pageTitle: "Redirecting to login",
-			message: "Redirecting to login"
-		}
+	if (!user.isLoggedIn()) {
 
-		return <LoadingLayout {...layoutAttr} />
+		navigate(
+			"/login/",
+			{
+				state: { prevPath: "/account/" },
+			}
+		)
+
+		return <LoadingLayout />
 	}
 
 	// Don't index or follow.
 	const metaRobots = ["nofollow", "noindex"]
 
-	const user = getUser()
+	//const prevPath = isBrowser ? window.location.pathname : "/"
+
+	/*<nav>
+		<ul>
+			<li><Link to="/account/" state={{ prevPath: prevPath }} rel="preload">Home</Link></li>
+		</ul>
+	</nav>*/
 
 	return (
 		<Layout heading="Your WPCampus profile" metaRobots={metaRobots}>
-			<nav>
-				<ul>
-					<li><Link to="/account/" rel="preload">Home</Link></li>
-				</ul>
-			</nav>
 			<Router>
 				<Home path="/account/" user={user} />
 			</Router>
@@ -244,4 +259,12 @@ const Account = () => {
 	)
 }
 
-export default Account
+Account.propTypes = {
+	user: PropTypes.object.isRequired,
+	isLoading: PropTypes.bool.isRequired,
+}
+
+// Connect this component to our provider.
+const ConnectedAccount = connect(mapStateToProps)(Account)
+
+export default ConnectedAccount

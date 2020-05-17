@@ -1,14 +1,18 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
+import { connect } from "react-redux"
 
 import WPCampusLogo from "../svg/logo"
 import { SearchForm } from "../components/search"
-import { isLoggedIn, getUser, LogoutButton } from "../utils/auth"
+import { LogoutLink } from "../utils/auth"
+import { isBrowser } from "../utils/utilities"
 
 import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
-const isBrowser = typeof window !== "undefined"
+const mapStateToProps = ({ user, isLoading }) => {
+	return { user, isLoading }
+}
 
 const HeaderArea = ({ children, area }) => {
 	return <div className={`wpc-area wpc-header__area wpc-header__area--${area}`}>
@@ -72,12 +76,12 @@ const HeaderLoggedInActions = ({ classes }) => {
 		actionsAttr.className += ` ${classes}`
 	}
 
-	const redirectPath = isBrowser ? window.location.pathname : "/"
+	const prevPath = isBrowser ? window.location.pathname : "/"
 
 	return <nav {...actionsAttr}>
 		<ul>
-			<li><Link className="wpc-button wpc-button--primary" to="/account/" rel="preload">Your account</Link></li>
-			<li><LogoutButton isPlain={true} redirectPath={redirectPath} /></li>
+			<li><Link className="wpc-button wpc-button--primary" to="/account/" state={{ prevPath: prevPath }} rel="preload">Your account</Link></li>
+			<li><LogoutLink isPlain={true} redirectPath={prevPath} /></li>
 		</ul>
 	</nav>
 }
@@ -87,9 +91,8 @@ HeaderLoggedInActions.propTypes = {
 	classes: PropTypes.string
 }
 
-const UserLoggedInActions = () => {
+const UserLoggedInActions = ({ user }) => {
 
-	const user = getUser()
 	const userName = user.getDisplayName()
 
 	let userNameDisplay
@@ -112,20 +115,23 @@ UserLoggedInActions.propTypes = {
 	user: PropTypes.object
 }
 
-// @TODO do we need to pass user as an object so updates when necessary?
-const HeaderUser = () => {
-	if (!isLoggedIn()) {
+const HeaderUser = ({ user, isLoading }) => {
+	if (isLoading) {
+		return null
+	}
+	if (!user.isLoggedIn()) {
 		return <HeaderMemberActions classes="wpc-member__actions" />
 	}
-	return <UserLoggedInActions />
+	return <UserLoggedInActions user={user} />
 }
 
-const HeaderHomeUser = () => {
-	if (!isLoggedIn()) {
-		return <HeaderMemberActions classes="wpc-home-banner__actions wpc-member__actions" />
-	}
-	return <UserLoggedInActions />
+HeaderUser.propTypes = {
+	user: PropTypes.object.isRequired,
+	isLoading: PropTypes.bool.isRequired,
 }
+
+// Connect this component to our provider.
+const ConnectedHeaderUser = connect(mapStateToProps)(HeaderUser)
 
 // Going to make a few different banners.
 const HeaderHomeBanner1 = () => {
@@ -154,7 +160,7 @@ const HeaderHomeBanner1 = () => {
 		</ul>
 		<p className="wpc-home-banner__tagline">Where WordPress meets Higher Education</p>
 		<SearchForm {...searchFormAttr} />
-		<HeaderUser />
+		<ConnectedHeaderUser />
 	</div>
 }
 
@@ -181,6 +187,7 @@ const Header = ({ isHome }) => {
 			</HeaderArea>
 			<HeaderArea area="meta"></HeaderArea>
 		</HeaderAreas>
+
 	} else {
 
 		headerAreas = <HeaderAreas>
@@ -190,7 +197,7 @@ const Header = ({ isHome }) => {
 				</span>
 			</HeaderArea>
 			<HeaderArea area="actions">
-				<HeaderHomeUser />
+				<ConnectedHeaderUser />
 			</HeaderArea>
 			<HeaderArea area="search">
 				<SearchForm {...searchFormAttr} />
