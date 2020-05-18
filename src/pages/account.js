@@ -168,7 +168,7 @@ const AdminLink = ({ user }) => {
 	if (user.hasCap("is_admin")) {
 
 		const linkAttr = {
-			href: process.env.GATSBY_WP_ADMIN,
+			href: `${process.env.GATSBY_WP_ADMIN}/`,
 			className: "wpc-button wpc-button--secondary",
 			"aria-label": "WordPress Admin dashboard",
 			"title": "WordPress Admin dashboard", 
