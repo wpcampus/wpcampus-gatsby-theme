@@ -164,6 +164,64 @@ SlackIdentity.propTypes = {
 	user: PropTypes.object.isRequired
 }*/
 
+const AdminLink = ({ user }) => {
+	if (user.hasCap("is_admin")) {
+
+		const linkAttr = {
+			href: process.env.GATSBY_WP_ADMIN,
+			className: "wpc-button wpc-button--secondary",
+			"aria-label": "WordPress Admin dashboard",
+			"title": "WordPress Admin dashboard", 
+		}
+
+		return <a {...linkAttr}>WP Admin</a>
+	}
+	return null
+}
+
+AdminLink.propTypes = {
+	user: PropTypes.object.isRequired
+}
+
+const AccountButtons = ({ user, classes }) => {
+
+	const buttons = []
+
+	const logoutLink = <LogoutLink redirectPath="/" isPrimary={true} />
+	if (logoutLink) {
+		buttons.push(logoutLink)
+	}
+
+	const adminLink = <AdminLink user={user} />
+	if (adminLink) {
+		buttons.push(adminLink)
+	}
+
+	if (!buttons.length) {
+		return null
+	}
+
+	const navAttr = {}
+	if (classes) {
+		navAttr.className = classes
+	}
+
+	return <nav {...navAttr}>
+		<ul>
+			{buttons.map((item, i) => (
+				<li key={i}>
+					{item}
+				</li>
+			))}
+		</ul>
+	</nav>
+}
+
+AccountButtons.propTypes = {
+	user: PropTypes.object.isRequired,
+	classes: PropTypes.string
+}
+
 const Home = ({ user }) => {
 
 	const profileAttr = {
@@ -200,8 +258,10 @@ const Home = ({ user }) => {
 	}
 
 	return <div {...profileAttr}>
-		<p>{welcome}</p>
-		<LogoutLink redirectPath="/" />
+		<div className="wpc-profile__header">
+			<p className="wpc-profile__header__welcome">{welcome}</p>
+			<AccountButtons classes="wpc-profile__header__buttons" user={user} />
+		</div>
 		<h2>Your personal information</h2>
 		<PersonalInfo user={user} />
 		<h2>Your contact information</h2>
