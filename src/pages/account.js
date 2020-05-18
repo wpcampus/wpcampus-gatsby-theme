@@ -171,10 +171,10 @@ const AdminLink = ({ user }) => {
 			href: `${process.env.GATSBY_WP_ADMIN}/`,
 			className: "wpc-button wpc-button--secondary",
 			"aria-label": "WordPress Admin dashboard",
-			"title": "WordPress Admin dashboard", 
+			"title": "WordPress Admin dashboard",
 		}
 
-		return <a {...linkAttr}>WP Admin</a>
+		return <a {...linkAttr}>Go to admin</a>
 	}
 	return null
 }
