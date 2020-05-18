@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo } from "react"
 
-import "./../css/conduct.css"
-
 const Conduct = () => {
 	useEffect(() => {
 		require("@wpcampus/wpcampus-wc-conduct")

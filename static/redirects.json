@@ -6,6 +6,11 @@
 			"status": 301
 		},
 		{
+			"source": "/profile/",
+			"destination": "/account/",
+			"status": 301
+		},
+		{
 			"source": "/library/",
 			"destination": "/learning/library/",
 			"status": 301
@@ -20,6 +25,11 @@
 			"source": "/2020/",
 			"destination": "/blog/2020/",
 			"prefix": true,
+			"status": 301
+		},
+		{
+			"source": "/review/",
+			"destination": "https://wpcampus.org/review/",
 			"status": 301
 		},
 		{

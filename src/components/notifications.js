@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo } from "react"
 
-import "../css/notifications.css"
-
 const Notifications = () => {
 	useEffect(() => {
 		require("@wpcampus/wpcampus-wc-notifications")

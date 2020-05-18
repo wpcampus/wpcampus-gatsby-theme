@@ -321,6 +321,22 @@ nav.wpc-nav {
 	}
 }
 
+svg#Truck_sheep {
+	display: block;
+	max-width: 300px;
+	height: auto;
+	margin: 2rem 0;
+
+	.st0 { fill: #757575; }
+	.st1 { fill: #fff; }
+	.st2 { fill: #383838; }
+	.st3 { fill: #347dc8; }
+	.st4 { fill: #1159bd; }
+	.st5 { fill: #e4eaf4; }
+	.st6 { fill: #fafdb0; }
+	.st7 { fill: #e5e5e5; }
+}
+
 .wpcampus--path-404 {
 	svg#Truck_sheep {
 		float: right;
@@ -513,4 +529,45 @@ iframe {
 	width: 100%;
 	border: 0;
 	margin: 0 0 1rem;
+}
+
+.iframe-wrapper {
+	min-height: 200px;
+	position: relative;
+
+	&__loading {
+		display: flex;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: auto;
+		min-height: 200px;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid #222;
+		padding: 2rem;
+		text-align: center;
+		opacity: 0;
+		transition: opacity 0.5s;
+
+		p {
+			margin: 0;
+		}
+	}
+
+	.iframe--resize {
+		opacity: 1;
+		transition: all 1s;
+	}
+
+	&--loading {
+		.iframe-wrapper__loading {
+			opacity: 0.4;
+		}
+
+		.iframe--resize {
+			opacity: 0;
+		}
+	}
 }

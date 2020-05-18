@@ -3,12 +3,12 @@ import PropTypes from "prop-types"
 import React from "react"
 
 import WPCampusLogo from "../svg/logo"
-import { User } from "../user/context"
 import { SearchForm } from "../components/search"
+import { isAuthenticated, getUser, LogoutButton } from "../utils/auth"
 
 import avatarEduwapuuBW from "../images/avatars/wpcampus-avatar-eduwapuu-bw.png"
 
-import "./../css/header.css"
+const isBrowser = typeof window !== "undefined"
 
 const HeaderArea = ({ children, area }) => {
 	return <div className={`wpc-area wpc-header__area wpc-header__area--${area}`}>
@@ -48,10 +48,13 @@ const HeaderMemberActions = ({ classes }) => {
 	if (classes) {
 		actionsAttr.className += ` ${classes}`
 	}
+
+	const prevPath = isBrowser ? window.location.pathname : "/"
+
 	return <nav {...actionsAttr}>
 		<ul>
 			<li><Link className="wpc-button wpc-button--primary" to="/community/membership/">Become a member</Link></li>
-			<li><Link className="wpc-button" to="/login/">Login</Link></li>
+			<li><Link className="wpc-button" to="/login/" state={{ prevPath: prevPath }} rel="preload">Login</Link></li>
 		</ul>
 	</nav>
 }
@@ -60,19 +63,21 @@ HeaderMemberActions.propTypes = {
 	classes: PropTypes.string
 }
 
-const HeaderLoggedInActions = ({ user, classes }) => {
+const HeaderLoggedInActions = ({ classes }) => {
 	const actionsAttr = {
 		className: "wpc-nav wpc-nav--actions",
-		"aria-label": "View profile or logout"
+		"aria-label": "Access account or logout"
 	}
 	if (classes) {
 		actionsAttr.className += ` ${classes}`
 	}
-	const LogoutButton = user.LogoutButton
+
+	const redirectPath = isBrowser ? window.location.pathname : "/"
+
 	return <nav {...actionsAttr}>
 		<ul>
-			<li><Link className="wpc-button wpc-button--primary" to="/profile/">Your profile</Link></li>
-			<li><LogoutButton isPlain={true} /></li>
+			<li><Link className="wpc-button wpc-button--primary" to="/account/" rel="preload">Your account</Link></li>
+			<li><LogoutButton isPlain={true} redirectPath={redirectPath} /></li>
 		</ul>
 	</nav>
 }
@@ -82,8 +87,9 @@ HeaderLoggedInActions.propTypes = {
 	classes: PropTypes.string
 }
 
-const UserLoggedInActions = ({ user }) => {
+const UserLoggedInActions = () => {
 
+	const user = getUser()
 	const userName = user.getDisplayName()
 
 	let userNameDisplay
@@ -97,7 +103,7 @@ const UserLoggedInActions = ({ user }) => {
 		<img className="wpc-user__avatar" src={avatarEduwapuuBW} alt="" />
 		<div className="wpc-user__info">
 			<span className="wpc-user__name">{userNameDisplay}</span>
-			<HeaderLoggedInActions user={user} classes="wpc-user__actions" />
+			<HeaderLoggedInActions classes="wpc-user__actions" />
 		</div>
 	</div>
 }
@@ -106,18 +112,23 @@ UserLoggedInActions.propTypes = {
 	user: PropTypes.object
 }
 
-// Going to make a few different banners.
-const HeaderHomeBanner1 = () => {
+// @TODO do we need to pass user as an object so updates when necessary?
+const HeaderUser = () => {
+	if (!isAuthenticated()) {
+		return <HeaderMemberActions classes="wpc-member__actions" />
+	}
+	return <UserLoggedInActions />
+}
 
-	const handleUserDisplay = user => {
-		if (!user.isActive()) {
-			return ""
-		}
-		if (user.isLoggedIn()) {
-			return <UserLoggedInActions user={user} />
-		}
+const HeaderHomeUser = () => {
+	if (!isAuthenticated()) {
 		return <HeaderMemberActions classes="wpc-home-banner__actions wpc-member__actions" />
 	}
+	return <UserLoggedInActions />
+}
+
+// Going to make a few different banners.
+const HeaderHomeBanner1 = () => {
 
 	const searchFormAttr = {
 		showSubmitIcon: true
@@ -143,21 +154,11 @@ const HeaderHomeBanner1 = () => {
 		</ul>
 		<p className="wpc-home-banner__tagline">Where WordPress meets Higher Education</p>
 		<SearchForm {...searchFormAttr} />
-		<User.Consumer>{handleUserDisplay}</User.Consumer>
+		<HeaderUser />
 	</div>
 }
 
 const Header = ({ isHome }) => {
-
-	const handleUserDisplay = user => {
-		if (!user.isActive()) {
-			return ""
-		}
-		if (user.isLoggedIn()) {
-			return <UserLoggedInActions user={user} />
-		}
-		return <HeaderMemberActions classes="wpc-member__actions" />
-	}
 
 	const headerAttr = {
 		className: "wpc-header wpc-wrapper"
@@ -189,7 +190,7 @@ const Header = ({ isHome }) => {
 				</span>
 			</HeaderArea>
 			<HeaderArea area="actions">
-				<User.Consumer>{handleUserDisplay}</User.Consumer>
+				<HeaderHomeUser />
 			</HeaderArea>
 			<HeaderArea area="search">
 				<SearchForm {...searchFormAttr} />

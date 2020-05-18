@@ -11,6 +11,7 @@ module.exports = {
 		twitter: "@wpcampusorg",
 	},
 	plugins: [
+		"gatsby-plugin-remove-generator",
 		"gatsby-plugin-react-helmet",
 		{
 			resolve: "gatsby-plugin-react-helmet-canonical-urls",
@@ -33,7 +34,16 @@ module.exports = {
 		},
 		{
 			resolve: "gatsby-plugin-sitemap",
-			options: {}
+			options: {
+				exclude: [
+					"/404/",
+					"/account/",
+					"/callback/",
+					"/login/",
+					"/pages/",
+					"/search/*",
+				]
+			}
 		},
 		{
 			resolve: "gatsby-plugin-robots-txt",
@@ -58,8 +68,8 @@ module.exports = {
 				name: "gatsby-starter-default",
 				short_name: "starter",
 				start_url: "/",
-				background_color: "#663399",
-				theme_color: "#663399",
+				background_color: "#ffffff",
+				theme_color: "#2e3641",
 				display: "minimal-ui",
 				icon: "src/svg/wpcampus-favicon.svg",
 			},
@@ -85,8 +95,8 @@ module.exports = {
 					//"**/members", // @TODO security concern?
 				],
 				auth: {
-					jwt_user: process.env.WPC_JWT_USER,
-					jwt_pass: process.env.WPC_JWT_PASSWORD,
+					htaccess_user: process.env.WPC_JWT_USER,
+					htaccess_pass: process.env.WPC_JWT_PASSWORD,
 				},
 			},
 		},

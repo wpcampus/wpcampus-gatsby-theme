@@ -32,19 +32,28 @@ const PageTemplate = props => {
 
 		const iframeAttr = {
 			id: iframeID,
-			src: form
+			src: form,
+			className: "iframe iframe--resize"
 		}
 
-		iframe = <iframe {...iframeAttr} />
+		iframe = <div className="iframe-wrapper iframe-wrapper--loading">
+			<div className="iframe-wrapper__loading">
+				<p>The form is loading.</p>
+			</div>
+			<iframe {...iframeAttr} />
+		</div>
 	}
 
-	const origins = [ pageContext.formOrigin ]
+	const origins = [pageContext.formOrigin]
 
 	useEffect(() => {
 		iFrameResize.iframeResizer({
 			log: isDev,
 			checkOrigin: origins,
 			warningTimeout: 10000,
+			resizedCallback: function (e) {
+				e.iframe.parentNode.classList.remove("iframe-wrapper--loading")
+			}
 		}, "#" + iframeID)
 	}, [])
 
