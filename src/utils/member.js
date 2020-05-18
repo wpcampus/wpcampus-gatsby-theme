@@ -29,6 +29,17 @@ export default class wpcMember {
 		return this.getID() > 0
 	}
 
+	// Returns true if the user has a specific capability.
+	hasCap(capability) {
+		if (!this.isLoggedIn() || !this.exists()) {
+			return false
+		}
+		if (!this.data.capabilities || !Object.prototype.hasOwnProperty.call(this.data.capabilities, capability)) {
+			return false
+		}
+		return true === this.data.capabilities[capability]
+	}
+
 	getID() {
 		const ID = this.data.ID ? parseInt(this.data.ID) : 0
 		return ID > 0 ? ID : 0
