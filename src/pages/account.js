@@ -183,18 +183,43 @@ AdminLink.propTypes = {
 	user: PropTypes.object.isRequired
 }
 
+const EditProfileLink = ({ user }) => {
+	if (user.hasCap("read")) {
+
+		const linkAttr = {
+			href: `${process.env.GATSBY_WP_ADMIN}/profile.php`,
+			className: "wpc-button wpc-button--secondary",
+			"aria-label": "Edit your WordPress user profile",
+			"title": "Edit your WordPress user profile",
+		}
+
+		return <a {...linkAttr}>Edit profile</a>
+	}
+	return null
+}
+
+EditProfileLink.propTypes = {
+	user: PropTypes.object.isRequired
+}
+
 const AccountButtons = ({ user, classes }) => {
 
 	const buttons = []
 
-	const logoutLink = <LogoutLink redirectPath="/" isPrimary={true} />
-	if (logoutLink) {
-		buttons.push(logoutLink)
-	}
-
 	const adminLink = <AdminLink user={user} />
 	if (adminLink) {
 		buttons.push(adminLink)
+	} else {
+
+		const editProfile = <EditProfileLink user={user} />
+		if (editProfile) {
+			buttons.push(editProfile)
+		}
+	}
+
+	const logoutLink = <LogoutLink redirectPath="/" isPrimary={true} />
+	if (logoutLink) {
+		buttons.push(logoutLink)
 	}
 
 	if (!buttons.length) {
@@ -257,6 +282,7 @@ const Home = ({ user }) => {
 		company_position: company_position
 	}
 
+	// @TODO add edit profile form.
 	return <div {...profileAttr}>
 		<div className="wpc-profile__header">
 			<p className="wpc-profile__header__welcome">{welcome}</p>
