@@ -301,12 +301,14 @@ export const logout = (access) => {
 }
 
 // Displays the logout "button".
-export const LogoutLink = ({ isPlain, redirectPath }) => {
+export const LogoutLink = ({ isPlain, isPrimary, redirectPath }) => {
 	const buttonAttr = {
 		to: "/logout/",
 		className: "wpc-button wpc-button--logout",
 	}
-	if (isPlain) {
+	if (isPrimary) {
+		buttonAttr.className += " wpc-button--primary"
+	} else if (isPlain) {
 		buttonAttr.className += " wpc-button--plain"
 	}
 	if (redirectPath) {
@@ -317,6 +319,7 @@ export const LogoutLink = ({ isPlain, redirectPath }) => {
 
 LogoutLink.propTypes = {
 	isPlain: PropTypes.bool,
+	isPrimary: PropTypes.bool,
 	redirectPath: PropTypes.string,
 }
 
