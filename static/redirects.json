@@ -312,7 +312,7 @@
 		},
 		{
 			"source": "/planning/community/",
-			"destination": "/about/governance/working/#community",
+			"destination": "/about/governance/working/community/",
 			"status": 301
 		},
 		{
