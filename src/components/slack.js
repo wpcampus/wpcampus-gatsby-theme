@@ -37,10 +37,10 @@ const SlackLogin = () => {
 
 	let loginURL = getRedirectURL(`${wpSlackURL}/login/`)
 
-	return <div className="wpc-slack-identity__login">
+	return <div className="wpc-slack__identity__login">
 		<span>Connect your WPCampus Slack account:</span>
-		<a href={loginURL} className="wpc-slack-identity__login__button">
-			<img className="wpc-slack-identity__login__button_img" src="https://api.slack.com/img/sign_in_with_slack.png" alt="Connect your WPCampus Slack account" />
+		<a href={loginURL} className="wpc-slack__identity__login__button">
+			<img className="wpc-slack__identity__login__button_img" src="https://api.slack.com/img/sign_in_with_slack.png" alt="Connect your WPCampus Slack account" />
 		</a>
 	</div>
 }
@@ -51,10 +51,10 @@ const SlackLogout = () => {
 
 	const linkAttr = {
 		href: logoutURL,
-		className: "wpc-slack-identity__logout__button"
+		className: "wpc-slack__identity__logout__button"
 	}
 
-	return <div className="wpc-slack-identity__logout">
+	return <div className="wpc-slack__identity__logout">
 		<a {...linkAttr}>Disconnect from Slack</a>
 	</div>
 }
@@ -90,26 +90,26 @@ const SlackIdentity = ({ user }) => {
 	}
 
 	const slackAttr = {
-		className: "wpc-slack-identity"
+		className: "wpc-slack__identity"
 	}
 
 	if (slackLoggedIn) {
-		slackAttr.className += " wpc-slack-identity--loggedin"
+		slackAttr.className += " wpc-slack__identity--loggedin"
 	}
 
 	// @TODO display user's Slack status
 
 	return <div {...slackAttr}>
-		<div className="wpc-slack-identity__avatar">
-			<img className="wpc-slack-identity__avatar__img" src={avatar} alt={avatar_alt} />
+		<div className="wpc-slack__identity__avatar">
+			<img className="wpc-slack__identity__avatar__img" src={avatar} alt={avatar_alt} />
 		</div>
-		<div className="wpc-slack-identity__info">
-			<div className="wpc-slack-identity__logo">
-				<img className="wpc-slack-identity__logo__img" src={slackLogo} alt="Slack logo" />
+		<div className="wpc-slack__identity__info">
+			<div className="wpc-slack__identity__logo">
+				<img className="wpc-slack__identity__logo__img" src={slackLogo} alt="Slack logo" />
 			</div>
-			<div className="wpc-slack-identity__user">
-				<div className="wpc-slack-identity__user__name">{loggedInAs}</div>
-				{slackUser.title ? <div className="wpc-slack-identity__user__bio">{slackUser.title}</div> : null}
+			<div className="wpc-slack__identity__user">
+				<div className="wpc-slack__identity__user__name">{loggedInAs}</div>
+				{slackUser.title ? <div className="wpc-slack__identity__user__bio">{slackUser.title}</div> : null}
 			</div>
 			{slackLoggedIn ? <SlackLogout /> : <SlackLogin />}
 		</div>
