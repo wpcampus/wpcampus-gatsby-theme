@@ -10,7 +10,7 @@ img.wpc-slack__teamlogo {
 		padding: 1rem;
 		border: var(--area-border-gray-light);
 		font-size: 1.1rem;
-		line-height: 1;
+		line-height: 1.4;
 		word-wrap: break-word;
 
 		span {
@@ -126,6 +126,35 @@ img.wpc-slack__teamlogo {
 			&__avatar {
 				max-width: 200px;
 			}
+		}
+	}
+
+	&__section {
+		margin: 2.5rem -2rem 0;
+		padding: 2rem;
+		border-top: var(--area-border-gray-light);
+
+		&--started {
+			background: rgba(29, 143, 170, 0.1);
+		}
+
+		/* Laptop */
+		@media (min-width: 920px) {
+			padding: 3rem;
+			margin-left: -3rem;
+			margin-right: -3rem;
+		}
+
+		& > *:first-child {
+			margin-top: 0;
+		}
+
+		& > *:last-child {
+			margin-bottom: 0;
+		}
+
+		& + .wpc-slack__section {
+			margin-top: 0;
 		}
 	}
 }
