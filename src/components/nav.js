@@ -90,10 +90,10 @@ const NavPrimaryItems = [
 					}
 				]
 			},*/
-			/*{
+			{
 				path: "/community/sme/",
 				text: "Subject Matter Experts"
-			},*/
+			},
 			{
 				path: "/about/governance/",
 				text: "Governance"
@@ -171,7 +171,11 @@ const NavPrimaryItems = [
 			{
 				path: "/learning/speaking/",
 				text: "Speaker training"
-			}
+			},
+			{
+				path: "/community/sme/",
+				text: "Subject Matter Experts"
+			},
 		]
 	},
 	{ path: "/jobs/", text: "Job Board" },
