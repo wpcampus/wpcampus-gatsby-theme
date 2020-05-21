@@ -16,11 +16,31 @@ const NavPrimaryItems = [
 				children: [
 					{
 						path: "/about/governance/committees/",
-						text: "Committees"
+						text: "Committees",
+						children: [
+							{
+								path: "/about/governance/committees/diversity-inclusion/",
+								text: "Diversity and Inclusion"
+							},
+						],
 					},
 					{
 						path: "/about/governance/working/",
-						text: "Working Groups"
+						text: "Working Groups",
+						children: [
+							{
+								path: "/about/governance/working/community/",
+								text: "Community planning",
+							},
+							{
+								path: "/about/governance/working/governance/",
+								text: "Governance",
+							},
+							{
+								path: "/about/governance/working/website/",
+								text: "Our website",
+							},
+						],
 					}
 				]
 			},
