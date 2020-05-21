@@ -95,6 +95,10 @@ const NavPrimaryItems = [
 				text: "Subject Matter Experts"
 			},*/
 			{
+				path: "/about/governance/",
+				text: "Governance"
+			},
+			{
 				path: "/about/guidelines/",
 				text: "Community guidelines"
 			},
