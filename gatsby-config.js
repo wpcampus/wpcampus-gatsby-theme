@@ -83,7 +83,7 @@ module.exports = {
 		{
 			resolve: "gatsby-source-wordpress",
 			options: {
-				baseUrl: process.env.WPC_WORDPRESS,
+				baseUrl: process.env.GATSBY_WPC_WORDPRESS,
 				protocol: "https",
 				hostingWPCOM: false,
 				useACF: false,

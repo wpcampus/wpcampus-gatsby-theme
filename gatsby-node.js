@@ -795,7 +795,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 		if (forms) {
 			pageContext.forms = forms
-			pageContext.formOrigin = `https://${process.env.WPC_WORDPRESS}`
+			pageContext.formOrigin = `https://${process.env.GATSBY_WPC_WORDPRESS}`
 		}
 
 		createPage({

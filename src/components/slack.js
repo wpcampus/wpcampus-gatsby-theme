@@ -5,7 +5,7 @@ import slackLogo from "../svg/slack_logo.svg"
 import slackAvatarDefault from "../images/slack_avatar_default.png"
 import { isBrowser } from "../utils/utilities"
 
-const wpSlackURL = `https://${process.env.WPC_WORDPRESS}/slack`
+const wpSlackURL = `https://${process.env.GATSBY_WPC_WORDPRESS}/slack`
 
 const getCurrentURL = () => {
 	if (!isBrowser) {
