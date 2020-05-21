@@ -24,13 +24,35 @@
 		}
 	}
 
+	&__messages {
+		margin: 2rem 0;
+
+		ul,
+		li {
+			display: block;
+			margin: 0;
+		}
+
+		.wpc-profile__message {
+			background: var(--wpc-orange-light);
+			border: 1px solid rgba(141, 82, 40, 0.2);
+			padding: 1rem;
+			margin: 0 0 1rem;
+			font-size: 1.1rem;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
 	.wpc-slack-identity {
 		--slack-avatar-width: 220px;
 		--slack-teal: #1d8faa;
 
 		display: flex;
 		align-items: flex-start;
-		margin: 2rem 0 1.5rem;
+		margin: 2rem 0 3rem;
 
 		&__avatar {
 			max-width: 125px;
@@ -89,14 +111,20 @@
 			}
 
 			&__button {
-				display: block;
+				display: inline-block;
 				background: transparent;
-				padding: 0;
-				border: 0;
+				padding: 2px;
+				border: 2px solid transparent;
+				border-radius: 10px;
 				margin: 0;
 
 				img {
 					display: block;
+				}
+
+				&:hover,
+				&:focus {
+					border-color: var(--slack-teal);
 				}
 			}
 		}

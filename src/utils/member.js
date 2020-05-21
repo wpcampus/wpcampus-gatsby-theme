@@ -84,4 +84,8 @@ export default class wpcMember {
 	getCompanyPosition() {
 		return this.data.company_position || null
 	}
+
+	getSlack() {
+		return this.data.slack || null
+	}
 }

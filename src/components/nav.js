@@ -95,7 +95,7 @@ const NavPrimaryItems = [
 				path: "/community/membership/",
 				text: "Become a member"
 			},
-			/*{
+			{
 				path: "/community/slack/",
 				text: "Slack",
 				children: [
@@ -104,7 +104,7 @@ const NavPrimaryItems = [
 						text: "Slack channels",
 					}
 				]
-			},*/
+			},
 			{
 				path: "/community/sme/",
 				text: "Subject Matter Experts"
@@ -191,6 +191,10 @@ const NavPrimaryItems = [
 				path: "/community/sme/",
 				text: "Subject Matter Experts"
 			},
+			{
+				path: "/community/slack/",
+				text: "Slack",
+			}
 		]
 	},
 	{
