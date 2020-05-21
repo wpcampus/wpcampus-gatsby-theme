@@ -5,6 +5,8 @@ import slackLogo from "../svg/slack_logo.svg"
 import slackAvatarDefault from "../images/slack_avatar_default.png"
 import { isBrowser } from "../utils/utilities"
 
+const wpSlackURL = `https://${process.env.WPC_WORDPRESS}/slack`
+
 const getCurrentURL = () => {
 	if (!isBrowser) {
 		return ""
@@ -33,7 +35,7 @@ const getRedirectURL = (rootURL) => {
 
 const SlackLogin = () => {
 
-	let loginURL = getRedirectURL("https://dev5290.wpcampus.org/slack/login/")
+	let loginURL = getRedirectURL(`${wpSlackURL}/login/`)
 
 	return <div className="wpc-slack-identity__login">
 		<span>Connect your WPCampus Slack account:</span>
@@ -45,7 +47,7 @@ const SlackLogin = () => {
 
 const SlackLogout = () => {
 
-	let logoutURL = getRedirectURL("https://dev5290.wpcampus.org/slack/logout/")
+	let logoutURL = getRedirectURL(`${wpSlackURL}/logout/`)
 
 	const linkAttr = {
 		href: logoutURL,
