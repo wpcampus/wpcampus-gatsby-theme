@@ -7,9 +7,18 @@ const NavPrimaryItems = [
 		path: "/about/",
 		text: "About",
 		children: [
-			{ path: "/about/contributors/", text: "Contributors" },
-			{ path: "/about/partners/", text: "Partners" },
-			{ path: "/about/mascots/", text: "Mascots" },
+			{
+				path: "/about/contributors/",
+				text: "Contributors"
+			},
+			{
+				path: "/about/partners/",
+				text: "Partners"
+			},
+			{
+				path: "/about/mascots/",
+				text: "Mascots"
+			},
 			{
 				path: "/about/governance/",
 				text: "Governance",
@@ -58,8 +67,14 @@ const NavPrimaryItems = [
 					}
 				]
 			},
-			{ path: "/about/newsletter/", text: "Our newsletter" },
-			{ path: "/about/contact/", text: "Contact us" },
+			{
+				path: "/about/newsletter/",
+				text: "Our newsletter"
+			},
+			{
+				path: "/about/contact/",
+				text: "Contact us"
+			},
 		]
 	},
 	{
@@ -178,7 +193,10 @@ const NavPrimaryItems = [
 			},
 		]
 	},
-	{ path: "/jobs/", text: "Job Board" },
+	{
+		path: "/jobs/",
+		text: "Job Board"
+	},
 	{
 		path: "/podcast/",
 		text: "Podcast",
@@ -189,7 +207,10 @@ const NavPrimaryItems = [
 			}
 		]
 	},
-	{ href: "https://shop.wpcampus.org/", text: "Shop" }
+	{
+		href: "https://shop.wpcampus.org/",
+		text: "Shop"
+	}
 ]
 
 const NavLink = ({ item }) => {
