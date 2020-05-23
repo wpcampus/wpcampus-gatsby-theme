@@ -106,8 +106,8 @@ const NavPrimaryItems = [
 				]
 			},
 			{
-				path: "/community/sme/",
-				text: "Subject Matter Experts"
+				path: "/community/directory/",
+				text: "Directory"
 			},
 			{
 				path: "/about/governance/",
@@ -188,8 +188,8 @@ const NavPrimaryItems = [
 				text: "Speaker training"
 			},
 			{
-				path: "/community/sme/",
-				text: "Subject Matter Experts"
+				path: "/community/directory/",
+				text: "Directory"
 			},
 			{
 				path: "/community/slack/",
