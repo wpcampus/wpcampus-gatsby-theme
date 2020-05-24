@@ -237,9 +237,8 @@ const basicAuth = (username, password) => {
 	return "Basic " + btoa(username + ":" + password)
 }
 
-const fetchContributors = async () => {
+const fetchContent = (url) => {
 
-	// Build request.
 	let options = {
 		method: "get",
 		headers: {
@@ -247,9 +246,7 @@ const fetchContributors = async () => {
 		}
 	}
 
-	const url = `${process.env.WPC_API}/wpcampus/contributors`
-
-	const contributors = await fetch(url, options)
+	return fetch(url, options)
 		.then((response) => {
 			return response.json()
 		})
@@ -257,6 +254,11 @@ const fetchContributors = async () => {
 			// @TODO throw error
 			return []
 		})
+}
+
+const fetchContributors = async () => {
+
+	const contributors = await fetchContent(`${process.env.WPC_API}/wpcampus/contributors`)
 
 	// Logging progress.
 	console.log(chalk.green(" -> WPCampus contributors fetched: " + contributors.length))
@@ -307,24 +309,7 @@ createContributorNodes.propTypes = {
 
 const fetchSessions = async () => {
 
-	// Build request.
-	let options = {
-		method: "get",
-		headers: {
-			Authorization: basicAuth(process.env.WPC_JWT_USER, process.env.WPC_JWT_PASSWORD)
-		}
-	}
-
-	const url = `${process.env.WPC_API}/wpcampus/data/public/sessions`
-
-	const sessions = await fetch(url, options)
-		.then((response) => {
-			return response.json()
-		})
-		.catch(() => {
-			// @TODO throw error
-			return []
-		})
+	const sessions = await fetchContent(`${process.env.WPC_API}/wpcampus/data/public/sessions`)
 
 	// Logging progress.
 	console.log(chalk.green(" -> WPCampus sessions fetched: " + sessions.length))
