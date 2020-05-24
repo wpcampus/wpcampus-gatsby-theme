@@ -1,12 +1,11 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
 import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
+import Iframe from "../components/iframe"
 import ProtectedContent from "../components/content"
-
-import iFrameResize from "iframe-resizer"
 
 const isDev = "development" === process.env.NODE_ENV
 
@@ -23,45 +22,19 @@ const PageTemplate = props => {
 	}
 
 	const forms = pageContext.forms || []
+	const formSrc = forms.length ? forms[0] : null
 
-	const form = forms.length ? forms[0] : null
-
-	let iframe, iframeID
-	if (form) {
-		iframeID = "formIframe"
-
-		const iframeAttr = {
-			id: iframeID,
-			src: form,
-			className: "iframe iframe--resize"
-		}
-
-		iframe = <div className="iframe-wrapper iframe-wrapper--loading">
-			<div className="iframe-wrapper__loading">
-				<p>The form is loading.</p>
-			</div>
-			<iframe {...iframeAttr} />
-		</div>
+	const iframeAttr = {
+		src: formSrc,
+		origins: [pageContext.formOrigin],
+		resizeLog: isDev
 	}
-
-	const origins = [pageContext.formOrigin]
-
-	useEffect(() => {
-		iFrameResize.iframeResizer({
-			log: isDev,
-			checkOrigin: origins,
-			warningTimeout: 10000,
-			resizedCallback: function (e) {
-				e.iframe.parentNode.classList.remove("iframe-wrapper--loading")
-			}
-		}, "#" + iframeID)
-	}, [])
 
 	return (
 		<Layout {...layoutAttr}>
 			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
 				<div>{ReactHtmlParser(page.content)}</div>
-				{form ? iframe : ""}
+				{formSrc && <Iframe {...iframeAttr} />}
 			</ProtectedContent>
 		</Layout>
 	)
