@@ -10,7 +10,9 @@ const getDateFormat = (dateObj) => {
 	return monthNames[dateObj.getMonth()] + " " + dateObj.getDate() + ", " + dateObj.getFullYear()
 }
 
+// Adding "T" between date and time makes it work in Safari.
 const getDate = (dateStr) => {
+	dateStr = dateStr.trim().replace(/\s/,"T")
 	return getDateFormat(new Date(dateStr))
 }
 
