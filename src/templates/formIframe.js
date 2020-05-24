@@ -1,10 +1,10 @@
 import React from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
+import Iframe from "@wpcampus/wpcampus-iframe"
 import ReactHtmlParser from "react-html-parser"
 
 import Layout from "../components/layout"
-import Iframe from "../components/iframe"
 import ProtectedContent from "../components/content"
 
 const isDev = "development" === process.env.NODE_ENV
@@ -22,10 +22,14 @@ const PageTemplate = props => {
 	}
 
 	const forms = pageContext.forms || []
-	const formSrc = forms.length ? forms[0] : null
+	const form = forms.length ? forms[0] : null
+	
+	const formTitle = `${form.title} form` || ""
+	const formSrc = form.permalink || ""
 
 	const iframeAttr = {
 		src: formSrc,
+		title: formTitle,
 		origins: [pageContext.formOrigin],
 		resizeLog: isDev
 	}

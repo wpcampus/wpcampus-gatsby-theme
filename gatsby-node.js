@@ -71,11 +71,19 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			interfaces: ["Node"],
 		}),
 		schema.buildObjectType({
+			name: "wpcForm",
+			fields: {
+				title: "String",
+				permalink: "String"
+			},
+			interfaces: ["Node"],
+		}),
+		schema.buildObjectType({
 			name: "wpcGatsby",
 			fields: {
 				disable: "Boolean",
 				template: "String",
-				forms: "[String]"
+				forms: "[wpcForm]"
 			},
 			interfaces: ["Node"],
 		}),
@@ -728,7 +736,10 @@ exports.createPages = async ({ graphql, actions }) => {
 						wpc_gatsby {
 							disable
 							template
-							forms
+							forms {
+								title
+								permalink
+							}
 						}
 					}
 				}
