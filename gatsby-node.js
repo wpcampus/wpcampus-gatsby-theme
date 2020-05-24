@@ -224,6 +224,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 }*/
 
 const contributorNodeType = "wordpress__wpc_contributors"
+const jobNodeType = "wordpress__wpc_job"
 const libraryNodeType = "wordpress__wpc_library"
 
 /**
@@ -302,6 +303,66 @@ const createContributorNodes = async ({ contributors, createNode, createNodeId, 
 
 createContributorNodes.propTypes = {
 	contributors: PropTypes.array.isRequired,
+	createNode: PropTypes.func.isRequired,
+	createNodeId: PropTypes.func.isRequired,
+	createContentDigest: PropTypes.func.isRequired
+}
+
+const fetchJobs = async () => {
+
+	const jobs = await fetchContent(`${process.env.WPC_API}/wpcampus/jobs`)
+
+	// Logging progress.
+	console.log(chalk.green(" -> WPCampus jobs fetched: " + jobs.length))
+
+	return jobs
+}
+
+const createJobNodes = async ({ jobs, contributorNodes, createNode, createNodeId, createContentDigest }) => {
+	if (!jobs.length) {
+		return
+	}
+
+	// Create job nodes.
+	jobs.forEach(node => {
+
+		const jobNode = node
+
+		// Store ID for usage in logic and then delete/replace with node ID.
+		const thisNodeID = node.ID
+		delete node.ID
+
+		// Change key for WordPress id. 
+		jobNode.wordpress_id = parseInt(thisNodeID)
+
+		// Add GraphQL ID
+		jobNode.id = createNodeId(`wpc-job-${thisNodeID}`)
+
+		// Find the user.
+		const user = contributorNodes.find(u => u.wordpress_id === node.author)
+
+		if (user) {
+			jobNode.author___NODE = [user.id]
+		} else {
+			jobNode.author___NODE = []
+		}
+
+		createNode({
+			...jobNode,
+			parent: null,
+			children: [],
+			internal:
+			{
+				type: jobNodeType,
+				contentDigest: createContentDigest(jobNode)
+			}
+		})
+	})
+}
+
+createJobNodes.propTypes = {
+	jobs: PropTypes.array.isRequired,
+	contributorNodes: PropTypes.object.isRequired,
 	createNode: PropTypes.func.isRequired,
 	createNodeId: PropTypes.func.isRequired,
 	createContentDigest: PropTypes.func.isRequired
@@ -399,6 +460,10 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 	// Fetch and process library content.
 	const items = await fetchSessions()
 	createLibraryNodes({ items, libraryType: "session", contributorNodes, createNode, createNodeId, createContentDigest })
+
+	// Fetch and process jobs.
+	const jobs = await fetchJobs()
+	createJobNodes({ jobs, contributorNodes, createNode, createNodeId, createContentDigest })
 
 	// Add some spacing to our logs.
 	console.log("")
@@ -738,6 +803,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 	const formTemplate = path.resolve("./src/templates/formIframe.js")
 	const pageTemplate = path.resolve("./src/templates/page.js")
+	const jobsTemplate = path.resolve("./src/templates/jobs.js")
 	const libraryTemplate = path.resolve("./src/templates/library.js")
 	const indexTemplate = path.resolve("./src/templates/index.js")
 
@@ -758,6 +824,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
 		if ("library" === edge.node.wpc_gatsby.template) {
 			template = libraryTemplate
+		} else if ("jobs" === edge.node.wpc_gatsby.template) {
+			template = jobsTemplate
 		} else if ("home" === edge.node.wpc_gatsby.template) {
 			template = indexTemplate
 		} else if ("form" == edge.node.wpc_gatsby.template) {
@@ -1062,6 +1130,52 @@ exports.createPages = async ({ graphql, actions }) => {
 								path: "/about/",
 								text: "About"
 							}
+						}
+					}
+				},
+			},
+		})
+	})
+
+	/*
+	 * Build job posts from WordPress "job" post type.
+	 */
+	const jobs = await graphql(`
+		query {
+			allWordpressWpcJob(
+				filter: {
+					status: { eq: "publish" }
+				}
+			) {
+				edges {
+					node {
+						id
+						path
+						title
+					}
+				}
+			}
+		}
+	`)
+
+	const jobTemplate = path.resolve("./src/templates/job.js")
+
+	jobs.data.allWordpressWpcJob.edges.forEach(edge => {
+
+		createPage({
+			path: edge.node.path,
+			component: slash(jobTemplate),
+			context: {
+				id: edge.node.id,
+				crumbs: {
+					crumb: {
+						path: edge.node.path,
+						text: edge.node.title,
+					},
+					parent_element: {
+						crumb: {
+							path: "/jobs/",
+							text: "Job Board"
 						}
 					}
 				},
