@@ -392,8 +392,13 @@
 			"status": 301
 		},
 		{
+			"source": "/registration/",
+			"destination": "/community/membership/",
+			"status": 301
+		},
+		{
 			"source": "/user-registration/",
-			"destination": "/registration/",
+			"destination": "/community/membership/",
 			"status": 301
 		},
 		{
