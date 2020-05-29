@@ -276,9 +276,9 @@ button {
 }
 
 .wpc-button {
+	display: inline-block;
 	background-color: #ecf2fa;
 	border: 1px solid #dce6f5;
-	border-radius: var(--button-border-radius);
 	padding: 0.5rem 1rem;
 	font-size: inherit;
 	color: inherit;
@@ -296,11 +296,30 @@ button {
 		border: 0;
 	}
 
+	&--larger {
+		font-size: 1.2em;
+		padding: 1rem 1.25rem;
+	}
+
 	&:hover,
 	&:focus {
 		background-color: var(--wpc-blue-dark);
 		border-color: var(--wpc-blue-dark);
 		color: #fff;
+	}
+}
+
+.wpc-callout {
+	background: #f2f2f2;
+	border-style: solid;
+	border-width: 0;
+	border-color: #d8d8d8;
+	margin: 1rem 0 2rem;
+	padding: 1.25rem;
+	color: #333;
+
+	&--center {
+		text-align: center;
 	}
 }
 
