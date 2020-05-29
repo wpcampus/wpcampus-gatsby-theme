@@ -84,6 +84,11 @@
 			"status": 301
 		},
 		{
+			"source": "/blog/2019/07/pantheon-2/",
+			"destination": "/blog/2019/07/meet-monarx-wpcampus-sponsor/",
+			"status": 301
+		},
+		{
 			"source": "/2018/",
 			"destination": "/blog/2018/",
 			"prefix": true,
