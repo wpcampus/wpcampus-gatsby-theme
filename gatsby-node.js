@@ -749,6 +749,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 	const formTemplate = path.resolve("./src/templates/formIframe.js")
 	const pageTemplate = path.resolve("./src/templates/page.js")
+	const auditTemplate = path.resolve("./src/templates/audit.js")
 	const libraryTemplate = path.resolve("./src/templates/library.js")
 	const indexTemplate = path.resolve("./src/templates/index.js")
 
@@ -769,6 +770,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
 		if ("library" === edge.node.wpc_gatsby.template) {
 			template = libraryTemplate
+		} else if ("audit" === edge.node.wpc_gatsby.template) {
+			template = auditTemplate
 		} else if ("home" === edge.node.wpc_gatsby.template) {
 			template = indexTemplate
 		} else if ("form" == edge.node.wpc_gatsby.template) {
