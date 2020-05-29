@@ -291,6 +291,10 @@ button {
 		color: #fff;
 	}
 
+	&--expand {
+		display: block;
+	}
+
 	&--plain {
 		background: transparent;
 		border: 0;
