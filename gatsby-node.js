@@ -71,11 +71,19 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			interfaces: ["Node"],
 		}),
 		schema.buildObjectType({
+			name: "wpcForm",
+			fields: {
+				title: "String",
+				permalink: "String"
+			},
+			interfaces: ["Node"],
+		}),
+		schema.buildObjectType({
 			name: "wpcGatsby",
 			fields: {
 				disable: "Boolean",
 				template: "String",
-				forms: "[String]"
+				forms: "[wpcForm]"
 			},
 			interfaces: ["Node"],
 		}),
@@ -237,9 +245,8 @@ const basicAuth = (username, password) => {
 	return "Basic " + btoa(username + ":" + password)
 }
 
-const fetchContributors = async () => {
+const fetchContent = (url) => {
 
-	// Build request.
 	let options = {
 		method: "get",
 		headers: {
@@ -247,9 +254,7 @@ const fetchContributors = async () => {
 		}
 	}
 
-	const url = `${process.env.WPC_API}/wpcampus/contributors`
-
-	const contributors = await fetch(url, options)
+	return fetch(url, options)
 		.then((response) => {
 			return response.json()
 		})
@@ -257,6 +262,11 @@ const fetchContributors = async () => {
 			// @TODO throw error
 			return []
 		})
+}
+
+const fetchContributors = async () => {
+
+	const contributors = await fetchContent(`${process.env.WPC_API}/wpcampus/contributors`)
 
 	// Logging progress.
 	console.log(chalk.green(" -> WPCampus contributors fetched: " + contributors.length))
@@ -307,24 +317,7 @@ createContributorNodes.propTypes = {
 
 const fetchSessions = async () => {
 
-	// Build request.
-	let options = {
-		method: "get",
-		headers: {
-			Authorization: basicAuth(process.env.WPC_JWT_USER, process.env.WPC_JWT_PASSWORD)
-		}
-	}
-
-	const url = `${process.env.WPC_API}/wpcampus/data/public/sessions`
-
-	const sessions = await fetch(url, options)
-		.then((response) => {
-			return response.json()
-		})
-		.catch(() => {
-			// @TODO throw error
-			return []
-		})
+	const sessions = await fetchContent(`${process.env.WPC_API}/wpcampus/data/public/sessions`)
 
 	// Logging progress.
 	console.log(chalk.green(" -> WPCampus sessions fetched: " + sessions.length))
@@ -743,7 +736,10 @@ exports.createPages = async ({ graphql, actions }) => {
 						wpc_gatsby {
 							disable
 							template
-							forms
+							forms {
+								title
+								permalink
+							}
 						}
 					}
 				}
@@ -753,6 +749,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 	const formTemplate = path.resolve("./src/templates/formIframe.js")
 	const pageTemplate = path.resolve("./src/templates/page.js")
+	const auditTemplate = path.resolve("./src/templates/audit.js")
 	const libraryTemplate = path.resolve("./src/templates/library.js")
 	const indexTemplate = path.resolve("./src/templates/index.js")
 
@@ -773,6 +770,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
 		if ("library" === edge.node.wpc_gatsby.template) {
 			template = libraryTemplate
+		} else if ("audit" === edge.node.wpc_gatsby.template) {
+			template = auditTemplate
 		} else if ("home" === edge.node.wpc_gatsby.template) {
 			template = indexTemplate
 		} else if ("form" == edge.node.wpc_gatsby.template) {
@@ -795,7 +794,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 		if (forms) {
 			pageContext.forms = forms
-			pageContext.formOrigin = `https://${process.env.WPC_WORDPRESS}`
+			pageContext.formOrigin = `https://${process.env.GATSBY_WPC_WORDPRESS}`
 		}
 
 		createPage({

@@ -22,6 +22,11 @@
 			"status": 301
 		},
 		{
+			"source": "/community/sme/",
+			"destination": "/community/directory/",
+			"status": 301
+		},
+		{
 			"source": "/2020/",
 			"destination": "/blog/2020/",
 			"prefix": true,
@@ -76,6 +81,11 @@
 		{
 			"source": "/blog/2018/11/fundraising-for-wpcampus-gutenberg-accessibility-audit/",
 			"destination": "/learning/audit/",
+			"status": 301
+		},
+		{
+			"source": "/blog/2019/07/pantheon-2/",
+			"destination": "/blog/2019/07/meet-monarx-wpcampus-sponsor/",
 			"status": 301
 		},
 		{
@@ -307,12 +317,12 @@
 		},
 		{
 			"source": "/planning/diversity-inclusion/",
-			"destination": "/about/governance/committees/#diversity",
+			"destination": "/about/governance/committees/diversity-inclusion/",
 			"status": 301
 		},
 		{
 			"source": "/planning/community/",
-			"destination": "/about/governance/working/#community",
+			"destination": "/about/governance/working/community/",
 			"status": 301
 		},
 		{
@@ -387,8 +397,13 @@
 			"status": 301
 		},
 		{
+			"source": "/registration/",
+			"destination": "/community/membership/",
+			"status": 301
+		},
+		{
 			"source": "/user-registration/",
-			"destination": "/registration/",
+			"destination": "/community/membership/",
 			"status": 301
 		},
 		{

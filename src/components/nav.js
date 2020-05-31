@@ -7,20 +7,49 @@ const NavPrimaryItems = [
 		path: "/about/",
 		text: "About",
 		children: [
-			{ path: "/about/contributors/", text: "Contributors" },
-			{ path: "/about/partners/", text: "Partners" },
-			{ path: "/about/mascots/", text: "Mascots" },
+			{
+				path: "/about/contributors/",
+				text: "Contributors"
+			},
+			{
+				path: "/about/partners/",
+				text: "Partners"
+			},
+			{
+				path: "/about/mascots/",
+				text: "Mascots"
+			},
 			{
 				path: "/about/governance/",
 				text: "Governance",
 				children: [
 					{
 						path: "/about/governance/committees/",
-						text: "Committees"
+						text: "Committees",
+						children: [
+							{
+								path: "/about/governance/committees/diversity-inclusion/",
+								text: "Diversity and Inclusion"
+							},
+						],
 					},
 					{
 						path: "/about/governance/working/",
-						text: "Working Groups"
+						text: "Working Groups",
+						children: [
+							{
+								path: "/about/governance/working/community/",
+								text: "Community planning",
+							},
+							{
+								path: "/about/governance/working/governance/",
+								text: "Governance",
+							},
+							{
+								path: "/about/governance/working/website/",
+								text: "Our website",
+							},
+						],
 					}
 				]
 			},
@@ -38,8 +67,14 @@ const NavPrimaryItems = [
 					}
 				]
 			},
-			{ path: "/about/newsletter/", text: "Our newsletter" },
-			{ path: "/about/contact/", text: "Contact us" },
+			{
+				path: "/about/newsletter/",
+				text: "Our newsletter"
+			},
+			{
+				path: "/about/contact/",
+				text: "Contact us"
+			},
 		]
 	},
 	{
@@ -60,7 +95,7 @@ const NavPrimaryItems = [
 				path: "/community/membership/",
 				text: "Become a member"
 			},
-			/*{
+			{
 				path: "/community/slack/",
 				text: "Slack",
 				children: [
@@ -69,11 +104,15 @@ const NavPrimaryItems = [
 						text: "Slack channels",
 					}
 				]
-			},*/
-			/*{
-				path: "/community/sme/",
-				text: "Subject Matter Experts"
-			},*/
+			},
+			{
+				path: "/community/directory/",
+				text: "Directory"
+			},
+			{
+				path: "/about/governance/",
+				text: "Governance"
+			},
 			{
 				path: "/about/guidelines/",
 				text: "Community guidelines"
@@ -147,10 +186,21 @@ const NavPrimaryItems = [
 			{
 				path: "/learning/speaking/",
 				text: "Speaker training"
+			},
+			{
+				path: "/community/directory/",
+				text: "Directory"
+			},
+			{
+				path: "/community/slack/",
+				text: "Slack",
 			}
 		]
 	},
-	{ path: "/jobs/", text: "Job Board" },
+	{
+		path: "/jobs/",
+		text: "Job Board"
+	},
 	{
 		path: "/podcast/",
 		text: "Podcast",
@@ -161,7 +211,10 @@ const NavPrimaryItems = [
 			}
 		]
 	},
-	{ href: "https://shop.wpcampus.org/", text: "Shop" }
+	{
+		href: "https://shop.wpcampus.org/",
+		text: "Shop"
+	}
 ]
 
 const NavAnchor = ({ item, attrs }) => {
