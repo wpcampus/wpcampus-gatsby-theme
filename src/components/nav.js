@@ -365,13 +365,19 @@ const NavList = ({ isSubmenu, list }) => {
 	return (
 		<ul className={isSubmenu ? "wpc-nav__sub" : ""}>
 			{
-				list.map((item, i) => (
-					<NavListItem
-						key={i}
-						item={item}
-						id={`item-${item.text.toLowerCase().replace(" ", "-")}`}
-					/>
-				))
+				list.map((item, i) => {
+					const id = item.text === "string" ?
+						`item-${item.text.toLowerCase().replace(" ", "-")}` :
+						""
+					return (
+						<NavListItem
+							key={i}
+							item={item}
+							id={id}
+						/>
+					)
+				}
+				)
 			}
 		</ul>
 	)
@@ -417,4 +423,4 @@ Nav.propTypes = {
 	children: PropTypes.object,
 }
 
-export { Nav, NavPrimaryItems }
+export { Nav, NavAnchor, NavPrimaryItems }
