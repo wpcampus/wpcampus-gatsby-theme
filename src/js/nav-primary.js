@@ -71,74 +71,6 @@
 	}
 
 	/**
-     * Returns the `button` element to use for toggling the display of submenus.
-     * @private
-     */
-	const getSubmenuToggle = () => {
-		const toggleButton = document.createElement("button")
-
-		toggleButton.classList.add("submenu-toggle", "js-submenu-toggle")
-
-		// Revisit for translation and internationalization.
-		toggleButton.setAttribute("aria-label", "Toggle child menu")
-
-		toggleButton.setAttribute("aria-expanded", "false")
-
-		return toggleButton
-	}
-
-	/**
-     * Adds `button` elements for toggling the display of submenus.
-     * @private
-     */
-	// const addSubmenuToggles = () => {
-	// 	const menu = settings.nav.querySelector("ul")
-
-	// 	// Get the submenus.
-	// 	const submenus = menu.querySelectorAll("ul")
-
-	// 	// Return early if there are no submenus.
-	// 	if (!submenus.length) return
-
-	// 	// Create the toggle button.
-	// 	const toggleButton = getSubmenuToggle()
-
-	// 	// Add a toggle button for each submenu.
-	// 	submenus.forEach(submenu => {
-	// 		if (submenu.parentNode.querySelector(".js-submenu-toggle")) return
-
-	// 		// Get parent link.
-	// 		const submenuParentLink = submenu.previousSibling
-
-	// 		// Create a span wrapper.
-	// 		const toggleSpan = document.createElement("span")
-	// 		toggleSpan.classList.add("nav-link--toggle")
-	// 		toggleSpan.appendChild(submenuParentLink)
-
-	// 		// Create a toggle button for the submenu.
-	// 		const thisToggleButton = toggleButton.cloneNode(true)
-
-	// 		// Add the toggle button to the span.
-	// 		toggleSpan.appendChild(thisToggleButton)
-
-	// 		// Add the span before the submenu.
-	// 		submenu.parentNode.insertBefore(toggleSpan, submenu)
-
-	// 		// If a parent menu is active, toggle the submenu.
-	// 		if (submenuParentLink.classList.contains("nav-link--current")) {
-	// 			toggleSubmenu(thisToggleButton, true)
-	// 		} else if (submenuParentLink.classList.contains("nav-link--current-parent")) {
-
-	// 			// If a submenu parent is a current parent, let the <li> know and toggle the submenu.
-	// 			submenuParentLink.parentNode.parentNode.classList.add("nav-listitem--current-parent")
-	// 			toggleSubmenu(thisToggleButton, true)
-	// 		}
-	// 	})
-
-	// 	menu.classList.add("has-submenu-toggle", "js-has-submenu-toggle")
-	// }
-
-	/**
 	 * Returns first focusable element in the container.
 	 *
 	 * @param {Object} container
@@ -213,20 +145,20 @@
      * @param {Event}  event    The click event target.
      * @param {Boolean} expand True if we're expanding.
      */
-	// const toggleMenu = (target, expanded) => {
-	// 	const label =
-	// 		"Open menu" === target.getAttribute("aria-label")
-	// 			? "Close menu"
-	// 			: "Open menu"
+	const toggleMenu = (target, expanded) => {
+		const label =
+			"Open menu" === target.getAttribute("aria-label")
+				? "Close menu"
+				: "Open menu"
 
-	// 	target.setAttribute("aria-expanded", expanded)
+		target.setAttribute("aria-expanded", expanded)
 
-	// 	target.setAttribute("aria-label", label)
+		target.setAttribute("aria-label", label)
 
-	// 	document.body.classList.toggle("menu-toggled-open")
+		document.body.classList.toggle("menu-toggled-open")
 
-	// 	settings.nav.classList.toggle("toggled-open")
-	// }
+		settings.nav.classList.toggle("toggled-open")
+	}
 
 	/**
      * Toggles classes and attributes used for handling the display of submenus.
@@ -234,41 +166,29 @@
      * @param {Event}  target   The click event target.
      * @param {Boolean} expand True if we're expanding.
      */
-	// const toggleSubmenu = (target, expanded) => {
-	// 	const label =
-	// 		"Open child menu" === target.getAttribute("aria-label")
-	// 			? "Close child menu"
-	// 			: "Open child menu"
-
-	// 	target.setAttribute("aria-expanded", expanded)
-
-	// 	target.setAttribute("aria-label", label)
-
-	// 	target.parentNode.parentNode.classList.toggle("toggled-open")
-
-	// 	resizeHandler()
-
-	// 	positionNav()
-	// }
+	const toggleSubmenu = () => {
+		resizeHandler()
+		positionNav()
+	}
 
 	/**
      * Handles click events on the navigation element.
      * @private
      * @param {Event} event The click event.
      */
-	// const clickHandler = event => {
-	// 	const target = event.target
-	// 	const expanded =
-	// 		"false" === target.getAttribute("aria-expanded") ? "true" : "false"
+	const clickHandler = event => {
+		const target = event.target
+		const expanded =
+			"false" === target.getAttribute("aria-expanded") ? "true" : "false"
 
-	// 	if (target.classList.contains("js-menu-toggle")) {
-	// 		toggleMenu(target, expanded)
-	// 	}
+		if (target.classList.contains("js-menu-toggle")) {
+			toggleMenu(target, expanded)
+		}
 
-	// 	if (target.classList.contains("js-submenu-toggle")) {
-	// 		toggleSubmenu(target, expanded)
-	// 	}
-	// }
+		if (target.classList.contains("js-submenu-toggle")) {
+			toggleSubmenu(target, expanded)
+		}
+	}
 
 	/**
      * Ensures that the appropriate attributes and classes are in place
@@ -294,7 +214,7 @@
 			}
 
 			// Set `min-height` values for both the `main` and `nav` elements if appropriate.
-			/*if ("vertical" === settings.orientation && settings.minHeights) {
+			if ("vertical" === settings.orientation && settings.minHeights) {
 				const navHeight = settings.nav.querySelector("ul").scrollHeight
 				const windowHeight = window.innerHeight
 				const minHeight =
@@ -302,7 +222,7 @@
 
 				settings.main.style.minHeight = minHeight
 				settings.nav.style.minHeight = minHeight
-			}*/
+			}
 		}
 	}
 
@@ -388,12 +308,12 @@
 		if (!settings) return
 
 		// Remove event listeners.
-		// settings.nav.removeEventListener("click", clickHandler, false)
+		settings.nav.removeEventListener("click", clickHandler, false)
 
-		/*if ("vertical" === settings.orientation) {
+		if ("vertical" === settings.orientation) {
 			window.addEventListener("resize", resizeHandler, true)
 			window.removeEventListener("scroll", scrollHandler, true)
-		}*/
+		}
 
 		// Reset variables.
 		settings = null
@@ -423,24 +343,22 @@
 
 		updateMenuToggle()
 
-		// addSubmenuToggles()
-
-		//resizeHandler()
+		resizeHandler()
 
 		// Listen for click events on the navigation element.
-		// settings.nav.addEventListener("click", clickHandler, false)
+		settings.nav.addEventListener("click", clickHandler, false)
 
 		// Listen for resize events.
-		//window.addEventListener("resize", resizeHandler, true)
+		window.addEventListener("resize", resizeHandler, true)
 
-		/*if ("vertical" === settings.orientation) {
+		if ("vertical" === settings.orientation) {
 			window.addEventListener("scroll", scrollHandler, true)
 		}
 
 		if ("horizontal" === settings.orientation) {
 			settings.nav.addEventListener("focus", focusHandler, true)
 			settings.nav.addEventListener("blur", focusHandler, true)
-		}*/
+		}
 	}
 
 	return navigation
