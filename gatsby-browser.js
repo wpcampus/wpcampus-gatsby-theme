@@ -19,5 +19,5 @@ import "./src/css/sidebar.css"
 import "./src/css/conduct.css"
 import "./src/css/footer.css"
 
-import SessionProvider from "./src/utils/provider"
+import { SessionProvider } from "@wpcampus/wpcampus-auth"
 export const wrapRootElement = SessionProvider

@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { navigate } from "gatsby"
 
-import { getAuthRedirect, handleLogout, handleLogin } from "../utils/auth"
+import { getAuthRedirect, handleLogout, handleLogin } from "@wpcampus/wpcampus-auth"
 import LoadingLayout from "../components/loadingLayout"
 import { isBrowser } from "../utils/utilities"
 

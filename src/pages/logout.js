@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { navigate } from "gatsby"
 import { isBrowser } from "../utils/utilities"
 
-import { getAccessCookie, setAuthRedirect, handleLogout, logout } from "../utils/auth"
+import { getAccessCookie, setAuthRedirect, handleLogout, logout } from "@wpcampus/wpcampus-auth"
 import LoadingLayout from "../components/loadingLayout"
 
 const Logout = ({ location }) => {
