@@ -1,17 +1,21 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Link } from "gatsby"
+import { navigate, Link } from "gatsby"
 import { Router } from "@reach/router"
-import { login, LogoutButton, isAuthenticated, getUser } from "../utils/auth"
+import { connect } from "react-redux"
+import { LogoutLink } from "../utils/auth"
 
 import Layout from "../components/layout"
 import LoadingLayout from "../components/loadingLayout"
 import { AuthorCard } from "../components/author"
-
-//import slackLogo from "../svg/slack_logo.svg"
-//import slackAvatarDefault from "../images/slack_avatar_default.png"
+import { SlackIdentity } from "../components/slack"
+import { isBrowser } from "../utils/utilities"
 
 import "./../css/profile.css"
+
+const mapStateToProps = ({ user, isLoading }) => {
+	return { user, isLoading }
+}
 
 const ProfileTableRow = ({ th, td }) => {
 	return <tr>
@@ -90,73 +94,119 @@ ProfessionalInfo.propTypes = {
 	user: PropTypes.object.isRequired
 }
 
-/*const SlackIdentity = ({ user }) => {
+const AdminLink = ({ user }) => {
+	if (user.hasCap("is_admin")) {
 
-	const slack = user.getSlack()
-	const slackUser = slack.user && slack.user.id ? slack.user : false
-	const slackLoggedIn = false !== slackUser
+		const linkAttr = {
+			href: `${process.env.GATSBY_WP_ADMIN}/`,
+			className: "wpc-button wpc-button--secondary",
+			"aria-label": "WordPress Admin dashboard",
+			"title": "WordPress Admin dashboard",
+		}
 
-	let avatar, avatar_alt
-	if (slackLoggedIn && slackUser.image_512) {
-		avatar = slackUser.image_512
-		avatar_alt = "Your Slack avatar"
-	} else {
-		avatar = slackAvatarDefault
-		avatar_alt = ""
+		return <a {...linkAttr}>Go to admin</a>
 	}
+	return null
+}
 
-	let loggedInAs
-	if (slackLoggedIn) {
-		if (slackUser.real_name_normalized && slackUser.name) {
-			loggedInAs = <p>You are logged in as <strong>{slackUser.real_name_normalized} ({slackUser.name})</strong></p>
-		} else if (slackUser.real_name_normalized) {
-			loggedInAs = <p>You are logged in as <strong>{slackUser.real_name_normalized}</strong>.</p>
-		} else if (slackUser.name) {
-			loggedInAs = <p>You are logged in as <strong>{slackUser.name}</strong>.</p>
+AdminLink.propTypes = {
+	user: PropTypes.object.isRequired
+}
+
+const EditProfileLink = ({ user }) => {
+	if (user.hasCap("read")) {
+
+		const linkAttr = {
+			href: `${process.env.GATSBY_WP_ADMIN}/profile.php`,
+			className: "wpc-button wpc-button--secondary",
+			"aria-label": "Edit your WordPress user profile",
+			"title": "Edit your WordPress user profile",
+		}
+
+		return <a {...linkAttr}>Edit profile</a>
+	}
+	return null
+}
+
+EditProfileLink.propTypes = {
+	user: PropTypes.object.isRequired
+}
+
+const AccountButtons = ({ user, classes }) => {
+
+	const buttons = []
+
+	const adminLink = <AdminLink user={user} />
+	if (adminLink) {
+		buttons.push(adminLink)
+	} else {
+
+		const editProfile = <EditProfileLink user={user} />
+		if (editProfile) {
+			buttons.push(editProfile)
 		}
 	}
 
-	const slackAuthURL = "https://slack.com/oauth/authorize?scope=identity.basic,identity.email,identity.team,identity.avatar&client_id=8624516180.919984917699&redirect_uri=https://wpcampus.org/slack/auth&state=loginWPCampusSlack&team=T08JCF65A"
-
-	const login = <div className="wpc-slack-identity__login">
-		<span>Connect your Slack account:</span>
-		<a href={slackAuthURL} className="wpc-slack-identity__login__button">
-			<img className="wpc-slack-identity__login__button_img" src="https://api.slack.com/img/sign_in_with_slack.png" alt="Connect your Slack account" />
-		</a>
-	</div>
-
-	const logout = <div className="wpc-slack-identity__logout">
-		<button className="wpc-slack-identity__logout__button" onClick={user.logoutSlack}>Remove Slack</button>
-	</div>
-
-	const slackAttr = {
-		className: "wpc-slack-identity"
+	const logoutLink = <LogoutLink redirectPath="/" isPrimary={true} />
+	if (logoutLink) {
+		buttons.push(logoutLink)
 	}
 
-	if (slackLoggedIn) {
-		slackAttr.className += " wpc-slack-identity--loggedin"
+	if (!buttons.length) {
+		return null
 	}
 
-	return <div {...slackAttr}>
-		<div className="wpc-slack-identity__avatar">
-			<img className="wpc-slack-identity__avatar__img" src={avatar} alt={avatar_alt} />
-		</div>
-		<div className="wpc-slack-identity__info">
-			<div className="wpc-slack-identity__logo">
-				<img className="wpc-slack-identity__logo__img" src={slackLogo} alt="Slack logo" />
-			</div>
-			<div className="wpc-slack-identity__user">
-				<div className="wpc-slack-identity__user__name">{loggedInAs}</div>
-				{slackUser.title ? <div className="wpc-slack-identity__user__bio">{slackUser.title}</div> : null}
-			</div>
-			{slackLoggedIn ? logout : login}
-		</div>
-	</div>
+	const navAttr = {}
+	if (classes) {
+		navAttr.className = classes
+	}
+
+	return <nav {...navAttr}>
+		<ul>
+			{buttons.map((item, i) => (
+				<li key={i}>
+					{item}
+				</li>
+			))}
+		</ul>
+	</nav>
 }
 
-SlackIdentity.propTypes = {
-	user: PropTypes.object.isRequired
-}*/
+AccountButtons.propTypes = {
+	user: PropTypes.object.isRequired,
+	classes: PropTypes.string
+}
+
+const AccountMessages = () => {
+
+	const messages = []
+
+	// Build any messages for the user.
+	if (isBrowser) {
+		const search = window.location.search
+
+		if (search.search("slackDisconnected=1") >= 0) {
+			messages.push("You have disconnected your account with Slack.")
+		} else if (search.search("slackConnected=1") >= 0) {
+			messages.push("You have connected your account with Slack!")
+		} else if (search.search("slackError=1") >= 0) {
+			messages.push("There was a problem talking to Slack. Please try again.")
+		}
+	}
+
+	if (!messages.length) {
+		return null
+	}
+
+	// @TODO add ability to dismiss message.
+	return <div className="wpc-profile__messages">
+		<ul>
+			{messages.map((message, i) => {
+				return <li className="wpc-profile__message" key={i}>{message}</li>
+			})}
+		</ul>
+	</div>
+}
 
 const Home = ({ user }) => {
 
@@ -179,10 +229,6 @@ const Home = ({ user }) => {
 		welcome = "Hi!"
 	}
 
-	/*<h2>Your Slack information</h2>
-		<p>The majority of WPCampus conversations and interactions take place in <Link to="/community/slack/" aria-label="WPCampus Slack account">our Slack account</Link>.</p>
-		<SlackIdentity user={user} />*/
-
 	const authorCardAttr = {
 		path: user.getUsername(),
 		display_name: displayName,
@@ -193,11 +239,18 @@ const Home = ({ user }) => {
 		company_position: company_position
 	}
 
+	// @TODO add edit profile form.
 	return <div {...profileAttr}>
-		<p>{welcome}</p>
-		<LogoutButton redirectPath="/" />
+		<div className="wpc-profile__header">
+			<p className="wpc-profile__header__welcome">{welcome}</p>
+			<AccountButtons classes="wpc-profile__header__buttons" user={user} />
+		</div>
+		<AccountMessages />
 		<h2>Your personal information</h2>
 		<PersonalInfo user={user} />
+		<h2>Your Slack information</h2>
+		<p>The majority of WPCampus conversations and interactions take place in <Link to="/community/slack/" aria-label="WPCampus Slack account">our Slack account</Link>.</p>
+		<SlackIdentity user={user} />
 		<h2>Your contact information</h2>
 		<ContactInfo user={user} />
 		<h2>Your professional information</h2>
@@ -211,32 +264,41 @@ Home.propTypes = {
 	user: PropTypes.object
 }
 
-const Account = () => {
-	if (!isAuthenticated()) {
+const Account = ({ user, isLoading }) => {
+	if (!isBrowser) {
+		return <LoadingLayout />
+	}
 
-		// Initiate login process.
-		login()
+	// Silent auth is running.
+	if (isLoading) {
+		return <LoadingLayout />
+	}
 
-		const layoutAttr = {
-			pageTitle: "Redirecting to login",
-			message: "Redirecting to login"
-		}
+	if (!user.isLoggedIn()) {
 
-		return <LoadingLayout {...layoutAttr} />
+		navigate(
+			"/login/",
+			{
+				state: { prevPath: "/account/" },
+			}
+		)
+
+		return <LoadingLayout />
 	}
 
 	// Don't index or follow.
 	const metaRobots = ["nofollow", "noindex"]
 
-	const user = getUser()
+	//const prevPath = isBrowser ? window.location.pathname : "/"
+
+	/*<nav>
+		<ul>
+			<li><Link to="/account/" state={{ prevPath: prevPath }} rel="preload">Home</Link></li>
+		</ul>
+	</nav>*/
 
 	return (
 		<Layout heading="Your WPCampus profile" metaRobots={metaRobots}>
-			<nav>
-				<ul>
-					<li><Link to="/account/" rel="preload">Home</Link></li>
-				</ul>
-			</nav>
 			<Router>
 				<Home path="/account/" user={user} />
 			</Router>
@@ -244,4 +306,12 @@ const Account = () => {
 	)
 }
 
-export default Account
+Account.propTypes = {
+	user: PropTypes.object.isRequired,
+	isLoading: PropTypes.bool.isRequired,
+}
+
+// Connect this component to our provider.
+const ConnectedAccount = connect(mapStateToProps)(Account)
+
+export default ConnectedAccount

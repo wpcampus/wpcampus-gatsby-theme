@@ -8,6 +8,7 @@
 	--wpc-gray-light: #ebebeb;
 	--wpc-gray-lightest: #fafafa;
 	--wpc-orange: #8d5228; /* #a76739; */
+	--wpc-orange-light: rgba(141, 82, 40, 0.1);
 	--wpc-yellow-light: rgba(241, 226, 175, 0.15);
 	--container-max-width: 80%;
 	--container-bp-nav: 960px;

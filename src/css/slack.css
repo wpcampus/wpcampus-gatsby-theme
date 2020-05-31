@@ -1,0 +1,203 @@
+
+img.wpc-slack__teamlogo {
+	max-width: 50%;
+	margin-top: 0;
+}
+
+.wpc-slack {
+	&__colors {
+		display: block;
+		padding: 1rem;
+		border: var(--area-border-gray-light);
+		font-size: 1.1rem;
+		line-height: 1.4;
+		word-wrap: break-word;
+
+		span {
+			display: inline-block;
+			word-wrap: break-word;
+		}
+	}
+
+	&__identity {
+		--slack-avatar-width: 220px;
+		--slack-teal: #1d8faa;
+
+		display: flex;
+		align-items: flex-start;
+		margin: 2rem 0 3rem;
+
+		&__avatar {
+			max-width: 125px;
+			margin: 0 2rem 0 0;
+
+			&__img {
+				display: block;
+				width: 100%;
+				height: auto;
+				margin: 0;
+			}
+		}
+
+		&__logo {
+			display: flex;
+			justify-items: flex-start;
+
+			&__img {
+				display: block;
+				max-height: 40px;
+				width: auto;
+				margin: 0;
+			}
+		}
+
+		&__user {
+			line-height: 1.8;
+			margin: 1.5rem 0 0;
+
+			/* p {
+				margin: 0 0 0.8rem 0;
+
+				&.wpc-slack__identity__error--auth {
+					font-weight: bold;
+					color: #900;
+				}
+			} */
+
+			&__name {
+				font-size: 120%;
+
+				p {
+					margin: 0;
+				}
+			}
+
+			&__bio {
+				font-style: italic;
+			}
+		}
+
+		&__login {
+			span {
+				display: block;
+				margin: 0 0 0.5rem;
+			}
+
+			&__button {
+				display: inline-block;
+				background: transparent;
+				padding: 2px;
+				border: 2px solid transparent;
+				border-radius: 10px;
+				margin: 0;
+
+				img {
+					display: block;
+				}
+
+				&:hover,
+				&:focus {
+					border-color: var(--slack-teal);
+				}
+			}
+		}
+
+		&__logout {
+			margin: 1.5rem 0 0;
+
+			&__button {
+				background: var(--slack-teal);
+				color: #fff;
+				font-size: 110%;
+				padding: 0.75rem 1rem;
+				border: 0;
+				border-radius: var(--button-border-radius);
+				margin: 0;
+
+				&:focus,
+				&:hover {
+					background: #0d657a;
+					color: #fff;
+				}
+			}
+		}
+
+		&--loggedin {
+			&__avatar {
+				max-width: 200px;
+			}
+		}
+	}
+
+	&__section,
+	&__channel {
+		margin: 2.5rem -2rem 0;
+		padding: 2rem;
+		border-top: var(--area-border-gray-light);
+
+		&--highlight {
+			background: rgba(29, 143, 170, 0.1);
+		}
+
+		/* Laptop */
+		@media (min-width: 920px) {
+			padding: 3rem;
+			margin-left: -3rem;
+			margin-right: -3rem;
+		}
+
+		& > *:first-child {
+			margin-top: 0;
+		}
+
+		& > *:last-child {
+			margin-bottom: 0;
+		}
+
+		& + .wpc-slack__section,
+		& + .wpc-slack__channel {
+			margin-top: 0;
+		}
+	}
+
+	&__channel {
+		&__name {
+			margin: 0 0 0.5rem;
+		}
+
+		table.wpc-slack__channel__info {
+			width: 100%;
+			text-align: left;
+			border: 0;
+			border-collapse: collapse;
+			border-spacing: 0;
+
+			th,
+			td {
+				padding: 0.25rem 0;
+				vertical-align: top;
+				line-height: 1.5;
+				border: 0;
+			}
+
+			th {
+				width: 5%;
+				padding-right: 0.5rem;
+				font-weight: bold;
+				text-align: right;
+			}
+		}
+
+		&--priority {
+			background: #fafafa;
+		}
+
+		&--general {
+			background: rgba(17, 89, 189, 0.05);
+
+			.wpc-slack__channel__name {
+				font-weight: bold;
+			}
+		}
+	}
+}
