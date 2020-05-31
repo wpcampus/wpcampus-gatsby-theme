@@ -300,9 +300,9 @@ NavItemLink.propTypes = {
 	item: PropTypes.object.isRequired
 }
 
-const NavListItem = ({ item, id }) => {
+const NavListItem = ({ item }) => {
 	const attrs = {
-		id,
+		// id,
 		className: "nav-listitem"
 	}
 
@@ -341,7 +341,7 @@ const NavListItem = ({ item, id }) => {
 					<>
 						<span className="nav-link--toggle">
 							<NavItemLink item={item} />
-							<NavToggle id={`button-${id}`} />
+							<NavToggle />
 						</span>
 						<NavList
 							list={item.children}
@@ -355,7 +355,7 @@ const NavListItem = ({ item, id }) => {
 }
 
 NavListItem.propTypes = {
-	id: PropTypes.string.isRequired,
+	// id: PropTypes.string.isRequired,
 	item: PropTypes.object.isRequired,
 	selectedItemId: PropTypes.string,
 	topLevelItemId: PropTypes.string
@@ -369,7 +369,6 @@ const NavList = ({ isSubmenu, list }) => {
 					<NavListItem
 						key={i}
 						item={item}
-						id={`item-${item.text.toLowerCase().replace(" ", "-")}`}
 					/>
 				))
 			}
@@ -417,4 +416,4 @@ Nav.propTypes = {
 	children: PropTypes.object,
 }
 
-export { Nav, NavPrimaryItems }
+export { Nav, NavAnchor, NavPrimaryItems }

@@ -186,7 +186,7 @@
 		}
 
 		if (target.classList.contains("js-submenu-toggle")) {
-			toggleSubmenu(target, expanded)
+			toggleSubmenu()
 		}
 	}
 
