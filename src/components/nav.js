@@ -233,7 +233,23 @@ NavAnchor.propTypes = {
 const NavLink = ({ item, attrs }) => {
 	if (item.text === "" || item.path === "") return
 
-	return (<Link to={item.path} {...attrs}>{item.text}</Link>)
+	return (
+		<Link 
+			to={item.path}
+			// manage the current classes based on gatsby-link getProps prop
+			getProps={({ isCurrent, isPartiallyCurrent }) => {
+				if (isCurrent || true === item.isCurrent) {
+					attrs.className += " nav-link--current"
+				} else if (isPartiallyCurrent) {
+					attrs.className += " nav-link--current-parent"
+				}
+				return attrs
+			}} 
+			{...attrs}
+		>
+			{item.text}
+		</Link>
+	)
 }
 
 NavLink.propTypes = {
