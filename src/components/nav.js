@@ -245,13 +245,27 @@ const NavToggle = ({ id }) => {
 
 	const [open, setOpen] = useState(false)
 
+	// this doesn't seem very "react-like" to me. but it's a start
+	const manageParent = (evt) => {
+
+		setOpen(!open)
+
+		const parentLi = evt.target.closest("li")
+		
+		if (parentLi === null) return
+
+		parentLi.classList.contains("toggled-open") ?
+			parentLi.classList.remove("toggled-open") :
+			parentLi.classList.add("toggled-open")
+	}
+
 	return (
 		<button
 			id={id}
 			className="submenu-toggle js-submenu-toggle"
 			aria-expanded={open ? "true" : "false"}
 			aria-label={`${open ? "Close" : "Open"} child menu`}
-			onClick={() => setOpen(!open)}
+			onClick={(evt) => manageParent(evt)}
 		></button>
 	)
 }
@@ -310,25 +324,6 @@ const NavListItem = ({ item }) => {
 		attrs.className = `${attrs.className} ${item.classes}`
 	}
 
-	useEffect(() => {
-		const clickHandler = (evt) => {
-
-			if (evt.target.localName !== "button") return
-
-			const parentLi = evt.target.closest("li")
-
-			parentLi.classList.contains("toggled-open") ?
-				parentLi.classList.remove("toggled-open") :
-				parentLi.classList.add("toggled-open")
-		}
-
-		document.addEventListener("click", clickHandler)
-
-		// remove the event handler when the component is destroyed
-		return () => document.removeEventListener("click", clickHandler)
-
-	}, [])
-
 	// select the elements to create based on if there are submenus
 	// if there are, make a new submenu with recursion
 	return (
@@ -365,12 +360,19 @@ const NavList = ({ isSubmenu, list }) => {
 	return (
 		<ul className={isSubmenu ? "wpc-nav__sub" : ""}>
 			{
-				list.map((item, i) => (
-					<NavListItem
-						key={i}
-						item={item}
-					/>
-				))
+				list.map((item, i) => {
+					const id = typeof item.text === "string" ?
+						`item-${item.text.toLowerCase().replace(" ", "-")}` :
+						""
+					return (
+						<NavListItem
+							key={i}
+							item={item}
+							id={id}
+						/>
+					)
+				}
+				)
 			}
 		</ul>
 	)
