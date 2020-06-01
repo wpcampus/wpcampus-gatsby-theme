@@ -262,7 +262,7 @@ const NavToggle = ({ id }) => {
 	return (
 		<button
 			id={id}
-			className="submenu-toggle js-submenu-toggle"
+			className="submenu-toggle"
 			aria-expanded={open ? "true" : "false"}
 			aria-label={`${open ? "Close" : "Open"} child menu`}
 			onClick={(evt) => manageParent(evt)}
@@ -277,10 +277,12 @@ NavToggle.propTypes = {
 
 const NavItemLink = ({ item }) => {
 
-	const linkAttr = {}
+	const linkAttr = {
+		className: "nav-link"
+	}
 
 	if (item.classes) {
-		linkAttr.className = item.classes
+		linkAttr.className = `${linkAttr.className} ${item.classes}`
 	}
 
 	if (item.title) {

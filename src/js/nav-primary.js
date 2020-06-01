@@ -57,12 +57,14 @@
 
 	/**
      * Updates the `button` element used for toggling the display of the menu.
+	 * @param {string} className the class of the button to find. This allows the "js-" version of the class to be applied when the page is loaded.
+	 * 
      * @private
      */
-	const updateMenuToggle = () => {
-		const menuToggle = settings.nav.querySelector(".menu-toggle")
+	const updateMenuToggle = (className) => {
+		const menuToggle = settings.nav.querySelector(`.${className}`)
 
-		menuToggle.classList.add("js-menu-toggle")
+		menuToggle.classList.add(`js-${className}`)
 
 		menuToggle.setAttribute("aria-expanded", "false")
 
@@ -341,7 +343,8 @@
 		// Merge user options with defaults.
 		settings = extendDefaults(defaults, options || {})
 
-		updateMenuToggle()
+		updateMenuToggle("menu-toggle")
+		updateMenuToggle("submenu-toggle")
 
 		resizeHandler()
 
