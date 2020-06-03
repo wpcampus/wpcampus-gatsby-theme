@@ -12,13 +12,16 @@ const mapStateToProps = ({ user, isLoading }) => {
 }
 
 const Login = ({ location, user, isLoading }) => {
+
+	const path = "/login/"
+
 	if (!isBrowser) {
-		return <LoadingLayout />
+		return <LoadingLayout path={path} />
 	}
 
 	// Wait for silentAuth to finish.
 	if (isLoading) {
-		return <LoadingLayout />
+		return <LoadingLayout path={path} />
 	}
 
 	// Will define our redirect for after login.
@@ -37,7 +40,8 @@ const Login = ({ location, user, isLoading }) => {
 
 		const layoutAttr = {
 			pageTitle: "Redirecting to login",
-			message: "Redirecting to login"
+			message: "Redirecting to login",
+			path: path,
 		}
 
 		return <LoadingLayout {...layoutAttr} />
@@ -46,7 +50,7 @@ const Login = ({ location, user, isLoading }) => {
 	// If logged in, redirect.
 	navigate(prevPath || "/account/")
 
-	return <LoadingLayout />
+	return <LoadingLayout path={path} />
 }
 
 Login.propTypes = {

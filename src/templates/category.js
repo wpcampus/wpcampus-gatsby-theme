@@ -8,8 +8,14 @@ const CategoryTemplate = ({ pageTitle, path, crumbs, category, categoryArchive }
 
 	// @TODO add meta description?
 
+	const layoutAttr = {
+		pageTitle: pageTitle,
+		crumbs: crumbs,
+		path: path,
+	}
+
 	return (
-		<Layout pageTitle={pageTitle} crumbs={crumbs} path={path}>
+		<Layout {...layoutAttr}>
 			<h1>{pageTitle}</h1>
 			{category.description ? <p>{category.description}</p> : ""}
 			<ArticleArchive list={categoryArchive} />

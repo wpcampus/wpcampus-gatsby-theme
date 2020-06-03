@@ -12,7 +12,7 @@ export default function Template(props) {
 
 	const layoutAttr = {
 		heading: "Pages",
-		path: props.path,
+		path: "/pages/",
 		metaRobots: ["nofollow", "noindex"],
 	}
 

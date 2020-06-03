@@ -40,8 +40,14 @@ const ContributorTemplate = props => {
 
 	// @TODO add meta description?
 
+	const layoutAttr = {
+		heading: heading,
+		crumbs: context.crumbs,
+		path: props.path,
+	}
+
 	return (
-		<Layout heading={heading} crumbs={context.crumbs} path={props.path}>
+		<Layout {...layoutAttr}>
 			<AuthorCard author={contributor} />
 			<div className="wpc-contributor-results">
 				{posts}

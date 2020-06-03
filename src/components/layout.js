@@ -114,6 +114,7 @@ const Layout = props => {
 	}
 
 	const seoAttr = {
+		path: path,
 		title: pageTitle,
 		useTitleTemplate: useTitleTemplate,
 		description: metaDescription,
@@ -164,7 +165,7 @@ Layout.propTypes = {
 	heading: PropTypes.string,
 	classes: PropTypes.string,
 	crumbs: PropTypes.object,
-	path: PropTypes.string,
+	path: PropTypes.string.isRequired,
 	children: PropTypes.node.isRequired,
 }
 

@@ -265,13 +265,16 @@ Home.propTypes = {
 }
 
 const Account = ({ user, isLoading }) => {
+
+	const path = "/account/"
+
 	if (!isBrowser) {
-		return <LoadingLayout />
+		return <LoadingLayout path={path} />
 	}
 
 	// Silent auth is running.
 	if (isLoading) {
-		return <LoadingLayout />
+		return <LoadingLayout path={path} />
 	}
 
 	if (!user.isLoggedIn()) {
@@ -283,7 +286,7 @@ const Account = ({ user, isLoading }) => {
 			}
 		)
 
-		return <LoadingLayout />
+		return <LoadingLayout path={path} />
 	}
 
 	// Don't index or follow.
@@ -297,8 +300,14 @@ const Account = ({ user, isLoading }) => {
 		</ul>
 	</nav>*/
 
+	const layoutAttr = {
+		path: path,
+		heading: "Your WPCampus profile",
+		metaRobots: metaRobots,
+	}
+
 	return (
-		<Layout heading="Your WPCampus profile" metaRobots={metaRobots}>
+		<Layout {...layoutAttr}>
 			<Router>
 				<Home path="/account/" user={user} />
 			</Router>

@@ -30,6 +30,8 @@ const mapDispatchToProps = (dispatch) => {
  */
 const Callback = ({ user, setUser }) => {
 
+	const path = "/callback/"
+
 	// This means the callback has a code.
 	const loggingIn = isBrowser && window.location.search.search(/\?code=[a-z0-9]+/) >= 0
 	if (loggingIn) {
@@ -38,7 +40,7 @@ const Callback = ({ user, setUser }) => {
 			navigate(getAuthRedirect(true) || "/")
 		})
 
-		return <LoadingLayout message="Logging you in" />
+		return <LoadingLayout message="Logging you in" path={path} />
 	}
 
 	handleLogout().then(() => {
@@ -48,7 +50,7 @@ const Callback = ({ user, setUser }) => {
 		}, 1000)
 	})
 
-	return <LoadingLayout message="Logging you out" />
+	return <LoadingLayout message="Logging you out" path={path} />
 }
 
 Callback.propTypes = {

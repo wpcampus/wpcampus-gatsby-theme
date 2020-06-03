@@ -16,8 +16,14 @@ export default function Template(props) {
 
 	// @TODO add meta description?
 
+	const layoutAttr = {
+		heading: "The WPCampus Podcast",
+		crumbs: crumbs,
+		path: props.path,
+	}
+
 	return (
-		<Layout heading="The WPCampus Podcast" crumbs={crumbs} path={props.path}>
+		<Layout {...layoutAttr}>
 			<PodcastCallout />
 			<PodcastActions />
 			<ArticleArchive list={props.data.allWordpressWpPodcast.edges} />

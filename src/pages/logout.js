@@ -7,8 +7,11 @@ import { getAccessCookie, setAuthRedirect, handleLogout, logout } from "../utils
 import LoadingLayout from "../components/loadingLayout"
 
 const Logout = ({ location }) => {
+
+	const path = "/logout/"
+
 	if (!isBrowser) {
-		return <LoadingLayout />
+		return <LoadingLayout path={path} />
 	}
 
 	// Will define our redirect for after login.
@@ -36,7 +39,7 @@ const Logout = ({ location }) => {
 		logout(access)
 	}
 
-	return <LoadingLayout message="Logging you out" />
+	return <LoadingLayout message="Logging you out" path={path} />
 }
 
 Logout.propTypes = {

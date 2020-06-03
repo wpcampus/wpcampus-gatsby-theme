@@ -15,6 +15,7 @@ function SEO(
 		description,
 		lang,
 		meta,
+		path,
 		title,
 		useTitleTemplate,
 		metaRobots,
@@ -61,6 +62,8 @@ function SEO(
 		helmetAttr.titleTemplate = `%s | ${site.siteMetadata.siteName}`
 	}
 
+	// @TODO don't create OG tags for pages we don't indexed.
+
 	// Create meta.
 	const helmetMeta = [
 		{
@@ -73,7 +76,7 @@ function SEO(
 		},
 		{
 			property: "og:url",
-			content: site.siteMetadata.siteUrl,
+			content: `${site.siteMetadata.siteUrl}${path}`,
 		},
 		{
 			property: "og:title",
@@ -179,6 +182,7 @@ SEO.propTypes = {
 	description: PropTypes.string,
 	lang: PropTypes.string,
 	meta: PropTypes.arrayOf(PropTypes.object),
+	path: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	useTitleTemplate: PropTypes.bool,
 	metaRobots: PropTypes.array,

@@ -21,8 +21,14 @@ export default function Template(props) {
 
 	// @TODO add meta description?
 
+	const layoutAttr = {
+		heading: context.heading,
+		crumbs: context.crumbs,
+		path: props.path,
+	}
+
 	return (
-		<Layout heading={context.heading} crumbs={context.crumbs} path={props.path}>
+		<Layout {...layoutAttr}>
 			<CategoryArchive list={categories} />
 		</Layout>
 	)

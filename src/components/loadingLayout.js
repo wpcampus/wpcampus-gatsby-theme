@@ -28,6 +28,7 @@ const LoadingLayout = props => {
 	}
 
 	const seoAttr = {
+		path: props.path,
 		title: pageTitle,
 		description: metaDescription,
 		metaRobots: metaRobots,
@@ -60,6 +61,7 @@ const LoadingLayout = props => {
 
 LoadingLayout.propTypes = {
 	metaDescription: PropTypes.string,
+	path: PropTypes.string.isRequired,
 	pageTitle: PropTypes.string,
 	message: PropTypes.string,
 	hideMessage: PropTypes.bool
