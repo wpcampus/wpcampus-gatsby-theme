@@ -5,7 +5,7 @@ import { Nav } from "./nav"
 const PodcastCallout = () => {
 	return (
 		<div>
-			<p>The WPCampus Podcast is a recurring show where members of the community come together to discuss relevant topics, unique ways that WordPress is being used in Higher Education, share tutorials and walkthroughs, and more. <strong><em>If you&apos;d like to be a guest on the show, or have a topic you&apos;d like us to discuss, please <a href="/about/contact/">let us know</a>.</em></strong></p>
+			<p>The WPCampus Podcast is a recurring show where members of the community come together to discuss relevant topics, unique ways that WordPress is being used in higher education, share tutorials and walkthroughs, and more. <strong><em>If you&apos;d like to be a guest on the show, or have a topic you&apos;d like us to discuss, please <a href="/about/contact/">let us know</a>.</em></strong></p>
 		</div>
 	)
 }

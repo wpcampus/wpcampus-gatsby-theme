@@ -33,7 +33,7 @@ export default function Template(props) {
 
 	return (
 		<Layout {...layoutAttr}>
-			<p>At WPCampus, our mission is to advance Higher Education by providing a support structure and wealth of knowledge for anyone who uses, or is interested in using, WordPress in the world of Higher Education.</p>
+			<p>At WPCampus, our mission is to advance higher education by providing a support structure and wealth of knowledge for anyone who uses, or is interested in using, WordPress in the world of higher education.</p>
 			<p>Our community is grateful to the <strong>{contributors.length} volunteer contributors</strong> who have donated their time, energy, and skills to provide content and resources in support of our mission.</p>
 			<p><em>Note:</em> We are working on a plan to highlight those who contribute to our community in other ways, for example, donating their time to organize events and lead committees and working groups. We have a wonderful, giving community and we are so grateful to all who foster its growth.</p>
 			<AuthorCards authors={contributors} displayBio={false} classes="wpc-contributors--archive" />
