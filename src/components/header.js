@@ -158,7 +158,7 @@ const HeaderHomeBanner1 = () => {
 				<span className="wpc-numbers__label"><WPCampusLogo includeTagline={false} /></span>
 			</li>
 		</ul>
-		<p className="wpc-home-banner__tagline">Where WordPress meets Higher Education</p>
+		<p className="wpc-home-banner__tagline">Where WordPress meets higher education</p>
 		<SearchForm {...searchFormAttr} />
 		<ConnectedHeaderUser />
 	</div>

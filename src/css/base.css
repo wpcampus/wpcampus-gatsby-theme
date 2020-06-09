@@ -291,6 +291,10 @@ button {
 		color: #fff;
 	}
 
+	&--center {
+		text-align: center;
+	}
+
 	&--expand {
 		display: block;
 	}

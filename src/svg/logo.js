@@ -82,7 +82,7 @@ V50z"/>
 const WPCampusLogo = ({ includeTagline }) => {
 	let title = "WPCampus"
 	if (includeTagline) {
-		title += ": Where WordPress meets Higher Education"
+		title += ": Where WordPress meets higher education"
 	}
 	let height = includeTagline ? 50 : 32
 	return (

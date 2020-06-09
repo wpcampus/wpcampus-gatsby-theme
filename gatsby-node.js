@@ -127,6 +127,21 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			interfaces: ["Node"],
 		}),
 		schema.buildObjectType({
+			name: "wordpress__wpc_librarySpeakers",
+			fields: {
+				headshot: {
+					type: "String",
+					resolve(source) {
+						if ("string" !== typeof source.headshot) {
+							return ""
+						}
+						return source.headshot
+					}
+				}
+			},
+			interfaces: ["Node"],
+		}),
+		schema.buildObjectType({
 			name: "wordpress__wp_podcast",
 			fields: {
 				"episode_featured_image": {
