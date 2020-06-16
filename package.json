@@ -9,7 +9,7 @@
     "@wpcampus/wpcampus-iframe": "^0.0.4",
     "@wpcampus/wpcampus-wc-blog": "^0.1.0",
     "@wpcampus/wpcampus-wc-conduct": "^0.0.7",
-    "@wpcampus/wpcampus-wc-footer": "^0.0.6",
+    "@wpcampus/wpcampus-wc-footer": "^0.0.7",
     "@wpcampus/wpcampus-wc-notifications": "^0.0.7",
     "@wpcampus/wpcampus-wc-tweets": "^0.0.5",
     "btoa": "^1.2.1",

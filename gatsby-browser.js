@@ -17,7 +17,7 @@ import "./src/css/nav.css"
 import "./src/css/notifications.css"
 import "./src/css/sidebar.css"
 import "./src/css/conduct.css"
-import "./src/css/footer.css"
+import "@wpcampus/wpcampus-wc-footer/dist/main.css"
 
 import SessionProvider from "./src/utils/provider"
 export const wrapRootElement = SessionProvider
