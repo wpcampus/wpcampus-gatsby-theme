@@ -16,7 +16,7 @@ import "./src/css/header.css"
 import "./src/css/nav.css"
 import "./src/css/notifications.css"
 import "./src/css/sidebar.css"
-import "./src/css/conduct.css"
+import "@wpcampus/wpcampus-wc-conduct/dist/main.css"
 import "@wpcampus/wpcampus-wc-footer/dist/main.css"
 
 import SessionProvider from "./src/utils/provider"

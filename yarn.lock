@@ -2510,10 +2510,10 @@
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.4"
 
-"@wpcampus/wpcampus-wc-conduct@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-conduct/-/wpcampus-wc-conduct-0.0.7.tgz#25bc58e0de68fc485450bae76fd0f339dcbee603"
-  integrity sha512-3vcYGCiHDa2rHQIDkxWPmGP4SfWf2BFNjn42tH2gSkrSq9NzdR0bCRvN0Y0LgYuWGG0ttvDdFG14hKlL4oGd/Q==
+"@wpcampus/wpcampus-wc-conduct@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-conduct/-/wpcampus-wc-conduct-0.0.8.tgz#5ead59e6937b8aaa5340f6d68735747e0842e36d"
+  integrity sha512-C36Hm/58h/endRMLhwtBKzUx+VYm+XZ3lco3oB26ATq+DAT76t3HzH+WpoLA1vXvzYp/ReBFETiuqovjy7nMSA==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
 
