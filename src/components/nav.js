@@ -316,18 +316,11 @@ const NavItemLink = ({ item }) => {
 		linkAttr["aria-label"] = item.aria_label
 	}
 
-	return (
-		<>
-			{
-				// conditionally render a gatsby link or regular anchor
-				item.path ? (
-					<NavLink item={item} attrs={linkAttr} />
-				) : (
-					<NavAnchor item={item} attrs={linkAttr} />
-				)
+	if (item.path) {
+		return <NavLink item={item} attrs={linkAttr} />
 			}
-		</>
-	)
+
+	return <NavAnchor item={item} attrs={linkAttr} />
 }
 
 NavItemLink.propTypes = {
