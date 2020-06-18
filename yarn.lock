@@ -2510,12 +2510,13 @@
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.4"
 
-"@wpcampus/wpcampus-wc-conduct@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-conduct/-/wpcampus-wc-conduct-0.0.8.tgz#5ead59e6937b8aaa5340f6d68735747e0842e36d"
-  integrity sha512-C36Hm/58h/endRMLhwtBKzUx+VYm+XZ3lco3oB26ATq+DAT76t3HzH+WpoLA1vXvzYp/ReBFETiuqovjy7nMSA==
+"@wpcampus/wpcampus-wc-conduct@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-conduct/-/wpcampus-wc-conduct-0.0.9.tgz#afd55b1a3fb9a3cdc6ab9b41bb68c4c09e614b01"
+  integrity sha512-Vq2uzqUj0VZCQlTMuJA07Rl4rPUKnngpZY7sz+yoQ9bFRqKjckblx+0AxB1V+y7cdGGWXtL3lHsgj60p4CNfeQ==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
+    file-loader "^6.0.0"
 
 "@wpcampus/wpcampus-wc-default@^0.0.1":
   version "0.0.1"
@@ -2540,6 +2541,14 @@
   integrity sha512-CnJAhh5Nmkj9iqxLLPsCniLb5ORqPJWVZcFzyb+6RXgAP3HdZu0Fn/IiTcVBtCi6YNjE6NVGcWQhQnQWE5UE7w==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.4"
+
+"@wpcampus/wpcampus-wc-subscribe@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-subscribe/-/wpcampus-wc-subscribe-0.0.1.tgz#1cb3772fda0ccae1c47ae69d28492579393c08f9"
+  integrity sha512-dd/ieXlWQDWv1t8eyVQAsFIoci3v9sCfVyBHT+PqFzGl60rwdmwHYvVfG4+oJDxj8XmdHHCMgp84/mvJK1NvFw==
+  dependencies:
+    "@wpcampus/wpcampus-wc-default" "^0.0.1"
+    file-loader "^6.0.0"
 
 "@wpcampus/wpcampus-wc-tweets@^0.0.5":
   version "0.0.5"
@@ -6345,6 +6354,14 @@ file-loader@^1.1.11:
     loader-utils "^1.0.2"
     schema-utils "^0.4.5"
 
+file-loader@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-6.0.0.tgz#97bbfaab7a2460c07bcbd72d3a6922407f67649f"
+  integrity sha512-/aMOAYEFXDdjG0wytpTL5YQLfZnnTmLNjn+AIrJ/6HVnTfDqLsVKUUwkDf4I4kgex36BvjuXEn/TX9B/1ESyqQ==
+  dependencies:
+    loader-utils "^2.0.0"
+    schema-utils "^2.6.5"
+
 file-type@5.2.0, file-type@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/file-type/-/file-type-5.2.0.tgz#2ddbea7c73ffe36368dfae49dc338c058c2b8ad6"
@@ -9535,6 +9552,15 @@ loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.2.3, loader-utils@^1.4
     big.js "^5.2.2"
     emojis-list "^3.0.0"
     json5 "^1.0.1"
+
+loader-utils@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.0.tgz#e4cace5b816d425a166b5f097e10cd12b36064b0"
+  integrity sha512-rP4F0h2RaWSvPEkD7BLDFQnvSf+nK+wr3ESUjNTyAGobqrijmW92zc+SO6d4p4B1wh7+B/Jg1mkQe5NYUEHtHQ==
+  dependencies:
+    big.js "^5.2.2"
+    emojis-list "^3.0.0"
+    json5 "^2.1.2"
 
 locate-path@^2.0.0:
   version "2.0.0"

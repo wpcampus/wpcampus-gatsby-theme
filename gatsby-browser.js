@@ -16,6 +16,7 @@ import "./src/css/header.css"
 import "./src/css/nav.css"
 import "./src/css/notifications.css"
 import "./src/css/sidebar.css"
+import "@wpcampus/wpcampus-wc-subscribe/dist/main.css"
 import "@wpcampus/wpcampus-wc-conduct/dist/main.css"
 import "@wpcampus/wpcampus-wc-footer/dist/main.css"
 

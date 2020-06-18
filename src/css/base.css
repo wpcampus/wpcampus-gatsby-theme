@@ -575,3 +575,33 @@ iframe {
 	border: 0;
 	margin: 0 0 1rem;
 }
+
+.wpc-promo {
+	/* Desktop */
+	@media (min-width: 1380px) {
+		display: grid;
+		grid-template-columns: 50% 1fr;
+		align-items: stretch;
+
+		/* stylelint-disable selector-type-no-unknown */
+		wpcampus-subscribe {
+			display: flex;
+			align-items: stretch;
+			border-left: 1px solid #e1e1e1;
+
+			.wpc-subscribe {
+				display: flex;
+			}
+		}
+
+		wpcampus-conduct {
+			display: flex;
+			align-items: stretch;
+
+			.wpc-conduct {
+				display: flex;
+			}
+		}
+		/* stylelint-disable */
+	}
+}
