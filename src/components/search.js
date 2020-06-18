@@ -14,8 +14,7 @@ import MagnifyingGlass from "../svg/magnifying-glass"
  *
  * Environment variables are only accessible in development.
  */
-const isDev = "development" === process.env.NODE_ENV
-const wpcSearchRoot = isDev ? process.env.WPC_API : "https://wpcampus.org/wp-json"
+const wpcSearchRoot = process.env.GATSBY_WPC_API
 const wpcSearchURL = `${wpcSearchRoot}/wpcampus/search/`
 
 const sanitizeSearchTerm = (str) => {

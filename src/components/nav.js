@@ -275,14 +275,16 @@ const NavToggle = ({ id }) => {
 			parentLi.classList.add("toggled-open")
 	}
 
+	const buttonAttr = {
+		id: id,
+		className: "submenu-toggle",
+		"aria-expanded": open ? "true" : "false",
+		"aria-label": `${open ? "Close" : "Open"} child menu`,
+		onClick: (evt) => manageParent(evt)
+	}
+
 	return (
-		<button
-			id={id}
-			className="submenu-toggle"
-			aria-expanded={open ? "true" : "false"}
-			aria-label={`${open ? "Close" : "Open"} child menu`}
-			onClick={(evt) => manageParent(evt)}
-		></button>
+		<button {...buttonAttr}></button>
 	)
 }
 
@@ -314,18 +316,11 @@ const NavItemLink = ({ item }) => {
 		linkAttr["aria-label"] = item.aria_label
 	}
 
-	return (
-		<>
-			{
-				// conditionally render a gatsby link or regular anchor
-				item.path ? (
-					<NavLink item={item} attrs={linkAttr} />
-				) : (
-					<NavAnchor item={item} attrs={linkAttr} />
-				)
+	if (item.path) {
+		return <NavLink item={item} attrs={linkAttr} />
 			}
-		</>
-	)
+
+	return <NavAnchor item={item} attrs={linkAttr} />
 }
 
 NavItemLink.propTypes = {
@@ -334,7 +329,6 @@ NavItemLink.propTypes = {
 
 const NavListItem = ({ item }) => {
 	const attrs = {
-		// id,
 		className: "nav-listitem"
 	}
 
@@ -368,7 +362,6 @@ const NavListItem = ({ item }) => {
 }
 
 NavListItem.propTypes = {
-	// id: PropTypes.string.isRequired,
 	item: PropTypes.object.isRequired,
 	selectedItemId: PropTypes.string,
 	topLevelItemId: PropTypes.string
@@ -376,21 +369,13 @@ NavListItem.propTypes = {
 
 const NavList = ({ isSubmenu, list }) => {
 	return (
-		<ul className={isSubmenu ? "wpc-nav__sub" : ""}>
+		<ul className={isSubmenu ? "wpc-nav__sub" : "wpc-nav__menu"}>
 			{
 				list.map((item, i) => {
-					const id = typeof item.text === "string" ?
-						`item-${item.text.toLowerCase().replace(" ", "-")}` :
-						""
 					return (
-						<NavListItem
-							key={i}
-							item={item}
-							id={id}
-						/>
-					)
-				}
+						<NavListItem key={i} item={item} />
 				)
+				})
 			}
 		</ul>
 	)
@@ -413,17 +398,17 @@ const Nav = ({ id, classes, aria_label, list, children }) => {
 		navAttr["aria-label"] = aria_label
 	}
 
-
+	const navListAttr = {
+		isSubmenu: false,
+		open: true,
+		list: list,
+		hasSubmenuToggle: false
+	}
 
 	return (
 		<nav {...navAttr}>
 			{children}
-			<NavList
-				isSubmenu={false}
-				open={true}
-				list={list}
-				hasSubmenuToggle={false}
-			/>
+			<NavList {...navListAttr} />
 		</nav>
 	)
 }
