@@ -374,7 +374,7 @@ NavListItem.propTypes = {
 
 const NavList = ({ isSubmenu, list }) => {
 	return (
-		<ul className={isSubmenu ? "wpc-nav__sub" : ""}>
+		<ul className={isSubmenu ? "wpc-nav__sub" : "wpc-nav__menu"}>
 			{
 				list.map((item, i) => {
 					return (
