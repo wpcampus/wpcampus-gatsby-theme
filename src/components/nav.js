@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
+import { isBrowser } from "../utils/utilities"
 
 const NavPrimaryItems = [
 	{
@@ -111,11 +112,13 @@ const NavPrimaryItems = [
 			},
 			{
 				path: "/about/governance/",
-				text: "Governance"
+				text: "Governance",
+				ref: true
 			},
 			{
 				path: "/about/guidelines/",
-				text: "Community guidelines"
+				text: "Community guidelines",
+				ref: true
 			},
 			{
 				path: "/community/calendar/",
@@ -234,7 +237,7 @@ const NavLink = ({ item, attrs }) => {
 	if (item.text === "" || item.path === "") return
 
 	return (
-		<Link 
+		<Link
 			to={item.path}
 			// manage the current classes based on gatsby-link getProps prop
 			getProps={({ isCurrent, isPartiallyCurrent }) => {
@@ -244,7 +247,7 @@ const NavLink = ({ item, attrs }) => {
 					attrs.className += " nav-link--current-parent"
 				}
 				return attrs
-			}} 
+			}}
 			{...attrs}
 		>
 			{item.text}
@@ -267,7 +270,7 @@ const NavToggle = ({ id }) => {
 		setOpen(!open)
 
 		const parentLi = evt.target.closest("li")
-		
+
 		if (parentLi === null) return
 
 		parentLi.classList.contains("toggled-open") ?
@@ -327,6 +330,33 @@ NavItemLink.propTypes = {
 	item: PropTypes.object.isRequired
 }
 
+const checkCurrentNavChildren = (children, currentPath) => {
+	if (! children.length) {
+		return false
+	}
+	let isCurrentPath = false
+	for (let i = 0; i < children.length; i++) {		
+		let child = children[i]
+		if (child.ref) {
+			continue
+		}
+		if (!child.path) {
+			continue
+		}
+		if (currentPath === child.path) {
+			isCurrentPath = true
+			break
+		}
+		if (child.children) {
+			isCurrentPath = checkCurrentNavChildren(child.children,currentPath)
+			if (isCurrentPath === true ) {
+				break
+			}
+		}
+	}
+	return isCurrentPath
+}
+
 const NavListItem = ({ item }) => {
 	const attrs = {
 		className: "nav-listitem"
@@ -336,29 +366,43 @@ const NavListItem = ({ item }) => {
 		attrs.className = `${attrs.className} ${item.classes}`
 	}
 
-	// select the elements to create based on if there are submenus
-	// if there are, make a new submenu with recursion
-	return (
-		<li {...attrs}>
-			{
-				// if the item has children, set the name followed by a button
-				// then add the new nav list with the children
-				// otherwise just return the name
-				item.children && item.children.length ? (
-					<>
-						<span className="nav-link--toggle">
-							<NavItemLink item={item} />
-							<NavToggle />
-						</span>
-						<NavList
-							list={item.children}
-							isSubmenu={true}
-						/>
-					</>
-				) : (<NavItemLink item={item} />)
-			}
+	let currentPath = isBrowser ? window.location.pathname : "/"
+
+	const hasChildren = item.children && item.children.length
+
+	// Means this item represents the current page.
+	if (item.path && currentPath === item.path) {
+		attrs.className += " nav-listitem--current"
+
+		if (hasChildren) {
+			attrs.className += " toggled-open"
+		}
+	} else if (hasChildren) {
+
+		let isCurrentParent = checkCurrentNavChildren(item.children,currentPath)
+
+		if (isCurrentParent) {
+			attrs.className += " nav-listitem--current-parent toggled-open"
+		}
+	}
+
+	/*
+	 * Select the elements to create based on if there are 
+	 * submenus. If there are, make a new submenu with recursion.
+	 */
+	if (hasChildren) {
+		return <li {...attrs}>
+			<span className="nav-link--toggle">
+				<NavItemLink item={item} />
+				<NavToggle />
+			</span>
+			<NavList list={item.children} isSubmenu={true} />
 		</li>
-	)
+	}
+
+	return <li {...attrs}>
+		<NavItemLink item={item} />
+	</li>
 }
 
 NavListItem.propTypes = {
