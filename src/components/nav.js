@@ -334,7 +334,6 @@ NavItemLink.propTypes = {
 
 const NavListItem = ({ item }) => {
 	const attrs = {
-		// id,
 		className: "nav-listitem"
 	}
 
@@ -368,7 +367,6 @@ const NavListItem = ({ item }) => {
 }
 
 NavListItem.propTypes = {
-	// id: PropTypes.string.isRequired,
 	item: PropTypes.object.isRequired,
 	selectedItemId: PropTypes.string,
 	topLevelItemId: PropTypes.string
@@ -379,18 +377,10 @@ const NavList = ({ isSubmenu, list }) => {
 		<ul className={isSubmenu ? "wpc-nav__sub" : ""}>
 			{
 				list.map((item, i) => {
-					const id = typeof item.text === "string" ?
-						`item-${item.text.toLowerCase().replace(" ", "-")}` :
-						""
 					return (
-						<NavListItem
-							key={i}
-							item={item}
-							id={id}
-						/>
-					)
-				}
+						<NavListItem key={i} item={item} />
 				)
+				})
 			}
 		</ul>
 	)
