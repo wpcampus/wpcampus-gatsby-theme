@@ -275,14 +275,16 @@ const NavToggle = ({ id }) => {
 			parentLi.classList.add("toggled-open")
 	}
 
+	const buttonAttr = {
+		id: id,
+		className: "submenu-toggle",
+		"aria-expanded": open ? "true" : "false",
+		"aria-label": `${open ? "Close" : "Open"} child menu`,
+		onClick: (evt) => manageParent(evt)
+	}
+
 	return (
-		<button
-			id={id}
-			className="submenu-toggle"
-			aria-expanded={open ? "true" : "false"}
-			aria-label={`${open ? "Close" : "Open"} child menu`}
-			onClick={(evt) => manageParent(evt)}
-		></button>
+		<button {...buttonAttr}></button>
 	)
 }
 
