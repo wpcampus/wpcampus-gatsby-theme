@@ -403,17 +403,17 @@ const Nav = ({ id, classes, aria_label, list, children }) => {
 		navAttr["aria-label"] = aria_label
 	}
 
-
+	const navListAttr = {
+		isSubmenu: false,
+		open: true,
+		list: list,
+		hasSubmenuToggle: false
+	}
 
 	return (
 		<nav {...navAttr}>
 			{children}
-			<NavList
-				isSubmenu={false}
-				open={true}
-				list={list}
-				hasSubmenuToggle={false}
-			/>
+			<NavList {...navListAttr} />
 		</nav>
 	)
 }
