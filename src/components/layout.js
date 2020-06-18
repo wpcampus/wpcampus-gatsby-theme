@@ -16,6 +16,7 @@ import Notifications from "./notifications"
 import Sidebar from "./sidebar"
 import Crumbs from "./crumbs"
 import Conduct from "./conduct"
+import Subscribe from "./subscribe"
 import Footer from "./footer"
 import WPCGridDev from "./grid-dev"
 
@@ -147,7 +148,10 @@ const Layout = props => {
 					</div>
 				</div>
 			</div>
-			<Conduct />
+			<div className="wpc-promo">
+				<Conduct />
+				<Subscribe />
+			</div>
 			<Footer />
 		</div>
 	)

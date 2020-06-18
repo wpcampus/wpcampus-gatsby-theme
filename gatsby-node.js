@@ -127,6 +127,21 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			interfaces: ["Node"],
 		}),
 		schema.buildObjectType({
+			name: "wordpress__wpc_librarySpeakers",
+			fields: {
+				headshot: {
+					type: "String",
+					resolve(source) {
+						if ("string" !== typeof source.headshot) {
+							return ""
+						}
+						return source.headshot
+					}
+				}
+			},
+			interfaces: ["Node"],
+		}),
+		schema.buildObjectType({
 			name: "wordpress__wp_podcast",
 			fields: {
 				"episode_featured_image": {
@@ -266,7 +281,7 @@ const fetchContent = (url) => {
 
 const fetchContributors = async () => {
 
-	const contributors = await fetchContent(`${process.env.WPC_API}/wpcampus/contributors`)
+	const contributors = await fetchContent(`${process.env.GATSBY_WPC_API}/wpcampus/contributors`)
 
 	// Logging progress.
 	console.log(chalk.green(" -> WPCampus contributors fetched: " + contributors.length))
@@ -317,7 +332,7 @@ createContributorNodes.propTypes = {
 
 const fetchSessions = async () => {
 
-	const sessions = await fetchContent(`${process.env.WPC_API}/wpcampus/data/public/sessions`)
+	const sessions = await fetchContent(`${process.env.GATSBY_WPC_API}/wpcampus/data/public/sessions`)
 
 	// Logging progress.
 	console.log(chalk.green(" -> WPCampus sessions fetched: " + sessions.length))
