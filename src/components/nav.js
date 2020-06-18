@@ -318,7 +318,7 @@ const NavItemLink = ({ item }) => {
 
 	if (item.path) {
 		return <NavLink item={item} attrs={linkAttr} />
-			}
+	}
 
 	return <NavAnchor item={item} attrs={linkAttr} />
 }
@@ -374,7 +374,7 @@ const NavList = ({ isSubmenu, list }) => {
 				list.map((item, i) => {
 					return (
 						<NavListItem key={i} item={item} />
-				)
+					)
 				})
 			}
 		</ul>
