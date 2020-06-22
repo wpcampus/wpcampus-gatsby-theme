@@ -49,7 +49,6 @@ const WorkShopSurveyTemplate = props => {
 		<Layout {...layoutAttr}>
 			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
 				<div>{ReactHtmlParser(page.content)}</div>
-				<p>The WPCampus community is gathering research in the pursuit of recurring professional development services, e.g. workshops or seminars.</p>
 				<h2>General workshop survey</h2>
 				<p>Help us gather feedback on interest in our workshop initiative. You can use the other surveys to submit topics or interest in being a presenter.</p>
 				<Iframe {...iframe1Attr} />
@@ -57,7 +56,7 @@ const WorkShopSurveyTemplate = props => {
 				<p>Submit your own topics and help us gather feedback on which topics would be most benificial to the group.</p>
 				<Iframe {...iframe2Attr} />
 				<h2>Lead a workshop</h2>
-				<p>Are you interested in leading a workshop? That would be amazing. Use this form to submit your interest, contact information, and which topics you would like to present on.</p>
+				<p>Are you interested in leading a workshop? Use this form to submit your interest, contact information, and which topics you would like to present on.</p>
 				<Iframe {...iframe3Attr} />
 			</ProtectedContent>
 		</Layout>
