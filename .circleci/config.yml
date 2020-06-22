@@ -3,7 +3,7 @@ workflows:
   version: 2
   build_deploy_test:
     jobs:
-      - pfe/gatsby_build_and_deploy:
+      - pfe/gatsby-build-and-deploy:
          post-steps:
             - run:
                 name: post deployment completion status
