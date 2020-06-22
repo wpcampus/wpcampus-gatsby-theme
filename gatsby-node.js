@@ -766,6 +766,7 @@ exports.createPages = async ({ graphql, actions }) => {
 	const pageTemplate = path.resolve("./src/templates/page.js")
 	const auditTemplate = path.resolve("./src/templates/audit.js")
 	const libraryTemplate = path.resolve("./src/templates/library.js")
+	const workshopsTemplate = path.resolve("./src/templates/workshops-survey.js")
 	const indexTemplate = path.resolve("./src/templates/index.js")
 
 	pages.data.allWordpressPage.edges.forEach(edge => {
@@ -785,6 +786,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
 		if ("library" === edge.node.wpc_gatsby.template) {
 			template = libraryTemplate
+		} else if ("workshops" === edge.node.wpc_gatsby.template) {
+			template = workshopsTemplate
 		} else if ("audit" === edge.node.wpc_gatsby.template) {
 			template = auditTemplate
 		} else if ("home" === edge.node.wpc_gatsby.template) {
@@ -809,8 +812,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
 		if (forms) {
 			pageContext.forms = forms
-			pageContext.formOrigin = `https://${process.env.GATSBY_WPC_WORDPRESS}`
 		}
+
+		// Add to all pages in case they need it for manual iframes.
+		pageContext.formOrigin = `https://${process.env.GATSBY_WPC_WORDPRESS}`
 
 		createPage({
 			path: edge.node.path,
