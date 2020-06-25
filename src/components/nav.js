@@ -106,6 +106,16 @@ const NavPrimaryItems = [
 				]
 			},
 			{
+				path: "/community/surveys/",
+				text: "Surveys",
+				children: [
+					{
+						path: "/community/surveys/workshops/",
+						text: "Workshops",
+					}
+				]
+			},
+			{
 				path: "/community/directory/",
 				text: "Directory"
 			},
