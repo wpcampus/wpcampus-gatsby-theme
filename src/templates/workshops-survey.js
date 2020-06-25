@@ -49,13 +49,13 @@ const WorkShopSurveyTemplate = props => {
 		<Layout {...layoutAttr}>
 			<ProtectedContent wpc_protected={pageContext.wpc_protected}>
 				<div>{ReactHtmlParser(page.content)}</div>
-				<h2>General workshop survey</h2>
+				<h2 id="general">General workshop survey</h2>
 				<p>Help us gather feedback on interest in our workshop initiative. You can use the other surveys to submit topics or interest in being a presenter.</p>
 				<Iframe {...iframe1Attr} />
-				<h2>Submit workshop topics</h2>
+				<h2 id="topics">Submit workshop topics</h2>
 				<p>Submit your own topics and help us gather feedback on which topics would be most benificial to the group.</p>
 				<Iframe {...iframe2Attr} />
-				<h2>Lead a workshop</h2>
+				<h2 id="lead">Lead a workshop</h2>
 				<p>Are you interested in leading a workshop? Use this form to submit your interest, contact information, and which topics you would like to present on.</p>
 				<Iframe {...iframe3Attr} />
 			</ProtectedContent>
