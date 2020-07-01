@@ -58,6 +58,10 @@ const NavPrimaryItems = [
 				text: "Guidelines",
 				children: [
 					{
+						path: "/about/guidelines/accessibility/",
+						text: "Accessibility"
+					},
+					{
 						path: "/about/guidelines/conduct/",
 						text: "Code of Conduct"
 					},
