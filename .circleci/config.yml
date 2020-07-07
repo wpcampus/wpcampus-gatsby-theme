@@ -1,14 +1,53 @@
 version: 2.1
 workflows:
   version: 2
-  build_deploy_test:
+  build_and_deploy_main:
+    when:
+      and:
+        - equal: [ main, << pipeline.git.branch >> ]
     jobs:
       - pfe/gatsby-build-and-deploy:
-         post-steps:
-            - run:
-                name: post deployment completion status
-                command: |
-                 curl "https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/statuses/$CIRCLE_SHA1" -H "Authorization: token $GITHUB_TOKEN" -X POST -d '{"state": "success", "context": "pantheon/deployment", "description": "Deployment complete", "target_url": "https://'${TERMINUS_ENV}'--'${TERMINUS_SITE}'.my.pantheonfrontend.website/"}'
-
+          use-yarn: true
+          incremental-build: true
+          pre-steps:
+            - pfe/gh-status:
+                state: "pending"
+                target_url: $CIRCLE_BUILD_URL
+                description: "Starting Gatsby Build"
+                context: "pantheon/webops"
+          post-steps:
+            - pfe/gh-status:
+                state: "success"
+                target_url: "https://$TERMINUS_ENV--$TERMINUS_SITE.my.pantheonfrontend.website/"
+                description: "Deployment complete"
+                context: "pantheon/webops"
+          data-source-url: << pipeline.parameters.data-source-url >>
+  build_and_deploy_pr:
+    # https://circleci.com/docs/2.0/configuration-reference/#using-when-in-workflows
+    when:
+      and:
+        - not:
+            equal: [ main, << pipeline.git.branch >> ]
+    jobs:
+      - pfe/gatsby-build-and-deploy:
+          use-yarn: true
+          incremental-build: true
+          pre-steps:
+            - pfe/gh-status:
+                state: "pending"
+                target_url: $CIRCLE_BUILD_URL
+                description: "Starting Gatsby build"
+                context: "pantheon/webops"
+          post-steps:
+            - pfe/gh-status:
+                state: "success"
+                target_url: "https://$TERMINUS_ENV--$TERMINUS_SITE.my.pantheonfrontend.website/"
+                description: "Deployment complete"
+                context: "pantheon/webops"
+          data-source-url: << pipeline.parameters.data-source-url >>
 orbs:
   pfe: pantheon-systems/front-end@0.3.0
+parameters:
+  data-source-url:
+    type: string
+    default: "https://live-wpcampus-gatsby.pantheonsite.io" 
