@@ -7,6 +7,8 @@ workflows:
         - equal: [ main, << pipeline.git.branch >> ]
     jobs:
       - pfe/gatsby-build-and-deploy:
+          use-yarn: true
+          incremental-build: true
           pre-steps:
             - pfe/gh-status:
                 state: "pending"
@@ -28,6 +30,8 @@ workflows:
             equal: [ main, << pipeline.git.branch >> ]
     jobs:
       - pfe/gatsby-build-and-deploy:
+          use-yarn: true
+          incremental-build: true
           pre-steps:
             - pfe/gh-status:
                 state: "pending"
