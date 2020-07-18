@@ -291,6 +291,11 @@
 			"status": 301
 		},
 		{
+			"source": "/conduct/",
+			"destination": "/about/guidelines/conduct/",
+			"status": 301
+		},
+		{
 			"source": "/code-of-conduct/",
 			"destination": "/about/guidelines/conduct/",
 			"status": 301
