@@ -2751,10 +2751,10 @@
   resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-default/-/wpcampus-wc-default-0.0.4.tgz#5ba8fdd8b96b9d1f46e8d34b4b295b484f83147f"
   integrity sha512-rQuP5Qj7qQifPGMilDPAUkiF0BVb2Zhc6q6bBQ0juJnOzwa4ilczHkQa4shLIopk16keqebjYHcMn2LoEa99pA==
 
-"@wpcampus/wpcampus-wc-footer@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-footer/-/wpcampus-wc-footer-0.0.8.tgz#891109b38948bdb2d55ce5e758b4c21fe97bffa7"
-  integrity sha512-FmkARzQH0Ag9kPUZ/Wlm/cAxVB4hGfn1MNy0VSXTdhjicPPggmmqc9vlBvLZUhmM+mcqAZwqm2MHBd/89V68TQ==
+"@wpcampus/wpcampus-wc-footer@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-footer/-/wpcampus-wc-footer-0.1.0.tgz#f6999adc84a295277df4ab8728ccd0529eca0c7f"
+  integrity sha512-hxB1HFBmStLuFeIAhu/NWt+Vf9h8p8dJhD8i83UiCJLJdB2PmN1eHHrNve0XF7p+auDI+wD/E2av9a9SbpDUPw==
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.1"
 
