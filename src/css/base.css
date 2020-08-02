@@ -153,26 +153,28 @@ strong {
 	font-weight: 600;
 }
 
+.alignleft,
+.alignright {
+	display: block;
+	margin: 0 auto 1rem auto;
+}
+
+@media (min-width: 420px) {
+	.alignleft {
+		float: left;
+		margin: 1rem 2.5rem 1.5rem 0;
+	}
+
+	.alignright {
+		float: right;
+		margin: 1rem 0 1.5rem 2.5rem;
+	}
+}
+
 img {
+	width: auto;
+	height: auto;
 	max-width: 100%;
-
-	&.alignleft,
-	&.alignright {
-		display: block;
-		margin: 0 auto;
-	}
-
-	@media (min-width: 920px) {
-		&.alignleft {
-			float: left;
-			margin: 1rem 1rem 1rem 0;
-		}
-
-		&.alignright {
-			float: right;
-			margin: 1rem 0 1rem 1rem;
-		}
-	}
 }
 
 p {
@@ -211,6 +213,25 @@ h4 {
 	font-size: 1.3rem;
 	line-height: 1.5;
 	margin: 0 0 0.5rem;
+}
+
+figure {
+	min-width: 200px;
+
+	img {
+		display: block;
+		margin: 0;
+	}
+
+	figcaption {
+		font-size: 0.9rem;
+		margin: 1rem 0 0;
+	}
+
+	&--border {
+		border: var(--area-border-gray-light);
+		padding: 1.5rem;
+	}
 }
 
 .wpc-skip-to-main {
