@@ -427,6 +427,11 @@
 			"status": 301
 		},
 		{
+			"source": "/about/contributors/dherman/",
+			"destination": "/about/contributors/kconcilio/",
+			"status": 301
+		},
+		{
 			"source": "/contributors/",
 			"destination": "/about/contributors/",
 			"status": 301
