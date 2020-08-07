@@ -12,7 +12,7 @@ const getDateFormat = (dateObj) => {
 
 // Adding "T" between date and time makes it work in Safari.
 const getDate = (dateStr) => {
-	dateStr = dateStr.trim().replace(/\s/,"T")
+	dateStr = dateStr.trim().replace(/\s/, "T")
 	return getDateFormat(new Date(dateStr))
 }
 
@@ -67,16 +67,34 @@ const LibraryItem = ({ item, format, headingLevel }) => {
 	// @TODO or show speaker profile name always?
 	let speakers = []
 
-	if (item.author && item.author) {
+	if (item.author && item.author.length) {
 		speakers = item.author
 	} else if (item.speakers && item.speakers.length) {
 		speakers = item.speakers
 	}
 
+	/*
+	 * Covers when some "speakers" are authors 
+	 * because they have WP user accounts and some are not.
+	 */
+	if (item.author && item.author.length
+		&& item.speakers && item.speakers.length
+		&& item.speakers.length !== item.author.length) {
+
+		for (let i = 0; i < item.speakers.length; i++) {
+			const speaker = item.speakers[i]
+			if (!speaker.wordpress_user) {
+				speakers.push(speaker)
+			}
+		}
+	}
+
 	if (speakers) {
 		speakers = speakers.map((author, i) => {
 			return <span key={i}>{i > 0 ? ", " : ""}
-				<Link to={`/about/contributors/${author.path}/`} aria-label={`Contributor: ${author.display_name}`}>{author.display_name}</Link>
+				{author.path ?
+					<Link to={`/about/contributors/${author.path}/`} aria-label={`Contributor: ${author.display_name}`}>{author.display_name}</Link>
+					: author.display_name}
 			</span>
 		})
 	}
