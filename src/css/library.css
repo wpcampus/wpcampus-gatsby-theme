@@ -53,6 +53,10 @@
 				background-image: url('../images/sessions/wpcampus-2019.png');
 			}
 
+			&--event-wpcampus-2020 {
+				background-image: url('../images/sessions/wpcampus-2020.png');
+			}
+
 			&--event-wpcampus-online-2017,
 			&--event-wpcampus-online-2018,
 			&--event-wpcampus-online-2019 {
