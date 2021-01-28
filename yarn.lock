@@ -2342,12 +2342,12 @@
     iframe-resizer "^4.2.10"
     prop-types "^15.7.2"
 
-"@wpcampus/wpcampus-wc-blog@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.1.0.tgz#b14c2aa8fbc1c86daf9677abc706d91de5b40274"
-  integrity sha512-19NKIWj+ZyC5lcXaVr1mj2/BcjozEL4SrT65f5ykDCheIQD3UB849LLI9laDfBJufKyr7jxKrOn/Gkp8US5EzA==
+"@wpcampus/wpcampus-wc-blog@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-blog/-/wpcampus-wc-blog-0.1.1.tgz#70d27fe769e3ad264bd2f48ad3275af12799210f"
+  integrity sha512-YNnEpSVIN6izfRuneVLOaz9CkeM/w1eo22exHYyw/6qEEnYMcFqqFq/u21H2mUYDDYZNdzoVMuqL6NmSjtEl7w==
   dependencies:
-    "@wpcampus/wpcampus-wc-default" "^0.0.4"
+    "@wpcampus/wpcampus-wc-default" "^0.0.5"
 
 "@wpcampus/wpcampus-wc-conduct@^0.0.9":
   version "0.0.9"
@@ -2366,6 +2366,11 @@
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-default/-/wpcampus-wc-default-0.0.4.tgz#5ba8fdd8b96b9d1f46e8d34b4b295b484f83147f"
   integrity sha512-rQuP5Qj7qQifPGMilDPAUkiF0BVb2Zhc6q6bBQ0juJnOzwa4ilczHkQa4shLIopk16keqebjYHcMn2LoEa99pA==
+
+"@wpcampus/wpcampus-wc-default@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-default/-/wpcampus-wc-default-0.0.5.tgz#fa4fbcfc5ae8d81f7f7e69b71889093431aac5ab"
+  integrity sha512-6oGAJTzH9l+5I5iqQthg4RGjqcp7UC/b2p+zoL90I9dRj9NrHmcwnhtxXboT1g+uSMbCGtf6fZN1zaWe2g0yWQ==
 
 "@wpcampus/wpcampus-wc-footer@0.1.0":
   version "0.1.0"
