@@ -87,6 +87,7 @@ module.exports = {
 				protocol: "https",
 				hostingWPCOM: false,
 				useACF: false,
+				minimizeDeprecationNotice: true,
 				includedRoutes: [
 					"**/posts",
 					"**/pages",
