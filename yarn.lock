@@ -2334,12 +2334,12 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@wpcampus/wpcampus-iframe@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-iframe/-/wpcampus-iframe-0.0.4.tgz#1b5bf29a9b657fe49c84dc7f20c7792b5f3ad2bb"
-  integrity sha512-+iN9w7Pd1I8T1ShXaA9KkV1cFfk9lmUBEKnrbVwjK/rTNNtMhrBcRYskGciwCNeF0TSXHY1/EZsZXdmxt6w8gg==
+"@wpcampus/wpcampus-iframe@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-iframe/-/wpcampus-iframe-0.0.5.tgz#c4bd2ccfc462ea9d29d3c380a060a36b396ac52e"
+  integrity sha512-jtXRwLvOFJuhT+PVPdtCz+gib+fws9OljTkWPXFXjpIMmPoE1Q5lm8kt5CRx5uMFLYcaFEJbJGBSbUtHsZhOzg==
   dependencies:
-    iframe-resizer "^4.2.10"
+    iframe-resizer "^4.3.1"
     prop-types "^15.7.2"
 
 "@wpcampus/wpcampus-wc-blog@^0.1.1":
@@ -7971,10 +7971,10 @@ iferr@^0.1.5:
   resolved "https://registry.yarnpkg.com/iferr/-/iferr-0.1.5.tgz#c60eed69e6d8fdb6b3104a1fcbca1c192dc5b501"
   integrity sha1-xg7taebY/bazEEofy8ocGS3FtQE=
 
-iframe-resizer@^4.2.10:
-  version "4.2.10"
-  resolved "https://registry.yarnpkg.com/iframe-resizer/-/iframe-resizer-4.2.10.tgz#c61c9119bb1bf31931fc3c3bb025e1891b18502c"
-  integrity sha512-9T/AWavGI5Q7nw2ch7qatkKvhK6S11eatuSh0SXpPXN3MV0HtN97KyifWJSuMj47rD6jbqe1CXT91PLQbexvEQ==
+iframe-resizer@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/iframe-resizer/-/iframe-resizer-4.3.1.tgz#7aca964ac02ba1fd2b8099b8ef30bc9a1f4f72ca"
+  integrity sha512-PkoTPNF6EYhTbDjogdKu7JVgKqRwwNBXMeywZaQyzEYM3BNltA8O9fIIrtUkmj+8VZGckXpwtXsWsaQ5lrhd0w==
 
 ignore@^4.0.6:
   version "4.0.6"
