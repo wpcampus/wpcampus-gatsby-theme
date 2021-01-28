@@ -30,7 +30,7 @@
     "gatsby-plugin-remove-generator": "^1.0.8",
     "gatsby-plugin-robots-txt": "^1.5.0",
     "gatsby-plugin-sharp": "^2.13.3",
-    "gatsby-plugin-sitemap": "^2.3.5",
+    "gatsby-plugin-sitemap": "^2.11.0",
     "gatsby-source-filesystem": "^2.10.0",
     "gatsby-source-wordpress": "^3.10.0",
     "gatsby-transformer-sharp": "^2.11.0",
