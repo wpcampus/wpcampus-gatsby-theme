@@ -2357,11 +2357,6 @@
     "@wpcampus/wpcampus-wc-default" "^0.0.5"
     file-loader "^6.2.0"
 
-"@wpcampus/wpcampus-wc-default@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-default/-/wpcampus-wc-default-0.0.1.tgz#446daec8c6fe4b8d3185dbc02f80d323078628f4"
-  integrity sha512-VYizejdAkyVEEV5n0hkleZF/sbC7QnAlzb9+cunn01g8o1uBKTMKCaP0yxVhJMgrM5Y9swj3rdZNZuwp/fJTyA==
-
 "@wpcampus/wpcampus-wc-default@^0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-default/-/wpcampus-wc-default-0.0.4.tgz#5ba8fdd8b96b9d1f46e8d34b4b295b484f83147f"
@@ -2386,13 +2381,13 @@
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.5"
 
-"@wpcampus/wpcampus-wc-subscribe@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-subscribe/-/wpcampus-wc-subscribe-0.0.1.tgz#1cb3772fda0ccae1c47ae69d28492579393c08f9"
-  integrity sha512-dd/ieXlWQDWv1t8eyVQAsFIoci3v9sCfVyBHT+PqFzGl60rwdmwHYvVfG4+oJDxj8XmdHHCMgp84/mvJK1NvFw==
+"@wpcampus/wpcampus-wc-subscribe@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-subscribe/-/wpcampus-wc-subscribe-0.0.2.tgz#61315f608a421eab1b4d99755807ad43a6302180"
+  integrity sha512-iY4PZ2Xa4XPcFQwZTKeOTCK7zKXRPiSLHmvvE+sd/M1GdcO0L16O5uCyx/jcvAPI2TFusPwUZ+CX8zUAIqZGww==
   dependencies:
-    "@wpcampus/wpcampus-wc-default" "^0.0.1"
-    file-loader "^6.0.0"
+    "@wpcampus/wpcampus-wc-default" "^0.0.5"
+    file-loader "^6.2.0"
 
 "@wpcampus/wpcampus-wc-tweets@^0.0.5":
   version "0.0.5"
@@ -6266,14 +6261,6 @@ file-loader@^1.1.11:
   dependencies:
     loader-utils "^1.0.2"
     schema-utils "^0.4.5"
-
-file-loader@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-6.0.0.tgz#97bbfaab7a2460c07bcbd72d3a6922407f67649f"
-  integrity sha512-/aMOAYEFXDdjG0wytpTL5YQLfZnnTmLNjn+AIrJ/6HVnTfDqLsVKUUwkDf4I4kgex36BvjuXEn/TX9B/1ESyqQ==
-  dependencies:
-    loader-utils "^2.0.0"
-    schema-utils "^2.6.5"
 
 file-loader@^6.2.0:
   version "6.2.0"

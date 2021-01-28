@@ -11,7 +11,7 @@
     "@wpcampus/wpcampus-wc-conduct": "^0.1.0",
     "@wpcampus/wpcampus-wc-footer": "^0.1.1",
     "@wpcampus/wpcampus-wc-notifications": "^0.0.8",
-    "@wpcampus/wpcampus-wc-subscribe": "^0.0.1",
+    "@wpcampus/wpcampus-wc-subscribe": "^0.0.2",
     "@wpcampus/wpcampus-wc-tweets": "^0.0.5",
     "btoa": "^1.2.1",
     "chalk": "^4.1.0",
