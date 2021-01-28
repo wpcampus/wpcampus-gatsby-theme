@@ -2379,12 +2379,12 @@
   dependencies:
     "@wpcampus/wpcampus-wc-default" "^0.0.5"
 
-"@wpcampus/wpcampus-wc-notifications@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-notifications/-/wpcampus-wc-notifications-0.0.7.tgz#2d144627d63ede282505826405fdd3e35480148e"
-  integrity sha512-CnJAhh5Nmkj9iqxLLPsCniLb5ORqPJWVZcFzyb+6RXgAP3HdZu0Fn/IiTcVBtCi6YNjE6NVGcWQhQnQWE5UE7w==
+"@wpcampus/wpcampus-wc-notifications@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@wpcampus/wpcampus-wc-notifications/-/wpcampus-wc-notifications-0.0.8.tgz#f3d25ddf3396a4f5d78ac0c2a36052a0af73663c"
+  integrity sha512-Tc65pKoD/EV9cVHV3c5dfSjr5un/w5MOy38MwXDm8mWGTe8tVxtYwR7hKP/fztw5yjjxHvKGgWZLCJSgL6OrZg==
   dependencies:
-    "@wpcampus/wpcampus-wc-default" "^0.0.4"
+    "@wpcampus/wpcampus-wc-default" "^0.0.5"
 
 "@wpcampus/wpcampus-wc-subscribe@^0.0.1":
   version "0.0.1"
