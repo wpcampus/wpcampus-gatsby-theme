@@ -6733,12 +6733,12 @@ gatsby-page-utils@^0.8.0:
     lodash "^4.17.20"
     micromatch "^4.0.2"
 
-gatsby-plugin-google-analytics@^2.2.4:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-google-analytics/-/gatsby-plugin-google-analytics-2.3.1.tgz#c86a4c9c31a3ad51123cbf1508e629072a7e1c5a"
-  integrity sha512-2dfaWVxAScwMMs00g5QJ4vHHOmj9i/3MWeC273zjpC8IW35IXw/ypcDg+O7Kh+Q/Xwok1pS+c+LREic8E08iYQ==
+gatsby-plugin-google-analytics@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-google-analytics/-/gatsby-plugin-google-analytics-2.10.0.tgz#e3a557779232fd919688b646e6ebd997c0575291"
+  integrity sha512-g3NjUrEPJJmjHrUxDaxgLV3rLfFXzHnGPKv4TEiqcntbuWH24rlWiZYi1btjGN+QqJMeOYGFzNILVMS8cFLxtw==
   dependencies:
-    "@babel/runtime" "^7.9.6"
+    "@babel/runtime" "^7.12.5"
     minimatch "3.0.4"
 
 gatsby-plugin-manifest@^2.11.0:
