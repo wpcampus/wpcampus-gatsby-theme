@@ -18,6 +18,7 @@
 	--nav-sub-toggle-width: 1px;
 	--nav-sub-toggle-length: 18px;
 	--nav-sub-toggle-padding-left: var(--nav-padding-right);
+	--nav-toggled-open-bg-color: #425068;
 
 	font-size: 1.15rem;
 	line-height: 1.5;
@@ -172,6 +173,12 @@
 
 		& + li.toggled-open {
 			border-top: 1px solid rgba(255, 255, 255, 0.3);
+		}
+	}
+
+	li.nav-listitem--current {
+		& > ul {
+			background-color: var(--nav-toggled-open-bg-color);
 		}
 	}
 

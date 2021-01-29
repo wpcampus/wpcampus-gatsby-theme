@@ -38,11 +38,11 @@
 	}
 
 	/**
-     * Merges user options with the default settings.
-     * @private
-     * @param {Object} defaults Default settings.
-     * @param {Object} options  User settings.
-     */
+	 * Merges user options with the default settings.
+	 * @private
+	 * @param {Object} defaults Default settings.
+	 * @param {Object} options  User settings.
+	 */
 	const extendDefaults = (defaults, options) => {
 		let property
 
@@ -56,9 +56,9 @@
 	}
 
 	/**
-     * Updates the `button` element used for toggling the display of the menu.
-     * @private
-     */
+	 * Updates the `button` element used for toggling the display of the menu.
+	 * @private
+	 */
 	const updateMenuToggle = () => {
 		const menuToggle = settings.nav.querySelector(".menu-toggle")
 
@@ -71,9 +71,9 @@
 	}
 
 	/**
-     * Returns the `button` element to use for toggling the display of submenus.
-     * @private
-     */
+	 * Returns the `button` element to use for toggling the display of submenus.
+	 * @private
+	 */
 	const getSubmenuToggle = () => {
 		const toggleButton = document.createElement("button")
 
@@ -88,9 +88,9 @@
 	}
 
 	/**
-     * Adds `button` elements for toggling the display of submenus.
-     * @private
-     */
+	 * Adds `button` elements for toggling the display of submenus.
+	 * @private
+	 */
 	const addSubmenuToggles = () => {
 		const menu = settings.nav.querySelector("ul")
 
@@ -145,8 +145,8 @@
 	 * @param {string} focusSelector
 	 * @return {Object} element
 	 */
-	const getfirstFocusableElement = ( container, focusSelector ) => {
-		const focusableElements = container.querySelectorAll( focusSelector )
+	const getfirstFocusableElement = (container, focusSelector) => {
+		const focusableElements = container.querySelectorAll(focusSelector)
 		return focusableElements[0]
 	}
 
@@ -157,9 +157,9 @@
 	 * @param {string} focusSelector
 	 * @return {Object} element
 	 */
-	const getlastFocusableElement = ( container, focusSelector ) => {
-		const focusableElements = container.querySelectorAll( focusSelector )
-		return focusableElements[ focusableElements.length - 1 ]
+	const getlastFocusableElement = (container, focusSelector) => {
+		const focusableElements = container.querySelectorAll(focusSelector)
+		return focusableElements[focusableElements.length - 1]
 	}
 
 	/**
@@ -187,8 +187,8 @@
 
 				// Which elements are focus-able in the nav.
 				let focusSelector = "a, button"
-			
-				if ( event.shiftKey ) {
+
+				if (event.shiftKey) {
 
 					// Means we're tabbing out of the beginning of the submenu.
 					if (document.activeElement === getfirstFocusableElement(settings.nav, focusSelector)) {
@@ -196,7 +196,7 @@
 						getlastFocusableElement(settings.nav, focusSelector).focus()
 					}
 
-				// Means we're tabbing out of the end of the submenu.
+					// Means we're tabbing out of the end of the submenu.
 				} else if (document.activeElement === getlastFocusableElement(settings.nav, focusSelector)) {
 					event.preventDefault()
 					getfirstFocusableElement(settings.nav, focusSelector).focus()
@@ -207,12 +207,12 @@
 	}
 
 	/**
-     * Toggles classes and attributes used for handling the display of the menu.
+	 * Toggles classes and attributes used for handling the display of the menu.
 	 *
 	 * @private
-     * @param {Event}  event    The click event target.
-     * @param {Boolean} expand True if we're expanding.
-     */
+	 * @param {Event}  event    The click event target.
+	 * @param {Boolean} expand True if we're expanding.
+	 */
 	const toggleMenu = (target, expand) => {
 
 		const expandStr = true === expand ? "true" : "false"
@@ -230,11 +230,11 @@
 	}
 
 	/**
-     * Toggles classes and attributes used for handling the display of submenus.
-     * @private
-     * @param {Event}  target   The click event target.
-     * @param {Boolean} expand True if we're expanding.
-     */
+	 * Toggles classes and attributes used for handling the display of submenus.
+	 * @private
+	 * @param {Event}  target   The click event target.
+	 * @param {Boolean} expand True if we're expanding.
+	 */
 	const toggleSubmenu = (target, expand) => {
 
 		const expandStr = true === expand ? "true" : "false"
@@ -248,10 +248,10 @@
 	}
 
 	/**
-     * Handles click events on the navigation element.
-     * @private
-     * @param {Event} event The click event.
-     */
+	 * Handles click events on the navigation element.
+	 * @private
+	 * @param {Event} event The click event.
+	 */
 	const clickHandler = event => {
 		const target = event.target
 		const expanded =
@@ -267,10 +267,10 @@
 	}
 
 	/**
-     * Ensures that the appropriate attributes and classes are in place
-     * on either side of the mobile styling breakpoint.
-     * @private
-     */
+	 * Ensures that the appropriate attributes and classes are in place
+	 * on either side of the mobile styling breakpoint.
+	 * @private
+	 */
 	const resizeHandler = () => {
 		// Return early if there is no breakpoint setting.
 		if (!settings.breakpoint) return
@@ -303,9 +303,9 @@
 	}
 
 	/**
-     * Ensures proper positioning of the navigation when the page scrolled.
-     * @private
-     */
+	 * Ensures proper positioning of the navigation when the page scrolled.
+	 * @private
+	 */
 	const positionNav = () => {
 		const windowTop = window.pageYOffset
 		const bottomedOut =
@@ -337,10 +337,10 @@
 	}
 
 	/**
-     * Ensures that the `positionNav` function fires only when needed,
-     * and uses the `requestAnimationFrame` method for optimal performance.
-     * @private
-     */
+	 * Ensures that the `positionNav` function fires only when needed,
+	 * and uses the `requestAnimationFrame` method for optimal performance.
+	 * @private
+	 */
 	const scrollHandler = () => {
 		if (
 			(!settings.breakpoint || settings.breakpoint < window.innerWidth) &&
@@ -352,10 +352,10 @@
 	}
 
 	/**
-     * Toggles the `focus` class for menu items with submenus.
-     * @private
-     * @param {Event} event The focus or blur event.
-     */
+	 * Toggles the `focus` class for menu items with submenus.
+	 * @private
+	 * @param {Event} event The focus or blur event.
+	 */
 	const focusHandler = event => {
 		if ("A" !== event.target.tagName) return
 
@@ -376,9 +376,9 @@
 	}
 
 	/**
-     * Destroys the current initialization.
-     * @public
-     */
+	 * Destroys the current initialization.
+	 * @public
+	 */
 	navigation.destroy = () => {
 		// If plugin isn't already initialized, stop.
 		if (!settings) return
@@ -396,17 +396,17 @@
 	}
 
 	/**
-     * Initializes the plugin.
-     *
+	 * Initializes the plugin.
+	 *
 	 * @public
-     * @param {Object}  options             User settings.
-     * @param {Number}  options.breakpoint  Pixel width at which the navigation is styled for mobile devices. Defaults to `null`
-     * @param {Object}  options.main        The element containing the page's content. Required. Defaults to `null`.
-     * @param {Boolean} options.minHeights  Whether the plugin should set min heights on the main and nav elements. Defaults to `true`.
-     * @param {Object}  options.nav         The element containing the navigation. Required. Defaults to `null`.
-     * @param {String}  options.orientation The orientation of the navigation. Accepts `vertical` or `horizontal`. Defaults to `vertical`.
-     * @param {Number}  options.position    Initial `top` value of the navigation element from CSS, if set. Defaults to `0`.
-     */
+	 * @param {Object}  options             User settings.
+	 * @param {Number}  options.breakpoint  Pixel width at which the navigation is styled for mobile devices. Defaults to `null`
+	 * @param {Object}  options.main        The element containing the page's content. Required. Defaults to `null`.
+	 * @param {Boolean} options.minHeights  Whether the plugin should set min heights on the main and nav elements. Defaults to `true`.
+	 * @param {Object}  options.nav         The element containing the navigation. Required. Defaults to `null`.
+	 * @param {String}  options.orientation The orientation of the navigation. Accepts `vertical` or `horizontal`. Defaults to `vertical`.
+	 * @param {Number}  options.position    Initial `top` value of the navigation element from CSS, if set. Defaults to `0`.
+	 */
 	navigation.init = options => {
 		// Check for required settings.
 		if (!options.nav || !options.main) return
@@ -418,6 +418,13 @@
 		settings = extendDefaults(defaults, options || {})
 
 		updateMenuToggle()
+
+		const menuItems = settings.nav.querySelectorAll("ul > li > a")
+		menuItems.forEach(item => {
+			if (item.classList.contains("nav-link--current")) {
+				item.parentNode.classList.add("nav-listitem--current")
+			}
+		})
 
 		addSubmenuToggles()
 
