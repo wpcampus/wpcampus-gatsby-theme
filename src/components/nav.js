@@ -110,6 +110,10 @@ const NavPrimaryItems = [
 				]
 			},
 			{
+				path: "/community/planning/",
+				text: "Planning Blog"
+			},
+			{
 				path: "/community/directory/",
 				text: "Directory"
 			},
