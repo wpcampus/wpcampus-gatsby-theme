@@ -117,7 +117,15 @@ const NavPrimaryItems = [
 			},
 			{
 				path: "/community/planning/",
-				text: "Planning Blog"
+				text: "Planning Blog",
+				children: [
+					{
+						href: "http://eepurl.com/hppn0T",
+						targetBlank: true,
+						aria_label: "Subscribe to Planning Blog updates",
+						text: "Subscribe to updates"
+					}
+				]
 			},
 			{
 				path: "/community/directory/",
