@@ -45,6 +45,7 @@ const TweetsWidget = () => {
 				<a href="https://twitter.com/wpcampusorg" aria-label="Follow WPCampus on Twitter">@wpcampusorg</a>
 			</h2>
 			<wpcampus-tweets></wpcampus-tweets>
+			<a className="wpc-button wpc-button--primary" href="https://twitter.com/wpcampusorg">Follow @wpcampusorg on Twitter</a>
 		</Widget>
 	})
 }
