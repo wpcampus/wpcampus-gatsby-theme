@@ -88,6 +88,11 @@ const NavPrimaryItems = [
 			{
 				path: "/blog/categories/",
 				text: "Categories"
+			},
+			{
+				href: "http://eepurl.com/dOd-Q9",
+				targetBlank: true,
+				text: "Subscribe to updates"
 			}
 		]
 	},
