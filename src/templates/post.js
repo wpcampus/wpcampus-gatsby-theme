@@ -44,7 +44,8 @@ const PostTemplate = props => {
 		isSingle: true,
 		displayContentFull: true,
 		headerPrefix: <Link to="/blog/">From our Community Blog</Link>,
-		paginationAdj: paginationAdj
+		paginationAdj: paginationAdj,
+		displaySubscribe: true,
 	}
 	return (
 		<Layout {...layoutAttr} >

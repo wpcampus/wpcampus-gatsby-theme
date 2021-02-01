@@ -49,6 +49,10 @@
 			}
 		}
 
+		.wpc-button {
+			margin-top: 1.5rem;
+		}
+
 		&::after {
 			content: '';
 			display: block;

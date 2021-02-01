@@ -161,7 +161,15 @@ ArticleMeta.propTypes = {
 	data: PropTypes.object.isRequired,
 }
 
-const ArticleHeader = ({ data, displayMeta, headingLevel, headerPrefix, includeLink }) => {
+const ArticleSubscribeCommunity = () => {
+	return <a className="wpc-button" href="http://eepurl.com/dOd-Q9" target="_blank" rel="noreferrer">Subscribe to Community Blog updates</a>
+}
+
+const ArticleSubscribePlanning = () => {
+	return <a className="wpc-button" href="http://eepurl.com/hppn0T" target="_blank" rel="noreferrer">Subscribe to Planning Blog updates</a>
+}
+
+const ArticleHeader = ({ data, displayMeta, displaySubscribe, isPlanning, headingLevel, headerPrefix, includeLink }) => {
 	const articleTitleAttr = {
 		data: data,
 		includeLink: includeLink
@@ -176,6 +184,7 @@ const ArticleHeader = ({ data, displayMeta, headingLevel, headerPrefix, includeL
 		{headerPrefix ? <span className="wpc-article-prefix">{headerPrefix}:</span> : null}
 		<ArticleTitle {...articleTitleAttr} />
 		{displayMeta ? <ArticleMeta data={data} /> : null}
+		{displaySubscribe ? isPlanning ? <ArticleSubscribePlanning /> : <ArticleSubscribeCommunity /> : null}
 	</header>
 }
 
@@ -183,12 +192,16 @@ ArticleHeader.propTypes = {
 	data: PropTypes.object.isRequired,
 	headingLevel: PropTypes.number,
 	displayMeta: PropTypes.bool,
+	displaySubscribe: PropTypes.bool,
 	headerPrefix: PropTypes.node,
-	includeLink: PropTypes.bool
+	includeLink: PropTypes.bool,
+	isPlanning: PropTypes.bool,
 }
 
 ArticleHeader.defaultProps = {
-	displayMeta: true
+	displayMeta: true,
+	displaySubscribe: false,
+	isPlanning: false,
 }
 
 const ArticleContent = ({ data, displayContentFull }) => {
@@ -236,11 +249,13 @@ const Article = ({
 	children,
 	wpc_protected,
 	isSingle,
+	isPlanning,
 	headerPrefix,
 	headingLevel,
 	includeLink,
 	displayAuthor,
 	displayMeta,
+	displaySubscribe,
 	displayContent,
 	displayContentFull,
 	paginationAdj
@@ -257,6 +272,8 @@ const Article = ({
 		isSingle: isSingle,
 		headerPrefix: headerPrefix,
 		displayMeta: displayMeta,
+		isPlanning: isPlanning,
+		displaySubscribe: displaySubscribe,
 		includeLink: includeLink
 	}
 
@@ -292,8 +309,10 @@ Article.propTypes = {
 	headingLevel: PropTypes.number,
 	includeLink: PropTypes.bool,
 	isSingle: PropTypes.bool,
+	isPlanning: PropTypes.bool,
 	displayAuthor: PropTypes.bool,
 	displayMeta: PropTypes.bool,
+	displaySubscribe: PropTypes.bool,
 	displayContent: PropTypes.bool,
 	displayContentFull: PropTypes.bool,
 	paginationAdj: PropTypes.node
@@ -302,9 +321,11 @@ Article.propTypes = {
 Article.defaultProps = {
 	displayAuthor: true,
 	displayMeta: true,
+	displaySubscribe: false,
 	displayContent: true,
 	displayContentFull: false,
 	isSingle: true,
+	isPlanning: false,
 }
 
 export default Article
