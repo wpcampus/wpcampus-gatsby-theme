@@ -16,7 +16,7 @@ export default function Template(props) {
 	// @TODO add meta description?
 
 	return (
-		<Layout pageTitle="Blog" heading="The WPCampus Blog" crumbs={crumbs} path={props.path}>
+		<Layout pageTitle="Blog" heading="The WPCampus Community Blog" crumbs={crumbs} path={props.path}>
 			<ArticleArchive list={props.data.allWordpressPost.edges} />
 		</Layout>
 	)
