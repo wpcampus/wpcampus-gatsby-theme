@@ -96,7 +96,7 @@ const ArticleMetaAuthors = ({ authors }) => {
 		{authors.map((item, i) => {
 			const contributorPath = contributorPathBase + item.path + "/"
 			return <li key={i}>
-				<Link to={contributorPath}>{item.display_name}</Link>
+				<Link to={contributorPath} aria_label={`Posts from contributor ${item.display_name}`}>{item.display_name}</Link>
 			</li>
 		})}
 	</ul>
