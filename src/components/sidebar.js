@@ -30,6 +30,7 @@ const BlogWidget = () => {
 				<span className="wpc-icon wpc-icon--quotes"></span>
 				<Link aria-label="The WPCampus Blog" to="/blog">From our Blog</Link></h2>
 			<wpcampus-blog></wpcampus-blog>
+			<a className="wpc-button wpc-button--primary" href="http://eepurl.com/dOd-Q9" target="_blank" rel="noreferrer">Subscribe to Community Blog updates</a>
 		</Widget>
 	})
 }
