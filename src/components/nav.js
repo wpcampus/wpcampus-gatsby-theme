@@ -92,6 +92,7 @@ const NavPrimaryItems = [
 			{
 				href: "http://eepurl.com/dOd-Q9",
 				targetBlank: true,
+				aria_label: "Subscribe to Community Blog updates",
 				text: "Subscribe to updates"
 			}
 		]
