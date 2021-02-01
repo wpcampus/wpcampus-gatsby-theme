@@ -336,6 +336,19 @@ button {
 		border-color: var(--wpc-blue-dark);
 		color: #fff;
 	}
+
+	&--dark {
+		background-color: var(--wpc-gray-dark);
+		border-color: var(--wpc-gray-dark);
+		color: #fff;
+
+		&:hover,
+		&:focus {
+			background-color: var(--wpc-blue-royal);
+			border-color: var(--wpc-blue-royal);
+			color: #fff;
+		}
+	}
 }
 
 .wpc-callout {
