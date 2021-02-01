@@ -105,7 +105,7 @@ const NavPrimaryItems = [
 				children: [
 					{
 						path: "/community/slack/channels/",
-						text: "Slack channels",
+						text: "Our Slack channels",
 					}
 				]
 			},
