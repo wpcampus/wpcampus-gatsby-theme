@@ -108,8 +108,8 @@ const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete })
 	const sortByType = {
 		post: {
 			id: "post",
-			label: "Blog posts",
-			plural: "blog posts",
+			label: "Community Blog",
+			plural: "Community Blog posts",
 			to: "/blog/",
 			results: []
 		},

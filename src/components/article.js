@@ -62,7 +62,7 @@ const ArticleCategories = ({ list, type }) => (
 					linkAttr["aria-label"] = item.aria_label
 				} else {
 					if ("post" == type) {
-						linkAttr["aria-label"] = `Blog category: ${item.name}`
+						linkAttr["aria-label"] = `Community Blog category: ${item.name}`
 					} else if ("podcast" == type) {
 						linkAttr["aria-label"] = `Podcast category: ${item.name}`
 					} else {

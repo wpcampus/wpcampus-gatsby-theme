@@ -9,14 +9,14 @@ export default function Template(props) {
 	const crumbs = {
 		crumb: {
 			path: props.path,
-			text: "Blog"
+			text: "Community Blog"
 		}
 	}
 
 	// @TODO add meta description?
 
 	return (
-		<Layout pageTitle="Blog" heading="The WPCampus Community Blog" crumbs={crumbs} path={props.path}>
+		<Layout pageTitle="Community Blog" heading="The WPCampus Community Blog" crumbs={crumbs} path={props.path}>
 			<ArticleArchive list={props.data.allWordpressPost.edges} />
 		</Layout>
 	)

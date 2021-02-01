@@ -7,7 +7,7 @@ import CategoryTemplate from "./category"
 const CategoryPost = ({ path, data, pageContext }) => {
 	const context = pageContext
 	const category = context.category
-	const pageTitle = `Blog posts about ${category.name}`
+	const pageTitle = `Community Blog posts about ${category.name}`
 	return (
 		<CategoryTemplate
 			pageTitle={pageTitle}

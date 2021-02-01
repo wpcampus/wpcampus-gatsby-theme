@@ -15,7 +15,7 @@ const normalizeCategories = (categories) => {
 	}
 	return categories.map(category => {
 		category.path = `/blog/categories/${category.slug}`
-		category.aria_label = `Blog post category: ${category.name}`
+		category.aria_label = `Community Blog post category: ${category.name}`
 		return category
 	})
 }

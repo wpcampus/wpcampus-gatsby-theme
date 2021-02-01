@@ -918,7 +918,7 @@ exports.createPages = async ({ graphql, actions }) => {
 					parent_element: {
 						crumb: {
 							path: "/blog/",
-							text: "Blog"
+							text: "Community Blog"
 						}
 					}
 				},
@@ -1018,10 +1018,10 @@ exports.createPages = async ({ graphql, actions }) => {
 		parentCrumbs: {
 			crumb: {
 				path: "/blog/",
-				text: "Blog"
+				text: "Community Blog"
 			}
 		},
-		archiveHeading: "Blog categories",
+		archiveHeading: "Community Blog categories",
 		graphql,
 		createPage
 	})
