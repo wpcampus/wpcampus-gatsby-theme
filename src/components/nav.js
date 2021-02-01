@@ -274,7 +274,9 @@ const NavAnchor = ({ item }) => {
 	if (item.title) {
 		anchorAttr.title = item.title
 	}
-	if (item.target) {
+	if (item.targetBlank !== undefined && true === item.targetBlank) {
+		anchorAttr.target = "_blank"
+	} else if (item.target) {
 		anchorAttr.target = item.target
 	}
 	return (<a {...anchorAttr}>{item.text}</a>)
