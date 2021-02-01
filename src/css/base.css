@@ -357,12 +357,28 @@ button {
 	border-width: 0;
 	border-color: #d8d8d8;
 	margin: 1rem 0 2rem;
-	padding: 1.25rem;
+	padding: 1.5rem;
 	color: #333;
+
+	h2 {
+		font-size: 1.75rem;
+	}
+
+	& > *:first-child {
+		margin-top: 0;
+	}
+
+	& > *:last-child {
+		margin-bottom: 0;
+	}
 
 	&--center {
 		text-align: center;
 	}
+}
+
+p + .wpc-callout {
+	margin-top: 1.5rem;
 }
 
 nav.wpc-nav {
