@@ -125,7 +125,7 @@ const NavPrimaryItems = [
 			},
 			{
 				path: "/about/governance/",
-				text: "Governance"
+				text: "Our Governance"
 			},
 			{
 				path: "/about/guidelines/",
