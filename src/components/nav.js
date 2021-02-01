@@ -115,7 +115,7 @@ const NavPrimaryItems = [
 			},
 			{
 				path: "/community/directory/",
-				text: "Directory"
+				text: "Our Directory"
 			},
 			{
 				path: "/about/governance/",
