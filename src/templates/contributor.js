@@ -22,6 +22,14 @@ const ContributorTemplate = props => {
 		</div>
 	}
 
+	let planning
+	if (props.data.allWordpressWpPlanning.edges.length) {
+		planning = <div className="wpc-contributor-results__result wpc-contributor-results__result--planning">
+			<h2 className="wpc-contributor-results__result__heading"><span className="wpc-icon wpc-icon--quotes"></span> <Link className="wpc-link wpc-link--inherit" to="/community/planning/">From our Planning Blog</Link></h2>
+			<ArticleArchive headingLevel={3} list={props.data.allWordpressWpPlanning.edges} />
+		</div>
+	}
+
 	let podcasts
 	if (props.data.allWordpressWpPodcast.edges.length) {
 		podcasts = <div className="wpc-contributor-results__result wpc-contributor-results__result--podcast">
@@ -44,9 +52,10 @@ const ContributorTemplate = props => {
 		<Layout heading={heading} crumbs={context.crumbs} path={props.path}>
 			<AuthorCard author={contributor} />
 			<div className="wpc-contributor-results">
-				{posts}
-				{podcasts}
 				{sessions}
+				{posts}
+				{planning}
+				{podcasts}
 			</div>
 		</Layout>
 	)
@@ -119,7 +128,42 @@ export const query = graphql`
         }
       }
     }
-    allWordpressWpPodcast(
+	allWordpressWpPlanning(
+      filter: {
+        status: { eq: "publish" }
+		author: { elemMatch: { id: { eq: $id } } },
+		wpc_gatsby: { disable: { eq: false } }
+      }
+      sort: { fields: date, order: DESC }
+    ) {
+      edges {
+        node {
+          id
+		  wordpress_id
+		  type
+          slug
+          path
+          author {
+            id
+			path
+			display_name
+			email
+			twitter
+			website
+			company
+			company_position
+			bio
+          }
+          title
+          status
+          date
+          dateFormatted: date(formatString: "MMMM D, YYYY")
+          excerpt
+          content
+        }
+      }
+	}
+	allWordpressWpPodcast(
       filter: {
         status: { eq: "publish" }
 		author: { elemMatch: { id: { eq: $id } } },
