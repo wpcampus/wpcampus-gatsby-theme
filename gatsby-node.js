@@ -81,7 +81,18 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 		schema.buildObjectType({
 			name: "wpcGatsby",
 			fields: {
-				disable: "Boolean",
+				disable: {
+					type: "Boolean",
+					resolve(source) {
+						if (undefined === source.disable || !source.disable) {
+							return false
+						}
+						if (true === source.disable) {
+							return true
+						}
+						return false
+					}
+				},
 				template: "String",
 				forms: "[wpcForm]"
 			},
