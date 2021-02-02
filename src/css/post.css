@@ -18,6 +18,38 @@
 		}
 	}
 
+	.wpc-article__content {
+		h2 {
+			position: relative;
+
+			&::before {
+				content: '';
+				display: block;
+				width: 100%;
+				height: 2px;
+				background: #444;
+				position: absolute;
+				right: 102%;
+				top: 50%;
+			}
+		}
+
+		h3 {
+			position: relative;
+
+			&::before {
+				content: '';
+				display: block;
+				width: 100%;
+				height: 2px;
+				background: #ccc;
+				position: absolute;
+				right: 102%;
+				top: 50%;
+			}
+		}
+	}
+
 	.wpc-article__header {
 		text-align: center;
 		padding: 0 5rem 4rem;
@@ -167,6 +199,10 @@
 
 	/* Laptop */
 	@media (min-width: 920px) {
+		.wpc-main {
+			overflow: hidden;
+		}
+
 		.wpc-body__areas {
 			background: url(../images/heros/hero1.png) center -175px fixed;
 			grid-template-rows: var(--header-height) auto auto 1fr;

@@ -153,6 +153,14 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			interfaces: ["Node"],
 		}),
 		schema.buildObjectType({
+			name: "wordpress__wp_planning",
+			fields: {
+				wpc_gatsby: "wpcGatsby",
+				wpc_seo: "wpcSEO"
+			},
+			interfaces: ["Node"],
+		}),
+		schema.buildObjectType({
 			name: "wordpress__wp_podcast",
 			fields: {
 				"episode_featured_image": {
@@ -447,7 +455,7 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 	 *
 	 * This connects an array of author IDs (instead of a single ID) to their contributor nodes.
 	 */
-	const hasContributorTypes = ["wordpress__wp_podcast", "wordpress__POST"]
+	const hasContributorTypes = ["wordpress__wp_planning", "wordpress__wp_podcast", "wordpress__POST"]
 
 	getNodes()
 		.filter(node => { if (hasContributorTypes.includes(node.internal.type)) return node })
@@ -524,7 +532,7 @@ const podcastCategoriesQuery = `
 /**
  * Build category archives.
  * 
- * One for blog posts and one for podcasts.
+ * One for blog posts, planning blog, and podcasts.
  * 
  * Query content and create a category page
  * for all categories assigned to content.
@@ -557,7 +565,9 @@ const createCategoriesPages = async ({ type, categoriesPath, parentCrumbs, archi
 
 	// Get the data.
 	let postData = []
-	if ("podcast" === type) {
+	if ("planning" === type) {
+		postData = results.data.allWordpressWpPlanning.edges
+	} else if ("podcast" === type) {
 		postData = results.data.allWordpressWpPodcast.edges
 	} else if ("post" == type) {
 		postData = results.data.allWordpressPost.edges
@@ -686,12 +696,12 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	/*
-   	 * Build pages from WordPress "page" post type.
-   	 * 
-   	 * @TODO remove fields we're not using.
-   	 * 
-   	 * @TODO this means we can't have more than 5 levels of crumbs.
-   	 */
+		   * Build pages from WordPress "page" post type.
+		   * 
+		   * @TODO remove fields we're not using.
+		   * 
+		   * @TODO this means we can't have more than 5 levels of crumbs.
+		   */
 	const pages = await graphql(`
 		query {
 			allWordpressPage(
@@ -836,10 +846,10 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	/*
-   	 * Build blog posts from WordPress "post" post type.
-   	 * 
-   	 * @TODO remove fields we're not using.
-   	 */
+		   * Build blog posts from WordPress "post" post type.
+		   * 
+		   * @TODO remove fields we're not using.
+		   */
 	const posts = await graphql(`
 		query {
 			allWordpressPost(
@@ -930,6 +940,93 @@ exports.createPages = async ({ graphql, actions }) => {
 						crumb: {
 							path: "/blog/",
 							text: "Community Blog"
+						}
+					}
+				},
+			},
+		})
+	})
+
+	/*
+	 * Create main planning page.
+	 */
+	createPage({
+		path: "/community/planning/",
+		component: path.resolve("src/templates/plannings.js")
+	})
+
+	/*
+	 * Build planning posts from WordPress "planning" post type.
+	 * 
+	 * @TODO remove fields we're not using.
+	 */
+	const planningPosts = await graphql(`
+		query {
+			allWordpressWpPlanning(
+				filter: {
+					status: { eq: "publish" },
+					wpc_gatsby: { disable: { eq: false } }
+				}
+			) {
+				edges {
+					previous {
+						id
+						wordpress_id
+						slug
+						path
+						title
+						date
+					}
+					next {
+						id
+						wordpress_id
+						slug
+						path
+						title
+						date
+					}
+					node {
+						id
+						path
+						title
+						wpc_gatsby {
+							disable
+						}
+					}
+				}
+			}
+		}
+	`)
+
+	const planningTemplate = path.resolve("./src/templates/planning.js")
+	planningPosts.data.allWordpressWpPlanning.edges.forEach(edge => {
+
+		// Don't build disabled planning posts.
+		if (true === edge.node.wpc_gatsby.disable) {
+			return
+		}
+
+		createPage({
+			// will be the url for the page
+			path: edge.node.path,
+			// specify the component template of your choice
+			component: slash(planningTemplate),
+			// In the ^template's GraphQL query, 'id' will be available
+			// as a GraphQL variable to query for this posts's data.
+			context: {
+				id: edge.node.id,
+				next: edge.next,
+				previous: edge.previous,
+				formOrigin: `https://${process.env.GATSBY_WPC_WORDPRESS}`,
+				crumbs: {
+					crumb: {
+						path: edge.node.path,
+						text: edge.node.title,
+					},
+					parent_element: {
+						crumb: {
+							path: "/community/planning/",
+							text: "Planning"
 						}
 					}
 				},
@@ -1061,10 +1158,10 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	/**
-   	 * Build contributor pages from WordPress users list.
-   	 * 
-   	 * @TODO remove fields we're not using.
-   	 */
+		   * Build contributor pages from WordPress users list.
+		   * 
+		   * @TODO remove fields we're not using.
+		   */
 	const authors = await graphql(`
 		query {
 			allWordpressWpcContributors {
@@ -1115,46 +1212,46 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	/**
-   	 * Build contributor archive from WordPress users list.
-   	 * 
-   	 * @TODO remove fields we're not using.
-   	 */
+		   * Build contributor archive from WordPress users list.
+		   * 
+		   * @TODO remove fields we're not using.
+		   */
 	/*const members = await graphql(`
-    query {
-      allWordpressWpMembers(
-        filter: { type: { eq: "member" }, status: { eq: "publish" } }
-      ) {
-        edges {
-          node {
-            id
-            path
-            template
-            wpc_protected {
-              protected
-              user_roles {
-                enable
-                disable
-              }
-              message
-            }
-          }
-        }
-      }
-    }
+	query {
+	  allWordpressWpMembers(
+		filter: { type: { eq: "member" }, status: { eq: "publish" } }
+	  ) {
+		edges {
+		  node {
+			id
+			path
+			template
+			wpc_protected {
+			  protected
+			  user_roles {
+				enable
+				disable
+			  }
+			  message
+			}
+		  }
+		}
+	  }
+	}
   `)
   const memberPageTemplate = path.resolve(`./src/templates/memberPage.js`)
   members.data.allWordpressWpMembers.edges.forEach(edge => {
-    createPage({
-      // will be the url for the page
-      path: edge.node.path,
-      // specify the component template of your choice
-      component: slash(memberPageTemplate),
-      // In the ^template's GraphQL query, 'id' will be available
-      // as a GraphQL variable to query for this data.
-      context: {
-        id: edge.node.id,
-        wpc_protected: edge.node.wpc_protected,
-      },
-    })
+	createPage({
+	  // will be the url for the page
+	  path: edge.node.path,
+	  // specify the component template of your choice
+	  component: slash(memberPageTemplate),
+	  // In the ^template's GraphQL query, 'id' will be available
+	  // as a GraphQL variable to query for this data.
+	  context: {
+		id: edge.node.id,
+		wpc_protected: edge.node.wpc_protected,
+	  },
+	})
   })*/
 }
