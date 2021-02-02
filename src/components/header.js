@@ -140,7 +140,7 @@ const HeaderHomeBanner1 = () => {
 		showSubmitIcon: true
 	}
 
-	const memberCount = "1,365"
+	const memberCount = "1,474"
 	const institutionCount = "688"
 
 	return <div className="wpc-home-banner">
