@@ -52,10 +52,10 @@ const ContributorTemplate = props => {
 		<Layout heading={heading} crumbs={context.crumbs} path={props.path}>
 			<AuthorCard author={contributor} />
 			<div className="wpc-contributor-results">
+				{sessions}
 				{posts}
 				{planning}
 				{podcasts}
-				{sessions}
 			</div>
 		</Layout>
 	)
