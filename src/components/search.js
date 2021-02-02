@@ -68,7 +68,7 @@ const SearchResultsByType = ({ label, id, results, headingLevel, headingTo, plur
 
 		resultsMarkup = <LibraryLayout itemHeadingLevel={headingLevel} enableFilters={false} library={results} />
 
-	} else if (["post","podcast"].includes(id)) {
+	} else if (["planning","post","podcast"].includes(id)) {
 
 		// Have to modify to match component.
 		results = results.map(item => {
@@ -106,13 +106,6 @@ SearchResultsByType.defaultProps = {
 
 const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete }) => {
 	const sortByType = {
-		post: {
-			id: "post",
-			label: "Community Blog",
-			plural: "Community Blog posts",
-			to: "/blog/",
-			results: []
-		},
 		session: {
 			id: "session",
 			label: "Learning Library",
@@ -124,6 +117,20 @@ const SearchResults = ({ searchQuery, results, headingLevel, isSearchComplete })
 			id: "page",
 			label: "Pages",
 			plural: "pages",
+			results: []
+		},
+		post: {
+			id: "post",
+			label: "Community Blog",
+			plural: "Community Blog posts",
+			to: "/blog/",
+			results: []
+		},
+		planning: {
+			id: "planning",
+			label: "Planning Blog",
+			plural: "Planning Blog posts",
+			to: "/community/planning/",
 			results: []
 		},
 		podcast: {
@@ -414,7 +421,7 @@ class SearchLayout extends React.Component {
 		let url = wpcSearchURL
 
 		// What post types do we want?
-		url += "?subtype=page,post,podcast"
+		url += "?subtype=page,planning,post,podcast"
 
 		// Add search value.
 		url += "&search=" + encodedSearchStr
