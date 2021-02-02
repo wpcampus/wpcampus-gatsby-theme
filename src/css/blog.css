@@ -1,0 +1,8 @@
+@media (min-width: 920px) {
+	.blog-about {
+		display: grid;
+		grid-template-columns: 50% 1fr;
+		column-gap: 2rem;
+		align-items: flex-start;
+	}
+}

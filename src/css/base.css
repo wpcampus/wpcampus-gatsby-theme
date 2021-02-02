@@ -200,13 +200,13 @@ h1 {
 h2 {
 	font-size: 2rem;
 	line-height: 1.3;
-	margin: 2rem 0 1rem;
+	margin: 2.5rem 0 1rem;
 }
 
 h3 {
 	font-size: 1.6rem;
 	line-height: 1.4;
-	margin: 0 0 0.5rem;
+	margin: 1.75rem 0 0.5rem;
 }
 
 h4 {
@@ -318,6 +318,7 @@ button {
 
 	&--expand {
 		display: block;
+		margin: 1.5rem 0 2rem;
 	}
 
 	&--plain {
@@ -336,6 +337,19 @@ button {
 		border-color: var(--wpc-blue-dark);
 		color: #fff;
 	}
+
+	&--dark {
+		background-color: var(--wpc-gray-dark);
+		border-color: var(--wpc-gray-dark);
+		color: #fff;
+
+		&:hover,
+		&:focus {
+			background-color: var(--wpc-blue-royal);
+			border-color: var(--wpc-blue-royal);
+			color: #fff;
+		}
+	}
 }
 
 .wpc-callout {
@@ -344,12 +358,28 @@ button {
 	border-width: 0;
 	border-color: #d8d8d8;
 	margin: 1rem 0 2rem;
-	padding: 1.25rem;
+	padding: 1.5rem;
 	color: #333;
+
+	h2 {
+		font-size: 1.75rem;
+	}
+
+	& > *:first-child {
+		margin-top: 0;
+	}
+
+	& > *:last-child {
+		margin-bottom: 0;
+	}
 
 	&--center {
 		text-align: center;
 	}
+}
+
+p + .wpc-callout {
+	margin-top: 1.5rem;
 }
 
 nav.wpc-nav {

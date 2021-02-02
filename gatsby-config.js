@@ -93,6 +93,7 @@ module.exports = {
 					"**/pages",
 					"**/categories",
 					"**/podcast",
+					"**/planning",
 					//"**/members", // @TODO security concern?
 				],
 				auth: {

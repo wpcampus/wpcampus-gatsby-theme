@@ -43,15 +43,11 @@
 						margin: 0.1rem 0 0;
 					}
 				}
-
-				&:last-child {
-					margin-bottom: 0;
-				}
 			}
 		}
 
 		& + .wpc-widget {
-			margin-top: 1.5rem;
+			margin-top: 1.75rem;
 		}
 	}
 }

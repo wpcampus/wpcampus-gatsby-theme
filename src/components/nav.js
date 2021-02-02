@@ -88,6 +88,12 @@ const NavPrimaryItems = [
 			{
 				path: "/blog/categories/",
 				text: "Categories"
+			},
+			{
+				href: "http://eepurl.com/dOd-Q9",
+				targetBlank: true,
+				aria_label: "Subscribe to Community Blog updates",
+				text: "Subscribe to updates"
 			}
 		]
 	},
@@ -106,6 +112,18 @@ const NavPrimaryItems = [
 					{
 						path: "/community/slack/channels/",
 						text: "Our Slack channels",
+					}
+				]
+			},
+			{
+				path: "/community/planning/",
+				text: "Planning Blog",
+				children: [
+					{
+						href: "http://eepurl.com/hppn0T",
+						targetBlank: true,
+						aria_label: "Subscribe to Planning Blog updates",
+						text: "Subscribe to updates"
 					}
 				]
 			},
@@ -270,7 +288,9 @@ const NavAnchor = ({ item }) => {
 	if (item.title) {
 		anchorAttr.title = item.title
 	}
-	if (item.target) {
+	if (item.targetBlank !== undefined && true === item.targetBlank) {
+		anchorAttr.target = "_blank"
+	} else if (item.target) {
 		anchorAttr.target = item.target
 	}
 	return (<a {...anchorAttr}>{item.text}</a>)

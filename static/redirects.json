@@ -27,6 +27,16 @@
 			"status": 301
 		},
 		{
+			"source": "/community/surveys/workshops/",
+			"destination": "/community/planning/",
+			"status": 301
+		},
+		{
+			"source": "/community/surveys/",
+			"destination": "/community/planning/",
+			"status": 301
+		},
+		{
 			"source": "/2020/",
 			"destination": "/blog/2020/",
 			"prefix": true,

@@ -17,7 +17,7 @@ const ContributorTemplate = props => {
 	let posts
 	if (props.data.allWordpressPost.edges.length) {
 		posts = <div className="wpc-contributor-results__result wpc-contributor-results__result--blog">
-			<h2 className="wpc-contributor-results__result__heading"><span className="wpc-icon wpc-icon--quotes"></span> <Link className="wpc-link wpc-link--inherit" to="/blog/">From our Blog</Link></h2>
+			<h2 className="wpc-contributor-results__result__heading"><span className="wpc-icon wpc-icon--quotes"></span> <Link className="wpc-link wpc-link--inherit" to="/blog/">From our Community Blog</Link></h2>
 			<ArticleArchive headingLevel={3} list={props.data.allWordpressPost.edges} />
 		</div>
 	}

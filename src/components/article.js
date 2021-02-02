@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import ReactHtmlParser from "react-html-parser"
+import Iframe from "@wpcampus/wpcampus-iframe"
 
 import { AuthorCards } from "../components/author"
 import ProtectedContent from "../components/content"
@@ -62,7 +63,7 @@ const ArticleCategories = ({ list, type }) => (
 					linkAttr["aria-label"] = item.aria_label
 				} else {
 					if ("post" == type) {
-						linkAttr["aria-label"] = `Blog category: ${item.name}`
+						linkAttr["aria-label"] = `Community Blog category: ${item.name}`
 					} else if ("podcast" == type) {
 						linkAttr["aria-label"] = `Podcast category: ${item.name}`
 					} else {
@@ -96,7 +97,7 @@ const ArticleMetaAuthors = ({ authors }) => {
 		{authors.map((item, i) => {
 			const contributorPath = contributorPathBase + item.path + "/"
 			return <li key={i}>
-				<Link to={contributorPath}>{item.display_name}</Link>
+				<Link to={contributorPath} aria_label={`Posts from contributor ${item.display_name}`}>{item.display_name}</Link>
 			</li>
 		})}
 	</ul>
@@ -161,7 +162,15 @@ ArticleMeta.propTypes = {
 	data: PropTypes.object.isRequired,
 }
 
-const ArticleHeader = ({ data, displayMeta, headingLevel, headerPrefix, includeLink }) => {
+const ArticleSubscribeCommunity = () => {
+	return <a className="wpc-button" href="http://eepurl.com/dOd-Q9" target="_blank" rel="noreferrer">Subscribe to Community Blog updates</a>
+}
+
+const ArticleSubscribePlanning = () => {
+	return <a className="wpc-button" href="http://eepurl.com/hppn0T" target="_blank" rel="noreferrer">Subscribe to Planning Blog updates</a>
+}
+
+const ArticleHeader = ({ data, displayMeta, displaySubscribe, isPlanning, headingLevel, headerPrefix, includeLink }) => {
 	const articleTitleAttr = {
 		data: data,
 		includeLink: includeLink
@@ -176,6 +185,7 @@ const ArticleHeader = ({ data, displayMeta, headingLevel, headerPrefix, includeL
 		{headerPrefix ? <span className="wpc-article-prefix">{headerPrefix}:</span> : null}
 		<ArticleTitle {...articleTitleAttr} />
 		{displayMeta ? <ArticleMeta data={data} /> : null}
+		{displaySubscribe ? isPlanning ? <ArticleSubscribePlanning /> : <ArticleSubscribeCommunity /> : null}
 	</header>
 }
 
@@ -183,12 +193,16 @@ ArticleHeader.propTypes = {
 	data: PropTypes.object.isRequired,
 	headingLevel: PropTypes.number,
 	displayMeta: PropTypes.bool,
+	displaySubscribe: PropTypes.bool,
 	headerPrefix: PropTypes.node,
-	includeLink: PropTypes.bool
+	includeLink: PropTypes.bool,
+	isPlanning: PropTypes.bool,
 }
 
 ArticleHeader.defaultProps = {
-	displayMeta: true
+	displayMeta: true,
+	displaySubscribe: false,
+	isPlanning: false,
 }
 
 const ArticleContent = ({ data, displayContentFull }) => {
@@ -236,14 +250,17 @@ const Article = ({
 	children,
 	wpc_protected,
 	isSingle,
+	isPlanning,
 	headerPrefix,
 	headingLevel,
 	includeLink,
 	displayAuthor,
 	displayMeta,
+	displaySubscribe,
 	displayContent,
 	displayContentFull,
-	paginationAdj
+	paginationAdj,
+	appendForm
 }) => {
 	const articleAttr = {
 		className: "wpc-article"
@@ -257,6 +274,8 @@ const Article = ({
 		isSingle: isSingle,
 		headerPrefix: headerPrefix,
 		displayMeta: displayMeta,
+		isPlanning: isPlanning,
+		displaySubscribe: displaySubscribe,
 		includeLink: includeLink
 	}
 
@@ -278,6 +297,7 @@ const Article = ({
 				{displayContent ? (
 					<ArticleContent data={data} displayContentFull={displayContentFull} />
 				) : null}
+				{appendForm !== undefined && <Iframe {...appendForm} />}
 				<ArticleFooter data={data} displayAuthor={displayAuthor} paginationAdj={paginationAdj} />
 			</ProtectedContent>
 		</article>
@@ -292,19 +312,24 @@ Article.propTypes = {
 	headingLevel: PropTypes.number,
 	includeLink: PropTypes.bool,
 	isSingle: PropTypes.bool,
+	isPlanning: PropTypes.bool,
 	displayAuthor: PropTypes.bool,
 	displayMeta: PropTypes.bool,
+	displaySubscribe: PropTypes.bool,
 	displayContent: PropTypes.bool,
 	displayContentFull: PropTypes.bool,
-	paginationAdj: PropTypes.node
+	paginationAdj: PropTypes.node,
+	appendForm: PropTypes.object,
 }
 
 Article.defaultProps = {
 	displayAuthor: true,
 	displayMeta: true,
+	displaySubscribe: false,
 	displayContent: true,
 	displayContentFull: false,
 	isSingle: true,
+	isPlanning: false,
 }
 
 export default Article

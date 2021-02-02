@@ -9,44 +9,66 @@ import { PostPaginationAdjacent } from "../components/pagination"
 
 import "./../css/post.css"
 
-const normalizeCategories = (categories) => {
+const isDev = "development" === process.env.NODE_ENV
+
+// @TODO setup
+/*const normalizeCategories = (categories) => {
 	if (!categories) {
 		return categories
 	}
 	return categories.map(category => {
 		category.path = `/blog/categories/${category.slug}`
-		category.aria_label = `Community Blog post category: ${category.name}`
+		category.aria_label = `Planning blog post category: ${category.name}`
 		return category
 	})
-}
+}*/
 
-const PostTemplate = props => {
-	const post = props.data.wordpressPost
+const PlanningTemplate = props => {
+	const planning = props.data.wordpressWpPlanning
 	const context = props.pageContext
 
-	post.categories = normalizeCategories(post.categories)
+	// @TODO setup
+	//planning.categories = normalizeCategories(planning.categories)
 
 	const paginationAdj = (
 		<PostPaginationAdjacent previous={context.previous} next={context.next} />
 	)
 
 	const layoutAttr = {
-		metaDescription: post.wpc_seo.meta.description || null,
-		metaRobots: post.wpc_seo.meta.robots || [],
+		metaDescription: planning.wpc_seo.meta.description || null,
+		metaRobots: planning.wpc_seo.meta.robots || [],
 		classes: "wpc-post",
-		pageTitle: post.title,
+		pageTitle: planning.title,
 		path: props.path
 	}
 
+	let iframeAttr = undefined
+	if (planning.wpc_gatsby && planning.wpc_gatsby.forms && planning.wpc_gatsby.forms.length) {
+
+		const form = planning.wpc_gatsby.forms.shift()
+		const formSrc = form.permalink || ""
+		const formTitle = form.title || ""
+
+		iframeAttr = {
+			src: formSrc,
+			title: formTitle,
+			origins: [context.formOrigin],
+			resizeLog: isDev
+		}
+	}
+
 	const articleAttr = {
-		data: post,
+		data: planning,
 		wpc_protected: context.wpc_protected,
 		isSingle: true,
 		displayContentFull: true,
-		headerPrefix: <Link to="/blog/">From our Community Blog</Link>,
+		headerPrefix: <Link to="/community/planning/">From our Planning Blog</Link>,
 		paginationAdj: paginationAdj,
+		isPlanning: true,
 		displaySubscribe: true,
+		appendForm: iframeAttr,
 	}
+
 	return (
 		<Layout {...layoutAttr} >
 			<Article {...articleAttr} />
@@ -54,19 +76,28 @@ const PostTemplate = props => {
 	)
 }
 
-PostTemplate.propTypes = {
+PlanningTemplate.propTypes = {
 	path: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired,
 	edges: PropTypes.array,
 	pageContext: PropTypes.object.isRequired
 }
 
-export default PostTemplate
+export default PlanningTemplate
 
 // @TODO remove fields we're not using.
-export const postQuery = graphql`
+// @TODO setup categories
+/*categories {
+	id
+	wordpress_id
+	count
+	name
+	description
+	slug
+}*/
+export const planningQuery = graphql`
   query($id: String!) {
-    wordpressPost(id: { eq: $id }) {
+    wordpressWpPlanning(id: { eq: $id }) {
       id
       wordpress_id
       slug
@@ -89,14 +120,13 @@ export const postQuery = graphql`
       dateFormatted: date(formatString: "MMMM D, YYYY")
       excerpt
       content
-      comment_status
-      categories {
-        id
-        wordpress_id
-        count
-        name
-        description
-        slug
+	  wpc_gatsby {
+		disable
+		template
+		forms {
+			title
+			permalink
+		}
 	  }
 	  wpc_seo {
 		title
