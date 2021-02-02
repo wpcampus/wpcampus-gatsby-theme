@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import ReactHtmlParser from "react-html-parser"
+import Iframe from "@wpcampus/wpcampus-iframe"
 
 import { AuthorCards } from "../components/author"
 import ProtectedContent from "../components/content"
@@ -258,7 +259,8 @@ const Article = ({
 	displaySubscribe,
 	displayContent,
 	displayContentFull,
-	paginationAdj
+	paginationAdj,
+	appendForm
 }) => {
 	const articleAttr = {
 		className: "wpc-article"
@@ -295,6 +297,7 @@ const Article = ({
 				{displayContent ? (
 					<ArticleContent data={data} displayContentFull={displayContentFull} />
 				) : null}
+				{appendForm !== undefined && <Iframe {...appendForm} />}
 				<ArticleFooter data={data} displayAuthor={displayAuthor} paginationAdj={paginationAdj} />
 			</ProtectedContent>
 		</article>
@@ -315,7 +318,8 @@ Article.propTypes = {
 	displaySubscribe: PropTypes.bool,
 	displayContent: PropTypes.bool,
 	displayContentFull: PropTypes.bool,
-	paginationAdj: PropTypes.node
+	paginationAdj: PropTypes.node,
+	appendForm: PropTypes.object,
 }
 
 Article.defaultProps = {
