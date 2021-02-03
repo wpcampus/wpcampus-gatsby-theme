@@ -9,6 +9,10 @@ module.exports = {
 		description: "WPCampus is a community of web professionals, educators, and people dedicated to advancing higher education by providing support, resources, and training focused on open source web publishing technologies.",
 		locale: "en_US",
 		twitter: "@wpcampusorg",
+		feeds: {
+			main: "https://wpcampus.org/feed/",
+			planning: "https://wpcampus.org/feed/planning/",
+		}
 	},
 	plugins: [
 		"gatsby-plugin-remove-generator",

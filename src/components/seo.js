@@ -30,6 +30,10 @@ function SEO(
 						description
 						locale
 						twitter
+						feeds {
+							main
+							planning
+						}
 					}
         		}
 			  }
@@ -163,6 +167,8 @@ function SEO(
 	return (
 		<Helmet {...helmetAttr}>
 			<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&family=Roboto:wght@300&display=swap" rel="stylesheet" />
+			<link rel="alternate" type="application/rss+xml" title="RSS Feed for WPCampus Community Blog" href={site.siteMetadata.feeds.main} />
+			<link rel="alternate" type="application/rss+xml" title="RSS Feed for WPCampus Planning Blog" href={site.siteMetadata.feeds.planning} />
 		</Helmet>
 	)
 }
