@@ -931,6 +931,7 @@ exports.createPages = async ({ graphql, actions }) => {
 				wpc_protected: edge.node.wpc_protected,
 				next: edge.next,
 				previous: edge.previous,
+				formOrigin: `https://${process.env.GATSBY_WPC_WORDPRESS}`,
 				crumbs: {
 					crumb: {
 						path: edge.node.path,
