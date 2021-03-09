@@ -9,6 +9,8 @@ import { PostPaginationAdjacent } from "../components/pagination"
 
 import "./../css/post.css"
 
+const isDev = "development" === process.env.NODE_ENV
+
 const normalizeCategories = (categories) => {
 	if (!categories) {
 		return categories
@@ -38,6 +40,21 @@ const PostTemplate = props => {
 		path: props.path
 	}
 
+	let iframeAttr = undefined
+	if (post.wpc_gatsby && post.wpc_gatsby.forms && post.wpc_gatsby.forms.length) {
+
+		const form = post.wpc_gatsby.forms.shift()
+		const formSrc = form.permalink || ""
+		const formTitle = form.title || ""
+
+		iframeAttr = {
+			src: formSrc,
+			title: formTitle,
+			origins: [context.formOrigin],
+			resizeLog: isDev
+		}
+	}
+
 	const articleAttr = {
 		data: post,
 		wpc_protected: context.wpc_protected,
@@ -46,6 +63,7 @@ const PostTemplate = props => {
 		headerPrefix: <Link to="/blog/">From our Community Blog</Link>,
 		paginationAdj: paginationAdj,
 		displaySubscribe: true,
+		appendForm: iframeAttr,
 	}
 	return (
 		<Layout {...layoutAttr} >
@@ -97,6 +115,14 @@ export const postQuery = graphql`
         name
         description
         slug
+	  }
+	  wpc_gatsby {
+		disable
+		template
+		forms {
+			title
+			permalink
+		}
 	  }
 	  wpc_seo {
 		title
