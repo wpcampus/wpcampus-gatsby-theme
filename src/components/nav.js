@@ -36,12 +36,7 @@ const NavPrimaryItems = [
 					{
 						path: "/about/governance/working/",
 						text: "Working Groups",
-						children: [
-							{
-								path: "/about/governance/working/community/",
-								text: "Community planning",
-							},
-						],
+						children: [],
 					}
 				]
 			},
