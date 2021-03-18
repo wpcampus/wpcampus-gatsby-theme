@@ -31,6 +31,10 @@ const NavPrimaryItems = [
 								path: "/about/governance/committees/diversity-inclusion/",
 								text: "Diversity and Inclusion"
 							},
+							{
+								path: "/about/governance/committees/wpcampus-2021-planning/",
+								text: "WPCampus 2021 Planning"
+							},
 						],
 					},
 				]
