@@ -45,10 +45,6 @@ const NavPrimaryItems = [
 								path: "/about/governance/working/governance/",
 								text: "Governance",
 							},
-							{
-								path: "/about/governance/working/website/",
-								text: "Our website",
-							},
 						],
 					}
 				]

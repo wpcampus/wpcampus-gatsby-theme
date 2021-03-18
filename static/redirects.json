@@ -1,6 +1,11 @@
 {
 	"redirects": [
 		{
+			"source": "/about/governance/working/website/",
+			"destination": "/about/governance/",
+			"status": 301
+		},
+		{
 			"source": "/get-involved/",
 			"destination": "/community/membership/",
 			"status": 301
