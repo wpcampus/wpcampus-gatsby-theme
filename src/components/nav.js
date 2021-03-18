@@ -20,6 +20,24 @@ const NavPrimaryItems = [
 				text: "Mascots"
 			},
 			{
+				path: "/about/guidelines/",
+				text: "Guidelines",
+				children: [
+					{
+						path: "/about/guidelines/accessibility/",
+						text: "Accessibility"
+					},
+					{
+						path: "/about/guidelines/conduct/",
+						text: "Code of Conduct"
+					},
+					{
+						path: "/about/guidelines/diversity/",
+						text: "Diversity, Equity, and Inclusion"
+					}
+				]
+			},
+			{
 				path: "/about/governance/",
 				text: "Governance",
 				children: [
@@ -37,24 +55,6 @@ const NavPrimaryItems = [
 							},
 						],
 					},
-				]
-			},
-			{
-				path: "/about/guidelines/",
-				text: "Guidelines",
-				children: [
-					{
-						path: "/about/guidelines/accessibility/",
-						text: "Accessibility"
-					},
-					{
-						path: "/about/guidelines/conduct/",
-						text: "Code of Conduct"
-					},
-					{
-						path: "/about/guidelines/diversity/",
-						text: "Diversity, Equity, and Inclusion"
-					}
 				]
 			},
 			{
