@@ -33,11 +33,6 @@ const NavPrimaryItems = [
 							},
 						],
 					},
-					{
-						path: "/about/governance/working/",
-						text: "Working Groups",
-						children: [],
-					}
 				]
 			},
 			{
