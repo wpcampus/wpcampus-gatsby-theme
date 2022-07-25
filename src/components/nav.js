@@ -140,6 +140,10 @@ const NavPrimaryItems = [
 		text: "Our Conferences",
 		children: [
 			{
+				href: "https://2023.wpcampus.org/",
+				text: "WPCampus 2023"
+			},
+			{
 				href: "https://2022.wpcampus.org/",
 				text: "WPCampus 2022"
 			},
