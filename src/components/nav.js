@@ -8,6 +8,10 @@ const NavPrimaryItems = [
 		text: "About",
 		children: [
 			{
+				path: "/about/leadership-transition/",
+				text: "Leadership transition"
+			},
+			{
 				path: "/about/contributors/",
 				text: "Contributors"
 			},
