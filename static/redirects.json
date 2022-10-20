@@ -21,6 +21,21 @@
 			"status": 301
 		},
 		{
+			"source": "/about/governance/committees/diversity-inclusion/",
+			"destination": "/about/governance/",
+			"status": 301
+		},
+		{
+			"source": "/about/governance/committees/wpcampus-2021-planning/",
+			"destination": "/about/governance/",
+			"status": 301
+		},
+		{
+			"source": "/about/governance/committees/",
+			"destination": "/about/governance/",
+			"status": 301
+		},
+		{
 			"source": "/get-involved/",
 			"destination": "/community/membership/",
 			"status": 301
@@ -352,12 +367,12 @@
 		},
 		{
 			"source": "/planning/diversity-inclusion/",
-			"destination": "/about/governance/committees/diversity-inclusion/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
 			"source": "/planning/community/",
-			"destination": "/about/governance/working/community/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
