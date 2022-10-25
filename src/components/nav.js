@@ -46,6 +46,10 @@ const NavPrimaryItems = [
 				text: "Governance",
 				children: [
 					{
+						path: "/about/governance/bylaws/",
+						text: "Bylaws"
+					},
+					{
 						path: "/about/governance/board/",
 						text: "Board of Directors"
 					},
