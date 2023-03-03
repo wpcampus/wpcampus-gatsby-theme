@@ -4,8 +4,8 @@
   "description": "A simple starter to get up and developing quickly with Gatsby",
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "engines" : { 
-    "node" : "10.17.0"
+  "engines": {
+    "node": "10.17.0"
   },
   "dependencies": {
     "@reach/router": "^1.3.4",
