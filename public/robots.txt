@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.wpcampus.org/sitemap.xml
+Host: https://www.wpcampus.org
