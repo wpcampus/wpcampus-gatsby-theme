@@ -108,7 +108,7 @@ const Layout = props => {
 		}
 
 		if (isHome) {
-			mainHeadingAttr.classes = "for-screen-reader"
+			mainHeadingAttr.classes = "v-hidden"
 		}
 
 		mainHeading = <Heading {...mainHeadingAttr} />

@@ -39,7 +39,7 @@ const LoadingLayout = props => {
 		const messageAttr = {}
 
 		if (hideMessage) {
-			messageAttr.className = " for-screen-reader"
+			messageAttr.className = " v-hidden"
 		}
 
 		message = <h1 {...messageAttr}>{message}</h1>

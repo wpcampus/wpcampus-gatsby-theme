@@ -527,8 +527,8 @@ const LibraryCount = ({ activeLibrary, state, updateLibraryState }) => {
 	return <div className="wpc-library__data">
 		<div className="wpc-library__data__count">
 			<p role="alert" aria-live="polite">
-				<span className="for-screen-reader">The Library has been updated.</span>
-				{!hasFilters ? <span className="for-screen-reader">No filters have been set.</span> : ""}
+				<span className="v-hidden">The Library has been updated.</span>
+				{!hasFilters ? <span className="v-hidden">No filters have been set.</span> : ""}
 				{mainMessage}
 			</p>
 			{hasFilters ? <ul>
