@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[18],{TRom:function(e,t,a){"use strict";a.r(t);var n=a("q1tI"),i=a.n(n),o=a("fhwx"),s=a.n(o),p=a("Bl7J");a("wI2i");t.default=function(e){var t=e.data.wordpressPage,a={metaDescription:t.wpc_seo.meta.description||null,metaRobots:t.wpc_seo.meta.robots||[],isHome:!0,pageTitle:t.title,useTitleTemplate:!1,heading:t.title,path:e.path};return i.a.createElement(p.a,a,i.a.createElement("div",null,s()(t.content)))}},wI2i:function(e,t,a){}}]);
-//# sourceMappingURL=component---src-templates-index-js-4d9fee01774bbf9dadde.js.map
