@@ -50,4 +50,11 @@
 			margin-top: 1.75rem;
 		}
 	}
+
+	/* Laptop */
+	@media (min-width: 920px) {
+		padding: var(--area-padding) var(--area-padding-large);
+		position: sticky;
+		top: 0;
+	}
 }
