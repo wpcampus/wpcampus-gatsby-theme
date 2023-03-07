@@ -60,6 +60,10 @@ const NavPrimaryItems = [
 				text: "Board of Directors"
 			},
 			{
+				path: "/governance/board/nominations",
+				text: "Nominations for the Board"
+			},
+			{
 				path: "/governance/leadership-transition/",
 				text: "Leadership transition"
 			},
