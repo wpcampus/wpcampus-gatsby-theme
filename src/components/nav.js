@@ -74,6 +74,10 @@ const NavPrimaryItems = [
 				text: "Categories"
 			},
 			{
+				path: "/blog/categories/board-of-directors",
+				text: "Board of Directors"
+			},
+			{
 				href: "http://eepurl.com/dOd-Q9",
 				targetBlank: true,
 				aria_label: "Subscribe to Community Blog updates",
