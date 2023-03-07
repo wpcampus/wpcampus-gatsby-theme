@@ -42,15 +42,15 @@ const NavPrimaryItems = [
 				]
 			},
 			{
-				path: "/about/governance/",
+				path: "/governance/",
 				text: "Governance",
 				children: [
 					{
-						path: "/about/governance/bylaws/",
+						path: "/governance/bylaws/",
 						text: "Bylaws"
 					},
 					{
-						path: "/about/governance/board/",
+						path: "/governance/board/",
 						text: "Board of Directors"
 					},
 				],
@@ -120,7 +120,7 @@ const NavPrimaryItems = [
 				text: "Our Directory"
 			},
 			{
-				path: "/about/governance/",
+				path: "/governance/",
 				text: "Our Governance"
 			},
 			{
