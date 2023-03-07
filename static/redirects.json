@@ -1,38 +1,58 @@
 {
 	"redirects": [
 		{
+			"source": "/about/governance/*",
+			"destination": "/governance/*",
+			"status": 301
+		},
+		{
+			"source": "/about/governance/",
+			"destination": "/governance/",
+			"status": 301
+		},
+		{
+			"source": "/about/governance/board/",
+			"destination": "/governance/board/",
+			"status": 301
+		},
+		{
+			"source": "/about/governance/bylaws/",
+			"destination": "/governance/bylaws/",
+			"status": 301
+		},
+		{
 			"source": "/about/governance/working/community/",
-			"destination": "/about/governance/",
+			"destination": "/governance/",
 			"status": 301
 		},
 		{
 			"source": "/about/governance/working/governance/",
-			"destination": "/about/governance/",
+			"destination": "/governance/",
 			"status": 301
 		},
 		{
 			"source": "/about/governance/working/website/",
-			"destination": "/about/governance/",
+			"destination": "/governance/",
 			"status": 301
 		},
 		{
 			"source": "/about/governance/working/",
-			"destination": "/about/governance/",
+			"destination": "/governance/",
 			"status": 301
 		},
 		{
 			"source": "/about/governance/committees/diversity-inclusion/",
-			"destination": "/about/governance/",
+			"destination": "/governance/",
 			"status": 301
 		},
 		{
 			"source": "/about/governance/committees/wpcampus-2021-planning/",
-			"destination": "/about/governance/",
+			"destination": "/governance/",
 			"status": 301
 		},
 		{
 			"source": "/about/governance/committees/",
-			"destination": "/about/governance/",
+			"destination": "/governance/",
 			"status": 301
 		},
 		{
@@ -367,12 +387,12 @@
 		},
 		{
 			"source": "/planning/diversity-inclusion/",
-			"destination": "/about/governance/",
+			"destination": "/governance/",
 			"status": 301
 		},
 		{
 			"source": "/planning/community/",
-			"destination": "/about/governance/",
+			"destination": "/governance/",
 			"status": 301
 		},
 		{
@@ -407,7 +427,7 @@
 		},
 		{
 			"source": "/planning/",
-			"destination": "/about/governance/",
+			"destination": "/governance/",
 			"status": 301
 		},
 		{
