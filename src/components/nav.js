@@ -57,7 +57,7 @@ const NavPrimaryItems = [
 			},
 			{
 				path: "/about/newsletter/",
-				text: "Our newsletter"
+				text: "Our newsletters"
 			},
 			{
 				path: "/about/contact/",
