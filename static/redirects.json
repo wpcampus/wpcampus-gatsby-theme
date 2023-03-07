@@ -1,43 +1,38 @@
 {
 	"redirects": [
 		{
-			"source": "/about/governance/*",
-			"destination": "/governance/*",
+			"source": "/about/governance/working/community/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
-			"source": "/governance/working/community/",
-			"destination": "/governance/",
+			"source": "/about/governance/working/governance/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
-			"source": "/governance/working/governance/",
-			"destination": "/governance/",
+			"source": "/about/governance/working/website/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
-			"source": "/governance/working/website/",
-			"destination": "/governance/",
+			"source": "/about/governance/working/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
-			"source": "/governance/working/",
-			"destination": "/governance/",
+			"source": "/about/governance/committees/diversity-inclusion/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
-			"source": "/governance/committees/diversity-inclusion/",
-			"destination": "/governance/",
+			"source": "/about/governance/committees/wpcampus-2021-planning/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
-			"source": "/governance/committees/wpcampus-2021-planning/",
-			"destination": "/governance/",
-			"status": 301
-		},
-		{
-			"source": "/governance/committees/",
-			"destination": "/governance/",
+			"source": "/about/governance/committees/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
@@ -372,12 +367,12 @@
 		},
 		{
 			"source": "/planning/diversity-inclusion/",
-			"destination": "/governance/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
 			"source": "/planning/community/",
-			"destination": "/governance/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
@@ -412,7 +407,7 @@
 		},
 		{
 			"source": "/planning/",
-			"destination": "/governance/",
+			"destination": "/about/governance/",
 			"status": 301
 		},
 		{
