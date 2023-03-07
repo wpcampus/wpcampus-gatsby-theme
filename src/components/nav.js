@@ -42,20 +42,6 @@ const NavPrimaryItems = [
 				]
 			},
 			{
-				path: "/governance/",
-				text: "Governance",
-				children: [
-					{
-						path: "/governance/bylaws/",
-						text: "Bylaws"
-					},
-					{
-						path: "/governance/board/",
-						text: "Board of Directors"
-					},
-				],
-			},
-			{
 				path: "/about/newsletter/",
 				text: "Our newsletters"
 			},
@@ -64,6 +50,20 @@ const NavPrimaryItems = [
 				text: "Contact us"
 			},
 		]
+	},
+	{
+		path: "/governance/",
+		text: "Governance",
+		children: [
+			{
+				path: "/governance/bylaws/",
+				text: "Bylaws"
+			},
+			{
+				path: "/governance/board/",
+				text: "Board of Directors"
+			},
+		],
 	},
 	{
 		path: "/blog/",
