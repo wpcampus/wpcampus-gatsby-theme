@@ -65,7 +65,7 @@ const NavPrimaryItems = [
 			},
 			{
 				path: "/governance/leadership-transition/",
-				text: "Leadership transition"
+				text: "2022 Leadership transition"
 			},
 		],
 	},
