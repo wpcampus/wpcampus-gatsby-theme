@@ -51,6 +51,11 @@
 			"status": 301
 		},
 		{
+			"source": "/about/leadership-transition/",
+			"destination": "/governance/leadership-transition/",
+			"status": 301
+		},
+		{
 			"source": "/get-involved/",
 			"destination": "/community/membership/",
 			"status": 301
