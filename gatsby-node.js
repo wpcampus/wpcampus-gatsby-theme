@@ -529,6 +529,102 @@ const podcastCategoriesQuery = `
 	}
 `
 
+const createCategoriesPagesDirectors = async ({ categoriesPath, parentCrumbs, graphql, createPage }) => {
+
+	// Ids of categories related to Board of Directors:
+	// 63 - Governance
+	// 285 - Board of Directors
+	// 282 - Board Minutes
+	const categoriesQuery = `
+		query {
+			allWordpressCategory(filter: {wordpress_id: {in: [63, 282, 285]}}) {
+				edges {
+					node {
+						id
+						name
+						slug
+						link
+						wordpress_id
+						wordpress_parent
+						taxonomy
+						path
+						description
+						count
+					}
+				}
+			}
+		}
+	`
+
+	const results = await graphql(categoriesQuery)
+
+	// Get the data.
+	let categoryData = results.data.allWordpressCategory.edges
+
+	if (!categoryData) {
+		return
+	}
+
+	const categoryIDs = []
+	let categoryMain = null
+
+	let index = categoryData.length
+	categoryData.forEach(edge => {
+		const category = edge.node
+
+		// Store IDs to use in template
+		categoryIDs.push(category.wordpress_id)
+
+		// We need a "main" category to use in the template
+		if (category.name === "Board of Directors") {
+			categoryMain = category
+		}
+
+		if (index === 1 && !categoryMain) {
+			categoryMain = category
+		}
+
+		index--
+	})
+
+	const pagePath = "/blog/categories/board-of-directors"
+
+	const crumbs = {
+		crumb: {
+			path: pagePath,
+			text: "Board of Directors",
+		},
+		parent_element: {
+			crumb: {
+				path: categoriesPath,
+				text: "Categories"
+			}
+		}
+	}
+
+	if (parentCrumbs) {
+		crumbs.parent_element.parent_element = parentCrumbs
+	}
+
+	/*
+	 * Create Board of Directors archive page.
+	 */
+	createPage({
+		path: pagePath,
+		component: path.resolve("./src/templates/categoryDirectors.js"),
+		context: {
+			categoryMain,
+			categories: categoryIDs,
+			crumbs: crumbs
+		}
+	})
+}
+
+createCategoriesPagesDirectors.propTypes = {
+	categoriesPath: PropTypes.string.isRequired,
+	parentCrumbs: PropTypes.object
+}
+
 /**
  * Build category archives.
  * 
@@ -1146,6 +1242,19 @@ exports.createPages = async ({ graphql, actions }) => {
 			}
 		},
 		archiveHeading: "Podcast categories",
+		graphql,
+		createPage
+	})
+
+	// Create category page for blog posts about Board of Directors.
+	createCategoriesPagesDirectors({
+		categoriesPath: "/blog/categories/",
+		parentCrumbs: {
+			crumb: {
+				path: "/blog/",
+				text: "Community Blog"
+			}
+		},
 		graphql,
 		createPage
 	})

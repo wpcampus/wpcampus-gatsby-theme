@@ -60,17 +60,17 @@ export const query = graphql`
           path
           author {
             id
-			path
-			display_name
-			email
-			twitter
-			website
-			company
-			company_position
-			bio
+						path
+						display_name
+						email
+						twitter
+						website
+						company
+						company_position
+						bio
           }
           title
-		  type
+		  		type
           status
           date
           dateFormatted: date(formatString: "MMMM D, YYYY")
