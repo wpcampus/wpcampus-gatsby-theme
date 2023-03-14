@@ -8,16 +8,8 @@ const NavPrimaryItems = [
 		text: "About",
 		children: [
 			{
-				path: "/about/contributors/",
-				text: "Contributors"
-			},
-			{
-				path: "/about/partners/",
-				text: "Partners"
-			},
-			{
-				path: "/about/mascots/",
-				text: "Mascots"
+				path: "/about/history/",
+				text: "History"
 			},
 			{
 				path: "/about/guidelines/",
@@ -36,6 +28,18 @@ const NavPrimaryItems = [
 						text: "Diversity, Equity, and Inclusion"
 					}
 				]
+			},
+			{
+				path: "/about/contributors/",
+				text: "Contributors"
+			},
+			{
+				path: "/about/partners/",
+				text: "Partners"
+			},
+			{
+				path: "/about/mascots/",
+				text: "Mascots"
 			},
 			{
 				path: "/about/newsletter/",
