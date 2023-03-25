@@ -27,6 +27,12 @@ const reducer = (state = initialState, action) => {
 				isLoading: false
 			})
 		}
+		case "destroyUser": {
+			return Object.assign({}, state, {
+				user: null,
+				isLoading: false
+			})
+		}
 		case "finishLoading": {
 			return Object.assign({}, state, {
 				isLoading: false

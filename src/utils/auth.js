@@ -4,7 +4,7 @@ import crypto from "crypto"
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import { isBrowser } from "../utils/utilities"
 
 const authAccessCookieKey = "wpAuthAccess"
@@ -55,8 +55,8 @@ const auth = isBrowser
 	? new ClientOAuth2({
 		clientId: process.env.GATSBY_WPAUTH_CLIENTID,
 		clientSecret: process.env.GATSBY_WPAUTH_CLIENTSECRET,
-		accessTokenUri: process.env.GATSBY_WPAUTH_DOMAIN + "/token",
-		authorizationUri: process.env.GATSBY_WPAUTH_DOMAIN + "/authorize",
+		accessTokenUri: process.env.GATSBY_WPAUTH_TOKEN,
+		authorizationUri: process.env.GATSBY_WPAUTH_AUTHORIZE,
 		redirectUri: process.env.GATSBY_WPAUTH_CALLBACK,
 		nonce: randomString(32),
 		//scopes: ["profile", "email", "openid"], @TODO dont need?
@@ -123,7 +123,7 @@ const setAccessCookie = (token, expires) => {
 	let secure = true
 
 	// For local builds.
-	if (isBrowser && "http://localhost:9000" === window.location.origin) {
+	if (isBrowser && "http://localhost:8000" === window.location.origin) {
 		secure = false
 	}
 
@@ -170,7 +170,8 @@ const setSession = (authResult, setUser) => {
 	})
 }
 
-export const handleLogout = () => {
+export const handleLogout = (destroyUser) => {
+	destroyUser()
 	return deleteSession()
 }
 
@@ -187,12 +188,17 @@ const validateToken = ({ setUser }) => {
 	return auth.code.getToken(window.location.href)
 		.then(function (user) {
 
-			const request = user.sign({
-				method: "get",
-				url: process.env.GATSBY_WPAUTH_DOMAIN + "/resource"
-			})
+			const url = new URL(process.env.GATSBY_WPAUTH_ME)
+			url.searchParams.append("access_token", user.accessToken)
 
-			return fetch(request.url, request)
+			// Can only use one auth request method at a time.
+			// Using an access token instead of the Authentication header.
+			/* const request = user.sign({
+				method: "get",
+				url: url.toString()
+			}) */
+
+			return fetch(url.toString())
 				.then(response => {
 					return response.json()
 				})
@@ -243,7 +249,7 @@ export const silentAuth = (store) => {
 
 	const request = userToken.sign({
 		method: "get",
-		url: process.env.GATSBY_WPAUTH_DOMAIN + "/resource"
+		url: process.env.GATSBY_WPAUTH_ME
 	})
 
 	fetch(request.url, request)
@@ -293,11 +299,19 @@ export const logout = (access) => {
 
 	const request = user.sign({
 		method: "get",
-		url: process.env.GATSBY_WPAUTH_DOMAIN + "/logout",
+		url: process.env.GATSBY_WPAUTH_LOGOUT,
 	})
 
-	window.location = request.url + "&redirect_uri=" + encodeURIComponent(process.env.GATSBY_WPAUTH_CALLBACK)
+	fetch(request.url, request)
+		.finally(() => {
 
+			const prevPath = location.state && location.state.prevPath || null
+			if (prevPath) {
+				setAuthRedirect(prevPath)
+			}
+
+			navigate(process.env.GATSBY_WPAUTH_CALLBACK)
+		})
 }
 
 // Displays the logout "button".

@@ -119,14 +119,14 @@ const HeaderUser = ({ user, isLoading }) => {
 	if (isLoading) {
 		return null
 	}
-	if (!user.isLoggedIn()) {
+	if (!user || !user.isLoggedIn()) {
 		return <HeaderMemberActions classes="wpc-member__actions" />
 	}
 	return <UserLoggedInActions user={user} />
 }
 
 HeaderUser.propTypes = {
-	user: PropTypes.object.isRequired,
+	user: PropTypes.object,
 	isLoading: PropTypes.bool.isRequired,
 }
 

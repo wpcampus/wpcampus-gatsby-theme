@@ -18,6 +18,12 @@ const mapDispatchToProps = (dispatch) => {
 			payload: {
 				user: data
 			}
+		}),
+		destroyUser: (data) => dispatch({
+			type: "destroyUser",
+			payload: {
+				user: data
+			}
 		})
 	}
 }
@@ -28,32 +34,34 @@ const mapDispatchToProps = (dispatch) => {
  * If a user visits this page directly, it will log them out.
  * @TODO change?
  */
-const Callback = ({ user, setUser }) => {
+const Callback = ({ user, setUser, destroyUser }) => {
+
 
 	// This means the callback has a code.
 	const loggingIn = isBrowser && window.location.search.search(/\?code=[a-z0-9]+/) >= 0
-	if (loggingIn) {
+	if (loggingIn && user) {
 
 		handleLogin({ user, setUser }).then(() => {
 			navigate(getAuthRedirect(true) || "/")
 		})
 
-		return <LoadingLayout message="Logging you in" />
+		return <LoadingLayout message="Logging you in. Takes a few seconds." />
 	}
 
-	handleLogout().then(() => {
+	handleLogout(destroyUser).then(() => {
 		// Delay the authentication a little so loading page doesn't flash
 		setTimeout(function () {
 			navigate(getAuthRedirect(true) || "/")
 		}, 1000)
 	})
 
-	return <LoadingLayout message="Logging you out" />
+	return <LoadingLayout message="Logging you out. Takes a few seconds." />
 }
 
 Callback.propTypes = {
-	user: PropTypes.object.isRequired,
+	user: PropTypes.object,
 	setUser: PropTypes.func.isRequired,
+	destroyUser: PropTypes.func.isRequired,
 }
 
 // Connect this component to our provider.

@@ -31,7 +31,7 @@ const Login = ({ location, user, isLoading }) => {
 	 * Initiate login process.
 	 * silentAuth checked for authentication.
 	 */
-	if (!user.isLoggedIn()) {
+	if (!user || !user.isLoggedIn()) {
 
 		login()
 
@@ -51,7 +51,7 @@ const Login = ({ location, user, isLoading }) => {
 
 Login.propTypes = {
 	location: PropTypes.object,
-	user: PropTypes.object.isRequired,
+	user: PropTypes.object,
 	isLoading: PropTypes.bool.isRequired,
 }
 
