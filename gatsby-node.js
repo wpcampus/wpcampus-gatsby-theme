@@ -288,6 +288,8 @@ const fetchContent = (url) => {
 		}
 	}
 
+	console.log("\n\n fetch from", url)
+
 	return fetch(url, options)
 		.then((response) => {
 			return response.json()
