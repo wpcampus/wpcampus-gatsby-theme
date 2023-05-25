@@ -11,11 +11,6 @@ const path = require("path")
 const slash = require("slash")
 const PropTypes = require("prop-types")
 
-const test = process.env
-for (const key in test) {
-	console.log("\n\n environment", key, test[key], "\n\n")
-}
-
 // Returns the path from a full URL.
 const getNodePathFromLink = link => {
 	if (!link) {
@@ -292,8 +287,6 @@ const fetchContent = (url) => {
 			Authorization: basicAuth(process.env.WPC_JWT_USER, process.env.WPC_JWT_PASSWORD)
 		}
 	}
-
-	console.log("\n\n fetch from", url)
 
 	return fetch(url, options)
 		.then((response) => {
