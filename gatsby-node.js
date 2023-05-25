@@ -11,7 +11,10 @@ const path = require("path")
 const slash = require("slash")
 const PropTypes = require("prop-types")
 
-console.log("\n\n environment", process.env, "\n\n")
+const test = process.env
+for (const key in test) {
+	console.log("\n\n environment", key, test[key], "\n\n")
+}
 
 // Returns the path from a full URL.
 const getNodePathFromLink = link => {
