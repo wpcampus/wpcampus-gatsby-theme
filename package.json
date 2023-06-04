@@ -60,7 +60,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+	"build": "bash ./scripts/build.sh",
     "develop": "gatsby develop",
     "playground": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
