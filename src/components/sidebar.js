@@ -35,27 +35,10 @@ const BlogWidget = () => {
 	})
 }
 
-const TweetsWidget = () => {
-	useEffect(() => {
-		require("@wpcampus/wpcampus-wc-tweets")
-	}, [])
-	return useMemo(() => {
-		return <Widget type="tweets">
-			<h2 className="wpc-widget__heading">
-				<span className="wpc-icon wpc-icon--twitter"></span>
-				<a href="https://twitter.com/wpcampusorg" aria-label="Follow WPCampus on Twitter">@wpcampusorg</a>
-			</h2>
-			<wpcampus-tweets></wpcampus-tweets>
-			<a className="wpc-button wpc-button--primary" href="https://twitter.com/wpcampusorg">Follow @wpcampusorg on Twitter</a>
-		</Widget>
-	})
-}
-
 const Sidebar = () => {
 	return (
 		<aside className="wpc-sidebar wpc-wrapper" aria-label="Sidebar">
 			<BlogWidget />
-			<TweetsWidget />
 		</aside>
 	)
 }
