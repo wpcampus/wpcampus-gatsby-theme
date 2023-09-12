@@ -1,0 +1,12 @@
+{
+  "name": "wpcampus_gatsby_scripts_public",
+  "version": "1.0.0",
+  "description": "",
+  "main": "run_gatsby_build.js",
+  "author": "WPCampus",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}

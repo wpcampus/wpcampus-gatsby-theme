@@ -14,3 +14,9 @@ fi
 export NODE_OPTIONS=--openssl-legacy-provider
 
 gatsby build
+
+# Sync build files to live directory.
+rsync -a --delete public/ live
+
+# Delete build directory.
+rm -r public/
