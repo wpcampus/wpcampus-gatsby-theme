@@ -169,13 +169,23 @@ const validateRequest = function (request, response, next) {
 		return
 	}
 
-	const { host } = request.body
+	const { host, author_id, author_name } = request.body
 	if (!host) {
 		response.statusCode = 400
 		response.setHeader("Content-Type", "text/plain")
 		response.end("The request body does not contain the request host.")
 		return
 	}
+
+	if (!author_id) {
+		response.statusCode = 400
+		response.setHeader("Content-Type", "text/plain")
+		response.end("The request body does not contain the author's user ID.")
+		return
+	}
+
+	request.author_id = author_id
+	request.author_name = author_name
 
 	if (host !== environment_url) {
 		response.statusCode = 400
@@ -216,13 +226,15 @@ const validateRequest = function (request, response, next) {
 	return next()
 }
 
-const processBuildRequest = function (_request, response) {
+const processBuildRequest = function (request, response) {
 	const build_start_date = new Date()
 	const build_uuid = crypto.randomUUID()
 
 	console.log("\nSomeone made a valid request to run the Gatsby build.")
 	console.log("Build ID:", build_uuid)
 	console.log("Build start time:", build_start_date.toISOString())
+	console.log("Build author ID:", request.author_id)
+	console.log("Build author name:", request.author_name)
 
 	console.time("rungatsbybuild")
 
@@ -281,6 +293,8 @@ const processBuildRequest = function (_request, response) {
 			build_id: build_uuid,
 			build_start_date: getDateTimestamp(build_start_date),
 			build_triggered: true,
+			build_author_id: request.author_id,
+			build_author_name: request.author_name,
 			message: "The Gatsby build has been triggered.",
 		})
 	)
