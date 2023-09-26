@@ -33,7 +33,7 @@ const BlogWidget = () => {
 						From our Community Blog
 					</Link>
 				</h2>
-				<wpcampus-blog limit="3"></wpcampus-blog>
+				<wpcampus-blog data-limit="3"></wpcampus-blog>
 				<a
 					className="wpc-button wpc-button--primary"
 					href="http://eepurl.com/dOd-Q9"
