@@ -299,13 +299,21 @@ const fetchContent = (url) => {
 }
 
 const fetchContributors = async () => {
+	try {
+		const contributors_url = `${process.env.GATSBY_WPC_API}/wpcampus/contributors`
 
-	const contributors = await fetchContent(`${process.env.GATSBY_WPC_API}/wpcampus/contributors`)
+		console.log(chalk.green(" -> Fetching WPCampus contributors from: " + contributors_url + "..."))
+
+		const contributors = await fetchContent(contributors_url)
 
 	// Logging progress.
 	console.log(chalk.green(" -> WPCampus contributors fetched: " + contributors.length))
 
 	return contributors
+	} catch (error) {
+		console.log(chalk.red(" -> WPCampus contributors fetch error: " + error.message))
+		return []
+	}
 }
 
 const createContributorNodes = async ({ contributors, createNode, createNodeId, createContentDigest }) => {
@@ -349,14 +357,71 @@ createContributorNodes.propTypes = {
 	createContentDigest: PropTypes.func.isRequired
 }
 
-const fetchSessions = async () => {
+const fetchJobs = async () => {
+	try {
+		const jobs_url = `${process.env.GATSBY_WPC_API}/wpcampus/data/public/jobs`
 
-	const sessions = await fetchContent(`${process.env.GATSBY_WPC_API}/wpcampus/data/public/sessions`)
+		console.log(chalk.green(" -> Fetching WPCampus jobs from: " + jobs_url + "..."))
+
+		const jobs = await fetchContent(jobs_url)
+
+		// Logging progress.
+		console.log(chalk.green(" -> WPCampus jobs fetched: " + jobs.length))
+
+		return jobs
+	} catch (error) {
+		console.log(chalk.red(" -> WPCampus jobs fetch error: " + error.message))
+		return []
+	}
+}
+
+const fetchSessions = async () => {
+	try {
+		const sessions_url = `${process.env.GATSBY_WPC_API}/wpcampus/data/public/sessions`
+
+		console.log(chalk.green(" -> Fetching WPCampus sessions from: " + sessions_url + "..."))
+
+		const sessions = await fetchContent(sessions_url)
 
 	// Logging progress.
 	console.log(chalk.green(" -> WPCampus sessions fetched: " + sessions.length))
 
 	return sessions
+	} catch (error) {
+		console.log(chalk.red(" -> WPCampus sessions fetch error: " + error.message))
+		return []
+	}
+}
+
+const createJobNodes = async ({ jobs, createNode, createNodeId, createContentDigest }) => {
+	if (!jobs.length) {
+		return
+	}
+
+	jobs.forEach(node => {
+
+		const jobNode = node
+
+		// Store ID for usage in logic and then delete/replace with node ID.
+		const thisNodeID = node.ID
+		delete node.ID
+
+		// Change key for WordPress id. 
+		jobNode.wordpress_id = parseInt(thisNodeID)
+
+		// Add GraphQL ID
+		jobNode.id = createNodeId(`wpc-job-${thisNodeID}`)
+
+		createNode({
+			...jobNode,
+			parent: null,
+			children: [],
+			internal:
+			{
+				contentDigest: createContentDigest(jobNode)
+			}
+		})
+	})
 }
 
 const createLibraryNodes = async ({ items, libraryType, contributorNodes, createNode, createNodeId, createContentDigest }) => {
@@ -437,6 +502,10 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 
 	// Get contributor nodes so can be related to library nodes.
 	const contributorNodes = getNodes().filter(e => e.internal.type === contributorNodeType)
+
+	// Fetch and process jobs.
+	const jobs = await fetchJobs()
+	createJobNodes({ jobs, createNode, createNodeId, createContentDigest })
 
 	// Fetch and process library content.
 	const items = await fetchSessions()
