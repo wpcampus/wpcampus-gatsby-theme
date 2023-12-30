@@ -11,6 +11,13 @@ const path = require("path")
 const slash = require("slash")
 const PropTypes = require("prop-types")
 
+const is_env_dev = process.env.NODE_ENV === "development"
+
+console.log("")
+console.log(chalk.green(" -> Building WPCampus: Gatsby..."))
+console.log(chalk.green(" -> Environment: " + process.env.NODE_ENV))
+console.log("")
+
 // Returns the path from a full URL.
 const getNodePathFromLink = link => {
 	if (!link) {
@@ -267,6 +274,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
 const contributorNodeType = "wordpress__wpc_contributors"
 const libraryNodeType = "wordpress__wpc_library"
+const jobNodeType = "wordpress__wpc_job"
 
 /**
  * Create basic auth header.
@@ -279,13 +287,22 @@ const basicAuth = (username, password) => {
 	return "Basic " + btoa(username + ":" + password)
 }
 
-const fetchContent = (url) => {
+const fetchContent = (url, use_dev_creds = false) => {
+
+	let headers
+	if (use_dev_creds) {
+		headers = {
+			Authorization: basicAuth(process.env.WPC_DEV_USER, process.env.WPC_DEV_PW)
+		}
+	} else {
+		headers = {
+			Authorization: basicAuth(process.env.WPC_JWT_USER, process.env.WPC_JWT_PASSWORD)
+		}
+	}
 
 	let options = {
 		method: "get",
-		headers: {
-			Authorization: basicAuth(process.env.WPC_JWT_USER, process.env.WPC_JWT_PASSWORD)
-		}
+		headers,
 	}
 
 	return fetch(url, options)
@@ -306,10 +323,10 @@ const fetchContributors = async () => {
 
 		const contributors = await fetchContent(contributors_url)
 
-	// Logging progress.
-	console.log(chalk.green(" -> WPCampus contributors fetched: " + contributors.length))
+		// Logging progress.
+		console.log(chalk.green(" -> WPCampus contributors fetched: " + contributors.length))
 
-	return contributors
+		return contributors
 	} catch (error) {
 		console.log(chalk.red(" -> WPCampus contributors fetch error: " + error.message))
 		return []
@@ -363,7 +380,7 @@ const fetchJobs = async () => {
 
 		console.log(chalk.green(" -> Fetching WPCampus jobs from: " + jobs_url + "..."))
 
-		const jobs = await fetchContent(jobs_url)
+		const jobs = await fetchContent(jobs_url, is_env_dev)
 
 		// Logging progress.
 		console.log(chalk.green(" -> WPCampus jobs fetched: " + jobs.length))
@@ -383,10 +400,10 @@ const fetchSessions = async () => {
 
 		const sessions = await fetchContent(sessions_url)
 
-	// Logging progress.
-	console.log(chalk.green(" -> WPCampus sessions fetched: " + sessions.length))
+		// Logging progress.
+		console.log(chalk.green(" -> WPCampus sessions fetched: " + sessions.length))
 
-	return sessions
+		return sessions
 	} catch (error) {
 		console.log(chalk.red(" -> WPCampus sessions fetch error: " + error.message))
 		return []
@@ -418,6 +435,7 @@ const createJobNodes = async ({ jobs, createNode, createNodeId, createContentDig
 			children: [],
 			internal:
 			{
+				type: jobNodeType,
 				contentDigest: createContentDigest(jobNode)
 			}
 		})
@@ -861,12 +879,12 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	/*
-		   * Build pages from WordPress "page" post type.
-		   * 
-		   * @TODO remove fields we're not using.
-		   * 
-		   * @TODO this means we can't have more than 5 levels of crumbs.
-		   */
+			 * Build pages from WordPress "page" post type.
+			 * 
+			 * @TODO remove fields we're not using.
+			 * 
+			 * @TODO this means we can't have more than 5 levels of crumbs.
+			 */
 	const pages = await graphql(`
 		query {
 			allWordpressPage(
@@ -1011,10 +1029,10 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	/*
-		   * Build blog posts from WordPress "post" post type.
-		   * 
-		   * @TODO remove fields we're not using.
-		   */
+			 * Build blog posts from WordPress "post" post type.
+			 * 
+			 * @TODO remove fields we're not using.
+			 */
 	const posts = await graphql(`
 		query {
 			allWordpressPost(
@@ -1337,10 +1355,10 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	/**
-		   * Build contributor pages from WordPress users list.
-		   * 
-		   * @TODO remove fields we're not using.
-		   */
+			 * Build contributor pages from WordPress users list.
+			 * 
+			 * @TODO remove fields we're not using.
+			 */
 	const authors = await graphql(`
 		query {
 			allWordpressWpcContributors {
@@ -1391,46 +1409,108 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	/**
-		   * Build contributor archive from WordPress users list.
-		   * 
-		   * @TODO remove fields we're not using.
-		   */
+			 * Build contributor archive from WordPress users list.
+			 * 
+			 * @TODO remove fields we're not using.
+			 */
 	/*const members = await graphql(`
 	query {
-	  allWordpressWpMembers(
+		allWordpressWpMembers(
 		filter: { type: { eq: "member" }, status: { eq: "publish" } }
-	  ) {
+		) {
 		edges {
-		  node {
+			node {
 			id
 			path
 			template
 			wpc_protected {
-			  protected
-			  user_roles {
+				protected
+				user_roles {
 				enable
 				disable
-			  }
-			  message
+				}
+				message
 			}
-		  }
+			}
 		}
-	  }
+		}
 	}
-  `)
-  const memberPageTemplate = path.resolve(`./src/templates/memberPage.js`)
-  members.data.allWordpressWpMembers.edges.forEach(edge => {
+	`)
+	const memberPageTemplate = path.resolve(`./src/templates/memberPage.js`)
+	members.data.allWordpressWpMembers.edges.forEach(edge => {
 	createPage({
-	  // will be the url for the page
-	  path: edge.node.path,
-	  // specify the component template of your choice
-	  component: slash(memberPageTemplate),
-	  // In the ^template's GraphQL query, 'id' will be available
-	  // as a GraphQL variable to query for this data.
-	  context: {
+		// will be the url for the page
+		path: edge.node.path,
+		// specify the component template of your choice
+		component: slash(memberPageTemplate),
+		// In the ^template's GraphQL query, 'id' will be available
+		// as a GraphQL variable to query for this data.
+		context: {
 		id: edge.node.id,
 		wpc_protected: edge.node.wpc_protected,
-	  },
+		},
 	})
-  })*/
+	})*/
+
+	// Create job pages
+	const jobs = await graphql(`
+		query {
+			allWordpressWpcJob {
+				edges {
+					previous {
+						id
+						wordpress_id
+						post_path
+						job_title
+					}
+					next {
+						id
+						wordpress_id
+						post_path
+						job_title
+					}
+					node {
+						id
+						wordpress_id
+						post_path
+						job_title
+					}
+				}
+			}
+		}
+	`)
+	const jobTemplate = path.resolve("./src/templates/job.js")
+	jobs.data.allWordpressWpcJob.edges.forEach(edge => {
+
+		const node = edge.node
+
+		// Don't build disabled jobs.
+		/* if (true === node.wpc_gatsby.disable) {
+			return
+		} */
+
+		createPage({
+			// will be the url for the page
+			path: node.post_path,
+			// specify the component template of your choice
+			component: slash(jobTemplate),
+			// In the ^template's GraphQL query, 'id' will be available
+			// as a GraphQL variable to query for this posts's data.
+			context: {
+				id: node.id,
+				crumbs: {
+					crumb: {
+						path: node.post_path,
+						text: node.job_title,
+					},
+					parent_element: {
+						crumb: {
+							path: "/jobs/",
+							text: "Jobs",
+						},
+					}
+				},
+			},
+		})
+	})
 }
