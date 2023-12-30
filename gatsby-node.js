@@ -1454,25 +1454,27 @@ exports.createPages = async ({ graphql, actions }) => {
 
 	// Create job pages
 	const jobs = await graphql(`
-		allWordpressWpcJob {
-			edges {
-				previous {
-					id
-					wordpress_id
-					post_path
-					job_title
-				}
-				next {
-					id
-					wordpress_id
-					post_path
-					job_title
-				}
-				node {
-					id
-					wordpress_id
-					post_path
-					job_title
+		query {
+			allWordpressWpcJob {
+				edges {
+					previous {
+						id
+						wordpress_id
+						post_path
+						job_title
+					}
+					next {
+						id
+						wordpress_id
+						post_path
+						job_title
+					}
+					node {
+						id
+						wordpress_id
+						post_path
+						job_title
+					}
 				}
 			}
 		}
