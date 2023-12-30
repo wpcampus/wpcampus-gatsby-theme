@@ -19,7 +19,7 @@ console.log(chalk.green(" -> Environment: " + process.env.NODE_ENV))
 console.log("")
 
 // Returns the path from a full URL.
-const getNodePathFromLink = link => {
+const getNodePathFromLink = (link) => {
 	if (!link) {
 		return ""
 	}
@@ -35,7 +35,7 @@ const getNodePathFromLink = link => {
  * Creating a custom schema for our protected post meta
  * that the WPCampus: Members WordPress plugin adds to the
  * WordPress REST API.
- * 
+ *
  * We use this data to protect/restrict content.
  */
 exports.createSchemaCustomization = ({ actions, schema }) => {
@@ -54,10 +54,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			fields: {
 				protected: {
 					type: "Boolean",
-					resolve: source => true === source.protected || false,
+					resolve: (source) => true === source.protected || false,
 				},
 				user_roles: "userRoles",
-				message: "String"
+				message: "String",
 			},
 			interfaces: ["Node"],
 		}),
@@ -65,7 +65,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			name: "wpcSEOMeta",
 			fields: {
 				description: "String",
-				robots: "[String]"
+				robots: "[String]",
 			},
 			interfaces: ["Node"],
 		}),
@@ -73,7 +73,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			name: "wpcSEO",
 			fields: {
 				title: "String",
-				meta: "wpcSEOMeta"
+				meta: "wpcSEOMeta",
 			},
 			interfaces: ["Node"],
 		}),
@@ -81,7 +81,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			name: "wpcForm",
 			fields: {
 				title: "String",
-				permalink: "String"
+				permalink: "String",
 			},
 			interfaces: ["Node"],
 		}),
@@ -98,10 +98,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 							return true
 						}
 						return false
-					}
+					},
 				},
 				template: "String",
-				forms: "[wpcForm]"
+				forms: "[wpcForm]",
 			},
 			interfaces: ["Node"],
 		}),
@@ -110,7 +110,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			fields: {
 				path: {
 					type: "String",
-					resolve: source => {
+					resolve: (source) => {
 						if (source.path) {
 							return source.path
 						}
@@ -118,10 +118,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 							return getNodePathFromLink(source.link)
 						}
 						return ""
-					}
+					},
 				},
 				aria_label: "String",
-				text: "String"
+				text: "String",
 			},
 			interfaces: ["Node"],
 		}),
@@ -131,7 +131,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 				wpc_gatsby: "wpcGatsby",
 				wpc_protected: "wpcProtected",
 				wpc_seo: "wpcSEO",
-				crumb: "wpcCrumb"
+				crumb: "wpcCrumb",
 			},
 			interfaces: ["Node"],
 		}),
@@ -140,7 +140,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			fields: {
 				wpc_gatsby: "wpcGatsby",
 				wpc_protected: "wpcProtected",
-				wpc_seo: "wpcSEO"
+				wpc_seo: "wpcSEO",
 			},
 			interfaces: ["Node"],
 		}),
@@ -154,8 +154,8 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 							return ""
 						}
 						return source.headshot
-					}
-				}
+					},
+				},
 			},
 			interfaces: ["Node"],
 		}),
@@ -163,24 +163,24 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 			name: "wordpress__wp_planning",
 			fields: {
 				wpc_gatsby: "wpcGatsby",
-				wpc_seo: "wpcSEO"
+				wpc_seo: "wpcSEO",
 			},
 			interfaces: ["Node"],
 		}),
 		schema.buildObjectType({
 			name: "wordpress__wp_podcast",
 			fields: {
-				"episode_featured_image": {
+				episode_featured_image: {
 					type: "String",
 					resolve(source) {
 						if ("string" !== typeof source.episode_featured_image) {
 							return ""
 						}
 						return source.episode_featured_image
-					}
+					},
 				},
 				wpc_gatsby: "wpcGatsby",
-				wpc_seo: "wpcSEO"
+				wpc_seo: "wpcSEO",
 			},
 			interfaces: ["Node"],
 		}),
@@ -197,7 +197,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
 /**
  * Create search nodes.
- * 
+ *
  * Am not using this code but its
  * a great example of how to create new
  * nodes from existing nodes so keeping
@@ -288,15 +288,20 @@ const basicAuth = (username, password) => {
 }
 
 const fetchContent = (url, use_dev_creds = false) => {
-
 	let headers
 	if (use_dev_creds) {
 		headers = {
-			Authorization: basicAuth(process.env.WPC_DEV_USER, process.env.WPC_DEV_PW)
+			Authorization: basicAuth(
+				process.env.WPC_DEV_USER,
+				process.env.WPC_DEV_PW
+			),
 		}
 	} else {
 		headers = {
-			Authorization: basicAuth(process.env.WPC_JWT_USER, process.env.WPC_JWT_PASSWORD)
+			Authorization: basicAuth(
+				process.env.WPC_JWT_USER,
+				process.env.WPC_JWT_PASSWORD
+			),
 		}
 	}
 
@@ -319,28 +324,40 @@ const fetchContributors = async () => {
 	try {
 		const contributors_url = `${process.env.GATSBY_WPC_API}/wpcampus/contributors`
 
-		console.log(chalk.green(" -> Fetching WPCampus contributors from: " + contributors_url + "..."))
+		console.log(
+			chalk.green(
+				" -> Fetching WPCampus contributors from: " + contributors_url + "..."
+			)
+		)
 
 		const contributors = await fetchContent(contributors_url)
 
 		// Logging progress.
-		console.log(chalk.green(" -> WPCampus contributors fetched: " + contributors.length))
+		console.log(
+			chalk.green(" -> WPCampus contributors fetched: " + contributors.length)
+		)
 
 		return contributors
 	} catch (error) {
-		console.log(chalk.red(" -> WPCampus contributors fetch error: " + error.message))
+		console.log(
+			chalk.red(" -> WPCampus contributors fetch error: " + error.message)
+		)
 		return []
 	}
 }
 
-const createContributorNodes = async ({ contributors, createNode, createNodeId, createContentDigest }) => {
+const createContributorNodes = async ({
+	contributors,
+	createNode,
+	createNodeId,
+	createContentDigest,
+}) => {
 	if (!contributors.length) {
 		return
 	}
 
 	// Create contributor nodes.
-	contributors.forEach(node => {
-
+	contributors.forEach((node) => {
 		const contributorNode = {
 			id: createNodeId(`wpc-contributor-${node.ID}`),
 			wordpress_id: parseInt(node.ID),
@@ -351,18 +368,17 @@ const createContributorNodes = async ({ contributors, createNode, createNodeId, 
 			twitter: node.twitter,
 			company: node.company,
 			company_position: node.company_position,
-			bio: node.bio
+			bio: node.bio,
 		}
 
 		createNode({
 			...contributorNode,
 			parent: null,
 			children: [],
-			internal:
-			{
+			internal: {
 				type: contributorNodeType,
-				contentDigest: createContentDigest(contributorNode)
-			}
+				contentDigest: createContentDigest(contributorNode),
+			},
 		})
 	})
 }
@@ -371,14 +387,16 @@ createContributorNodes.propTypes = {
 	contributors: PropTypes.array.isRequired,
 	createNode: PropTypes.func.isRequired,
 	createNodeId: PropTypes.func.isRequired,
-	createContentDigest: PropTypes.func.isRequired
+	createContentDigest: PropTypes.func.isRequired,
 }
 
 const fetchJobs = async () => {
 	try {
 		const jobs_url = `${process.env.GATSBY_WPC_API}/wpcampus/data/public/jobs`
 
-		console.log(chalk.green(" -> Fetching WPCampus jobs from: " + jobs_url + "..."))
+		console.log(
+			chalk.green(" -> Fetching WPCampus jobs from: " + jobs_url + "...")
+		)
 
 		const jobs = await fetchContent(jobs_url, is_env_dev)
 
@@ -396,34 +414,46 @@ const fetchSessions = async () => {
 	try {
 		const sessions_url = `${process.env.GATSBY_WPC_API}/wpcampus/data/public/sessions`
 
-		console.log(chalk.green(" -> Fetching WPCampus sessions from: " + sessions_url + "..."))
+		console.log(
+			chalk.green(
+				" -> Fetching WPCampus sessions from: " + sessions_url + "..."
+			)
+		)
 
 		const sessions = await fetchContent(sessions_url)
 
 		// Logging progress.
-		console.log(chalk.green(" -> WPCampus sessions fetched: " + sessions.length))
+		console.log(
+			chalk.green(" -> WPCampus sessions fetched: " + sessions.length)
+		)
 
 		return sessions
 	} catch (error) {
-		console.log(chalk.red(" -> WPCampus sessions fetch error: " + error.message))
+		console.log(
+			chalk.red(" -> WPCampus sessions fetch error: " + error.message)
+		)
 		return []
 	}
 }
 
-const createJobNodes = async ({ jobs, createNode, createNodeId, createContentDigest }) => {
+const createJobNodes = async ({
+	jobs,
+	createNode,
+	createNodeId,
+	createContentDigest,
+}) => {
 	if (!jobs.length) {
 		return
 	}
 
-	jobs.forEach(node => {
-
+	jobs.forEach((node) => {
 		const jobNode = node
 
 		// Store ID for usage in logic and then delete/replace with node ID.
 		const thisNodeID = node.ID
 		delete node.ID
 
-		// Change key for WordPress id. 
+		// Change key for WordPress id.
 		jobNode.wordpress_id = parseInt(thisNodeID)
 
 		// Add GraphQL ID
@@ -433,30 +463,35 @@ const createJobNodes = async ({ jobs, createNode, createNodeId, createContentDig
 			...jobNode,
 			parent: null,
 			children: [],
-			internal:
-			{
+			internal: {
 				type: jobNodeType,
-				contentDigest: createContentDigest(jobNode)
-			}
+				contentDigest: createContentDigest(jobNode),
+			},
 		})
 	})
 }
 
-const createLibraryNodes = async ({ items, libraryType, contributorNodes, createNode, createNodeId, createContentDigest }) => {
+const createLibraryNodes = async ({
+	items,
+	libraryType,
+	contributorNodes,
+	createNode,
+	createNodeId,
+	createContentDigest,
+}) => {
 	if (!items.length) {
 		return
 	}
 
 	// Create library nodes.
-	items.forEach(node => {
-
+	items.forEach((node) => {
 		const libraryNode = node
 
 		// Store ID for usage in logic and then delete/replace with node ID.
 		const thisNodeID = node.ID
 		delete node.ID
 
-		// Change key for WordPress id. 
+		// Change key for WordPress id.
 		libraryNode.wordpress_id = parseInt(thisNodeID)
 
 		// Add GraphQL ID
@@ -466,14 +501,15 @@ const createLibraryNodes = async ({ items, libraryType, contributorNodes, create
 		libraryNode.type = libraryType
 
 		libraryNode.author___NODE = node.speakers
-			.map(speaker => {
-
+			.map((speaker) => {
 				if (!speaker.wordpress_user) {
 					return undefined
 				}
 
 				// Find the user.
-				const user = contributorNodes.find(u => u.wordpress_id === speaker.wordpress_user)
+				const user = contributorNodes.find(
+					(u) => u.wordpress_id === speaker.wordpress_user
+				)
 
 				if (user) {
 					return user.id
@@ -481,17 +517,16 @@ const createLibraryNodes = async ({ items, libraryType, contributorNodes, create
 
 				return undefined
 			})
-			.filter(node => node !== undefined)
+			.filter((node) => node !== undefined)
 
 		createNode({
 			...libraryNode,
 			parent: null,
 			children: [],
-			internal:
-			{
+			internal: {
 				type: libraryNodeType,
-				contentDigest: createContentDigest(libraryNode)
-			}
+				contentDigest: createContentDigest(libraryNode),
+			},
 		})
 	})
 }
@@ -502,13 +537,18 @@ createLibraryNodes.propTypes = {
 	contributorNodes: PropTypes.object.isRequired,
 	createNode: PropTypes.func.isRequired,
 	createNodeId: PropTypes.func.isRequired,
-	createContentDigest: PropTypes.func.isRequired
+	createContentDigest: PropTypes.func.isRequired,
 }
 
 /**
  * Create nodes from our custom WP API endpoints.
  */
-exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDigest }) => {
+exports.sourceNodes = async ({
+	actions,
+	getNodes,
+	createNodeId,
+	createContentDigest,
+}) => {
 	const { createNode } = actions
 
 	// Add some spacing to our logs.
@@ -516,10 +556,17 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 
 	// Fetch and process contributors.
 	const contributors = await fetchContributors()
-	createContributorNodes({ contributors, createNode, createNodeId, createContentDigest })
+	createContributorNodes({
+		contributors,
+		createNode,
+		createNodeId,
+		createContentDigest,
+	})
 
 	// Get contributor nodes so can be related to library nodes.
-	const contributorNodes = getNodes().filter(e => e.internal.type === contributorNodeType)
+	const contributorNodes = getNodes().filter(
+		(e) => e.internal.type === contributorNodeType
+	)
 
 	// Fetch and process jobs.
 	const jobs = await fetchJobs()
@@ -527,7 +574,14 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 
 	// Fetch and process library content.
 	const items = await fetchSessions()
-	createLibraryNodes({ items, libraryType: "session", contributorNodes, createNode, createNodeId, createContentDigest })
+	createLibraryNodes({
+		items,
+		libraryType: "session",
+		contributorNodes,
+		createNode,
+		createNodeId,
+		createContentDigest,
+	})
 
 	// Add some spacing to our logs.
 	console.log("")
@@ -542,21 +596,25 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 	 *
 	 * This connects an array of author IDs (instead of a single ID) to their contributor nodes.
 	 */
-	const hasContributorTypes = ["wordpress__wp_planning", "wordpress__wp_podcast", "wordpress__POST"]
+	const hasContributorTypes = [
+		"wordpress__wp_planning",
+		"wordpress__wp_podcast",
+		"wordpress__POST",
+	]
 
 	getNodes()
-		.filter(node => { if (hasContributorTypes.includes(node.internal.type)) return node })
-		.map(node => {
-
+		.filter((node) => {
+			if (hasContributorTypes.includes(node.internal.type)) return node
+		})
+		.map((node) => {
 			if (!node.author || !node.author.length) {
 				return node
 			}
 
 			node.author___NODE = node.author
-				.map(userID => {
-
+				.map((userID) => {
 					// Find the user.
-					const user = contributorNodes.find(u => u.wordpress_id === userID)
+					const user = contributorNodes.find((u) => u.wordpress_id === userID)
 
 					if (user) {
 						return user.id
@@ -564,7 +622,7 @@ exports.sourceNodes = async ({ actions, getNodes, createNodeId, createContentDig
 
 					return undefined
 				})
-				.filter(node => node !== undefined)
+				.filter((node) => node !== undefined)
 
 			delete node.author
 
@@ -616,8 +674,12 @@ const podcastCategoriesQuery = `
 	}
 `
 
-const createCategoriesPagesDirectors = async ({ categoriesPath, parentCrumbs, graphql, createPage }) => {
-
+const createCategoriesPagesDirectors = async ({
+	categoriesPath,
+	parentCrumbs,
+	graphql,
+	createPage,
+}) => {
 	// Ids of categories related to Board of Directors:
 	// 63 - Governance
 	// 285 - Board of Directors
@@ -656,7 +718,7 @@ const createCategoriesPagesDirectors = async ({ categoriesPath, parentCrumbs, gr
 	let categoryMain = null
 
 	let index = categoryData.length
-	categoryData.forEach(edge => {
+	categoryData.forEach((edge) => {
 		const category = edge.node
 
 		// Store IDs to use in template
@@ -684,9 +746,9 @@ const createCategoriesPagesDirectors = async ({ categoriesPath, parentCrumbs, gr
 		parent_element: {
 			crumb: {
 				path: categoriesPath,
-				text: "Categories"
-			}
-		}
+				text: "Categories",
+			},
+		},
 	}
 
 	if (parentCrumbs) {
@@ -702,30 +764,36 @@ const createCategoriesPagesDirectors = async ({ categoriesPath, parentCrumbs, gr
 		context: {
 			categoryMain,
 			categories: categoryIDs,
-			crumbs: crumbs
-		}
+			crumbs: crumbs,
+		},
 	})
 }
 
 createCategoriesPagesDirectors.propTypes = {
 	categoriesPath: PropTypes.string.isRequired,
-	parentCrumbs: PropTypes.object
+	parentCrumbs: PropTypes.object,
 }
 
 /**
  * Build category archives.
- * 
+ *
  * One for blog posts, planning blog, and podcasts.
- * 
+ *
  * Query content and create a category page
  * for all categories assigned to content.
- * 
+ *
  * We're getting all the category info because
- * we're passing this info to the categories 
+ * we're passing this info to the categories
  * page template.
  */
-const createCategoriesPages = async ({ type, categoriesPath, parentCrumbs, archiveHeading, graphql, createPage }) => {
-
+const createCategoriesPages = async ({
+	type,
+	categoriesPath,
+	parentCrumbs,
+	archiveHeading,
+	graphql,
+	createPage,
+}) => {
 	// Will hold categories that are assigned to posts.
 	const postCategories = []
 
@@ -760,12 +828,13 @@ const createCategoriesPages = async ({ type, categoriesPath, parentCrumbs, archi
 		return
 	}
 
-	const capitalType = type.replace(/^\w/, c => c.toUpperCase())
+	const capitalType = type.replace(/^\w/, (c) => c.toUpperCase())
 
 	// Pricess the post and category data and create pages.
-	const categoryTemplate = path.resolve(`./src/templates/category${capitalType}.js`)
-	postData.forEach(edge => {
-
+	const categoryTemplate = path.resolve(
+		`./src/templates/category${capitalType}.js`
+	)
+	postData.forEach((edge) => {
 		const post = edge.node
 
 		// Only neeed to process if the post has categories.
@@ -774,8 +843,7 @@ const createCategoriesPages = async ({ type, categoriesPath, parentCrumbs, archi
 		}
 
 		// Process each category.
-		post.categories.forEach(category => {
-
+		post.categories.forEach((category) => {
 			// So we don't process the same category more than once.
 			if (processedCategories.includes(category.id)) {
 				return
@@ -796,9 +864,9 @@ const createCategoriesPages = async ({ type, categoriesPath, parentCrumbs, archi
 				parent_element: {
 					crumb: {
 						path: categoriesPath,
-						text: "Categories"
-					}
-				}
+						text: "Categories",
+					},
+				},
 			}
 
 			if (parentCrumbs) {
@@ -811,7 +879,7 @@ const createCategoriesPages = async ({ type, categoriesPath, parentCrumbs, archi
 				context: {
 					id: category.id,
 					crumbs: crumbs,
-					category: category
+					category: category,
 				},
 			})
 		})
@@ -821,7 +889,7 @@ const createCategoriesPages = async ({ type, categoriesPath, parentCrumbs, archi
 		crumb: {
 			path: categoriesPath,
 			text: "Categories",
-		}
+		},
 	}
 
 	if (parentCrumbs) {
@@ -837,8 +905,8 @@ const createCategoriesPages = async ({ type, categoriesPath, parentCrumbs, archi
 		context: {
 			categories: postCategories,
 			heading: archiveHeading,
-			crumbs: archiveCrumbs
-		}
+			crumbs: archiveCrumbs,
+		},
 	})
 }
 
@@ -846,7 +914,7 @@ createCategoriesPages.propTypes = {
 	type: PropTypes.string.isRequired,
 	categoriesPath: PropTypes.string.isRequired,
 	archiveHeading: PropTypes.string.isRequired,
-	parentCrumbs: PropTypes.object
+	parentCrumbs: PropTypes.object,
 }
 
 exports.onCreatePage = async ({ page, actions }) => {
@@ -863,7 +931,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 
 /**
  * Build content from WordPress content.
- * 
+ *
  * @TODO remove fields we're not using.
  */
 exports.createPages = async ({ graphql, actions }) => {
@@ -875,21 +943,21 @@ exports.createPages = async ({ graphql, actions }) => {
 	createPage({
 		path: "/search/",
 		matchPath: "/search/*",
-		component: path.resolve("src/templates/search.js")
+		component: path.resolve("src/templates/search.js"),
 	})
 
 	/*
-			 * Build pages from WordPress "page" post type.
-			 * 
-			 * @TODO remove fields we're not using.
-			 * 
-			 * @TODO this means we can't have more than 5 levels of crumbs.
-			 */
+	 * Build pages from WordPress "page" post type.
+	 *
+	 * @TODO remove fields we're not using.
+	 *
+	 * @TODO this means we can't have more than 5 levels of crumbs.
+	 */
 	const pages = await graphql(`
 		query {
 			allWordpressPage(
 				filter: {
-					status: { eq: "publish" },
+					status: { eq: "publish" }
 					wpc_gatsby: { disable: { eq: false } }
 				}
 			) {
@@ -964,7 +1032,7 @@ exports.createPages = async ({ graphql, actions }) => {
 				}
 			}
 		}
-  	`)
+	`)
 
 	const formTemplate = path.resolve("./src/templates/formIframe.js")
 	const pageTemplate = path.resolve("./src/templates/page.js")
@@ -973,7 +1041,7 @@ exports.createPages = async ({ graphql, actions }) => {
 	const workshopsTemplate = path.resolve("./src/templates/workshops-survey.js")
 	const indexTemplate = path.resolve("./src/templates/index.js")
 
-	pages.data.allWordpressPage.edges.forEach(edge => {
+	pages.data.allWordpressPage.edges.forEach((edge) => {
 		let template
 
 		// @TODO will be able to delete after deleted from WordPress app.
@@ -1009,7 +1077,7 @@ exports.createPages = async ({ graphql, actions }) => {
 			id: edge.node.id,
 			crumbs: {
 				crumb: edge.node.crumb,
-				parent_element: edge.node.parent_element
+				parent_element: edge.node.parent_element,
 			},
 			wpc_protected: edge.node.wpc_protected,
 		}
@@ -1029,15 +1097,15 @@ exports.createPages = async ({ graphql, actions }) => {
 	})
 
 	/*
-			 * Build blog posts from WordPress "post" post type.
-			 * 
-			 * @TODO remove fields we're not using.
-			 */
+	 * Build blog posts from WordPress "post" post type.
+	 *
+	 * @TODO remove fields we're not using.
+	 */
 	const posts = await graphql(`
 		query {
 			allWordpressPost(
-				filter: { 
-					status: { eq: "publish" },
+				filter: {
+					status: { eq: "publish" }
 					wpc_gatsby: { disable: { eq: false } }
 				}
 			) {
@@ -1093,10 +1161,9 @@ exports.createPages = async ({ graphql, actions }) => {
 				}
 			}
 		}
-  	`)
+	`)
 	const postTemplate = path.resolve("./src/templates/post.js")
-	posts.data.allWordpressPost.edges.forEach(edge => {
-
+	posts.data.allWordpressPost.edges.forEach((edge) => {
 		// Don't build disabled posts.
 		if (true === edge.node.wpc_gatsby.disable) {
 			return
@@ -1123,9 +1190,9 @@ exports.createPages = async ({ graphql, actions }) => {
 					parent_element: {
 						crumb: {
 							path: "/blog/",
-							text: "Community Blog"
-						}
-					}
+							text: "Community Blog",
+						},
+					},
 				},
 			},
 		})
@@ -1136,19 +1203,19 @@ exports.createPages = async ({ graphql, actions }) => {
 	 */
 	createPage({
 		path: "/community/planning/",
-		component: path.resolve("src/templates/plannings.js")
+		component: path.resolve("src/templates/plannings.js"),
 	})
 
 	/*
 	 * Build planning posts from WordPress "planning" post type.
-	 * 
+	 *
 	 * @TODO remove fields we're not using.
 	 */
 	const planningPosts = await graphql(`
 		query {
 			allWordpressWpPlanning(
 				filter: {
-					status: { eq: "publish" },
+					status: { eq: "publish" }
 					wpc_gatsby: { disable: { eq: false } }
 				}
 			) {
@@ -1183,8 +1250,7 @@ exports.createPages = async ({ graphql, actions }) => {
 	`)
 
 	const planningTemplate = path.resolve("./src/templates/planning.js")
-	planningPosts.data.allWordpressWpPlanning.edges.forEach(edge => {
-
+	planningPosts.data.allWordpressWpPlanning.edges.forEach((edge) => {
 		// Don't build disabled planning posts.
 		if (true === edge.node.wpc_gatsby.disable) {
 			return
@@ -1210,9 +1276,9 @@ exports.createPages = async ({ graphql, actions }) => {
 					parent_element: {
 						crumb: {
 							path: "/community/planning/",
-							text: "Planning"
-						}
-					}
+							text: "Planning",
+						},
+					},
 				},
 			},
 		})
@@ -1223,19 +1289,19 @@ exports.createPages = async ({ graphql, actions }) => {
 	 */
 	createPage({
 		path: "/podcast/",
-		component: path.resolve("src/templates/podcasts.js")
+		component: path.resolve("src/templates/podcasts.js"),
 	})
 
 	/*
 	 * Build podcast posts from WordPress "podcast" post type.
-	 * 
+	 *
 	 * @TODO remove fields we're not using.
 	 */
 	const podcasts = await graphql(`
 		query {
 			allWordpressWpPodcast(
 				filter: {
-					status: { eq: "publish" },
+					status: { eq: "publish" }
 					wpc_gatsby: { disable: { eq: false } }
 				}
 			) {
@@ -1269,8 +1335,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		}
 	`)
 	const podcastTemplate = path.resolve("./src/templates/podcast.js")
-	podcasts.data.allWordpressWpPodcast.edges.forEach(edge => {
-
+	podcasts.data.allWordpressWpPodcast.edges.forEach((edge) => {
 		// Don't build disabled podcasts.
 		if (true === edge.node.wpc_gatsby.disable) {
 			return
@@ -1295,9 +1360,9 @@ exports.createPages = async ({ graphql, actions }) => {
 					parent_element: {
 						crumb: {
 							path: "/podcast/",
-							text: "Podcast"
-						}
-					}
+							text: "Podcast",
+						},
+					},
 				},
 			},
 		})
@@ -1310,12 +1375,12 @@ exports.createPages = async ({ graphql, actions }) => {
 		parentCrumbs: {
 			crumb: {
 				path: "/blog/",
-				text: "Community Blog"
-			}
+				text: "Community Blog",
+			},
 		},
 		archiveHeading: "Community Blog categories",
 		graphql,
-		createPage
+		createPage,
 	})
 
 	// Create category pages for podcasts.
@@ -1325,12 +1390,12 @@ exports.createPages = async ({ graphql, actions }) => {
 		parentCrumbs: {
 			crumb: {
 				path: "/podcast/",
-				text: "Podcast"
-			}
+				text: "Podcast",
+			},
 		},
 		archiveHeading: "Podcast categories",
 		graphql,
-		createPage
+		createPage,
 	})
 
 	// Create category page for blog posts about Board of Directors.
@@ -1339,11 +1404,11 @@ exports.createPages = async ({ graphql, actions }) => {
 		parentCrumbs: {
 			crumb: {
 				path: "/blog/",
-				text: "Community Blog"
-			}
+				text: "Community Blog",
+			},
 		},
 		graphql,
-		createPage
+		createPage,
 	})
 
 	/*
@@ -1351,14 +1416,14 @@ exports.createPages = async ({ graphql, actions }) => {
 	 */
 	createPage({
 		path: "/about/contributors/",
-		component: path.resolve("src/templates/contributors.js")
+		component: path.resolve("src/templates/contributors.js"),
 	})
 
 	/**
-			 * Build contributor pages from WordPress users list.
-			 * 
-			 * @TODO remove fields we're not using.
-			 */
+	 * Build contributor pages from WordPress users list.
+	 *
+	 * @TODO remove fields we're not using.
+	 */
 	const authors = await graphql(`
 		query {
 			allWordpressWpcContributors {
@@ -1366,15 +1431,14 @@ exports.createPages = async ({ graphql, actions }) => {
 					node {
 						id
 						path
-						display_name											
+						display_name
 					}
 				}
 			}
 		}
-  	`)
+	`)
 	const authorTemplate = path.resolve("./src/templates/contributor.js")
-	authors.data.allWordpressWpcContributors.edges.forEach(edge => {
-
+	authors.data.allWordpressWpcContributors.edges.forEach((edge) => {
 		const contributorPath = "/about/contributors/" + edge.node.path + "/"
 
 		createPage({
@@ -1399,20 +1463,20 @@ exports.createPages = async ({ graphql, actions }) => {
 						parent_element: {
 							crumb: {
 								path: "/about/",
-								text: "About"
-							}
-						}
-					}
+								text: "About",
+							},
+						},
+					},
 				},
 			},
 		})
 	})
 
 	/**
-			 * Build contributor archive from WordPress users list.
-			 * 
-			 * @TODO remove fields we're not using.
-			 */
+	 * Build contributor archive from WordPress users list.
+	 *
+	 * @TODO remove fields we're not using.
+	 */
 	/*const members = await graphql(`
 	query {
 		allWordpressWpMembers(
@@ -1454,78 +1518,73 @@ exports.createPages = async ({ graphql, actions }) => {
 
 	// Create job pages
 	/* try {
-	await graphql(`
-		query {
-			allWordpressWpcJob {
-				edges {
-					previous {
-						id
-						wordpress_id
-						post_path
-						job_title
-					}
-					next {
-						id
-						wordpress_id
-						post_path
-						job_title
-					}
-					node {
-						id
-						wordpress_id
-						post_path
-						job_title
+		await graphql(`
+			query {
+				allWordpressWpcJob {
+					edges {
+						previous {
+							id
+							wordpress_id
+							post_path
+							job_title
+						}
+						next {
+							id
+							wordpress_id
+							post_path
+							job_title
+						}
+						node {
+							id
+							wordpress_id
+							post_path
+							job_title
+						}
 					}
 				}
 			}
-		}
-	`)
-		.then((result) => {
-			console.log("jobs result", result)
+		`)
+			.then((result) => {
+				console.log("jobs result", result)
 
-		const jobTemplate = path.resolve("./src/templates/job.js")
+				const jobTemplate = path.resolve("./src/templates/job.js")
 
-			result.data.allWordpressWpcJob.edges.forEach((edge) => {
-			const node = edge.node
+				result.data.allWordpressWpcJob.edges.forEach((edge) => {
+					const node = edge.node
 
-			// Don't build disabled jobs.
-			/* if (true === node.wpc_gatsby.disable) {
-				return
-			} */
+					// Make sure we have a path.
+					if (!node.post_path) {
+						return
+					}
 
-			// Make sure we have a path.
-			if (!node.post_path) {
-				return
-			}
-
-			createPage({
-				// will be the url for the page
-				path: node.post_path,
-				// specify the component template of your choice
-				component: slash(jobTemplate),
-				// In the ^template's GraphQL query, 'id' will be available
-				// as a GraphQL variable to query for this posts's data.
-				context: {
-					id: node.id,
-					crumbs: {
-						crumb: {
-							path: node.post_path,
-							text: node.job_title,
-						},
-						parent_element: {
-							crumb: {
-								path: "/jobs/",
-								text: "Jobs",
+					createPage({
+						// will be the url for the page
+						path: node.post_path,
+						// specify the component template of your choice
+						component: slash(jobTemplate),
+						// In the ^template's GraphQL query, 'id' will be available
+						// as a GraphQL variable to query for this posts's data.
+						context: {
+							id: node.id,
+							crumbs: {
+								crumb: {
+									path: node.post_path,
+									text: node.job_title,
+								},
+								parent_element: {
+									crumb: {
+										path: "/jobs/",
+										text: "Jobs",
+									},
+								},
 							},
-					},
-				},
-					},
+						},
+					})
 				})
 			})
-		})
-		.catch((error) => {
-			console.log(chalk.red(" -> Error querying jobs."), error)
-	})
+			.catch((error) => {
+				console.log(chalk.red(" -> Error querying jobs."), error)
+			})
 	} catch (error) {
 		console.log(chalk.red(" -> Error querying jobs."), error)
 	} */
