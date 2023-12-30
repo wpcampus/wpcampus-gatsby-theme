@@ -1479,43 +1479,45 @@ exports.createPages = async ({ graphql, actions }) => {
 			}
 		}
 	`)
-	const jobTemplate = path.resolve("./src/templates/job.js")
-	jobs.data.allWordpressWpcJob.edges.forEach(edge => {
+	if (jobs && jobs.data && jobs.data.allWordpressWpcJob && jobs.data.allWordpressWpcJob.edges) {
+		const jobTemplate = path.resolve("./src/templates/job.js")
+		jobs.data.allWordpressWpcJob.edges.forEach(edge => {
 
-		const node = edge.node
+			const node = edge.node
 
-		// Don't build disabled jobs.
-		/* if (true === node.wpc_gatsby.disable) {
-			return
-		} */
+			// Don't build disabled jobs.
+			/* if (true === node.wpc_gatsby.disable) {
+				return
+			} */
 
-		// Make sure we have a path.
-		if (!node.post_path) {
-			return
-		}
+			// Make sure we have a path.
+			if (!node.post_path) {
+				return
+			}
 
-		createPage({
-			// will be the url for the page
-			path: node.post_path,
-			// specify the component template of your choice
-			component: slash(jobTemplate),
-			// In the ^template's GraphQL query, 'id' will be available
-			// as a GraphQL variable to query for this posts's data.
-			context: {
-				id: node.id,
-				crumbs: {
-					crumb: {
-						path: node.post_path,
-						text: node.job_title,
-					},
-					parent_element: {
+			createPage({
+				// will be the url for the page
+				path: node.post_path,
+				// specify the component template of your choice
+				component: slash(jobTemplate),
+				// In the ^template's GraphQL query, 'id' will be available
+				// as a GraphQL variable to query for this posts's data.
+				context: {
+					id: node.id,
+					crumbs: {
 						crumb: {
-							path: "/jobs/",
-							text: "Jobs",
+							path: node.post_path,
+							text: node.job_title,
 						},
-					}
+						parent_element: {
+							crumb: {
+								path: "/jobs/",
+								text: "Jobs",
+							},
+						}
+					},
 				},
-			},
+			})
 		})
-	})
+	}
 }
