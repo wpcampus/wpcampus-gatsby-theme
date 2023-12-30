@@ -1478,11 +1478,15 @@ exports.createPages = async ({ graphql, actions }) => {
 				}
 			}
 		}
-	`)
-	if (jobs && jobs.data && jobs.data.allWordpressWpcJob && jobs.data.allWordpressWpcJob.edges) {
-		const jobTemplate = path.resolve("./src/templates/job.js")
-		jobs.data.allWordpressWpcJob.edges.forEach(edge => {
+	`).then((result) => {
+		if (result.errors) {
+			console.log(chalk.red(" -> Error querying jobs."), result.errors)
+			return
+		}
 
+		const jobTemplate = path.resolve("./src/templates/job.js")
+
+		jobs.data.allWordpressWpcJob.edges.forEach((edge) => {
 			const node = edge.node
 
 			// Don't build disabled jobs.
@@ -1519,5 +1523,5 @@ exports.createPages = async ({ graphql, actions }) => {
 				},
 			})
 		})
-	}
+	})
 }
