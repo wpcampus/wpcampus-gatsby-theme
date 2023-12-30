@@ -1489,6 +1489,11 @@ exports.createPages = async ({ graphql, actions }) => {
 			return
 		} */
 
+		// Make sure we have a path.
+		if (!node.post_path) {
+			return
+		}
+
 		createPage({
 			// will be the url for the page
 			path: node.post_path,
