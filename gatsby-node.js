@@ -1453,6 +1453,7 @@ exports.createPages = async ({ graphql, actions }) => {
 	})*/
 
 	// Create job pages
+	try {
 	await graphql(`
 		query {
 			allWordpressWpcJob {
@@ -1525,4 +1526,7 @@ exports.createPages = async ({ graphql, actions }) => {
 		.catch((error) => {
 			console.log(chalk.red(" -> Error querying jobs."), error)
 	})
+	} catch (error) {
+		console.log(chalk.red(" -> Error querying jobs."), error)
+	}
 }
