@@ -1453,7 +1453,7 @@ exports.createPages = async ({ graphql, actions }) => {
 	})*/
 
 	// Create job pages
-	const jobs = await graphql(`
+	await graphql(`
 		query {
 			allWordpressWpcJob {
 				edges {
@@ -1478,15 +1478,13 @@ exports.createPages = async ({ graphql, actions }) => {
 				}
 			}
 		}
-	`).then((result) => {
-		if (result.errors) {
-			console.log(chalk.red(" -> Error querying jobs."), result.errors)
-			return
-		}
+	`)
+		.then((result) => {
+			console.log("jobs result", result)
 
 		const jobTemplate = path.resolve("./src/templates/job.js")
 
-		jobs.data.allWordpressWpcJob.edges.forEach((edge) => {
+			result.data.allWordpressWpcJob.edges.forEach((edge) => {
 			const node = edge.node
 
 			// Don't build disabled jobs.
@@ -1518,10 +1516,13 @@ exports.createPages = async ({ graphql, actions }) => {
 								path: "/jobs/",
 								text: "Jobs",
 							},
-						}
 					},
 				},
+					},
+				})
 			})
 		})
+		.catch((error) => {
+			console.log(chalk.red(" -> Error querying jobs."), error)
 	})
 }
